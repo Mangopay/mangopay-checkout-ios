@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-         .package(url: "https://github.com/apollographql/apollo-ios", from: "0.9.5"),
+         .package(url: "https://github.com/apollographql/apollo-ios", branch: "main"),
          .package(url: "https://github.com/realm/SwiftLint", branch: "main"),
     ],
     targets: [
@@ -40,5 +40,6 @@ let package = Package(
                     ]
                 )
                )
+        
     ]
 )

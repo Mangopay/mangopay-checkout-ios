@@ -1,0 +1,27 @@
+{
+  "schemaName" : "SchemaConfig",
+  "input" : {
+    "operationSearchPaths" : [
+      "./Sources/Schema/*.graphql"
+    ],
+    "schemaSearchPaths" : [
+      "./Sources/Schema/*.json"
+    ]
+  },
+  "output": {
+      "schemaTypes": {
+          "moduleType": {
+              "swiftPackageManager": {}
+          },
+          "path": "./Sources/Schema"
+      },
+      "operations": {
+          "inSchemaModule": {}
+      },
+      "testMocks": {
+          "none": {}
+      },
+      "operationIdentifiersPath": "./Sources/Schemag"
+  }
+}
+
