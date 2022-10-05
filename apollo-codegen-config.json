@@ -1,27 +1,43 @@
 {
-  "schemaName" : "SchemaConfig",
+  "schemaName" : "Schema",
   "input" : {
     "operationSearchPaths" : [
-      "./Sources/Schema/*.graphql"
+      "./*.graphql"
     ],
     "schemaSearchPaths" : [
-      "./Sources/Schema/*.json"
+      "./*.graphqls"
     ]
   },
-  "output": {
-      "schemaTypes": {
-          "moduleType": {
-              "swiftPackageManager": {}
-          },
-          "path": "./Sources/Schema"
-      },
-      "operations": {
-          "inSchemaModule": {}
-      },
-      "testMocks": {
-          "none": {}
-      },
-      "operationIdentifiersPath": "./Sources/Schemag"
-  }
+  "output" : {
+    "testMocks" : {
+      "none" : {
+      }
+    },
+    "schemaTypes" : {
+      "path" : "./MySchemaName",
+      "moduleType" : {
+        "swiftPackageManager" : {
+        }
+      }
+    },
+    "operations" : {
+      "relative" : {
+      }
+    }
+  },
+  "schemaDownloadConfiguration": {
+    "downloadMethod": {
+        "introspection": {
+            "endpointURL": "https://api.dev.whenthen.co/api/graphql",
+            "httpMethod": {
+                "POST": {}
+            },
+            "includeDeprecatedInputValues": false,
+            "outputFormat": "JSON"
+        }
+    },
+    "downloadTimeout": 60,
+    "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
+    "outputPath": "./graphql/"
 }
-
+}
