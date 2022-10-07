@@ -20,6 +20,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
          .package(url: "https://github.com/apollographql/apollo-ios", branch: "main"),
          .package(url: "https://github.com/realm/SwiftLint", branch: "main"),
+//         .product(name: "ApolloCodegenLib", package: "apollo-ios")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
