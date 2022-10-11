@@ -20,6 +20,8 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
          .package(url: "https://github.com/apollographql/apollo-ios", branch: "main"),
          .package(url: "https://github.com/realm/SwiftLint", branch: "main"),
+         .package(name: "SchemaPackage", path: "./SchemaPackage")
+
 //         .product(name: "ApolloCodegenLib", package: "apollo-ios")
     ],
     targets: [
@@ -29,7 +31,13 @@ let package = Package(
             name: "checkout-ios-sdk",
             dependencies: [
                 .product(name: "Apollo", package: "apollo-ios"),
-            ]),
+                .product(name: "SchemaPackage", package: "SchemaPackage")
+            ]
+//            resources: [
+//                .copy("./Sources/checkout-ios-sdk/Core/Network/GraphConfig/AuthorizePayment.graphql"),
+//            ]
+            
+        ),
         .testTarget(
             name: "checkout-ios-sdkTests",
             dependencies: ["checkout-ios-sdk"]),

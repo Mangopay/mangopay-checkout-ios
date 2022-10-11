@@ -6,16 +6,16 @@ import ApolloAPI
 public typealias ID = String
 
 public protocol SelectionSet: ApolloAPI.SelectionSet & ApolloAPI.RootSelectionSet
-where Schema == Schema.SchemaMetadata {}
+where Schema == SchemaPackage.SchemaMetadata {}
 
 public protocol InlineFragment: ApolloAPI.SelectionSet & ApolloAPI.InlineFragment
-where Schema == Schema.SchemaMetadata {}
+where Schema == SchemaPackage.SchemaMetadata {}
 
 public protocol MutableSelectionSet: ApolloAPI.MutableRootSelectionSet
-where Schema == Schema.SchemaMetadata {}
+where Schema == SchemaPackage.SchemaMetadata {}
 
 public protocol MutableInlineFragment: ApolloAPI.MutableSelectionSet & ApolloAPI.InlineFragment
-where Schema == Schema.SchemaMetadata {}
+where Schema == SchemaPackage.SchemaMetadata {}
 
 public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
   public static let configuration: ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self

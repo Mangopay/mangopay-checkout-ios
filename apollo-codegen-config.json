@@ -1,5 +1,5 @@
 {
-  "schemaName" : "Schema",
+  "schemaName" : "SchemaPackage",
   "input" : {
     "operationSearchPaths" : [
       "./*.graphql"
@@ -14,7 +14,7 @@
       }
     },
     "schemaTypes" : {
-      "path" : "./MySchemaName",
+      "path" : "./SchemaPackage",
       "moduleType" : {
         "swiftPackageManager" : {
         }
@@ -28,16 +28,16 @@
   "schemaDownloadConfiguration": {
     "downloadMethod": {
         "introspection": {
-            "endpointURL": "https://api.dev.whenthen.co/api/graphql",
+            "endpointURL": "https://api.spacex.land/graphql/",
             "httpMethod": {
                 "POST": {}
             },
             "includeDeprecatedInputValues": false,
-            "outputFormat": "JSON"
+            "outputFormat": "SDL"
         }
     },
     "downloadTimeout": 60,
-    "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
-    "outputPath": "./graphql/"
+    "headers": [],
+    "outputPath": "./graphqls/"
 }
 }
