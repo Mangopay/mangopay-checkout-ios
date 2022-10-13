@@ -10,7 +10,7 @@ import UIKit
 
 class HeaderView: UIView {
     
-    lazy var titleLabel = UILabel.git create(text: "Card Information", numberOfLines: 1)
+    lazy var titleLabel = UILabel.create(text: "Card Information", numberOfLines: 1)
 
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()

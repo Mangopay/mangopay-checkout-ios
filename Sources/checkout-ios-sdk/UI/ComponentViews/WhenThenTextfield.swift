@@ -118,7 +118,7 @@ class WhenThenTextfield: UIView {
 
     func setLeftImage(_ image: UIImage?) {
         leftImageView.image = image
-        leftImageView.isHidden = image == nil
+//        leftImageView.isHidden = image == nil
     }
 
     @objc private func editingDidEnd() {
