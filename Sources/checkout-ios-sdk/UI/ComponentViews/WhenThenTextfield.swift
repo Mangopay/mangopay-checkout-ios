@@ -8,11 +8,25 @@
 import Foundation
 import UIKit
 
+enum TextFieldState {
+    case error
+    case active
+    case highlighted
+    case inactive
+    case greyedOut
+}
+
 class WhenThenTextfield: UIView {
 
     var onEditingBegin: (() -> Void)?
     var onEditingDidEnd: (() -> Void)?
     var onEditingChanged: ((String) -> Void)?
+
+    var errorText: String? {
+        didSet {
+            errorLabel.text = errorText
+        }
+    }
 
     var text: String? {
         get { return textfield.text?.trimmingCharacters(in: .whitespaces) }
@@ -64,6 +78,15 @@ class WhenThenTextfield: UIView {
         return view
     }()
 
+    private lazy var errorLabel = UILabel.create(text: "")
+    
+    private lazy var vStack = UIStackView.create(
+        spacing: 4,
+        axis: .vertical,
+        alignment: .fill,
+        distribution: .fill,
+        views: [containerView, errorLabel]
+    )
     
     init(
         placeholderText: String? = nil,
@@ -94,11 +117,11 @@ class WhenThenTextfield: UIView {
 
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
-        addSubview(containerView)
-        containerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        containerView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        containerView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        addSubview(vStack)
+        vStack.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        vStack.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        vStack.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        vStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         self.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
 
@@ -123,16 +146,38 @@ class WhenThenTextfield: UIView {
 
     @objc private func editingDidEnd() {
         onEditingDidEnd?()
-//        updateViewWith(state: .inactive)
+        updateViewWith(state: .inactive)
     }
 
     @objc private func editingDidBegin() {
         onEditingBegin?()
-//        updateViewWith(state: .active)
+        updateViewWith(state: .active)
     }
 
     @objc private func editingChanged() {
         onEditingChanged?(trimmedText ?? "")
-//        updateViewWith(state: .active)
+        updateViewWith(state: .active)
+    }
+
+    func updateViewWith(state: TextFieldState) {
+        containerView.layer.borderWidth = 1
+        switch state {
+        case .error:
+            containerView.layer.borderColor = UIColor.red.cgColor
+        case .active:
+            containerView.layer.borderColor = UIColor.blue.cgColor
+            errorText = " "
+        case .highlighted:
+            containerView.layer.borderColor = UIColor.blue.cgColor
+            containerView.layer.borderWidth = 4
+            errorText = " "
+        case .inactive:
+            containerView.layer.borderColor = UIColor.gray.cgColor
+            errorText = " "
+        case .greyedOut:
+            containerView.layer.borderColor = UIColor.gray.cgColor
+            containerView.backgroundColor = UIColor.gray
+            errorText = " "
+        }
     }
 }

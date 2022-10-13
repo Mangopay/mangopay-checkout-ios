@@ -12,6 +12,7 @@ extension UILabel {
 
     static func create(
         text: String? = nil,
+        color: UIColor? = nil,
         textAlignment: NSTextAlignment = .left,
         numberOfLines: Int = 0,
         adjustsFontSizeToFitWidth: Bool = false,
@@ -19,6 +20,10 @@ extension UILabel {
     ) -> UILabel {
         let label = UILabel()
         label.text = text
+        
+        if let color = color {
+            label.textColor = color
+        }
 
         label.textAlignment = textAlignment
         label.numberOfLines = numberOfLines
