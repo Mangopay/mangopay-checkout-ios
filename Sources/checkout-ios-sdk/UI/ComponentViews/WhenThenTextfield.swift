@@ -78,8 +78,8 @@ class WhenThenTextfield: UIView {
         return view
     }()
 
-    private lazy var errorLabel = UILabel.create(text: "")
-    
+    private lazy var errorLabel = UILabel.create(text: "", color: .red)
+
     private lazy var vStack = UIStackView.create(
         spacing: 4,
         axis: .vertical,

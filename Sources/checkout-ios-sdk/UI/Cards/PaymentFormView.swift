@@ -26,7 +26,8 @@ class PaymentFormView: UIView {
 
     lazy var expiryDateField = WhenThenDropDownTextfield(
         placeholderText: "MM/YY",
-        showDropDownIcon: false
+        showDropDownIcon: false,
+        usecase: .date
     )
 
     lazy var cvvField = WhenThenTextfield(
@@ -104,6 +105,13 @@ class PaymentFormView: UIView {
     }
 
     func loadCountries() {
-        Utils().loadCountries()
+        Utils().loadCountries(
+            onSuccess: { countries in
+                self.countryField.update(with: countries.map({$0.nameAndFlag ?? ""}))
+            },
+            onFailure: {
+                
+            }
+        )
     }
 }

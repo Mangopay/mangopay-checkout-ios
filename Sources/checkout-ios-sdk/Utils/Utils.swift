@@ -9,10 +9,11 @@ import Foundation
 
 
 class Utils {
-    
-    var countries: [Country] = []
-    
-    func loadCountries() {
+        
+    func loadCountries(
+         onSuccess: @escaping ([Country]) -> (),
+        onFailure: @escaping () -> ()
+    ) {
         let queue = DispatchQueue(label: "CountryLoaderQueue", qos: .background)
         queue.async {
             
@@ -20,19 +21,21 @@ class Utils {
                 forResource: "countrylistdata",
                 withExtension: "json"
             ) else {
-                print("failed to recover ❌")
-                print("bundle", Bundle.module)
                 return
-                
             }
-
+            
             do {
                 let decoder = JSONDecoder()
                 let data = try Data(contentsOf: url)
                 let countries = try decoder.decode([Country].self, from: data)
-                self.countries = countries.filter{$0.dialCode != ""}
+                DispatchQueue.main.async {
+                    onSuccess(countries)
+                }
             } catch let err {
                 print("Error occurred whiles decoding: \(err.localizedDescription)")
+                DispatchQueue.main.async {
+                    onFailure()
+                }
             }
         }
     }
