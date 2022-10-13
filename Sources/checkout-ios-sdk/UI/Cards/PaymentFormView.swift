@@ -86,6 +86,7 @@ class PaymentFormView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        loadCountries()
     }
 
     required init?(coder: NSCoder) {
@@ -100,5 +101,9 @@ class PaymentFormView: UIView {
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
 //        vStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16).isActive = true
         self.backgroundColor = .white
+    }
+
+    func loadCountries() {
+        Utils().loadCountries()
     }
 }

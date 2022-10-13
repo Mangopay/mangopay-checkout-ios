@@ -23,7 +23,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "checkout-ios-sdk",
-            dependencies: []),
+            dependencies: [],
+            resources: [
+                .copy("Resources/countrylistdata.json")
+            ]
+        ),
         .testTarget(
             name: "checkout-ios-sdkTests",
             dependencies: ["checkout-ios-sdk"]),
