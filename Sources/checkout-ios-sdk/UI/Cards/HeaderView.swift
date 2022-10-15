@@ -9,13 +9,17 @@ import Foundation
 import UIKit
 
 class HeaderView: UIView {
-    
-    lazy var titleLabel = UILabel.create(text: "Card Information", numberOfLines: 1)
+
+    lazy var titleLabel = UILabel.create(
+        text: "Card Information",
+        font: UIFont.boldSystemFont(ofSize: 18),
+        numberOfLines: 1
+    )
 
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = 4
-        flowLayout.minimumLineSpacing = 8
+        flowLayout.minimumInteritemSpacing = -4
+        flowLayout.minimumLineSpacing = -2
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         cv.backgroundColor = .clear
@@ -23,6 +27,7 @@ class HeaderView: UIView {
         cv.register(CardCell.self, forCellWithReuseIdentifier: CardCell.id)
         cv.dataSource = self
         cv.delegate = self
+        cv.contentInset = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
         return cv
     }()
 
@@ -67,8 +72,7 @@ extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return viewModel.count
-        return 6
+        return viewModel.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -80,7 +84,7 @@ extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
             fatalError("CardCell not found ")
         }
 
-//        cell.configure(with: viewModel.card(at: indexPath.row))
+        cell.configure(with: viewModel.card(at: indexPath.row))
         return cell
     }
 

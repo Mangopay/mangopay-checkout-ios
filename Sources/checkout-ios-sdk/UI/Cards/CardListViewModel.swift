@@ -9,7 +9,7 @@ import Foundation
 
 struct CardListViewModel {
 
-    var cards = [Card]()
+    var cards = CardType.allCases
 
     var count: Int {
         return cards.count
@@ -18,7 +18,7 @@ struct CardListViewModel {
     init() {
     }
 
-    func card(at index: Int) -> Card {
+    func card(at index: Int) -> CardType {
         return cards[index]
     }
 

@@ -35,17 +35,20 @@ class WhenThenTextfield: UIView {
 
     var trimmedText: String? { return textfield.text?.trimmingCharacters(in: .whitespaces) }
 
-    private lazy var textfield: UITextField = {
+    lazy var textfield: UITextField = {
         let view = UITextField()
 //        view.font = .bodyText1(for: .regular)
         view.textColor = .black
-        view.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//        view.heightAnchor.constraint(equalToConstant: 40).isActive = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .green
+        view.backgroundColor = .clear
         return view
     }()
 
     private lazy var leftImageView = IconImage.create(iconName: .none, iconHeight: 20, iconWidth: 30)
+    
+    private lazy var rightImageView = IconImage.create(iconName: .none, iconHeight: 16, iconWidth: 16)
+
 
     private let verticalDividerView: UIView = {
         let view = UIView()
@@ -61,7 +64,7 @@ class WhenThenTextfield: UIView {
         axis: .horizontal,
         alignment: .center,
         distribution: .fillProportionally,
-        views: [leftImageView, textfield]
+        views: [leftImageView, textfield, rightImageView]
     )
 
     lazy var containerView: UIView = {
@@ -78,7 +81,11 @@ class WhenThenTextfield: UIView {
         return view
     }()
 
-    private lazy var errorLabel = UILabel.create(text: "", color: .red)
+    private lazy var errorLabel = UILabel.create(
+        text: "",
+        color: .red,
+        font: .systemFont(ofSize: 11)
+    )
 
     private lazy var vStack = UIStackView.create(
         spacing: 4,
@@ -91,10 +98,12 @@ class WhenThenTextfield: UIView {
     init(
         placeholderText: String? = nil,
         leftImage: UIImage? = nil,
+        rightImage: UIImage? = nil,
         keyboardType: UIKeyboardType = .default,
         returnKeyType: UIReturnKeyType = .done,
 //        validationRule: [ValidationRules],
         allowsInteraction: Bool = true,
+        textfieldDelegate: UITextFieldDelegate? = nil,
         textfield: ((WhenThenTextfield) -> Void)? = nil
     ) {
 //        self.validationRules = validationRule
@@ -105,10 +114,11 @@ class WhenThenTextfield: UIView {
         addTextfieldTargets()
         self.setPlaceHolder(with: placeholderText)
         self.setLeftImage(leftImage)
+        self.setRightImage(rightImage)
+        self.textfield.delegate = textfieldDelegate
         self.textfield.keyboardType = keyboardType
         self.textfield.returnKeyType = returnKeyType
         self.isUserInteractionEnabled = allowsInteraction
-        leftImageView.backgroundColor = .yellow
     }
 
     required init?(coder: NSCoder) {
@@ -141,7 +151,16 @@ class WhenThenTextfield: UIView {
 
     func setLeftImage(_ image: UIImage?) {
         leftImageView.image = image
-//        leftImageView.isHidden = image == nil
+        leftImageView.isHidden = image == nil
+    }
+
+    func setRightImage(_ image: UIImage?) {
+        rightImageView.image = image
+        rightImageView.isHidden = image == nil
+    }
+
+    func setResponsder() {
+        textfield.becomeFirstResponder()
     }
 
     @objc private func editingDidEnd() {
@@ -166,18 +185,18 @@ class WhenThenTextfield: UIView {
             containerView.layer.borderColor = UIColor.red.cgColor
         case .active:
             containerView.layer.borderColor = UIColor.blue.cgColor
-            errorText = " "
+            errorText = ""
         case .highlighted:
             containerView.layer.borderColor = UIColor.blue.cgColor
             containerView.layer.borderWidth = 4
-            errorText = " "
+            errorText = ""
         case .inactive:
             containerView.layer.borderColor = UIColor.gray.cgColor
-            errorText = " "
+            errorText = ""
         case .greyedOut:
             containerView.layer.borderColor = UIColor.gray.cgColor
             containerView.backgroundColor = UIColor.gray
-            errorText = " "
+            errorText = ""
         }
     }
 }

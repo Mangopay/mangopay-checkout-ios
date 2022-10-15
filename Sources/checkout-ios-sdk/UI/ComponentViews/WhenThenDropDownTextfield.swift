@@ -66,8 +66,12 @@ class WhenThenDropDownTextfield: UIView {
         }
     }
 
-    private lazy var errorLabel = UILabel.create(text: "", color: .red)
-    
+    private lazy var errorLabel = UILabel.create(
+        text: "lll",
+        color: .red,
+        font: .systemFont(ofSize: 11)
+    )
+
     var usecase: Usecase = .normal
 
     lazy var textfield: UITextField = {
@@ -81,11 +85,12 @@ class WhenThenDropDownTextfield: UIView {
     }()
 
     lazy var containerView: UIView = {
-        let imageView = UIImageView(image: UIImage(assetIdentifier: .dropDownIcon))
+        let imageView = UIImageView(image: UIImage(systemName: "chevron.down"))
+        imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 12).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
 
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -139,13 +144,16 @@ class WhenThenDropDownTextfield: UIView {
     init(
         placeholderText: String? = nil,
         showDropDownIcon: Bool = true,
-        usecase: Usecase = .normal
+        usecase: Usecase = .normal,
+        textfieldDelegate: UITextFieldDelegate? = nil
     ) {
         self.showDropDownIcon = showDropDownIcon
         self.usecase = usecase
         super.init(frame: .zero)
         setupView()
-        
+
+        textfield.delegate = textfieldDelegate
+
         switch usecase {
         case .date:
             setupDatePicker()
@@ -224,6 +232,10 @@ class WhenThenDropDownTextfield: UIView {
     func update(with data: [String]) {
         self.data = data
         pickerView.reloadAllComponents()
+    }
+
+    func setResponsder() {
+        textfield.becomeFirstResponder()
     }
 
     @objc private func didTapSelf() {

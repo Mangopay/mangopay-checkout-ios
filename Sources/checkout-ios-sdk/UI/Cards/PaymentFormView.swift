@@ -14,25 +14,30 @@ class PaymentFormView: UIView {
 
     lazy var cardNumberField = WhenThenTextfield(
         placeholderText: "1234 1234 1234 1234",
-        leftImage: UIImage(assetIdentifier: .none),
+        leftImage: UIImage(assetIdentifier: .card_visa),
         keyboardType: .numberPad,
-        returnKeyType: .next
+        returnKeyType: .next,
+        textfieldDelegate: self
     )
 
     lazy var cardNameField = WhenThenTextfield(
         placeholderText: "Name on Card",
-        returnKeyType: .next
+        returnKeyType: .next,
+        textfieldDelegate: self
     )
 
     lazy var expiryDateField = WhenThenDropDownTextfield(
         placeholderText: "MM/YY",
         showDropDownIcon: false,
-        usecase: .date
+        usecase: .date,
+        textfieldDelegate: self
     )
 
     lazy var cvvField = WhenThenTextfield(
         placeholderText: "CVV",
-        returnKeyType: .next
+        keyboardType: .numberPad,
+        returnKeyType: .next,
+        textfieldDelegate: self
     )
     
     private lazy var hStack = UIStackView.create(
@@ -43,28 +48,37 @@ class PaymentFormView: UIView {
         views: [expiryDateField, cvvField]
     )
 
-    lazy var saveDetailsCheckMark = CheckmarkView(title: "Save payment details for future use")
+    lazy var saveDetailsCheckMark = CheckmarkView(
+        title: "Save payment details for future use"
+    )
     
-    lazy var billingAddressCheckMark = CheckmarkView(title: "Save payment details for future use")
+    lazy var billingAddressCheckMark = CheckmarkView(
+        title: "Billing address is same as shipping"
+    )
     
     private lazy var checkMarkStack = UIStackView.create(
-        spacing: 2,
+        spacing: 6,
         axis: .vertical,
         alignment: .fill,
         distribution: .fill,
         views: [saveDetailsCheckMark, billingAddressCheckMark]
     )
 
-    lazy var billingInfoTitle = UILabel.create(text: "Billing Information")
+    lazy var billingInfoTitle = UILabel.create(
+        text: "Billing Information",
+        font: .systemFont(ofSize: 16, weight: .medium)
+    )
     
     lazy var countryField = WhenThenDropDownTextfield(
         placeholderText: "Select Country",
-        showDropDownIcon: true
+        showDropDownIcon: true,
+        textfieldDelegate: self
     )
 
     lazy var zipCodeField = WhenThenTextfield(
         placeholderText: "ZIP/ Postal Code",
-        returnKeyType: .next
+        returnKeyType: .done,
+        textfieldDelegate: self
     )
 
     private lazy var vStack = UIStackView.create(
@@ -82,7 +96,11 @@ class PaymentFormView: UIView {
             countryField,
             zipCodeField
         ]
-    )
+    ) { stackView in
+        stackView.setCustomSpacing(16, after: self.headerView)
+        stackView.setCustomSpacing(24, after: self.checkMarkStack)
+        stackView.setCustomSpacing(8, after: self.billingInfoTitle)
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,12 +113,10 @@ class PaymentFormView: UIView {
     }
 
     private func setupView() {
-//        translatesAutoresizingMaskIntoConstraints = false
         addSubview(vStack)
         vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
-//        vStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16).isActive = true
         self.backgroundColor = .white
     }
 
@@ -113,5 +129,24 @@ class PaymentFormView: UIView {
                 
             }
         )
+    }
+}
+
+
+extension PaymentFormView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case cardNumberField.textfield:
+            cardNameField.setResponsder()
+        case cardNameField.textfield:
+            expiryDateField.setResponsder()
+        case cvvField.textfield:
+            countryField.setResponsder()
+        case zipCodeField.textfield:
+            self.endEditing(true)
+        default: break
+        }
+        return true
     }
 }

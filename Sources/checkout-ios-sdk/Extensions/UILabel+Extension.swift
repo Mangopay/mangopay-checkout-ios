@@ -13,6 +13,7 @@ extension UILabel {
     static func create(
         text: String? = nil,
         color: UIColor? = nil,
+        font: UIFont? = nil,
         textAlignment: NSTextAlignment = .left,
         numberOfLines: Int = 0,
         adjustsFontSizeToFitWidth: Bool = false,
@@ -21,6 +22,10 @@ extension UILabel {
         let label = UILabel()
         label.text = text
         
+        if let font = font {
+            label.font = font
+        }
+
         if let color = color {
             label.textColor = color
         }
@@ -28,7 +33,6 @@ extension UILabel {
         label.textAlignment = textAlignment
         label.numberOfLines = numberOfLines
         clabel?(label)
-        label.textColor = .black
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = adjustsFontSizeToFitWidth
