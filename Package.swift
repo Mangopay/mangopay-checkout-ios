@@ -25,7 +25,8 @@ let package = Package(
             name: "checkout-ios-sdk",
             dependencies: [],
             resources: [
-                .copy("Resources/countrylistdata.json")
+                .copy("Resources/countrylistdata.json"),
+                .process("Resources/Images")
             ]
         ),
         .testTarget(
