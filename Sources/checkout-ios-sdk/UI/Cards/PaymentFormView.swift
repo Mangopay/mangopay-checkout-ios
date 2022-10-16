@@ -26,10 +26,9 @@ class PaymentFormView: UIView {
         textfieldDelegate: self
     )
 
-    lazy var expiryDateField = WhenThenDropDownTextfield(
+    lazy var expiryDateField = WhenThenTextfield(
         placeholderText: "MM/YY",
-        showDropDownIcon: false,
-        usecase: .date,
+        returnKeyType: .next,
         textfieldDelegate: self
     )
 
@@ -149,4 +148,124 @@ extension PaymentFormView: UITextFieldDelegate {
         }
         return true
     }
+
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        
+        switch textField {
+        case cardNumberField.textfield:
+            if [6, 11, 16].contains(textField.text?.count ?? 0) && string.isEmpty {
+                textField.text = String(textField.text!.dropLast())
+                return true
+            }
+            
+            let text = NSString(string: textField.text ?? "").replacingCharacters(
+                in: range,
+                with: string
+            ).replacingOccurrences(of: " ", with: "")
+            
+            if text.count >= 4 && text.count <= 16 {
+                var newString = ""
+                for i in stride(from: 0, to: text.count, by: 4) {
+                    let upperBoundIndex = i + 4
+                    
+                    let lowerBound = String.Index.init(encodedOffset: i)
+                    let upperBound = String.Index.init(encodedOffset: upperBoundIndex)
+                    
+                    if upperBoundIndex <= text.count  {
+                        newString += String(text[lowerBound..<upperBound]) + " "
+                        if newString.count > 19 {
+                            newString = String(newString.dropLast())
+                        }
+                    }
+                    
+                    else if i <= text.count {
+                        newString += String(text[lowerBound...])
+                    }
+                }
+                
+                textField.text = newString
+                return false
+            }
+            
+            if text.count > 16 {
+                return false
+            }
+            
+            return true
+            
+        case expiryDateField.textfield:
+            guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+                return true
+            }
+            let updatedText = oldText.replacingCharacters(in: r, with: string)
+            
+            if string == "" {
+                if updatedText.count == 2 {
+                    textField.text = "\(updatedText.prefix(1))"
+                    return false
+                }
+            } else if updatedText.count == 1 {
+                if updatedText > "1" {
+                    return false
+                }
+            } else if updatedText.count == 2 {
+                if updatedText <= "12" { //Prevent user to not enter month more than 12
+                    textField.text = "\(updatedText)/" //This will add "/" when user enters 2nd digit of month
+                }
+                return false
+            } else if updatedText.count == 5 {
+                self.expDateValidation(dateStr: updatedText)
+            } else if updatedText.count > 5 {
+                return false
+            }
+            
+            return true
+        case cvvField.textfield:
+            guard let preText = textField.text as NSString?,
+                preText.replacingCharacters(in: range, with: string).count <= 4 else {
+                return false
+            }
+
+            return true
+    
+        default: return true
+        }
+    }
+    
+    
+    func expDateValidation(dateStr: String) {
+
+        let currentYear = Calendar.current.component(.year, from: Date()) % 100   // This will give you current year (i.e. if 2019 then it will be 19)
+        let currentMonth = Calendar.current.component(.month, from: Date()) // This will give you current month (i.e if June then it will be 6)
+
+        let enteredYear = Int(dateStr.suffix(2)) ?? 0 // get last two digit from entered string as year
+        let enteredMonth = Int(dateStr.prefix(2)) ?? 0 // get first two digit from entered string as month
+        print(dateStr) // This is MM/YY Entered by user
+
+        if enteredYear > currentYear {
+            if (1 ... 12).contains(enteredMonth) {
+                print("Entered Date Is Right")
+            } else {
+                print("Entered Date Is Wrong")
+            }
+        } else if currentYear == enteredYear {
+            if enteredMonth >= currentMonth {
+                if (1 ... 12).contains(enteredMonth) {
+                   print("Entered Date Is Right")
+                } else {
+                   print("Entered Date Is Wrong")
+                }
+            } else {
+                print("Entered Date Is Wrong")
+            }
+        } else {
+           print("Entered Date Is Wrong")
+        }
+
+    }
+
 }
