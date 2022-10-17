@@ -28,6 +28,7 @@ class PaymentFormView: UIView {
 
     lazy var expiryDateField = WhenThenTextfield(
         placeholderText: "MM/YY",
+        keyboardType: .numberPad,
         returnKeyType: .next,
         textfieldDelegate: self
     )
@@ -78,11 +79,14 @@ class PaymentFormView: UIView {
         placeholderText: "ZIP/ Postal Code",
         returnKeyType: .done,
         textfieldDelegate: self
-    )
+    ) { textF in
+        textF.textfield.autocorrectionType = .no
+    }
+    
+    var tapGesture: UIGestureRecognizer?
 
-    private lazy var vStack = UIStackView.create(
+    private lazy var vStack = UIScrollView.createWithVStack(
         spacing: 4,
-        axis: .vertical,
         alignment: .fill,
         distribution: .fill,
         views: [
@@ -99,12 +103,33 @@ class PaymentFormView: UIView {
         stackView.setCustomSpacing(16, after: self.headerView)
         stackView.setCustomSpacing(24, after: self.checkMarkStack)
         stackView.setCustomSpacing(8, after: self.billingInfoTitle)
+//        stackView.setCustomSpacing(24, after: self.zipCodeField)
+//        stackView.addGestureRecognizer(self.tapGesture!)
     }
+
+    var keyboardUtil: KeyboardUtil?
+    var footerBottomConstriant: NSLayoutConstraint!
+
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        tapGesture = UIGestureRecognizer(
+            target: self,
+            action: #selector(onViewTap)
+        )
+
         setupView()
         loadCountries()
+
+        keyboardUtil = KeyboardUtil(
+            original: self.footerBottomConstriant.constant,
+            padding: 0
+        )
+        keyboardUtil?.delegate = self
+        keyboardUtil?.register()
+//        backgroundColor = .red
+        
+
     }
 
     required init?(coder: NSCoder) {
@@ -116,6 +141,8 @@ class PaymentFormView: UIView {
         vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
+        footerBottomConstriant = vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        footerBottomConstriant.isActive = true
         self.backgroundColor = .white
     }
 
@@ -129,6 +156,11 @@ class PaymentFormView: UIView {
             }
         )
     }
+
+    @objc func onViewTap() {
+        self.endEditing(true)
+        print("🤣🤣🤣🤣")
+    }
 }
 
 
@@ -140,6 +172,8 @@ extension PaymentFormView: UITextFieldDelegate {
             cardNameField.setResponsder()
         case cardNameField.textfield:
             expiryDateField.setResponsder()
+        case expiryDateField.textfield:
+            cvvField.setResponsder()
         case cvvField.textfield:
             countryField.setResponsder()
         case zipCodeField.textfield:
@@ -266,6 +300,31 @@ extension PaymentFormView: UITextFieldDelegate {
            print("Entered Date Is Wrong")
         }
 
+    }
+
+}
+
+extension PaymentFormView: KeyboardUtilDelegate {
+
+    func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
+        let padding: CGFloat = 60
+        let moveBy = rect.height - safeAreaInsets.bottom - padding
+        footerBottomConstriant.constant = -moveBy
+
+//        let currentOffset = vStack.contentOffset
+
+//        vStack.setContentOffset(CGPoint(x: currentOffset.x, y: currentOffset.y + (moveBy / 2)), animated: true)
+        UIView.animate(withDuration: animationDuration) {
+            self.layoutIfNeeded()
+        }
+
+    }
+
+    func keyboardDidHide(sender: KeyboardUtil, animationDuration: Double) {
+        footerBottomConstriant.constant = sender.original
+        UIView.animate(withDuration: animationDuration) {
+            self.layoutIfNeeded()
+        }
     }
 
 }
