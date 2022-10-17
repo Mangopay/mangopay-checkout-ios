@@ -17,12 +17,21 @@ class PaymentFormView: UIView {
         leftImage: UIImage(assetIdentifier: .card_visa),
         keyboardType: .numberPad,
         returnKeyType: .next,
+        validationRule: [
+            .cardMinimmun,
+            .cardNumberRequired,
+            .invalidCardNumber
+        ],
         textfieldDelegate: self
     )
 
     lazy var cardNameField = WhenThenTextfield(
         placeholderText: "Name on Card",
         returnKeyType: .next,
+        validationRule: [
+            .fullNameRequired,
+            .textTooShort
+        ],
         textfieldDelegate: self
     )
 
@@ -30,6 +39,10 @@ class PaymentFormView: UIView {
         placeholderText: "MM/YY",
         keyboardType: .numberPad,
         returnKeyType: .next,
+        validationRule: [
+            .cardExpired,
+            .dateRequired
+        ],
         textfieldDelegate: self
     )
 
@@ -37,6 +50,10 @@ class PaymentFormView: UIView {
         placeholderText: "CVV",
         keyboardType: .numberPad,
         returnKeyType: .next,
+        validationRule: [
+            .cvvRequired,
+            .textTooShort
+        ],
         textfieldDelegate: self
     )
     
@@ -78,6 +95,9 @@ class PaymentFormView: UIView {
     lazy var zipCodeField = WhenThenTextfield(
         placeholderText: "ZIP/ Postal Code",
         returnKeyType: .done,
+        validationRule: [
+            .textTooShort
+        ],
         textfieldDelegate: self
     ) { textF in
         textF.textfield.autocorrectionType = .no
@@ -108,8 +128,14 @@ class PaymentFormView: UIView {
     }
 
     var keyboardUtil: KeyboardUtil?
-    var footerBottomConstriant: NSLayoutConstraint!
+    var topConstriant: NSLayoutConstraint!
 
+    lazy var forms: [Validatable] = [
+        cardNumberField,
+        cardNameField,
+        expiryDateField,
+        cvvField
+    ]
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -122,7 +148,7 @@ class PaymentFormView: UIView {
         loadCountries()
 
         keyboardUtil = KeyboardUtil(
-            original: self.footerBottomConstriant.constant,
+            original: self.topConstriant.constant,
             padding: 0
         )
         keyboardUtil?.delegate = self
@@ -138,11 +164,15 @@ class PaymentFormView: UIView {
 
     private func setupView() {
         addSubview(vStack)
-        vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+//        vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+        
+        topConstriant = vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16)
+        topConstriant.isActive = true
+
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
-        footerBottomConstriant = vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        footerBottomConstriant.isActive = true
+        vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+//        footerBottomConstriant.isActive = true
         self.backgroundColor = .white
     }
 
@@ -273,12 +303,16 @@ extension PaymentFormView: UITextFieldDelegate {
     
     func expDateValidation(dateStr: String) {
 
-        let currentYear = Calendar.current.component(.year, from: Date()) % 100   // This will give you current year (i.e. if 2019 then it will be 19)
+        let currentYear = Calendar.current.component(.year, from: Date()) // This will give you current year (i.e. if 2019 then it will be 19)
         let currentMonth = Calendar.current.component(.month, from: Date()) // This will give you current month (i.e if June then it will be 6)
 
-        let enteredYear = Int(dateStr.suffix(2)) ?? 0 // get last two digit from entered string as year
-        let enteredMonth = Int(dateStr.prefix(2)) ?? 0 // get first two digit from entered string as month
+//        let enteredYear = Int(dateStr.suffix(2)) ?? 0 // get last two digit from entered string as year
+//        let enteredMonth = Int(dateStr.prefix(2)) ?? 0 // get first two digit from entered string as month
         print(dateStr) // This is MM/YY Entered by user
+        
+        guard let actualDate = Date(dateStr, format: "MM/yy") else { return }
+        let enteredYear = Calendar.current.dateComponents([.year], from: actualDate).year ?? 0
+        let enteredMonth = Calendar.current.dateComponents([.month], from: actualDate).month ?? 0
 
         if enteredYear > currentYear {
             if (1 ... 12).contains(enteredMonth) {
@@ -307,13 +341,10 @@ extension PaymentFormView: UITextFieldDelegate {
 extension PaymentFormView: KeyboardUtilDelegate {
 
     func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
-        let padding: CGFloat = 60
+        let padding: CGFloat = 240
         let moveBy = rect.height - safeAreaInsets.bottom - padding
-        footerBottomConstriant.constant = -moveBy
+        topConstriant.constant = -moveBy
 
-//        let currentOffset = vStack.contentOffset
-
-//        vStack.setContentOffset(CGPoint(x: currentOffset.x, y: currentOffset.y + (moveBy / 2)), animated: true)
         UIView.animate(withDuration: animationDuration) {
             self.layoutIfNeeded()
         }
@@ -321,10 +352,32 @@ extension PaymentFormView: KeyboardUtilDelegate {
     }
 
     func keyboardDidHide(sender: KeyboardUtil, animationDuration: Double) {
-        footerBottomConstriant.constant = sender.original
+        topConstriant.constant = sender.original
         UIView.animate(withDuration: animationDuration) {
             self.layoutIfNeeded()
         }
     }
 
+    func textFieldDidEndEditing(_ textField: UITextField) {
+//        guard areFormsValidShowingError() else { return }
+        
+        switch textField {
+        case cardNumberField.textfield:
+            isFormValid(cardNumberField)
+        case cardNameField.textfield:
+            isFormValid(cardNameField)
+        case expiryDateField.textfield:
+            isFormValid(expiryDateField)
+        case cvvField.textfield:
+            isFormValid(cvvField)
+        case zipCodeField.textfield:
+            isFormValid(cvvField)
+        default: break
+        }
+    }
+
+}
+
+extension PaymentFormView: FormValidatable {
+    
 }
