@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "checkout-ios-sdk",
+    defaultLocalization: "en",
     platforms: [
       .iOS(.v13)
     ],

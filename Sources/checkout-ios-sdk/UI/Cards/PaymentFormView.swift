@@ -26,7 +26,7 @@ class PaymentFormView: UIView {
     )
 
     lazy var cardNameField = WhenThenTextfield(
-        placeholderText: "Name on Card",
+        placeholderText: LocalizableString.CARD_NAME_PLACEHOLDER,
         returnKeyType: .next,
         validationRule: [
             .fullNameRequired,
@@ -36,7 +36,7 @@ class PaymentFormView: UIView {
     )
 
     lazy var expiryDateField = WhenThenTextfield(
-        placeholderText: "MM/YY",
+        placeholderText: LocalizableString.CARD_EXPIRIY_PLACEHOLDER,
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [
@@ -47,7 +47,7 @@ class PaymentFormView: UIView {
     )
 
     lazy var cvvField = WhenThenTextfield(
-        placeholderText: "CVV",
+        placeholderText: LocalizableString.CARD_CVV,
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [
@@ -66,11 +66,11 @@ class PaymentFormView: UIView {
     )
 
     lazy var saveDetailsCheckMark = CheckmarkView(
-        title: "Save payment details for future use"
+        title: LocalizableString.SAVE_PAYMENT_CHECKMARK
     )
     
     lazy var billingAddressCheckMark = CheckmarkView(
-        title: "Billing address is same as shipping"
+        title: LocalizableString.BILLING_ADDRESS_CHECKMARK
     )
     
     private lazy var checkMarkStack = UIStackView.create(
@@ -82,18 +82,18 @@ class PaymentFormView: UIView {
     )
 
     lazy var billingInfoTitle = UILabel.create(
-        text: "Billing Information",
+        text: LocalizableString.BILLING_INFO_TITLE,
         font: .systemFont(ofSize: 16, weight: .medium)
     )
     
     lazy var countryField = WhenThenDropDownTextfield(
-        placeholderText: "Select Country",
+        placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
         textfieldDelegate: self
     )
 
     lazy var zipCodeField = WhenThenTextfield(
-        placeholderText: "ZIP/ Postal Code",
+        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
             .textTooShort
@@ -106,7 +106,7 @@ class PaymentFormView: UIView {
     var tapGesture: UIGestureRecognizer?
 
     private lazy var vStack = UIScrollView.createWithVStack(
-        spacing: 4,
+        spacing: 16,
         alignment: .fill,
         distribution: .fill,
         views: [
