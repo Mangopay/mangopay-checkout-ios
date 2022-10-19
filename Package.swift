@@ -32,11 +32,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Apollo", package: "apollo-ios"),
                 .product(name: "SchemaPackage", package: "SchemaPackage")
+            ],
+            resources: [
+                .copy("./AuthorizePayment.graphql"),
             ]
-//            resources: [
-//                .copy("./Sources/checkout-ios-sdk/Core/Network/GraphConfig/AuthorizePayment.graphql"),
-//            ]
-            
         ),
         .testTarget(
             name: "checkout-ios-sdkTests",

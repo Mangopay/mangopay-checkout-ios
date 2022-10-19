@@ -28,7 +28,7 @@
   "schemaDownloadConfiguration": {
     "downloadMethod": {
         "introspection": {
-            "endpointURL": "https://api.spacex.land/graphql/",
+            "endpointURL": "https://api.dev.whenthen.co/api/graphql",
             "httpMethod": {
                 "POST": {}
             },
@@ -37,7 +37,7 @@
         }
     },
     "downloadTimeout": 60,
-    "headers": [],
+    "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
     "outputPath": "./graphqls/"
 }
 }
