@@ -40,9 +40,8 @@ class WhenThenTextfield: UIView {
 
     lazy var textfield: UITextField = {
         let view = UITextField()
-//        view.font = .bodyText1(for: .regular)
-        view.textColor = .black
-//        view.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        view.font = BrandConfig.font
+        view.textColor = BrandConfig.textColor
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
@@ -73,7 +72,7 @@ class WhenThenTextfield: UIView {
     lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.borderColor = BrandConfig.borderColor.cgColor
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 8
         view.addSubview(hStack)
@@ -86,7 +85,7 @@ class WhenThenTextfield: UIView {
 
     private lazy var errorLabel = UILabel.create(
         text: "",
-        color: .red,
+        color: BrandConfig.errorColor,
         font: .systemFont(ofSize: 11)
     )
 
@@ -148,12 +147,12 @@ class WhenThenTextfield: UIView {
     func setPlaceHolder(with text: String?) {
         let placeholderText = NSAttributedString(
             string: text ?? "",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+            attributes: [NSAttributedString.Key.foregroundColor: BrandConfig.placeHolderColor]
         )
         textfield.attributedPlaceholder = placeholderText
     }
 
-    func setLeftImage(_ image: UIImage?) {
+    func setLeftImage(_ image: UIImage?, withAnimation: Bool = false) {
         leftImageView.image = image
         leftImageView.isHidden = image == nil
     }
@@ -186,19 +185,19 @@ class WhenThenTextfield: UIView {
         containerView.layer.borderWidth = 1
         switch state {
         case .error:
-            containerView.layer.borderColor = UIColor.red.cgColor
+            containerView.layer.borderColor = BrandConfig.errorColor.cgColor
         case .active:
-            containerView.layer.borderColor = UIColor.blue.cgColor
+            containerView.layer.borderColor = BrandConfig.borderFocusedColor.cgColor
             errorText = ""
         case .highlighted:
-            containerView.layer.borderColor = UIColor.blue.cgColor
+            containerView.layer.borderColor = BrandConfig.borderFocusedColor.cgColor
             containerView.layer.borderWidth = 4
             errorText = ""
         case .inactive:
-            containerView.layer.borderColor = UIColor.gray.cgColor
+            containerView.layer.borderColor = BrandConfig.borderColor.cgColor
             errorText = ""
         case .greyedOut:
-            containerView.layer.borderColor = UIColor.gray.cgColor
+            containerView.layer.borderColor = BrandConfig.borderColor.cgColor
             containerView.backgroundColor = UIColor.gray
             errorText = ""
         }

@@ -143,19 +143,21 @@ class PaymentFormView: UIView {
             target: self,
             action: #selector(onViewTap)
         )
-
+        
         setupView()
         loadCountries()
-
+        
         keyboardUtil = KeyboardUtil(
             original: self.topConstriant.constant,
             padding: 0
         )
         keyboardUtil?.delegate = self
         keyboardUtil?.register()
-//        backgroundColor = .red
         
-
+        cardNameField.onEditingChanged = { text in
+//            let cardType = LuhnChecker.getCreditCardType(cardNumber: text)
+//            print("🤣 cardType", cardType)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -259,6 +261,10 @@ extension PaymentFormView: UITextFieldDelegate {
                 return false
             }
             
+            let cardType = LuhnChecker.getCreditCardType(
+                cardNumber: text.trimmingCharacters(in: .whitespaces)
+            )
+            cardNumberField.setLeftImage(cardType.icon)
             return true
             
         case expiryDateField.textfield:
@@ -341,8 +347,9 @@ extension PaymentFormView: UITextFieldDelegate {
 extension PaymentFormView: KeyboardUtilDelegate {
 
     func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
-        let padding: CGFloat = 240
+        let padding: CGFloat = 180
         let moveBy = rect.height - safeAreaInsets.bottom - padding
+        print("🤣 moveBy", moveBy)
         topConstriant.constant = -moveBy
 
         UIView.animate(withDuration: animationDuration) {
@@ -375,6 +382,7 @@ extension PaymentFormView: KeyboardUtilDelegate {
         default: break
         }
     }
+    
 
 }
 
