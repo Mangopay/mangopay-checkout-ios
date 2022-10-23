@@ -1,0 +1,74 @@
+query getPayment($id: ID!){
+  getPayment(id: $id) {
+        id
+        date
+        country
+        amount {
+            formattedAmount
+        }
+        status
+        paymentGateway {
+            name
+            logo
+        }
+        paymentCore {
+            paymentMethod
+            outcome {
+                networkStatus
+                reason
+                riskLevel
+                riskScore
+                type
+            }
+        }
+        paymentDetails {
+            statementDescriptor
+            localCurrency
+            localAmount {
+                formattedAmount
+            }
+            exchangeRate
+            fee {
+                formattedAmount
+            }
+            tax {
+                formattedAmount
+            }
+            processingFee {
+                formattedAmount
+            }
+            net {
+                formattedAmount
+            }
+            description
+        }
+        paymentTimeline {
+            overview {
+                title
+                time
+                message
+            }
+            flows {
+                name
+                date
+                flowId
+                flowInstanceId
+            }
+        }
+        paymentCustomer {
+            id
+            email
+        }
+        paymentMethodDetails {
+            id
+            number
+            expires
+            fingerprint
+            paymentMethod
+        }
+        metadata
+        attachments {
+            fileName
+        }
+    }
+}

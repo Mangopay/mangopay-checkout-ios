@@ -34,7 +34,7 @@ let package = Package(
                 .product(name: "SchemaPackage", package: "SchemaPackage")
             ],
             resources: [
-                .copy("./AuthorizePayment.graphql"),
+//                .copy("AuthorizePayment.graphql"),
             ]
         ),
         .testTarget(
