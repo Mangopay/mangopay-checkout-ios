@@ -1,0 +1,44 @@
+{
+  "schemaName" : "SchemaPackage",
+  "input" : {
+    "operationSearchPaths" : [
+      "./Sources/checkout-ios-sdk/Core/Network/GraphConfig/*.graphql"
+    ],
+    "schemaSearchPaths" : [
+      "./*.graphqls",
+      "./Sources/checkout-ios-sdk/Core/Network/GraphConfig/*.graphqls"
+    ]
+  },
+  "output" : {
+    "testMocks" : {
+      "none" : {
+      }
+    },
+    "schemaTypes" : {
+      "path" : "./SchemaPackage",
+      "moduleType" : {
+        "swiftPackageManager" : {
+        }
+      }
+    },
+    "operations" : {
+      "relative" : {
+      }
+    }
+  },
+  "schemaDownloadConfiguration": {
+    "downloadMethod": {
+        "introspection": {
+            "endpointURL": "https://api.dev.whenthen.co/api/graphql",
+            "httpMethod": {
+                "POST": {}
+            },
+            "includeDeprecatedInputValues": false,
+            "outputFormat": "SDL"
+        }
+    },
+    "downloadTimeout": 60,
+    "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
+    "outputPath": "./graphqls/"
+}
+}
