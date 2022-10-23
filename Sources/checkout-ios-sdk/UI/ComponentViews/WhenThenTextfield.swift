@@ -21,6 +21,9 @@ class WhenThenTextfield: UIView {
     var onEditingBegin: (() -> Void)?
     var onEditingDidEnd: (() -> Void)?
     var onEditingChanged: ((String) -> Void)?
+    let placeholderText: String?
+    
+    var validationRules: [ValidationRules]
 
     var errorText: String? {
         didSet {
@@ -101,12 +104,13 @@ class WhenThenTextfield: UIView {
         rightImage: UIImage? = nil,
         keyboardType: UIKeyboardType = .default,
         returnKeyType: UIReturnKeyType = .done,
-//        validationRule: [ValidationRules],
+        validationRule: [ValidationRules],
         allowsInteraction: Bool = true,
         textfieldDelegate: UITextFieldDelegate? = nil,
         textfield: ((WhenThenTextfield) -> Void)? = nil
     ) {
-//        self.validationRules = validationRule
+        self.validationRules = validationRule
+        self.placeholderText = placeholderText
         super.init(frame: .zero)
         setupView()
         textfield?(self)
@@ -198,5 +202,24 @@ class WhenThenTextfield: UIView {
             containerView.backgroundColor = UIColor.gray
             errorText = ""
         }
+    }
+
+    func showError(message: String) {
+        errorText = message
+        updateViewWith(state: .error)
+    }
+}
+
+extension WhenThenTextfield: Validatable {
+    var inputData: String {
+        return trimmedText ?? ""
+    }
+
+    func triggerError(message: String) {
+        showError(message: message)
+    }
+
+    var identifier: String {
+        return placeholderText ?? ""
     }
 }
