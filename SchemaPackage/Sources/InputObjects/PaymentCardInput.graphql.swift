@@ -65,3 +65,4 @@ public struct PaymentCardInput: InputObject {
     set { __data.isDefault = newValue }
   }
 }
+
