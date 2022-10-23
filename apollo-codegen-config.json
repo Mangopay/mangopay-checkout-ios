@@ -2,10 +2,11 @@
   "schemaName" : "SchemaPackage",
   "input" : {
     "operationSearchPaths" : [
-      "./*.graphql"
+      "./Sources/checkout-ios-sdk/Core/Network/GraphConfig/*.graphql"
     ],
     "schemaSearchPaths" : [
-      "./*.graphqls"
+      "./*.graphqls",
+      "./Sources/checkout-ios-sdk/Core/Network/GraphConfig/*.graphqls"
     ]
   },
   "output" : {
