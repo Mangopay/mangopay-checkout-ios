@@ -17,6 +17,7 @@ extension UIImage {
         case card_unionpay
         case card_mastercard
         case card_discover
+        case card_jcb
         case none
     }
 

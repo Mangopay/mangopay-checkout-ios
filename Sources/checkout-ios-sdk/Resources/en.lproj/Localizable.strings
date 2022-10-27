@@ -1,0 +1,25 @@
+/* 
+  Localizable.strings
+  
+
+  Created by Elikem Savie on 17/10/2022.
+  
+*/
+
+"CARD_INFO_TITLE" = "Card Information";
+"CARD_NAME_PLACEHOLDER" = "Name on Card";
+"CARD_EXPIRIY_PLACEHOLDER" = "MM/YY";
+"CARD_CVV" = "CVV";
+"SAVE_PAYMENT_CHECKMARK" = "Save payment details for future use";
+"BILLING_ADDRESS_CHECKMARK" = "Billing address is same as shipping";
+"BILLING_INFO_TITLE" = "Billing Information";
+"CARD_COUNTRY_PLACEHOLDER" = "Select Country";
+"CARD_ZIP_PLACEHOLDER" = "ZIP/ Postal Code";
+"ERROR_CARD_NUMBER_INVALID" = "Card Number Invalid";
+"ERROR_CARD_NUMBER_REQUIRED" = "Card Number Required";
+"ERROR_CARD_MIN_NUMBER" = "Minimum Number of digits is 13";
+"ERROR_FULLNAME_REQUIRED" = "Fullname Required";
+"ERROR_CARD_EXPIRED" = "Your card expiration date is invalid";
+"ERROR_CVC_REQUIRED" = "CVC Required";
+"ERROR_EXPIRED_DATE_REQUIRED" = "Expiry Date Required";
+"ERROR_TEXT_TOO_SHORT" = "Text is too short.";
