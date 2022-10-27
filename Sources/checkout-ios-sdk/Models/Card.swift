@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum CardType: String, Codable, CaseIterable {
+public enum CardType: String, Codable, CaseIterable {
     case amex = "AMEX"
     case diner = "DINER"
     case visa = "VISA"
@@ -18,7 +18,7 @@ enum CardType: String, Codable, CaseIterable {
     case jcb
     case none
 
-    var icon: UIImage? {
+    public var icon: UIImage? {
         switch self {
         case .amex:
             return UIImage.init(assetIdentifier: .card_amex)

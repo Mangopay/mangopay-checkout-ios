@@ -247,7 +247,7 @@ class PaymentFormView: UIView {
         activitySpineer.startAnimating()
     }
 
-    func setCards(cards: [CardType]) {
+    func setCards(cards: CardConfig?) {
         headerView.set(cards)
     }
 }

@@ -12,21 +12,28 @@ public class PaymentFormController: UIViewController {
 
     lazy var formView = PaymentFormView()
     var cancelables = Set<AnyCancellable>()
+    var cardConfig: CardConfig?
+
+    public init(cardConfig: CardConfig? = nil) {
+        super.init(nibName: nil, bundle: nil)
+        self.cardConfig = cardConfig
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         setupObservers()
+        formView.setCards(cards: self.cardConfig)
     }
 
     public override func loadView() {
         view = formView
     }
-
-//    static func present(on viewController: UIViewController) {
-//        viewController.present(self, animated: true)
-//    }
 
     func setupObservers() {
         formView.viewModel.tokenObserver.sink { tokenised in
