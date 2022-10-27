@@ -105,6 +105,12 @@ public class ListCustomerCardsQuery: GraphQLQuery {
       public var systemCreated: SchemaPackage.DateTime? { __data["systemCreated"] }
       public var systemUpdated: SchemaPackage.DateTime? { __data["systemUpdated"] }
       public var billingAddress: BillingAddress? { __data["billingAddress"] }
+        
+      ///CardBrandType
+        var brandType: CardType? {
+            guard let brandStr = brand else { return nil }
+            return CardType(rawValue: brandStr)
+        }
 
       /// ListCustomerCard.BillingAddress
       ///

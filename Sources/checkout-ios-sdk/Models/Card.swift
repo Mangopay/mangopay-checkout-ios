@@ -8,13 +8,13 @@
 import Foundation
 import UIKit
 
-enum CardType: Codable, CaseIterable {
-    case amex
-    case diner
-    case visa
-    case unionPay
-    case mastercard
-    case discover
+enum CardType: String, Codable, CaseIterable {
+    case amex = "AMEX"
+    case diner = "DINER"
+    case visa = "VISA"
+    case unionPay = "UNIONPAY"
+    case mastercard = "MASTERCARD"
+    case discover = "DISCOVER"
     case jcb
     case none
 

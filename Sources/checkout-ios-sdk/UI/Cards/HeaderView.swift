@@ -42,7 +42,7 @@ class HeaderView: UIView {
         ]
     )
 
-    let viewModel = CardListViewModel()
+    var viewModel = CardListViewModel()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -64,6 +64,11 @@ class HeaderView: UIView {
         self.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
 
+    func set(_ cardlists: [CardType]) {
+        self.viewModel.cards = cardlists
+        collectionView.reloadData()
+    }
+    
 }
 
 extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

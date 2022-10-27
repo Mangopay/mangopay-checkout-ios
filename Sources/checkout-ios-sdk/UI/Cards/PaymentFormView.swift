@@ -102,7 +102,22 @@ class PaymentFormView: UIView {
     ) { textF in
         textF.textfield.autocorrectionType = .no
     }
+
+    lazy var paymentButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .black
+        button.setTitle("Checkout", for: .normal)
+        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        button.layer.cornerRadius = 8
+        button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)
+        return button
+    }()
+
+    lazy var activitySpineer = UIActivityIndicatorView()
     
+    var expiryMonth: Int?
+    var expiryYear: Int?
+
     var tapGesture: UIGestureRecognizer?
 
     private lazy var vStack = UIScrollView.createWithVStack(
@@ -117,19 +132,20 @@ class PaymentFormView: UIView {
             checkMarkStack,
             billingInfoTitle,
             countryField,
-            zipCodeField
+            zipCodeField,
+            paymentButton
         ]
     ) { stackView in
         stackView.setCustomSpacing(16, after: self.headerView)
         stackView.setCustomSpacing(24, after: self.checkMarkStack)
         stackView.setCustomSpacing(8, after: self.billingInfoTitle)
-//        stackView.setCustomSpacing(24, after: self.zipCodeField)
-//        stackView.addGestureRecognizer(self.tapGesture!)
+        stackView.setCustomSpacing(16, after: self.zipCodeField)
     }
 
     var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
-
+    let viewModel = PaymentFormViewModel()
+    
     lazy var forms: [Validatable] = [
         cardNumberField,
         cardNameField,
@@ -153,7 +169,12 @@ class PaymentFormView: UIView {
         )
         keyboardUtil?.delegate = self
         keyboardUtil?.register()
+        activitySpineer.isHidden = true
         
+        cardNumberField.text = "1234 1234 1234 1234"
+        cardNameField.text = "Elikem"
+        cvvField.text = "120"
+
         cardNameField.onEditingChanged = { text in
 //            let cardType = LuhnChecker.getCreditCardType(cardNumber: text)
 //            print("🤣 cardType", cardType)
@@ -166,7 +187,7 @@ class PaymentFormView: UIView {
 
     private func setupView() {
         addSubview(vStack)
-//        vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+        addSubview(activitySpineer)
         
         topConstriant = vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16)
         topConstriant.isActive = true
@@ -174,7 +195,9 @@ class PaymentFormView: UIView {
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
         vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-//        footerBottomConstriant.isActive = true
+        
+        activitySpineer.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        activitySpineer.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         self.backgroundColor = .white
     }
 
@@ -192,6 +215,40 @@ class PaymentFormView: UIView {
     @objc func onViewTap() {
         self.endEditing(true)
         print("🤣🤣🤣🤣")
+    }
+
+    @objc func onTappedButton() {
+        grabData()
+    }
+
+    func grabData() {
+        let formData = FormData(
+            number: cardNumberField.text,
+            name: cardNameField.text,
+            expMonth: expiryMonth,
+            expYear: expiryYear,
+            cvc: cvvField.text,
+            savePayment: saveDetailsCheckMark.isSelected,
+            bilingInfo: BillingInfo(
+                line1: nil,
+                line2: zipCodeField.text ?? "",
+                city: nil,
+                postalCode: nil,
+                state: nil,
+                country: countryField.text
+            )
+        )
+
+        viewModel.formData = formData
+        Task {
+            await viewModel.tokeniseCard()
+        }
+        activitySpineer.isHidden = false
+        activitySpineer.startAnimating()
+    }
+
+    func setCards(cards: [CardType]) {
+        headerView.set(cards)
     }
 }
 
@@ -323,6 +380,8 @@ extension PaymentFormView: UITextFieldDelegate {
         if enteredYear > currentYear {
             if (1 ... 12).contains(enteredMonth) {
                 print("Entered Date Is Right")
+                self.expiryMonth = enteredMonth
+                self.expiryYear = enteredYear
             } else {
                 print("Entered Date Is Wrong")
             }
@@ -330,6 +389,7 @@ extension PaymentFormView: UITextFieldDelegate {
             if enteredMonth >= currentMonth {
                 if (1 ... 12).contains(enteredMonth) {
                    print("Entered Date Is Right")
+                    self.expiryMonth = enteredMonth
                 } else {
                    print("Entered Date Is Wrong")
                 }
