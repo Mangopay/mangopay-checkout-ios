@@ -22,21 +22,21 @@ enum ValidationRules: String {
     var reason: String {
         switch self {
         case .invalidCardNumber:
-            return "Card Number Invalid"
+            return LocalizableString.ERROR_CARD_NUMBER_INVALID
         case .cardNumberRequired:
-            return "Card Number Required"
+            return LocalizableString.ERROR_CARD_NUMBER_INVALID
         case .cardMinimmun:
-            return "Minimum Number of digits is 13"
+            return LocalizableString.ERROR_CARD_MIN_NUMBER
         case .fullNameRequired:
-            return "Fullname Required"
+            return LocalizableString.ERROR_FULLNAME_REQUIRED
         case .cardExpired:
-            return "Your card expiration date is invalid"
+            return LocalizableString.ERROR_CARD_EXPIRED
         case .cvvRequired:
-            return "CVC Required"
+            return LocalizableString.ERROR_CVC_REQUIRED
         case .dateRequired:
-            return "Expiry Date Required"
+            return LocalizableString.ERROR_EXPIRED_DATE_REQUIRED
         case .textTooShort:
-            return "Text is too short."
+            return LocalizableString.ERROR_TEXT_TOO_SHORT
         }
     }
 }

@@ -26,7 +26,7 @@ class PaymentFormView: UIView {
     )
 
     lazy var cardNameField = WhenThenTextfield(
-        placeholderText: "Name on Card",
+        placeholderText: LocalizableString.CARD_NAME_PLACEHOLDER,
         returnKeyType: .next,
         validationRule: [
             .fullNameRequired,
@@ -36,7 +36,7 @@ class PaymentFormView: UIView {
     )
 
     lazy var expiryDateField = WhenThenTextfield(
-        placeholderText: "MM/YY",
+        placeholderText: LocalizableString.CARD_EXPIRIY_PLACEHOLDER,
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [
@@ -47,7 +47,7 @@ class PaymentFormView: UIView {
     )
 
     lazy var cvvField = WhenThenTextfield(
-        placeholderText: "CVV",
+        placeholderText: LocalizableString.CARD_CVV,
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [
@@ -66,11 +66,11 @@ class PaymentFormView: UIView {
     )
 
     lazy var saveDetailsCheckMark = CheckmarkView(
-        title: "Save payment details for future use"
+        title: LocalizableString.SAVE_PAYMENT_CHECKMARK
     )
     
     lazy var billingAddressCheckMark = CheckmarkView(
-        title: "Billing address is same as shipping"
+        title: LocalizableString.BILLING_ADDRESS_CHECKMARK
     )
     
     private lazy var checkMarkStack = UIStackView.create(
@@ -82,18 +82,18 @@ class PaymentFormView: UIView {
     )
 
     lazy var billingInfoTitle = UILabel.create(
-        text: "Billing Information",
+        text: LocalizableString.BILLING_INFO_TITLE,
         font: .systemFont(ofSize: 16, weight: .medium)
     )
     
     lazy var countryField = WhenThenDropDownTextfield(
-        placeholderText: "Select Country",
+        placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
         textfieldDelegate: self
     )
 
     lazy var zipCodeField = WhenThenTextfield(
-        placeholderText: "ZIP/ Postal Code",
+        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
             .textTooShort
@@ -121,7 +121,7 @@ class PaymentFormView: UIView {
     var tapGesture: UIGestureRecognizer?
 
     private lazy var vStack = UIScrollView.createWithVStack(
-        spacing: 4,
+        spacing: 16,
         alignment: .fill,
         distribution: .fill,
         views: [
@@ -159,10 +159,10 @@ class PaymentFormView: UIView {
             target: self,
             action: #selector(onViewTap)
         )
-
+        
         setupView()
         loadCountries()
-
+        
         keyboardUtil = KeyboardUtil(
             original: self.topConstriant.constant,
             padding: 0
@@ -174,6 +174,11 @@ class PaymentFormView: UIView {
         cardNumberField.text = "1234 1234 1234 1234"
         cardNameField.text = "Elikem"
         cvvField.text = "120"
+
+        cardNameField.onEditingChanged = { text in
+//            let cardType = LuhnChecker.getCreditCardType(cardNumber: text)
+//            print("🤣 cardType", cardType)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -313,6 +318,10 @@ extension PaymentFormView: UITextFieldDelegate {
                 return false
             }
             
+            let cardType = LuhnChecker.getCreditCardType(
+                cardNumber: text.trimmingCharacters(in: .whitespaces)
+            )
+            cardNumberField.setLeftImage(cardType.icon)
             return true
             
         case expiryDateField.textfield:
@@ -398,8 +407,9 @@ extension PaymentFormView: UITextFieldDelegate {
 extension PaymentFormView: KeyboardUtilDelegate {
 
     func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
-        let padding: CGFloat = 240
+        let padding: CGFloat = 180
         let moveBy = rect.height - safeAreaInsets.bottom - padding
+        print("🤣 moveBy", moveBy)
         topConstriant.constant = -moveBy
 
         UIView.animate(withDuration: animationDuration) {
@@ -432,6 +442,7 @@ extension PaymentFormView: KeyboardUtilDelegate {
         default: break
         }
     }
+    
 
 }
 

@@ -15,6 +15,8 @@ enum CardType: String, Codable, CaseIterable {
     case unionPay = "UNIONPAY"
     case mastercard = "MASTERCARD"
     case discover = "DISCOVER"
+    case jcb
+    case none
 
     var icon: UIImage? {
         switch self {
@@ -30,6 +32,10 @@ enum CardType: String, Codable, CaseIterable {
             return UIImage.init(assetIdentifier: .card_mastercard)
         case .discover:
             return UIImage.init(assetIdentifier: .card_discover)
+        case .jcb:
+            return UIImage.init(assetIdentifier: .card_jcb)
+        case .none:
+            return UIImage(systemName: "creditcard")
         }
     }
 }
