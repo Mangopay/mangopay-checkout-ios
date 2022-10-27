@@ -12,9 +12,11 @@ import ApolloAPI
 class TokenInterceptor: ApolloInterceptor {
 
     let token: String
+    let indempodentKey: String
 
-    init(token: String) {
+    init(token: String, indempodentKey: String) {
         self.token = token
+        self.indempodentKey = indempodentKey
     }
 
     func interceptAsync<Operation>(
@@ -23,6 +25,7 @@ class TokenInterceptor: ApolloInterceptor {
         response: Apollo.HTTPResponse<Operation>?,
         completion: @escaping (Result<Apollo.GraphQLResult<Operation.Data>, Error>) -> Void) where Operation : ApolloAPI.GraphQLOperation {
             request.addHeader(name: "Authorization", value: "Bearer \(token)")
+            request.addHeader(name: "X-Idempotency-Key", value: indempodentKey)
             chain.proceedAsync(request: request, response: response, completion: completion)
             print("🤣 Additional Headers", request.additionalHeaders)
         }
