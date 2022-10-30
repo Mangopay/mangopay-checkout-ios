@@ -29,7 +29,7 @@ public class WhenThenClient {
         let interceptorProvider = NetworkInterceptorsProvider(
             interceptors: [
                 TokenInterceptor(
-                    token: "ct_test_YdJFTSyVW9G24d5m",
+                    token: "ct_test_zd73miMIedQ6b3tW",
                     indempodentKey: indempodentKey
                 )
             ],
