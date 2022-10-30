@@ -29,7 +29,6 @@ class CustomerCardListController: UIViewController {
         let view = UITableView()
         view.dataSource = self
         view.delegate = self
-//        view.separatorStyle = .none
         view.backgroundColor = .clear
         view.register(CardListCell.self, forCellReuseIdentifier: CardListCell.id)
         view.estimatedRowHeight = 200
