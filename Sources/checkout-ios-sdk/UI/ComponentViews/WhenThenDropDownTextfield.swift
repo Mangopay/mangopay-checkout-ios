@@ -67,7 +67,7 @@ class WhenThenDropDownTextfield: UIView {
     }
 
     private lazy var errorLabel = UILabel.create(
-        text: "lll",
+        text: "",
         color: .red,
         font: .systemFont(ofSize: 11)
     )

@@ -25,8 +25,6 @@ public class PaymentFormController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         setupObservers()
         formView.setCards(cards: self.cardConfig)
     }
@@ -42,13 +40,18 @@ public class PaymentFormController: UIViewController {
         
         Task {
             let items = try await WhenThenClient.shared.fetchCards(with: nil)
-            print("🇬🇭 ", items.map({$0.brand }))
             
-//            self.formView.setCards(cards: items.compactMap({$0.brandType}))
-            for item in items {
-                print(item)
+            let cards = items.compactMap({$0.brandType})
+            self.formView.setUsersCards(cards)
+            
+            formView.onRightButtonTappedAction = {
+                CustomerCardListController.showDatePicker(with: self, cardLists: items) { cardType in
+                    self.formView.cardNumberField.text = cardType.number
+                }
             }
+
         }
+
     }
     
     private func showAlert(with cardToken: String, title: String) {

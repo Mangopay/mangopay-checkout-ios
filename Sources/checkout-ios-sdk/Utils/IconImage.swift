@@ -25,3 +25,40 @@ class IconImage: UIImageView {
     }
 
 }
+
+class IconButton: UIButton {
+
+    static func create(
+        title: String,
+        iconName: UIImage.AssetIdentifier = .none,
+        iconSystemName: String? = nil,
+        iconSystemColor: UIColor? = .black,
+        iconHeight: CGFloat = 30,
+        iconWidth: CGFloat = 30,
+        contentMode: UIView.ContentMode = .scaleAspectFill,
+        alignment: UIControl.ContentHorizontalAlignment? = nil,
+        buttonAction: ((IconButton) -> Void)? = nil
+    ) -> UIButton {
+        let button = IconButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: iconHeight).isActive = true
+        button.widthAnchor.constraint(equalToConstant: iconWidth).isActive = true
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 8)
+
+        if let sysName = iconSystemName, iconName == .none {
+            let image = UIImage(systemName: sysName)
+            button.setImage(image, for: .normal)
+            button.tintColor = iconSystemColor
+        } else {
+            button.setImage(UIImage(assetIdentifier: iconName), for: .normal)
+        }
+
+        button.contentMode = contentMode
+        buttonAction?(button)
+        if let alignment = alignment {
+            button.contentHorizontalAlignment = alignment
+        }
+        return button
+    }
+}

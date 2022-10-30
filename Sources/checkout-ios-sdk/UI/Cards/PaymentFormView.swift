@@ -23,7 +23,12 @@ class PaymentFormView: UIView {
             .invalidCardNumber
         ],
         textfieldDelegate: self
-    )
+    ) { textfield in
+        textfield.setRightImage(nil, text: "Choose Card")
+        textfield.onRightButtonTappedAction = {
+            self.onRightButtonTappedAction?()
+        }
+    }
 
     lazy var cardNameField = WhenThenTextfield(
         placeholderText: LocalizableString.CARD_NAME_PLACEHOLDER,
@@ -145,7 +150,8 @@ class PaymentFormView: UIView {
     var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
     let viewModel = PaymentFormViewModel()
-    
+    var onRightButtonTappedAction: (() -> Void)?
+
     lazy var forms: [Validatable] = [
         cardNumberField,
         cardNameField,
@@ -249,6 +255,11 @@ class PaymentFormView: UIView {
 
     func setCards(cards: CardConfig?) {
         headerView.set(cards)
+    }
+
+    func setUsersCards(_ cards: [CardType]) {
+        cardNumberField.setRightImage(UIImage(systemName: "plus"), text: "Choose Card")
+//        cardNumberField.setData(cards: cards)
     }
 }
 
