@@ -108,6 +108,72 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
+    lazy var statusLabel = UILabel.create(
+        text: "",
+        font: .systemFont(ofSize: 12, weight: .medium)
+    )
+
+    lazy var firstNameTextfield = WhenThenDropDownTextfield(
+        placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
+        showDropDownIcon: true,
+        textfieldDelegate: self
+    )
+
+    lazy var lastNameTextfield = WhenThenTextfield(
+        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
+        returnKeyType: .done,
+        validationRule: [
+            .textTooShort
+        ],
+        textfieldDelegate: self
+    ) { textF in
+        textF.textfield.autocorrectionType = .no
+    }
+
+    lazy var addressLine1Field = WhenThenTextfield(
+        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
+        returnKeyType: .done,
+        validationRule: [
+            .textTooShort
+        ],
+        textfieldDelegate: self
+    ) { textF in
+        textF.textfield.autocorrectionType = .no
+    }
+
+    lazy var addressLine2Field = WhenThenTextfield(
+        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
+        returnKeyType: .done,
+        validationRule: [
+            .textTooShort
+        ],
+        textfieldDelegate: self
+    ) { textF in
+        textF.textfield.autocorrectionType = .no
+    }
+
+    lazy var cityAddressField = WhenThenTextfield(
+        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
+        returnKeyType: .done,
+        validationRule: [
+            .textTooShort
+        ],
+        textfieldDelegate: self
+    ) { textF in
+        textF.textfield.autocorrectionType = .no
+    }
+
+    lazy var stateField = WhenThenTextfield(
+        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
+        returnKeyType: .done,
+        validationRule: [
+            .textTooShort
+        ],
+        textfieldDelegate: self
+    ) { textF in
+        textF.textfield.autocorrectionType = .no
+    }
+
     lazy var paymentButton: UIButton = {
        let button = UIButton()
         button.backgroundColor = .black
@@ -138,13 +204,15 @@ class PaymentFormView: UIView {
             billingInfoTitle,
             countryField,
             zipCodeField,
-            paymentButton
+            paymentButton,
+            statusLabel
         ]
     ) { stackView in
         stackView.setCustomSpacing(16, after: self.headerView)
         stackView.setCustomSpacing(24, after: self.checkMarkStack)
         stackView.setCustomSpacing(8, after: self.billingInfoTitle)
         stackView.setCustomSpacing(16, after: self.zipCodeField)
+        stackView.setCustomSpacing(32, after: self.paymentButton)
     }
 
     var keyboardUtil: KeyboardUtil?
@@ -246,11 +314,42 @@ class PaymentFormView: UIView {
         )
 
         viewModel.formData = formData
+        
+        var customer = Customer()
+        let billingInfo = BillingInfo(
+            line1: "j153",
+            line2: "Prickasd",
+            city: "accra",
+            postalCode: "GH 21331",
+            state: "Accra",
+            country: "Ghana"
+        )
+        customer.billingAddress = billingInfo
+        customer.description = "Happy Customer"
+        customer.email = "elviva96@gmail.com"
+        customer.name = "Elikem Savie"
+        customer.phone = "0545543521"
+        let shippingAddress = ShippingAddress(
+            address: billingInfo,
+            name: "Elikem",
+            phone: "Accra"
+        )
+        customer.shippingAddress = shippingAddress
+        customer.company = Company(name: "File", number: "+233542442442")
+        
+        let cusInput = CustomerInputData(card: formData, customer: customer)
+
         Task {
-            await viewModel.tokeniseCard()
+//            await viewModel.tokeniseCard()
+//            await viewModel.createCustomer(with: cusInput)
+//            await viewModel.getPayment(with: "payments:053362b6-fc21-4989-abf2-6eec7f817b1f")
+            await viewModel.performDropin(with: formData.toPaymentCardInput(), cardToken: nil)
         }
+        
+
         activitySpineer.isHidden = false
         activitySpineer.startAnimating()
+        
     }
 
     func setCards(cards: CardConfig?) {

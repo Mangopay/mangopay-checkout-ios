@@ -14,8 +14,9 @@ public class PaymentFormController: UIViewController {
     var cancelables = Set<AnyCancellable>()
     var cardConfig: CardConfig?
 
-    public init(cardConfig: CardConfig? = nil) {
+    public init(cardConfig: CardConfig? = nil, paymentDelegate: DropInFormDelegate) {
         super.init(nibName: nil, bundle: nil)
+        formView.viewModel.delegate = paymentDelegate
         self.cardConfig = cardConfig
     }
 
@@ -37,7 +38,14 @@ public class PaymentFormController: UIViewController {
         formView.viewModel.tokenObserver.sink { tokenised in
             self.showAlert(with: tokenised.token, title: "Tokenised Card")
         }.store(in: &cancelables)
-        
+
+        formView.viewModel.statusObserver.sink { status in
+            DispatchQueue.main.async {
+                let text = self.formView.statusLabel.text ?? ""
+                self.formView.statusLabel.text = text.appending("\n \n \(status) \n ==========")
+            }
+        }.store(in: &cancelables)
+
         Task {
             let items = try await WhenThenClient.shared.fetchCards(with: nil)
             

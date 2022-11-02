@@ -27,7 +27,5 @@ class TokenInterceptor: ApolloInterceptor {
             request.addHeader(name: "Authorization", value: "Bearer \(token)")
             request.addHeader(name: "X-Idempotency-Key", value: indempodentKey)
             chain.proceedAsync(request: request, response: response, completion: completion)
-            print("🤣 Additional Headers", request.additionalHeaders)
         }
-    
 }
