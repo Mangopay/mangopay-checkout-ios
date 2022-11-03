@@ -21,6 +21,7 @@ class WhenThenTextfield: UIView {
     var onEditingBegin: (() -> Void)?
     var onEditingDidEnd: (() -> Void)?
     var onEditingChanged: ((String) -> Void)?
+    var onRightButtonTappedAction: (() -> Void)?
     let placeholderText: String?
     
     var validationRules: [ValidationRules]
@@ -49,8 +50,24 @@ class WhenThenTextfield: UIView {
 
     private lazy var leftImageView = IconImage.create(iconName: .none, iconHeight: 20, iconWidth: 30)
     
-    private lazy var rightImageView = IconImage.create(iconName: .none, iconHeight: 16, iconWidth: 16)
-
+    private lazy var rightImageButton = IconButton.create(
+        title: "Choose Card",
+        iconName: .none,
+        iconSystemColor: .black,
+        iconHeight: 30,
+        iconWidth: 50,
+        buttonAction: { button in
+            button.isHidden = true
+            button.titleLabel?.font = .systemFont(ofSize: 7, weight: .regular)
+            button.setTitleColor(.black, for: .normal)
+            button.tintColor = .black
+            button.addTarget(
+                self,
+                action: #selector(self.onRightButtonTapped),
+                for: .touchUpInside
+            )
+        }
+    )
 
     private let verticalDividerView: UIView = {
         let view = UIView()
@@ -66,7 +83,7 @@ class WhenThenTextfield: UIView {
         axis: .horizontal,
         alignment: .center,
         distribution: .fillProportionally,
-        views: [leftImageView, textfield, rightImageView]
+        views: [leftImageView, textfield, rightImageButton]
     )
 
     lazy var containerView: UIView = {
@@ -96,7 +113,7 @@ class WhenThenTextfield: UIView {
         distribution: .fill,
         views: [containerView, errorLabel]
     )
-    
+
     init(
         placeholderText: String? = nil,
         leftImage: UIImage? = nil,
@@ -157,13 +174,19 @@ class WhenThenTextfield: UIView {
         leftImageView.isHidden = image == nil
     }
 
-    func setRightImage(_ image: UIImage?) {
-        rightImageView.image = image
-        rightImageView.isHidden = image == nil
+    func setRightImage(_ image: UIImage?, text: String? = nil) {
+//        rightImageButton.setImage(UIImage(), for: .normal)
+        rightImageButton.isHidden = (image == nil) && (text == nil)
+//        rightImageButton.setTitle(text, for: .normal)
     }
 
     func setResponsder() {
         textfield.becomeFirstResponder()
+    }
+            
+    @objc private func onRightButtonTapped() {
+        onRightButtonTappedAction?()
+        updateViewWith(state: .inactive)
     }
 
     @objc private func editingDidEnd() {

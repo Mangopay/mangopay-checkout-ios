@@ -11,26 +11,54 @@ import ApolloAPI
 import SchemaPackage
 
 public typealias TokeniseCard = TokeniseCardMutation.Data.TokeniseCard
-typealias AuthorizePaymentResponse = AuthorizePaymentMutation.Data.AuthorizePayment
+public typealias AuthorizePaymentResponse = AuthorizePaymentMutation.Data.AuthorizePayment
 public typealias ListCustomerCard = ListCustomerCardsQuery.Data.ListCustomerCard
+public typealias GetPayment = GetPaymentQuery.Data.GetPayment
+
 
 public class WhenThenClient {
     
     public static let shared = WhenThenClient()
     let indempodentKey = UUID().uuidString
-    
+    let version1UUID = UUID().version1UUID
+        
     private(set) lazy var apollo: ApolloClient = {
 
         let apiEndpoint = "https://api.dev.whenthen.co/api/graphql"
         let url = URL(string: apiEndpoint)!
         
         let store = ApolloStore()
-
+        
         let interceptorProvider = NetworkInterceptorsProvider(
             interceptors: [
                 TokenInterceptor(
-                    token: "ct_test_ExDkAS5Y6p4KJDJN",
+                    token: "ct_test_40kEuXKwSxGNzmYO",
                     indempodentKey: indempodentKey
+                )
+            ],
+            store: store
+        )
+
+        let networkTransport = RequestChainNetworkTransport(
+            interceptorProvider: interceptorProvider,
+            endpointURL: url
+        )
+
+        return ApolloClient(networkTransport: networkTransport, store: store)
+    }()
+
+    private(set) lazy var apollo2: ApolloClient = {
+
+        let apiEndpoint = "https://api.dev.whenthen.co/api/graphql"
+        let url = URL(string: apiEndpoint)!
+        
+        let store = ApolloStore()
+        
+        let interceptorProvider = NetworkInterceptorsProvider(
+            interceptors: [
+                TokenInterceptor(
+                    token: "ct_test_40kEuXKwSxGNzmYO",
+                    indempodentKey: version1UUID
                 )
             ],
             store: store
@@ -48,7 +76,7 @@ public class WhenThenClient {
 
         let _customerId = customerId ?? "a4a7cb68-9ce6-4874-84df-276d7e9b235b"
         let query = ListCustomerCardsQuery(vaultCustomerId: _customerId)
-        
+
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<[ListCustomerCard], Error>) in
             apollo.fetch(query: query) { result in
                 switch result {
@@ -75,7 +103,7 @@ public class WhenThenClient {
         )
         
         let mutation = TokeniseCardMutation(data: tokenInput)
-        
+
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<TokeniseCard, Error>) in
             apollo.perform(mutation: mutation) { result in
                 switch result {
@@ -103,14 +131,14 @@ public class WhenThenClient {
         
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<AuthorizePaymentResponse, Error>) in
             
-            apollo.perform(mutation: mutation)  { result in
+            apollo2.perform(mutation: mutation)  { result in
                 switch result {
                 case .success(let reponse):
                     if let _data = reponse.data?.authorizePayment {
-                        print("🤣 _data", _data)
+                        print("🤣 authorizePayment", _data)
                         continuation.resume(returning: _data)
                     } else if let errrs = reponse.errors {
-                        print("Card tokenizing error \(errrs)")
+                        print("❌ authorizePayment error \(errrs)")
                         continuation.resume(throwing: errrs.first!)
                     }
 
@@ -125,7 +153,7 @@ public class WhenThenClient {
     func createCustomer(with customer: CustomerInputData) async throws -> String {
         
         let mutation = CreateCustomerMutation(data: customer.toDTO)
-
+        
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<String, Error>) in
             
             apollo.perform(mutation: mutation)  { result in
@@ -138,13 +166,31 @@ public class WhenThenClient {
                         print("createCustomer error \(errrs)")
                         continuation.resume(throwing: errrs.first!)
                     }
-
+                    
                 case .failure(let error):
                     print("❌ Failed to authorizePayment ..")
                     continuation.resume(throwing: error)
                 }
             }
         })
+        
+    }
 
+    func getPayment(with id: String) async throws -> GetPayment {
+        let query = GetPaymentQuery(id: id)
+
+        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<GetPayment, Error>) in
+            apollo.fetch(query: query) { result in
+                switch result {
+                case .success(let reponse):
+                    if let getPayment = reponse.data?.getPayment {
+                        continuation.resume(returning: getPayment)
+                    }
+                case .failure(let error):
+                    print("❌ Failed to get Payment ..\(error.localizedDescription)")
+                    continuation.resume(throwing: error)
+                }
+            }
+        })
     }
 }

@@ -25,4 +25,9 @@ struct CardListViewModel {
     func fetchCards() {
         
     }
+
+    mutating func setCards(with card: CardConfig?) {
+        guard let _cards = card?.supportedCardBrands else { return }
+        self.cards = _cards
+    }
 }
