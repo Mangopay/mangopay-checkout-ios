@@ -88,7 +88,7 @@ struct BillingInfo {
 }
 
 struct PaymentDtoInput {
-    var type: String
+    var type: PaymentMethodEnum
     var token: String?
     var walletToken: String?
     var card: FormData?
@@ -99,7 +99,7 @@ struct PaymentDtoInput {
         let googlePay = googlePayId != nil ? GraphQLNullable<GooglePayInput>(GooglePayInput(transactionId: googlePayId!)) : nil
 
         return PaymentMethodDtoInput(
-            type: type,
+            type: type.rawValue,
             token: token?.toGraphQLNullable() ?? nil,
             walletToken: walletToken?.toGraphQLNullable() ?? nil,
             card: card,

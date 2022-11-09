@@ -49,7 +49,7 @@ public class PaymentFormViewModel {
                 amount: "500",
                 currencyCode: "EUR",
                 paymentMethod: PaymentDtoInput(
-                    type: "CARD",
+                    type: .card,
                     token: tokenisedCard.token
                 )
             )
@@ -95,7 +95,7 @@ public class PaymentFormViewModel {
             amount: "500",
             currencyCode: "EUR",
             paymentMethod: PaymentDtoInput(
-                type: "CARD",
+                type: .card,
                 token: token
             )
         )
