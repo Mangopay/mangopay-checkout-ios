@@ -14,7 +14,7 @@ enum BorderType {
     case bottom
 }
 
-public class BrandConfig {
+public class PaymentFormStyle {
     static var font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
     static var borderType: BorderType = .round
     static var backgroundColor: UIColor = .white
@@ -24,6 +24,7 @@ public class BrandConfig {
     static var borderFocusedColor: UIColor = .blue
     static var errorColor: UIColor = .red
 }
+
 
 //public class CheckoutTheme {
 //    /// Background color of the views
