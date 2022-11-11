@@ -18,9 +18,10 @@ public typealias GetPayment = GetPaymentQuery.Data.GetPayment
 
 public class WhenThenClient {
     
-    public static let shared = WhenThenClient()
+    public static let shared = WhenThenClient(clientKey: WhenThenSDK.clientID)
     let indempodentKey = UUID().uuidString
     let version1UUID = UUID().version1UUID
+    var clientKey: String!
         
     private(set) lazy var apollo: ApolloClient = {
 
@@ -32,7 +33,7 @@ public class WhenThenClient {
         let interceptorProvider = NetworkInterceptorsProvider(
             interceptors: [
                 TokenInterceptor(
-                    token: "ct_test_2rET1a32UCPW1VKe",
+                    token: clientKey,
                     indempodentKey: indempodentKey
                 )
             ],
@@ -57,7 +58,7 @@ public class WhenThenClient {
         let interceptorProvider = NetworkInterceptorsProvider(
             interceptors: [
                 TokenInterceptor(
-                    token: "ct_test_2rET1a32UCPW1VKe",
+                    token: clientKey,
                     indempodentKey: version1UUID
                 )
             ],
@@ -71,7 +72,11 @@ public class WhenThenClient {
 
         return ApolloClient(networkTransport: networkTransport, store: store)
     }()
-    
+
+    init(clientKey: String) {
+        self.clientKey = clientKey
+    }
+
     public func fetchCards(with customerId: String?) async throws -> [ListCustomerCard] {
 
         let _customerId = customerId ?? "a4a7cb68-9ce6-4874-84df-276d7e9b235b"

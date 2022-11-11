@@ -73,6 +73,7 @@ class WhenThenDropDownTextfield: UIView {
     )
 
     var usecase: Usecase = .normal
+    var style: PaymentFormStyle
 
     lazy var textfield: UITextField = {
         let view = UITextField()
@@ -94,9 +95,9 @@ class WhenThenDropDownTextfield: UIView {
 
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.borderColor = style.borderColor.cgColor
         view.layer.borderWidth = 1
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = style.borderType == .round ? 8 : 0
         view.heightAnchor.constraint(equalToConstant: 60).isActive = true
 
         view.addSubview(imageView)
@@ -145,10 +146,12 @@ class WhenThenDropDownTextfield: UIView {
         placeholderText: String? = nil,
         showDropDownIcon: Bool = true,
         usecase: Usecase = .normal,
+        style: PaymentFormStyle,
         textfieldDelegate: UITextFieldDelegate? = nil
     ) {
         self.showDropDownIcon = showDropDownIcon
         self.usecase = usecase
+        self.style = style
         super.init(frame: .zero)
         setupView()
 
@@ -183,19 +186,19 @@ class WhenThenDropDownTextfield: UIView {
         containerView.layer.borderWidth = 1
         switch state {
         case .error:
-            containerView.layer.borderColor = UIColor.red.cgColor
+            containerView.layer.borderColor = style.errorColor.cgColor
         case .active:
-            containerView.layer.borderColor = UIColor.blue.cgColor
+            containerView.layer.borderColor = style.borderFocusedColor.cgColor
             errorText = " "
         case .highlighted:
-            containerView.layer.borderColor = UIColor.blue.cgColor
+            containerView.layer.borderColor = style.borderFocusedColor.cgColor
             containerView.layer.borderWidth = 4
             errorText = " "
         case .inactive:
-            containerView.layer.borderColor = UIColor.gray.cgColor
+            containerView.layer.borderColor = style.borderColor.cgColor
             errorText = " "
         case .greyedOut:
-            containerView.layer.borderColor = UIColor.gray.cgColor
+            containerView.layer.borderColor = style.borderColor.cgColor
             containerView.backgroundColor = UIColor.gray
             errorText = " "
         }

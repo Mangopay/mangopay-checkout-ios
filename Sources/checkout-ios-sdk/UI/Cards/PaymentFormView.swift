@@ -8,6 +8,11 @@
 import Foundation
 import UIKit
 
+enum FormType {
+    case dropIn
+    case element
+}
+
 class PaymentFormView: UIView {
     
     lazy var headerView = HeaderView()
@@ -22,6 +27,7 @@ class PaymentFormView: UIView {
             .cardNumberRequired,
             .invalidCardNumber
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     ) { textfield in
         textfield.setRightImage(nil, text: "Choose Card")
@@ -37,6 +43,7 @@ class PaymentFormView: UIView {
             .fullNameRequired,
             .textTooShort
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     )
 
@@ -48,6 +55,7 @@ class PaymentFormView: UIView {
             .cardExpired,
             .dateRequired
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     )
 
@@ -59,6 +67,7 @@ class PaymentFormView: UIView {
             .cvvRequired,
             .textTooShort
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     )
     
@@ -94,6 +103,7 @@ class PaymentFormView: UIView {
     lazy var countryField = WhenThenDropDownTextfield(
         placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     )
 
@@ -103,6 +113,7 @@ class PaymentFormView: UIView {
         validationRule: [
             .textTooShort
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     ) { textF in
         textF.textfield.autocorrectionType = .no
@@ -116,6 +127,7 @@ class PaymentFormView: UIView {
     lazy var firstNameTextfield = WhenThenDropDownTextfield(
         placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     )
 
@@ -125,6 +137,7 @@ class PaymentFormView: UIView {
         validationRule: [
             .textTooShort
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     ) { textF in
         textF.textfield.autocorrectionType = .no
@@ -136,6 +149,7 @@ class PaymentFormView: UIView {
         validationRule: [
             .textTooShort
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     ) { textF in
         textF.textfield.autocorrectionType = .no
@@ -147,6 +161,7 @@ class PaymentFormView: UIView {
         validationRule: [
             .textTooShort
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     ) { textF in
         textF.textfield.autocorrectionType = .no
@@ -158,6 +173,7 @@ class PaymentFormView: UIView {
         validationRule: [
             .textTooShort
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     ) { textF in
         textF.textfield.autocorrectionType = .no
@@ -169,6 +185,7 @@ class PaymentFormView: UIView {
         validationRule: [
             .textTooShort
         ],
+        style: self.paymentFormStyle,
         textfieldDelegate: self
     ) { textF in
         textF.textfield.autocorrectionType = .no
@@ -176,20 +193,22 @@ class PaymentFormView: UIView {
 
     lazy var paymentButton: UIButton = {
        let button = UIButton()
-        button.backgroundColor = .black
+        button.backgroundColor = paymentFormStyle.checkoutButtonBackgroundColor
         button.setTitle("Checkout", for: .normal)
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)
+        button.setTitleColor(paymentFormStyle.checkoutButtonTextColor, for: .normal)
         return button
     }()
 
-    lazy var activitySpineer = UIActivityIndicatorView()
+    lazy var activitySpiner = UIActivityIndicatorView()
     
     var expiryMonth: Int?
     var expiryYear: Int?
 
     var tapGesture: UIGestureRecognizer?
+    var formType: FormType = .dropIn
 
     private lazy var vStack = UIScrollView.createWithVStack(
         spacing: 16,
@@ -217,9 +236,11 @@ class PaymentFormView: UIView {
 
     var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
-    let viewModel = PaymentFormViewModel()
+    var viewModel: PaymentFormViewModel!
     var onRightButtonTappedAction: (() -> Void)?
-
+    
+    var paymentFormStyle: PaymentFormStyle
+    
     lazy var forms: [Validatable] = [
         cardNumberField,
         cardNameField,
@@ -227,8 +248,11 @@ class PaymentFormView: UIView {
         cvvField
     ]
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(paymentFormStyle: PaymentFormStyle?, formType: FormType) {
+        self.formType = formType
+        self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
+        self.viewModel = PaymentFormViewModel(clientId: WhenThenSDK.clientID)
+        super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
             target: self,
             action: #selector(onViewTap)
@@ -243,15 +267,16 @@ class PaymentFormView: UIView {
         )
         keyboardUtil?.delegate = self
         keyboardUtil?.register()
-        activitySpineer.isHidden = true
+        activitySpiner.isHidden = true
         
-        cardNumberField.text = "1234 1234 1234 1234"
-        cardNameField.text = "Elikem"
-        cvvField.text = "120"
-
-        cardNameField.onEditingChanged = { text in
-//            let cardType = LuhnChecker.getCreditCardType(cardNumber: text)
-//            print("🤣 cardType", cardType)
+//        cardNumberField.text = "1234 1234 1234 1234"
+//        cardNameField.text = "Elikem"
+//        cvvField.text = "120"
+        
+        cardNumberField.onEditingChanged = { text in
+            let cardType = LuhnChecker.getCreditCardType(cardNumber: text)
+            print("🤣 cardType", cardType)
+            self.cardNumberField.setRightImage(cardType.icon)
         }
     }
 
@@ -261,7 +286,7 @@ class PaymentFormView: UIView {
 
     private func setupView() {
         addSubview(vStack)
-        addSubview(activitySpineer)
+        addSubview(activitySpiner)
         
         topConstriant = vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16)
         topConstriant.isActive = true
@@ -270,8 +295,11 @@ class PaymentFormView: UIView {
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
         vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
         
-        activitySpineer.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        activitySpineer.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        activitySpiner.translatesAutoresizingMaskIntoConstraints = false
+        activitySpiner.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        activitySpiner.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        activitySpiner.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        activitySpiner.widthAnchor.constraint(equalToConstant: 30).isActive = true
         self.backgroundColor = .white
     }
 
@@ -288,7 +316,6 @@ class PaymentFormView: UIView {
 
     @objc func onViewTap() {
         self.endEditing(true)
-        print("🤣🤣🤣🤣")
     }
 
     @objc func onTappedButton() {
@@ -338,17 +365,19 @@ class PaymentFormView: UIView {
         customer.company = Company(name: "File", number: "+233542442442")
         
         let cusInput = CustomerInputData(card: formData, customer: customer)
+    
 
         Task {
-//            await viewModel.tokeniseCard()
-//            await viewModel.createCustomer(with: cusInput)
-//            await viewModel.getPayment(with: "payments:053362b6-fc21-4989-abf2-6eec7f817b1f")
-            await viewModel.performDropin(with: formData.toPaymentCardInput(), cardToken: nil)
+            activitySpiner.isHidden = false
+            activitySpiner.startAnimating()
+            switch formType {
+            case .dropIn:
+                await viewModel.performDropin(with: formData.toPaymentCardInput(), cardToken: nil)
+            case .element:
+                await viewModel.tokeniseCard()
+            }
+            activitySpiner.stopAnimating()
         }
-        
-
-        activitySpineer.isHidden = false
-        activitySpineer.startAnimating()
         
     }
 

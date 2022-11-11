@@ -41,8 +41,8 @@ class WhenThenTextfield: UIView {
 
     lazy var textfield: UITextField = {
         let view = UITextField()
-        view.font = BrandConfig.font
-        view.textColor = BrandConfig.textColor
+        view.font = style.font
+        view.textColor = style.textColor
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
@@ -89,9 +89,9 @@ class WhenThenTextfield: UIView {
     lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = BrandConfig.borderColor.cgColor
+        view.layer.borderColor = style.borderColor.cgColor
         view.layer.borderWidth = 1
-        view.layer.cornerRadius = 8
+        view.layer.cornerRadius = style.borderType == .round ? 8 : 0
         view.addSubview(hStack)
         hStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 8).isActive = true
         hStack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
@@ -102,7 +102,7 @@ class WhenThenTextfield: UIView {
 
     private lazy var errorLabel = UILabel.create(
         text: "",
-        color: BrandConfig.errorColor,
+        color: style.errorColor,
         font: .systemFont(ofSize: 11)
     )
 
@@ -113,6 +113,8 @@ class WhenThenTextfield: UIView {
         distribution: .fill,
         views: [containerView, errorLabel]
     )
+    
+    var style: PaymentFormStyle
 
     init(
         placeholderText: String? = nil,
@@ -122,11 +124,13 @@ class WhenThenTextfield: UIView {
         returnKeyType: UIReturnKeyType = .done,
         validationRule: [ValidationRules],
         allowsInteraction: Bool = true,
+        style: PaymentFormStyle,
         textfieldDelegate: UITextFieldDelegate? = nil,
         textfield: ((WhenThenTextfield) -> Void)? = nil
     ) {
         self.validationRules = validationRule
         self.placeholderText = placeholderText
+        self.style = style
         super.init(frame: .zero)
         setupView()
         textfield?(self)
@@ -164,7 +168,7 @@ class WhenThenTextfield: UIView {
     func setPlaceHolder(with text: String?) {
         let placeholderText = NSAttributedString(
             string: text ?? "",
-            attributes: [NSAttributedString.Key.foregroundColor: BrandConfig.placeHolderColor]
+            attributes: [NSAttributedString.Key.foregroundColor: style.placeHolderColor]
         )
         textfield.attributedPlaceholder = placeholderText
     }
@@ -208,19 +212,19 @@ class WhenThenTextfield: UIView {
         containerView.layer.borderWidth = 1
         switch state {
         case .error:
-            containerView.layer.borderColor = BrandConfig.errorColor.cgColor
+            containerView.layer.borderColor = style.errorColor.cgColor
         case .active:
-            containerView.layer.borderColor = BrandConfig.borderFocusedColor.cgColor
+            containerView.layer.borderColor = style.borderFocusedColor.cgColor
             errorText = ""
         case .highlighted:
-            containerView.layer.borderColor = BrandConfig.borderFocusedColor.cgColor
+            containerView.layer.borderColor = style.borderFocusedColor.cgColor
             containerView.layer.borderWidth = 4
             errorText = ""
         case .inactive:
-            containerView.layer.borderColor = BrandConfig.borderColor.cgColor
+            containerView.layer.borderColor = style.borderColor.cgColor
             errorText = ""
         case .greyedOut:
-            containerView.layer.borderColor = BrandConfig.borderColor.cgColor
+            containerView.layer.borderColor = style.borderColor.cgColor
             containerView.backgroundColor = UIColor.gray
             errorText = ""
         }

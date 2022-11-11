@@ -178,7 +178,7 @@ struct Company {
     }
 }
 
-struct CustomerInputData {
+public struct CustomerInputData {
     var card: FormData?
     var customer: Customer
     

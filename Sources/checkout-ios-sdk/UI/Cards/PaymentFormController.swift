@@ -10,13 +10,27 @@ import Combine
 
 public class PaymentFormController: UIViewController {
 
-    lazy var formView = PaymentFormView()
+    var formView: PaymentFormView!
     var cancelables = Set<AnyCancellable>()
     var cardConfig: CardConfig?
 
-    public init(cardConfig: CardConfig? = nil, paymentDelegate: DropInFormDelegate) {
+    public init(
+        cardConfig: CardConfig? = nil,
+        dropInOptions: DropInOptions? = nil,
+        elementOptions: ElementsOptions? = nil
+    ) {
+        if let dropInOptions = dropInOptions {
+            formView = PaymentFormView(paymentFormStyle: dropInOptions.style, formType: .dropIn)
+        } else if let elementOptions = elementOptions {
+            formView = PaymentFormView(paymentFormStyle: elementOptions.style, formType: .element)
+        } else {
+            formView = PaymentFormView(paymentFormStyle: PaymentFormStyle(), formType: .dropIn)
+        }
+
         super.init(nibName: nil, bundle: nil)
-        formView.viewModel.delegate = paymentDelegate
+        formView.viewModel.dropInDelegate = dropInOptions?.delegate
+        formView.viewModel.dropInData = dropInOptions
+        formView.viewModel.elementDelegate = elementOptions?.delegate
         self.cardConfig = cardConfig
     }
 
