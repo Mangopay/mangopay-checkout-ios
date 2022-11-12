@@ -106,7 +106,8 @@ public class PaymentFormViewModel {
             paymentMethod: PaymentDtoInput(
                 type: .card,
                 token: token
-            )
+            ),
+            perform3DSecure: AuthorisedPayment._3DSecure(redirectUrl: "http://localhost:3000")
         )
 
         do {
@@ -173,3 +174,4 @@ public class PaymentFormViewModel {
     }
 
 }
+//4000002760003184

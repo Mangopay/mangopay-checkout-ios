@@ -117,6 +117,15 @@ struct AuthorisedPayment {
     var paymentMethod: PaymentDtoInput
     var description: String?
     var headlessMode: Bool = false
+    var perform3DSecure: _3DSecure?
+    
+    struct _3DSecure {
+        var redirectUrl: String?
+        
+        var toThreeDSecureDtoInput: ThreeDSecureDtoInput {
+            return ThreeDSecureDtoInput(redirectUrl: (redirectUrl ?? "").toGraphQLNullable())
+        }
+    }
     
     
 //    struct PaymentMethod {
@@ -131,6 +140,7 @@ struct AuthorisedPayment {
 
         let paymentMethod = paymentMethod.toPaymentDtoInput()
         let headlessMode = GraphQLNullable<Bool>(booleanLiteral: headlessMode)
+        let threeDS = perform3DSecure != nil ? GraphQLNullable<ThreeDSecureDtoInput>(perform3DSecure!.toThreeDSecureDtoInput) : nil
 
         let input = AuthorisedPaymentInput(
             orderId: (orderId ?? "").toGraphQLNullable(),
@@ -139,6 +149,7 @@ struct AuthorisedPayment {
             amount: (amount ?? "").toGraphQLNullable(),
             paymentMethod: paymentMethod,
             description: (description ?? "").toGraphQLNullable(),
+            perform3DSecure: threeDS,
             headlessMode: headlessMode
         )
 
