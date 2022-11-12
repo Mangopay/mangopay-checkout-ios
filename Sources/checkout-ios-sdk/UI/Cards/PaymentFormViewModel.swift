@@ -18,19 +18,34 @@ public protocol DropInFormDelegate: AnyObject {
     func onAuthorizePaymentFailed(sender: PaymentFormViewModel, error: Error)
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment)
     func onPaymentFailed(sender: PaymentFormViewModel, error: Error)
+    
+    //paymentComplete
+    //payment failed
+    
+    //paymentSuccess
+    //paymentFailed
+    //
+}
+
+public protocol ElementsFormDelegate: AnyObject {
+    func onTokenGenerated(tokenisedCard: TokeniseCard)
+    func onTokenGenerationFailed(error: Error)
 }
 
 public class PaymentFormViewModel {
     
     var formData: FormData?
-    let client = WhenThenClient()
+    var client: WhenThenClient!
     var tokenObserver = PassthroughSubject<TokeniseCard, Never>()
     var statusObserver = PassthroughSubject<String, Never>()
 
-    weak var delegate: DropInFormDelegate?
+    weak var dropInDelegate: DropInFormDelegate?
+    weak var elementDelegate: ElementsFormDelegate?
 
-    init() {
-        
+    var dropInData: DropInOptions?
+
+    init(clientId: String) {
+        self.client = WhenThenClient(clientKey: clientId)
     }
 
     func fetchCards() {
@@ -42,26 +57,16 @@ public class PaymentFormViewModel {
 
         do {
             let tokenisedCard = try await client.tokenizeCard(with: inputData)
-
-            let authData = AuthorisedPayment(
-                orderId: "5114e019-9316-4498-a16d-4343fda403eb",
-                flowId: "b4869810-04e3-4ae9-98b6-6d6de57d9e85",
-                amount: "500",
-                currencyCode: "EUR",
-                paymentMethod: PaymentDtoInput(
-                    type: "CARD",
-                    token: tokenisedCard.token
-                )
-            )
-
-            let authpayment = try await client.authorizePayment(payment: authData)
-            let getPayment = try await client.getPayment(with: authpayment.id)
     
             DispatchQueue.main.async {
                 self.tokenObserver.send(tokenisedCard)
+                self.elementDelegate?.onTokenGenerated(tokenisedCard: tokenisedCard)
             }
         } catch {
-            print("❌❌ Error tokeninsing Card \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                print("❌❌ Error tokeninsing Card \(error.localizedDescription)")
+                self.elementDelegate?.onTokenGenerationFailed(error: error)
+            }
         }
     }
 
@@ -74,11 +79,13 @@ public class PaymentFormViewModel {
             do {
                 tokenisedCard = try await client.tokenizeCard(with: _data)
                 self.statusObserver.send("Succesfully Tokenised: \(tokenisedCard!.token )")
-                delegate?.onTokenGenerated(sender: self, tokenisedCard: tokenisedCard!)
+                dropInDelegate?.onTokenGenerated(sender: self, tokenisedCard: tokenisedCard!)
             } catch {
-                print("❌❌ Error tokeninsing Card \(error.localizedDescription)")
-                delegate?.onTokenGenerationFailed(sender: self, error: error)
-                return
+                DispatchQueue.main.async {
+                    print("❌❌ Error tokeninsing Card \(error.localizedDescription)")
+                    self.dropInDelegate?.onTokenGenerationFailed(sender: self, error: error)
+                    return
+                }
             }
         }
 
@@ -88,37 +95,41 @@ public class PaymentFormViewModel {
             print("❌ token is nil")
             return
         }
+
+        guard let data = dropInData else { return }
         
         let authData = AuthorisedPayment(
-            orderId: "5114e019-9316-4498-a16d-4343fda403eb",
-            flowId: "b4869810-04e3-4ae9-98b6-6d6de57d9e85",
-            amount: "500",
-            currencyCode: "EUR",
+            orderId: data.orderId,
+            flowId: data.flowId,
+            amount: String(data.amount),
+            currencyCode: data.currencyCode,
             paymentMethod: PaymentDtoInput(
-                type: "CARD",
+                type: .card,
                 token: token
-            )
+            ),
+            perform3DSecure: AuthorisedPayment._3DSecure(redirectUrl: "http://localhost:3000")
         )
-            
 
         do {
             authpayment = try await client.authorizePayment(payment: authData)
             self.statusObserver.send("Succesfully authorised: \(authpayment.id )")
-            delegate?.onAuthorizePaymentSuccess(sender: self, response: authpayment)
+            dropInDelegate?.onAuthorizePaymentSuccess(sender: self, response: authpayment)
         } catch {
             print("❌❌ Error authorising \(error.localizedDescription)")
-            delegate?.onAuthorizePaymentFailed(sender: self, error: error)
+            dropInDelegate?.onAuthorizePaymentFailed(sender: self, error: error)
             return
         }
 
         do {
             let getPayment = try await client.getPayment(with: authpayment.id)
             self.statusObserver.send("Succesfully Retrieved payment: \(getPayment.id )")
-            delegate?.onPaymentCompleted(sender: self, payment: getPayment)
+            dropInDelegate?.onPaymentCompleted(sender: self, payment: getPayment)
         } catch {
-            print("❌❌ Error GetPayment \(error.localizedDescription)")
-            delegate?.onPaymentFailed(sender: self, error: error)
-            return
+            DispatchQueue.main.async {
+                print("❌❌ Error GetPayment \(error.localizedDescription)")
+                self.dropInDelegate?.onPaymentFailed(sender:  self, error: error)
+                return
+            }
         }
     
     }
@@ -163,3 +174,4 @@ public class PaymentFormViewModel {
     }
 
 }
+//4000002760003184

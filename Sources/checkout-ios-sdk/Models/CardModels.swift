@@ -88,7 +88,7 @@ struct BillingInfo {
 }
 
 struct PaymentDtoInput {
-    var type: String
+    var type: PaymentMethodEnum
     var token: String?
     var walletToken: String?
     var card: FormData?
@@ -99,7 +99,7 @@ struct PaymentDtoInput {
         let googlePay = googlePayId != nil ? GraphQLNullable<GooglePayInput>(GooglePayInput(transactionId: googlePayId!)) : nil
 
         return PaymentMethodDtoInput(
-            type: type,
+            type: type.rawValue,
             token: token?.toGraphQLNullable() ?? nil,
             walletToken: walletToken?.toGraphQLNullable() ?? nil,
             card: card,
@@ -117,6 +117,15 @@ struct AuthorisedPayment {
     var paymentMethod: PaymentDtoInput
     var description: String?
     var headlessMode: Bool = false
+    var perform3DSecure: _3DSecure?
+    
+    struct _3DSecure {
+        var redirectUrl: String?
+        
+        var toThreeDSecureDtoInput: ThreeDSecureDtoInput {
+            return ThreeDSecureDtoInput(redirectUrl: (redirectUrl ?? "").toGraphQLNullable())
+        }
+    }
     
     
 //    struct PaymentMethod {
@@ -131,6 +140,7 @@ struct AuthorisedPayment {
 
         let paymentMethod = paymentMethod.toPaymentDtoInput()
         let headlessMode = GraphQLNullable<Bool>(booleanLiteral: headlessMode)
+        let threeDS = perform3DSecure != nil ? GraphQLNullable<ThreeDSecureDtoInput>(perform3DSecure!.toThreeDSecureDtoInput) : nil
 
         let input = AuthorisedPaymentInput(
             orderId: (orderId ?? "").toGraphQLNullable(),
@@ -139,6 +149,7 @@ struct AuthorisedPayment {
             amount: (amount ?? "").toGraphQLNullable(),
             paymentMethod: paymentMethod,
             description: (description ?? "").toGraphQLNullable(),
+            perform3DSecure: threeDS,
             headlessMode: headlessMode
         )
 
@@ -178,7 +189,7 @@ struct Company {
     }
 }
 
-struct CustomerInputData {
+public struct CustomerInputData {
     var card: FormData?
     var customer: Customer
     
