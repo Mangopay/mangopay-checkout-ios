@@ -9,11 +9,8 @@ import UIKit
 import WebKit
 
 public protocol ThreeDSControllerDelegate: AnyObject {
-
     func onSuccess3D(paymentId: String)
-
     func onFailure3D()
-
 }
 
 public class ThreeDSController: UIViewController {
@@ -86,15 +83,11 @@ public class ThreeDSController: UIViewController {
 extension ThreeDSController: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
         decisionHandler(.allow)
-
     }
     
     public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        print("🤣 redirect url", webView.url)
         let status = urlHelper.extractToken(from: webView.url!)
-        print("🤣 status", status)
         guard let paymentId = status.0, let paymentStatus = status.1 else { return }
         handleDismiss(status: paymentStatus, paymentId: paymentId)
     }
@@ -127,33 +120,6 @@ extension ThreeDSController: WKNavigationDelegate {
             }
         default: return
         }
-
-        
-//        if let successUrl = successUrl,
-//           urlHelper.urlsMatch(redirectUrl: redirectUrl, matchingUrl: successUrl) {
-//            // success url, dismissing the page with the payment token
-//
-////            self.dismiss(animated: true) { [urlHelper, delegate] in
-//            print("😭 redirectUrl", redirectUrl)
-//                let token = urlHelper.extractToken(from: redirectUrl)
-//                print("😭 3DS ", token)
-////                delegate?.threeDSWebViewControllerAuthenticationDidSucceed(self, token: token)
-////                delegate?.onSuccess3D()
-////            }
-//
-//            return true
-//        } else if let failUrl = failUrl,
-//                  urlHelper.urlsMatch(redirectUrl: redirectUrl, matchingUrl: failUrl) {
-//            // fail url, dismissing the page
-////            self.dismiss(animated: true) { [delegate] in
-////                delegate?.threeDSWebViewControllerAuthenticationDidFail(self)
-////                delegate?.onFailure3D()
-////            }
-//
-//            return true
-//        }
-
-//        return false
     }
 
 

@@ -60,6 +60,12 @@ public class PaymentFormController: UIViewController {
             }
         }.store(in: &cancelables)
 
+        formView.viewModel.trigger3DSObserver.sink { url in
+            DispatchQueue.main.async {
+                self.routeTo3DS(with: url)
+            }
+        }.store(in: &cancelables)
+
         Task {
             let items = try await WhenThenClient.shared.fetchCards(with: nil)
             
@@ -74,6 +80,13 @@ public class PaymentFormController: UIViewController {
 
         }
 
+    }
+
+    func routeTo3DS(with url: URL) {
+        let vc = ThreeDSController(successUrl: url, failUrl: nil)
+        vc.authUrl = url
+        vc.delegate = self
+        present(vc, animated: true)
     }
     
     private func showAlert(with cardToken: String, title: String) {
@@ -93,3 +106,30 @@ public class PaymentFormController: UIViewController {
     }
 }
 
+extension PaymentFormController: ThreeDSControllerDelegate {
+
+    public func onSuccess3D(paymentId: String) {
+        let text = self.formView.statusLabel.text ?? ""
+        self.formView.statusLabel.text = text.appending("\n \n 3DS SUCESSFULL \n ==========")
+        
+        Task {
+            guard let payment = await self.formView.viewModel.getPayment(with: paymentId) else { return }
+
+            let text = self.formView.statusLabel.text ?? ""
+            self.formView.statusLabel.text = text.appending("\n \n paymentId \(payment.id) \n ==========")
+
+            self.formView.viewModel.dropInDelegate?.onPaymentCompleted(
+                sender: self.formView.viewModel,
+                payment: payment
+            )
+        }
+    }
+    
+    public func onFailure3D() {
+        let text = self.formView.statusLabel.text ?? ""
+        self.formView.statusLabel.text = text.appending("\n \n 3DS FAILED \n ==========")
+
+    }
+    
+    
+}
