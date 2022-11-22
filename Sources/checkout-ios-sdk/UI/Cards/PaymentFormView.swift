@@ -12,7 +12,7 @@ enum FormType {
     case dropIn
     case element
 }
-
+//4000002760003184
 class PaymentFormView: UIView {
     
     lazy var headerView = HeaderView()
@@ -270,8 +270,8 @@ class PaymentFormView: UIView {
         activitySpiner.isHidden = true
         
         cardNumberField.text = "4000002760003184"
-        cardNameField.text = "Elikem"
-        cvvField.text = "120"
+//        cardNameField.text = "Elikem"
+//        cvvField.text = "120"
 //        expiryDateField.text = "12/26"
         
         cardNumberField.onEditingChanged = { text in
