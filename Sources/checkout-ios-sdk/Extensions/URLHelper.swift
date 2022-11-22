@@ -11,17 +11,19 @@ import Foundation
 protocol URLHelping {
 
     func urlsMatch(redirectUrl: URL, matchingUrl: URL) -> Bool
-    func extractToken(from url: URL) -> String?
+    func extractToken(from url: URL) -> (String?, String?)
 }
 
 final class URLHelper: URLHelping {
 
-    func extractToken(from url: URL) -> String? {
+    func extractToken(from url: URL) -> (String?, String?) {
 
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return (nil, nil) }
 
-        return components.queryItems?.first { $0.name == "cko-payment-token" }?.value
-            ?? components.queryItems?.first { $0.name == "cko-session-id" }?.value
+        return (
+            components.queryItems?.first { $0.name == "id" }?.value,
+            components.queryItems?.first { $0.name == "3ds_status" }?.value
+        )
     }
 
     func urlsMatch(redirectUrl: URL, matchingUrl: URL) -> Bool {

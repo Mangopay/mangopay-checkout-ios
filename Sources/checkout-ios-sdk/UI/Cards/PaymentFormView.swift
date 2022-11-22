@@ -269,9 +269,10 @@ class PaymentFormView: UIView {
         keyboardUtil?.register()
         activitySpiner.isHidden = true
         
-        cardNumberField.text = "4000 9002760003184"
-        cardNameField.text = "Elikem"
-        cvvField.text = "120"
+        cardNumberField.text = "4000002760003184"
+//        cardNameField.text = "Elikem"
+//        cvvField.text = "120"
+//        expiryDateField.text = "12/26"
         
         cardNumberField.onEditingChanged = { text in
             let cardType = LuhnChecker.getCreditCardType(cardNumber: text)

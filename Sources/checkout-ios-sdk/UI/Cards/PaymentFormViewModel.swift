@@ -12,19 +12,8 @@ import ApolloAPI
 import Apollo
 
 public protocol DropInFormDelegate: AnyObject {
-    func onTokenGenerated(sender: PaymentFormViewModel, tokenisedCard: TokeniseCard)
-    func onTokenGenerationFailed(sender: PaymentFormViewModel, error: Error)
-    func onAuthorizePaymentSuccess(sender: PaymentFormViewModel, response: AuthorizePaymentResponse)
-    func onAuthorizePaymentFailed(sender: PaymentFormViewModel, error: Error)
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment)
-    func onPaymentFailed(sender: PaymentFormViewModel, error: Error)
-    
-    //paymentComplete
-    //payment failed
-    
-    //paymentSuccess
-    //paymentFailed
-    //
+    func onPaymentFailed(sender: PaymentFormViewModel, error: WhenThenError)
 }
 
 public protocol ElementsFormDelegate: AnyObject {
@@ -38,6 +27,7 @@ public class PaymentFormViewModel {
     var client: WhenThenClient!
     var tokenObserver = PassthroughSubject<TokeniseCard, Never>()
     var statusObserver = PassthroughSubject<String, Never>()
+    var trigger3DSObserver = PassthroughSubject<URL, Never>()
 
     weak var dropInDelegate: DropInFormDelegate?
     weak var elementDelegate: ElementsFormDelegate?
@@ -79,11 +69,10 @@ public class PaymentFormViewModel {
             do {
                 tokenisedCard = try await client.tokenizeCard(with: _data)
                 self.statusObserver.send("Succesfully Tokenised: \(tokenisedCard!.token )")
-                dropInDelegate?.onTokenGenerated(sender: self, tokenisedCard: tokenisedCard!)
             } catch {
                 DispatchQueue.main.async {
                     print("❌❌ Error tokeninsing Card \(error.localizedDescription)")
-                    self.dropInDelegate?.onTokenGenerationFailed(sender: self, error: error)
+                    self.dropInDelegate?.onPaymentFailed(sender: self, error: .onTokenGenerationFailed(reason: error.localizedDescription))
                     return
                 }
             }
@@ -107,16 +96,34 @@ public class PaymentFormViewModel {
                 type: .card,
                 token: token
             ),
-            perform3DSecure: AuthorisedPayment._3DSecure(redirectUrl: "http://localhost:3000")
+            perform3DSecure: AuthorisedPayment._3DSecure(redirectUrl: "https://whenthen.com")
         )
 
         do {
             authpayment = try await client.authorizePayment(payment: authData)
             self.statusObserver.send("Succesfully authorised: \(authpayment.id )")
-            dropInDelegate?.onAuthorizePaymentSuccess(sender: self, response: authpayment)
         } catch {
-            print("❌❌ Error authorising \(error.localizedDescription)")
-            dropInDelegate?.onAuthorizePaymentFailed(sender: self, error: error)
+            guard let graphError = error as? GraphQLError else {
+                let error = WhenThenError.onAuthorizePaymentFailed(reason: nil)
+                dropInDelegate?.onPaymentFailed(sender: self, error: error)
+                return
+            }
+
+            guard let code = graphError.extensions?["code"] as? String,
+                  code == "error.authorize.requires3DSecure",
+                  let urlStr = graphError.extensions?["url"] as? String
+            else {
+                self.dropInDelegate?.onPaymentFailed(
+                    sender: self,
+                    error: .onAuthorizePaymentFailed(reason: nil)
+                )
+                return
+            }
+            
+            if let url = URL(string: urlStr) {
+                trigger3DSObserver.send(url)
+            }
+
             return
         }
 
@@ -126,12 +133,13 @@ public class PaymentFormViewModel {
             dropInDelegate?.onPaymentCompleted(sender: self, payment: getPayment)
         } catch {
             DispatchQueue.main.async {
-                print("❌❌ Error GetPayment \(error.localizedDescription)")
-                self.dropInDelegate?.onPaymentFailed(sender:  self, error: error)
+                self.dropInDelegate?.onPaymentFailed(
+                    sender: self,
+                    error: .onAuthorizePaymentFailed(reason: error.localizedDescription)
+                )
                 return
             }
         }
-    
     }
 
     func authorizePayment(authPayment: AuthorisedPayment) async {
@@ -161,15 +169,13 @@ public class PaymentFormViewModel {
         }
     }
 
-    func getPayment(with id: String) async {
+    func getPayment(with id: String) async -> GetPayment? {
         do {
             let paymentData = try await client.getPayment(with: id)
-            DispatchQueue.main.async {
-                print("DONEEE ")
-                print(" 🤣 paymentData", paymentData)
-            }
+            return paymentData
         } catch {
             print("❌❌ Error Getting payment \(error.localizedDescription)")
+            return nil
         }
     }
 
