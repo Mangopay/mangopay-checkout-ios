@@ -12,7 +12,7 @@ enum FormType {
     case dropIn
     case element
 }
-//4000002760003184
+
 class PaymentFormView: UIView {
     
     lazy var headerView = HeaderView()
