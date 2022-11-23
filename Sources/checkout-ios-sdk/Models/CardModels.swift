@@ -108,7 +108,7 @@ struct PaymentDtoInput {
     }
 }
 
-struct AuthorisedPayment {
+public struct AuthorisedPayment {
     var orderId: String?
     var flowId: String?
     var _3DSRedirect: String?

@@ -25,6 +25,11 @@ extension String {
         }
         
     }
+    
+    func fromBase64() -> String {
+        let base64Decode = Data(base64Encoded: self)!
+        return String(data: base64Decode, encoding: .utf8)!
+    }
 }
 
 extension String {

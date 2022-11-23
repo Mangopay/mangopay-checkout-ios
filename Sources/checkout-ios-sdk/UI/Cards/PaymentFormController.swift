@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import PassKit
 
 public class PaymentFormController: UIViewController {
 
@@ -65,6 +66,19 @@ public class PaymentFormController: UIViewController {
                 self.routeTo3DS(with: url)
             }
         }.store(in: &cancelables)
+        
+        formView.onApplePayTapped = {
+            let applePay = WhenThenApplePay(
+                withMerchantIdentifier: "merchant.co.whenthen.applepay",
+                amount: 200,
+                country: "US",
+                currency: "USD",
+                orderId: "5114e019-9316-4498-a16d-4343fda403eb",
+                flowId: "c23700cf-25a9-4b80-8aa6-3e3169f6d896",
+                delegate: self
+            )
+            applePay.presentApplePay(in: self)
+        }
 
         Task {
             let items = try await WhenThenClient.shared.fetchCards(with: nil)
@@ -129,6 +143,27 @@ extension PaymentFormController: ThreeDSControllerDelegate {
         let text = self.formView.statusLabel.text ?? ""
         self.formView.statusLabel.text = text.appending("\n \n 3DS FAILED \n ==========")
 
+    }
+    
+    
+}
+
+extension PaymentFormController: WhenThenApplePayDelegate {
+
+    public func applePayContext(
+        _ sender: WhenThenApplePay,
+        didSelect shippingMethod: PKShippingMethod,
+        handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void
+    ) {
+        
+    }
+
+    public func applePayContext(
+        _ sender: WhenThenApplePay,
+        didCompleteWith status: WhenThenApplePay.PaymentStatus,
+        error: Error?
+    ) {
+        print("😅 Did complete ", status)
     }
     
     

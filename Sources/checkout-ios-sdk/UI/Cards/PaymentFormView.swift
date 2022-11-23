@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import PassKit
 
 enum FormType {
     case dropIn
@@ -124,6 +125,15 @@ class PaymentFormView: UIView {
         font: .systemFont(ofSize: 12, weight: .medium)
     )
 
+    lazy var orPayWith = UILabel.create(
+        text: "Or pay with",
+        font: .systemFont(
+            ofSize: 15,
+            weight: .light
+        ),
+        textAlignment: .center
+    )
+
     lazy var firstNameTextfield = WhenThenDropDownTextfield(
         placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
@@ -202,6 +212,23 @@ class PaymentFormView: UIView {
         return button
     }()
 
+    lazy var applePayButton = {
+        let appleButton = PKPaymentButton(
+            paymentButtonType: .plain,
+            paymentButtonStyle: .black
+        )
+        appleButton.cornerRadius = 8
+        appleButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        appleButton.titleLabel?.font = .systemFont(ofSize: 2)
+        appleButton.addTarget(
+            self,
+            action: #selector(onApplePayBtnTapped),
+            for: .touchUpInside
+        )
+        
+        return appleButton
+    }()
+
     lazy var activitySpiner = UIActivityIndicatorView()
     
     var expiryMonth: Int?
@@ -209,6 +236,7 @@ class PaymentFormView: UIView {
 
     var tapGesture: UIGestureRecognizer?
     var formType: FormType = .dropIn
+    var onApplePayTapped: (() -> ())?
 
     private lazy var vStack = UIScrollView.createWithVStack(
         spacing: 16,
@@ -224,6 +252,8 @@ class PaymentFormView: UIView {
             countryField,
             zipCodeField,
             paymentButton,
+            orPayWith,
+            applePayButton,
             statusLabel
         ]
     ) { stackView in
@@ -231,7 +261,9 @@ class PaymentFormView: UIView {
         stackView.setCustomSpacing(24, after: self.checkMarkStack)
         stackView.setCustomSpacing(8, after: self.billingInfoTitle)
         stackView.setCustomSpacing(16, after: self.zipCodeField)
-        stackView.setCustomSpacing(32, after: self.paymentButton)
+        stackView.setCustomSpacing(8, after: self.paymentButton)
+        stackView.setCustomSpacing(8, after: self.orPayWith)
+        stackView.setCustomSpacing(32, after: self.applePayButton)
     }
 
     var keyboardUtil: KeyboardUtil?
@@ -321,6 +353,10 @@ class PaymentFormView: UIView {
 
     @objc func onTappedButton() {
         grabData()
+    }
+
+    @objc func onApplePayBtnTapped() {
+        onApplePayTapped?()
     }
 
     func grabData() {

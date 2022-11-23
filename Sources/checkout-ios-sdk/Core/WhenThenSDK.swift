@@ -118,7 +118,7 @@ public struct WhenThenSDK {
         }
     }
 
-    func authorizePayment(apikey: String, paymentData: AuthorisedPayment) async throws -> AuthorizePaymentResponse {
+    public static func authorizePayment(apikey: String, paymentData: AuthorisedPayment) async throws -> AuthorizePaymentResponse {
 
         let client = WhenThenClient(clientKey: apikey)
         do {
