@@ -212,7 +212,7 @@ class PaymentFormView: UIView {
         return button
     }()
 
-    lazy var applePayButton = {
+    lazy var applePayButton: PKPaymentButton = {
         let appleButton = PKPaymentButton(
             paymentButtonType: .plain,
             paymentButtonStyle: .black
