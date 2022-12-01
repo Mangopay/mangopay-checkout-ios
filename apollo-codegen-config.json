@@ -1,12 +1,12 @@
 {
-  "schemaName" : "SchemaPackage",
+  "schemaName" : "CheckoutSchema",
   "input" : {
     "operationSearchPaths" : [
-      "./Sources/checkout-ios-sdk/Core/Network/GraphConfig/*.graphql"
+        "./*.graphql",
+        "./Sources/checkout-ios-sdk/Core/Network/GraphConfig/*.graphql"
     ],
     "schemaSearchPaths" : [
-      "./*.graphqls",
-      "./Sources/checkout-ios-sdk/Core/Network/GraphConfig/*.graphqls"
+       "./*.graphqls"
     ]
   },
   "output" : {
@@ -15,14 +15,15 @@
       }
     },
     "schemaTypes" : {
-      "path" : "./SchemaPackage",
+      "path" : "Sources/core-SDK",
       "moduleType" : {
-        "swiftPackageManager" : {
+        "embeddedInTarget" : {
+            "name": "core-SDK"
         }
       }
     },
     "operations" : {
-      "relative" : {
+      "inSchemaModule" : {
       }
     }
   },
@@ -39,6 +40,6 @@
     },
     "downloadTimeout": 60,
     "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
-    "outputPath": "./graphqls/"
+    "outputPath": "./dowmloaded.graphqls/"
 }
 }
