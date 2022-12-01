@@ -13,7 +13,7 @@
 		98FBB61D2938989600B05006 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98FBB61B2938989600B05006 /* Main.storyboard */; };
 		98FBB61F2938989600B05006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98FBB61E2938989600B05006 /* Assets.xcassets */; };
 		98FBB6222938989600B05006 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98FBB6202938989600B05006 /* LaunchScreen.storyboard */; };
-		98FBB62E2938A11F00B05006 /* checkout-ios-sdk in Frameworks */ = {isa = PBXBuildFile; productRef = 98FBB62D2938A11F00B05006 /* checkout-ios-sdk */; };
+		98FBB6332938A2CE00B05006 /* checkout-ios-sdk in Frameworks */ = {isa = PBXBuildFile; productRef = 98FBB6322938A2CE00B05006 /* checkout-ios-sdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +25,7 @@
 		98FBB61E2938989600B05006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98FBB6212938989600B05006 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98FBB6232938989600B05006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98FBB6302938A2C200B05006 /* checkout-ios-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "checkout-ios-sdk"; path = ../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,7 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98FBB62E2938A11F00B05006 /* checkout-ios-sdk in Frameworks */,
+				98FBB6332938A2CE00B05006 /* checkout-ios-sdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,8 +43,10 @@
 		98FBB6092938989600B05006 = {
 			isa = PBXGroup;
 			children = (
+				98FBB62F2938A2C200B05006 /* Packages */,
 				98FBB6142938989600B05006 /* CheckoutiOSDemoApp */,
 				98FBB6132938989600B05006 /* Products */,
+				98FBB6312938A2CE00B05006 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,6 +72,21 @@
 			path = CheckoutiOSDemoApp;
 			sourceTree = "<group>";
 		};
+		98FBB62F2938A2C200B05006 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				98FBB6302938A2C200B05006 /* checkout-ios-sdk */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		98FBB6312938A2CE00B05006 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,7 +104,7 @@
 			);
 			name = CheckoutiOSDemoApp;
 			packageProductDependencies = (
-				98FBB62D2938A11F00B05006 /* checkout-ios-sdk */,
+				98FBB6322938A2CE00B05006 /* checkout-ios-sdk */,
 			);
 			productName = CheckoutiOSDemoApp;
 			productReference = 98FBB6122938989600B05006 /* CheckoutiOSDemoApp.app */;
@@ -117,7 +135,6 @@
 			);
 			mainGroup = 98FBB6092938989600B05006;
 			packageReferences = (
-				98FBB62C2938A11F00B05006 /* XCRemoteSwiftPackageReference "checkout-ios-sdk" */,
 			);
 			productRefGroup = 98FBB6132938989600B05006 /* Products */;
 			projectDirPath = "";
@@ -367,21 +384,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		98FBB62C2938A11F00B05006 /* XCRemoteSwiftPackageReference "checkout-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk";
-			requirement = {
-				branch = feature/apple_pay;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		98FBB62D2938A11F00B05006 /* checkout-ios-sdk */ = {
+		98FBB6322938A2CE00B05006 /* checkout-ios-sdk */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 98FBB62C2938A11F00B05006 /* XCRemoteSwiftPackageReference "checkout-ios-sdk" */;
 			productName = "checkout-ios-sdk";
 		};
 /* End XCSwiftPackageProductDependency section */
