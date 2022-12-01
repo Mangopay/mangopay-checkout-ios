@@ -36,8 +36,8 @@ let package = Package(
             path: "Sources",
             resources: [
 //                .copy("AuthorizePayment.graphql"),
-                .copy("Resources/countrylistdata.json"),
-                .process("Resources/Images")
+//                .copy("Resources/countrylistdata.json"),
+//                .process("Resources/Images")
             ]
         )
 //        .testTarget(

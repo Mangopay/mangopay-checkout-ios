@@ -13,6 +13,7 @@
 		98FBB61D2938989600B05006 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98FBB61B2938989600B05006 /* Main.storyboard */; };
 		98FBB61F2938989600B05006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98FBB61E2938989600B05006 /* Assets.xcassets */; };
 		98FBB6222938989600B05006 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98FBB6202938989600B05006 /* LaunchScreen.storyboard */; };
+		98FBB62E2938A11F00B05006 /* checkout-ios-sdk in Frameworks */ = {isa = PBXBuildFile; productRef = 98FBB62D2938A11F00B05006 /* checkout-ios-sdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98FBB62E2938A11F00B05006 /* checkout-ios-sdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = CheckoutiOSDemoApp;
+			packageProductDependencies = (
+				98FBB62D2938A11F00B05006 /* checkout-ios-sdk */,
+			);
 			productName = CheckoutiOSDemoApp;
 			productReference = 98FBB6122938989600B05006 /* CheckoutiOSDemoApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +116,9 @@
 				Base,
 			);
 			mainGroup = 98FBB6092938989600B05006;
+			packageReferences = (
+				98FBB62C2938A11F00B05006 /* XCRemoteSwiftPackageReference "checkout-ios-sdk" */,
+			);
 			productRefGroup = 98FBB6132938989600B05006 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -358,6 +366,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		98FBB62C2938A11F00B05006 /* XCRemoteSwiftPackageReference "checkout-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk";
+			requirement = {
+				branch = feature/apple_pay;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		98FBB62D2938A11F00B05006 /* checkout-ios-sdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98FBB62C2938A11F00B05006 /* XCRemoteSwiftPackageReference "checkout-ios-sdk" */;
+			productName = "checkout-ios-sdk";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 98FBB60A2938989600B05006 /* Project object */;
 }
