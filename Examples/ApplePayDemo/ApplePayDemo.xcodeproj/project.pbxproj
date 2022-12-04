@@ -13,6 +13,7 @@
 		98152D9F293CBC7900A15451 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98152D9D293CBC7900A15451 /* Main.storyboard */; };
 		98152DA1293CBC7A00A15451 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98152DA0293CBC7A00A15451 /* Assets.xcassets */; };
 		98152DA4293CBC7A00A15451 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98152DA2293CBC7A00A15451 /* LaunchScreen.storyboard */; };
+		98152DB7293CEA2500A15451 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 98152DB6293CEA2500A15451 /* netfox */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98152DB7293CEA2500A15451 /* netfox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +87,9 @@
 			dependencies = (
 			);
 			name = ApplePayDemo;
+			packageProductDependencies = (
+				98152DB6293CEA2500A15451 /* netfox */,
+			);
 			productName = ApplePayDemo;
 			productReference = 98152D94293CBC7900A15451 /* ApplePayDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +118,9 @@
 				Base,
 			);
 			mainGroup = 98152D8B293CBC7900A15451;
+			packageReferences = (
+				98152DB5293CEA2500A15451 /* XCRemoteSwiftPackageReference "netfox" */,
+			);
 			productRefGroup = 98152D95293CBC7900A15451 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -362,6 +370,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		98152DB5293CEA2500A15451 /* XCRemoteSwiftPackageReference "netfox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kasketis/netfox";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		98152DB6293CEA2500A15451 /* netfox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98152DB5293CEA2500A15451 /* XCRemoteSwiftPackageReference "netfox" */;
+			productName = netfox;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 98152D8C293CBC7900A15451 /* Project object */;
 }

@@ -177,9 +177,10 @@ extension WhenThenApplePay: PKPaymentAuthorizationViewControllerDelegate {
     public func paymentAuthorizationViewController(
         _ controller: PKPaymentAuthorizationViewController,
         didAuthorizePayment payment: PKPayment,
-        handler completion: @escaping (PKPaymentAuthorizationResult
-        ) -> Void) {
+        handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
         
+        // Perform basic validation on the provided contact information.
+        let errors = [Error]()
         
         var token = payment.token.paymentData
         print("token,", token)
