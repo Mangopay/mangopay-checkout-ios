@@ -80,6 +80,13 @@ public class WhenThenApplePay: NSObject {
         authorizationController = PKPaymentAuthorizationViewController(
             paymentRequest: paymentRequest
         )
+
+        if PKPaymentAuthorizationViewController.canMakePayments() {
+            print("🇬🇭🇬🇭🇬🇭🇬🇭🇬🇭🇬🇭")
+        } else {
+            print("❌ Cant make payment on this device")
+        }
+
         self.delegate = delegate
         authorizationController?.delegate = self
     }
