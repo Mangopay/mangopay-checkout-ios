@@ -54,6 +54,8 @@ public class PaymentFormController: UIViewController {
                 
         return paymentRequest;
     }()
+    
+    var applePay: WhenThenApplePay?
 
     public init(
         cardConfig: CardConfig? = nil,
@@ -108,15 +110,15 @@ public class PaymentFormController: UIViewController {
         }.store(in: &cancelables)
         
         formView.onApplePayTapped = {
-//            let applePay = WhenThenApplePay(
-//                withMerchantIdentifier: "merchant.co.whenthen.applepay",
-//                amount: 200,
-//                country: "US",
-//                currency: "USD",
-//                orderId: "5114e019-9316-4498-a16d-4343fda403eb",
-//                flowId: "c23700cf-25a9-4b80-8aa6-3e3169f6d896",
-//                delegate: self
-//            )
+             applePay = WhenThenApplePay(
+                withMerchantIdentifier: "merchant.co.whenthen.applepay",
+                amount: 200,
+                country: "US",
+                currency: "USD",
+                orderId: "5114e019-9316-4498-a16d-4343fda403eb",
+                flowId: "c23700cf-25a9-4b80-8aa6-3e3169f6d896",
+                delegate: self
+            )
 //            applePay.presentApplePay(in: self)
             let paymentController = PKPaymentAuthorizationViewController(paymentRequest: self.paymentRequest)
             if paymentController != nil {
@@ -232,12 +234,12 @@ extension PaymentFormController: PKPaymentAuthorizationViewControllerDelegate {
     public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
         
         // Perform basic validation on the provided contact information.
-        let errors = [Error]()
         
-        var token = payment.token.paymentData
-        print("token,", token)
-        
-        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+        applePay?._completePayment(with: payment) { status, error in
+            completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+        }
         
     }
+
+
 }

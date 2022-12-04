@@ -110,26 +110,16 @@ public class WhenThenApplePay: NSObject {
         self.amount = amount
         self.currencyCode = currencyCode
         super.init()
-//        let paymentRequest = makePaymentRequest(
-//            withMerchantIdentifier: merchantIdentifier,
-//            amount: amount,
-//            country: countryCode,
-//            currency: currencyCode
-//        )
-
-        authorizationController = PKPaymentAuthorizationViewController(
-            paymentRequest: self.paymentRequest
+        let paymentRequest = makePaymentRequest(
+            withMerchantIdentifier: merchantIdentifier,
+            amount: amount,
+            country: countryCode,
+            currency: currencyCode
         )
 
-//        if PKPaymentAuthorizationViewController.canMakePayments() {
-//            print("🇬🇭🇬🇭🇬🇭🇬🇭🇬🇭🇬🇭")
-//        } else
-        
-        if PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: [.amex, .masterCard, .visa, .discover]) {
-            print("😂😂😂😂😂😂")
-        } else {
-            print("❌ Cant make payment on this device")
-        }
+        authorizationController = PKPaymentAuthorizationViewController(
+            paymentRequest: paymentRequest
+        )
 
         self.delegate = delegate
         authorizationController?.delegate = self
