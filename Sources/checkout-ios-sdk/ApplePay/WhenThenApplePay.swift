@@ -53,6 +53,46 @@ public class WhenThenApplePay: NSObject {
     var flowId: String?
     var amount: Double
     var currencyCode: String
+    
+    static let supportedNetworks: [PKPaymentNetwork] = [
+        .amex,
+        .discover,
+        .masterCard,
+        .visa
+    ]
+    
+    private var paymentRequest : PKPaymentRequest = {
+    
+        // Create a payment request.
+        let paymentRequest = PKPaymentRequest()
+        
+        paymentRequest.merchantCapabilities = .capability3DS
+        paymentRequest.countryCode = "US"
+        paymentRequest.currencyCode = "USD"
+        paymentRequest.supportedNetworks = supportedNetworks
+        paymentRequest.shippingType = .delivery
+        paymentRequest.merchantIdentifier = "merchant.co.whenthen.applepay"
+        paymentRequest.supportedNetworks = [.amex, .masterCard, .visa, .discover]
+        paymentRequest.merchantCapabilities = .capability3DS
+        paymentRequest.countryCode = "US"
+        paymentRequest.currencyCode = "USD"
+        paymentRequest.requiredBillingContactFields = Set([.postalAddress])
+        paymentRequest.paymentSummaryItems = [
+            PKPaymentSummaryItem(
+                label: "Item",
+                amount: NSDecimalNumber(value: 20))
+        ]
+        
+        if #available(iOS 15.0, *) {
+         #if !os(watchOS)
+            paymentRequest.supportsCouponCode = true
+         #endif
+        } else {
+            // Fallback on earlier versions
+        }
+                
+        return paymentRequest;
+    }()
 
     private var didCancelOrTimeoutWhilePending = false
 
@@ -70,15 +110,15 @@ public class WhenThenApplePay: NSObject {
         self.amount = amount
         self.currencyCode = currencyCode
         super.init()
-        let paymentRequest = makePaymentRequest(
-            withMerchantIdentifier: merchantIdentifier,
-            amount: amount,
-            country: countryCode,
-            currency: currencyCode
-        )
+//        let paymentRequest = makePaymentRequest(
+//            withMerchantIdentifier: merchantIdentifier,
+//            amount: amount,
+//            country: countryCode,
+//            currency: currencyCode
+//        )
 
         authorizationController = PKPaymentAuthorizationViewController(
-            paymentRequest: paymentRequest
+            paymentRequest: self.paymentRequest
         )
 
 //        if PKPaymentAuthorizationViewController.canMakePayments() {
