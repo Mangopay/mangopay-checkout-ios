@@ -83,6 +83,8 @@ public class WhenThenApplePay: NSObject {
 
         if PKPaymentAuthorizationViewController.canMakePayments() {
             print("🇬🇭🇬🇭🇬🇭🇬🇭🇬🇭🇬🇭")
+        } else if PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: [.amex, .masterCard, .visa, .discover]) {
+            print("😂😂😂😂😂😂")
         } else {
             print("❌ Cant make payment on this device")
         }
