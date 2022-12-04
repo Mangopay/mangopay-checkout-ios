@@ -180,11 +180,11 @@ extension WhenThenApplePay: PKPaymentAuthorizationViewControllerDelegate {
         handler completion: @escaping (PKPaymentAuthorizationResult
         ) -> Void) {
         
-        _completePayment(with: payment) { status, error in
-//            let result = PKPaymentAuthorizationResult(status: status, errors: [error])
-            
-            completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
-        }
+        
+        var token = payment.token.paymentData
+        print("token,", token)
+        
+        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
     }
 
     func _completePayment(
