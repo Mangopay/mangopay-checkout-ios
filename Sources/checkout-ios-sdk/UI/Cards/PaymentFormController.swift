@@ -110,7 +110,7 @@ public class PaymentFormController: UIViewController {
         }.store(in: &cancelables)
         
         formView.onApplePayTapped = {
-             applePay = WhenThenApplePay(
+            self.applePay = WhenThenApplePay(
                 withMerchantIdentifier: "merchant.co.whenthen.applepay",
                 amount: 200,
                 country: "US",
