@@ -135,7 +135,7 @@ public class WhenThenClient {
         
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<AuthorizePaymentResponse, Error>) in
             
-            apollo.perform(mutation: mutation)  { result in
+            apollo2.perform(mutation: mutation)  { result in
                 switch result {
                 case .success(let reponse):
                     if let _data = reponse.data?.authorizePayment {
