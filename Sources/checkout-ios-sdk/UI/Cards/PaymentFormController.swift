@@ -191,6 +191,14 @@ extension PaymentFormController: WhenThenApplePayDelegate {
             let text = self.formView.statusLabel.text ?? ""
             self.formView.statusLabel.text = text.appending("\n \n Succesfully authorised with apple pay \n ==========")
         }
+        
+        switch status {
+        case .success:
+            self.showAlert(with: "Succesfully paid", title: "Apple Pay authorised succesfully")
+        case .error:
+            self.showAlert(with: "Failed", title: "Apple Pay authorised failed")
+        default: break
+        }
     }
     
     
