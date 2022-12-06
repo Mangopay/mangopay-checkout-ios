@@ -217,7 +217,9 @@ extension WhenThenApplePay: PKPaymentAuthorizationViewControllerDelegate {
             }
         }
         
-        let token = payment.token.paymentData.base64EncodedString().fromBase64()
+        var token = payment.token.paymentData.base64EncodedString().fromBase64()
+        token = "{ \"paymentData\": \(token) }" //wrap token in paymentData object
+
         print("😀 apple pay token", token)
 
         let authData = AuthorisedPayment(
