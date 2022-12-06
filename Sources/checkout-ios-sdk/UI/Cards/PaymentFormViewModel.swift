@@ -13,11 +13,13 @@ import Apollo
 public protocol DropInFormDelegate: AnyObject {
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment)
     func onPaymentFailed(sender: PaymentFormViewModel, error: WhenThenError)
+    func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus)
 }
 
 public protocol ElementsFormDelegate: AnyObject {
     func onTokenGenerated(tokenisedCard: TokeniseCard)
     func onTokenGenerationFailed(error: Error)
+    func onApplePayCompleteElement(status: WhenThenApplePay.PaymentStatus)
 }
 
 public class PaymentFormViewModel {

@@ -135,7 +135,7 @@ public class PaymentFormController: UIViewController {
     }
     
 }
-
+g
 extension PaymentFormController: ThreeDSControllerDelegate {
 
     public func onSuccess3D(paymentId: String) {
@@ -180,6 +180,17 @@ extension PaymentFormController: WhenThenApplePayDelegate {
         error: Error?
     ) {
         print("😅 Did complete ", status)
+
+        if let _delegate = formView.viewModel.dropInDelegate  {
+            _delegate.onApplePayCompleteDropIn(status: status)
+        } else if let _delegate = formView.viewModel.elementDelegate {
+            _delegate.onApplePayCompleteElement(status: status)
+        }
+        
+        if status == .success {
+            let text = self.formView.statusLabel.text ?? ""
+            self.formView.statusLabel.text = text.appending("\n \n Succesfully authorised with apple pay \n ==========")
+        }
     }
     
     
