@@ -21,40 +21,7 @@ public class PaymentFormController: UIViewController {
         .masterCard,
         .visa
     ]
-    
-    private var paymentRequest : PKPaymentRequest = {
-    
-        // Create a payment request.
-        let paymentRequest = PKPaymentRequest()
         
-        paymentRequest.merchantCapabilities = .capability3DS
-        paymentRequest.countryCode = "US"
-        paymentRequest.currencyCode = "USD"
-        paymentRequest.supportedNetworks = supportedNetworks
-        paymentRequest.shippingType = .delivery
-        paymentRequest.merchantIdentifier = "merchant.co.whenthen.applepay"
-        paymentRequest.supportedNetworks = [.amex, .masterCard, .visa, .discover]
-        paymentRequest.merchantCapabilities = .capability3DS
-        paymentRequest.countryCode = "US"
-        paymentRequest.currencyCode = "USD"
-        paymentRequest.requiredBillingContactFields = Set([.postalAddress])
-        paymentRequest.paymentSummaryItems = [
-            PKPaymentSummaryItem(
-                label: "Item",
-                amount: NSDecimalNumber(value: 20))
-        ]
-        
-        if #available(iOS 15.0, *) {
-         #if !os(watchOS)
-            paymentRequest.supportsCouponCode = true
-         #endif
-        } else {
-            // Fallback on earlier versions
-        }
-                
-        return paymentRequest;
-    }()
-    
     var applePay: WhenThenApplePay?
 
     public init(
@@ -120,10 +87,11 @@ public class PaymentFormController: UIViewController {
                 delegate: self
             )
 //            applePay.presentApplePay(in: self)
-            let paymentController = PKPaymentAuthorizationViewController(paymentRequest: self.paymentRequest)
-            if paymentController != nil {
-                paymentController!.delegate = self
-                self.present(paymentController!, animated: true, completion: nil)
+            
+            if let paymentRequest = self.applePay?.paymentRequest,
+               let paymentController = PKPaymentAuthorizationViewController(paymentRequest: paymentRequest) {
+                paymentController.delegate = self
+                self.present(paymentController, animated: true, completion: nil)
             }
         }
 
@@ -166,14 +134,6 @@ public class PaymentFormController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func applePay(_ sender: UIButton) {
-        // Display the payment sheet.
-        let paymentController = PKPaymentAuthorizationViewController(paymentRequest: paymentRequest)
-        if paymentController != nil {
-            paymentController!.delegate = self
-            present(paymentController!, animated: true, completion: nil)
-        }
-    }
 }
 
 extension PaymentFormController: ThreeDSControllerDelegate {
