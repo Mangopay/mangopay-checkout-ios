@@ -157,25 +157,26 @@ extension WhenThenApplePay: PKPaymentAuthorizationViewControllerDelegate {
             switch state {
             case .error:
                 self.paymentState = .error
+                DispatchQueue.main.async {
+                    
                     self.authorizationController?.dismiss(animated: true) {
-                        DispatchQueue.main.async {
-                            self.delegate?.applePayContext(self, didCompleteWith: .error, error: error)
-                            self.delegate = nil
-                            self.authorizationController = nil
-                            completion(PKPaymentAuthorizationStatus.failure, error)
-                        }
+                        self.delegate?.applePayContext(self, didCompleteWith: .error, error: error)
+                        self.delegate = nil
+                        self.authorizationController = nil
+                        completion(PKPaymentAuthorizationStatus.failure, error)
                     }
-               
+                }
+                
                 return
             case .success:
                 self.paymentState = .success
+                DispatchQueue.main.async {
                     self.authorizationController?.dismiss(animated: true) {
-                        DispatchQueue.main.async {
-                            self.delegate?.applePayContext(self, didCompleteWith: .success, error: nil)
-                            completion(PKPaymentAuthorizationStatus.success, nil)
-                        }
+                        self.delegate?.applePayContext(self, didCompleteWith: .success, error: nil)
+                        completion(PKPaymentAuthorizationStatus.success, nil)
                     }
- 
+                }
+                
                 return
             case .pending, .notStarted:
                 return
@@ -184,9 +185,9 @@ extension WhenThenApplePay: PKPaymentAuthorizationViewControllerDelegate {
         
         var token = payment.token.paymentData.base64EncodedString().fromBase64()
         token = "{ \"paymentData\": \(token) }" //wrap token in paymentData object
-
+        
         print("😀 apple pay token", token)
-
+        
         let authData = AuthorisedPayment(
             orderId: self.orderId,
             flowId: self.flowId,
