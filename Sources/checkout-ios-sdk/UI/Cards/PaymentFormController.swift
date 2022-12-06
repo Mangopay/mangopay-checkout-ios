@@ -135,7 +135,7 @@ public class PaymentFormController: UIViewController {
     }
     
 }
-g
+
 extension PaymentFormController: ThreeDSControllerDelegate {
 
     public func onSuccess3D(paymentId: String) {
