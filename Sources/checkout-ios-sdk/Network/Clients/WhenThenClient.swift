@@ -8,12 +8,11 @@
 import Foundation
 import Apollo
 import ApolloAPI
-import SchemaPackage
 
-public typealias TokeniseCard = TokeniseCardMutation.Data.TokeniseCard
-public typealias AuthorizePaymentResponse = AuthorizePaymentMutation.Data.AuthorizePayment
-public typealias ListCustomerCard = ListCustomerCardsQuery.Data.ListCustomerCard
-public typealias GetPayment = GetPaymentQuery.Data.GetPayment
+public typealias TokeniseCard = CheckoutSchema.TokeniseCardMutation.Data.TokeniseCard
+public typealias AuthorizePaymentResponse = CheckoutSchema.AuthorizePaymentMutation.Data.AuthorizePayment
+public typealias ListCustomerCard = CheckoutSchema.ListCustomerCardsQuery.Data.ListCustomerCard
+public typealias GetPayment = CheckoutSchema.GetPaymentQuery.Data.GetPayment
 
 
 public class WhenThenClient {
@@ -80,7 +79,7 @@ public class WhenThenClient {
     public func fetchCards(with customerId: String?) async throws -> [ListCustomerCard] {
 
         let _customerId = customerId ?? "a4a7cb68-9ce6-4874-84df-276d7e9b235b"
-        let query = ListCustomerCardsQuery(vaultCustomerId: _customerId)
+        let query = CheckoutSchema.ListCustomerCardsQuery(vaultCustomerId: _customerId)
 
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<[ListCustomerCard], Error>) in
             apollo.fetch(query: query) { result in
@@ -98,16 +97,16 @@ public class WhenThenClient {
         })
     }
 
-    public func tokenizeCard(with card: PaymentCardInput) async throws -> TokeniseCard {
+    public func tokenizeCard(with card: CheckoutSchema.PaymentCardInput) async throws -> TokeniseCard {
         
-        let y = GraphQLNullable<SchemaPackage.PaymentCardInput>(card)
-        let paymentMethodInput = SchemaPackage.PaymentMethodInput(card: y)
+        let y = GraphQLNullable<CheckoutSchema.PaymentCardInput>(card)
+        let paymentMethodInput = CheckoutSchema.PaymentMethodInput(card: y)
 
-        let tokenInput = TokenInput(
+        let tokenInput = CheckoutSchema.TokenInput(
             paymentMethod: paymentMethodInput
         )
         
-        let mutation = TokeniseCardMutation(data: tokenInput)
+        let mutation = CheckoutSchema.TokeniseCardMutation(data: tokenInput)
 
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<TokeniseCard, Error>) in
             apollo.perform(mutation: mutation) { result in
@@ -132,7 +131,7 @@ public class WhenThenClient {
 
     func authorizePayment(payment: AuthorisedPayment) async throws -> AuthorizePaymentResponse {
 
-        let mutation = AuthorizePaymentMutation(authorisePayment: payment.toAuthorisedPaymentInput())
+        let mutation = CheckoutSchema.AuthorizePaymentMutation(authorisePayment: payment.toAuthorisedPaymentInput())
         
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<AuthorizePaymentResponse, Error>) in
             
@@ -157,7 +156,7 @@ public class WhenThenClient {
 
     func createCustomer(with customer: CustomerInputData) async throws -> String {
         
-        let mutation = CreateCustomerMutation(data: customer.toDTO)
+        let mutation = CheckoutSchema.CreateCustomerMutation(data: customer.toDTO)
         
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<String, Error>) in
             
@@ -182,7 +181,7 @@ public class WhenThenClient {
     }
 
     func getPayment(with id: String) async throws -> GetPayment {
-        let query = GetPaymentQuery(id: id)
+        let query = CheckoutSchema.GetPaymentQuery(id: id)
 
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<GetPayment, Error>) in
             apollo.fetch(query: query) { result in

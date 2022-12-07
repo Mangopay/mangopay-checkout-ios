@@ -7,18 +7,19 @@
 
 import Foundation
 import Combine
-import SchemaPackage
 import ApolloAPI
 import Apollo
 
 public protocol DropInFormDelegate: AnyObject {
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment)
     func onPaymentFailed(sender: PaymentFormViewModel, error: WhenThenError)
+    func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus)
 }
 
 public protocol ElementsFormDelegate: AnyObject {
     func onTokenGenerated(tokenisedCard: TokeniseCard)
     func onTokenGenerationFailed(error: Error)
+    func onApplePayCompleteElement(status: WhenThenApplePay.PaymentStatus)
 }
 
 public class PaymentFormViewModel {
@@ -60,7 +61,7 @@ public class PaymentFormViewModel {
         }
     }
 
-    func performDropin(with inputData: PaymentCardInput?, cardToken: String?) async {
+    func performDropin(with inputData: CheckoutSchema.PaymentCardInput?, cardToken: String?) async {
         
         var tokenisedCard: TokeniseCard?
         var authpayment: AuthorizePaymentResponse!

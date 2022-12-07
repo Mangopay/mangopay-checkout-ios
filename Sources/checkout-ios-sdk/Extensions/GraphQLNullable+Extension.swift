@@ -8,7 +8,6 @@
 import Foundation
 import ApolloAPI
 import Apollo
-import SchemaPackage
 
 extension GraphQLNullable {
     static func makeString(_ text: String) -> GraphQLNullable<String> {

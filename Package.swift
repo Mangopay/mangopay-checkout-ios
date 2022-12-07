@@ -18,11 +18,8 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-         .package(url: "https://github.com/apollographql/apollo-ios", branch: "main"),
-         .package(url: "https://github.com/realm/SwiftLint", branch: "main"),
-         .package(name: "SchemaPackage", path: "./SchemaPackage")
-
-//         .product(name: "ApolloCodegenLib", package: "apollo-ios")
+        .package(url: "https://github.com/apollographql/apollo-ios.git", .upToNextMinor(from: "1.0.5")),
+//         .package(url: "https://github.com/realm/SwiftLint", branch: "main"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -31,25 +28,25 @@ let package = Package(
             name: "checkout-ios-sdk",
             dependencies: [
                 .product(name: "Apollo", package: "apollo-ios"),
-                .product(name: "SchemaPackage", package: "SchemaPackage")
             ],
+//            path: "",
             resources: [
 //                .copy("AuthorizePayment.graphql"),
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
             ]
-        ),
-        .testTarget(
-            name: "checkout-ios-sdkTests",
-            dependencies: ["checkout-ios-sdk"]),
-        .plugin(name: "SwiftLintCommandPlugin.swift",
-                capability: .command(
-                    intent: .sourceCodeFormatting(),
-                    permissions: [
-                        .writeToPackageDirectory(reason: "This command reformats source files")
-                    ]
-                )
-               )
+        )
+//        .testTarget(
+//            name: "checkout-ios-sdkTests",
+//            dependencies: ["checkout-ios-sdk"]),
+//        .plugin(name: "SwiftLintCommandPlugin.swift",
+//                capability: .command(
+//                    intent: .sourceCodeFormatting(),
+//                    permissions: [
+//                        .writeToPackageDirectory(reason: "This command reformats source files")
+//                    ]
+//                )
+//               )
         
     ]
 )

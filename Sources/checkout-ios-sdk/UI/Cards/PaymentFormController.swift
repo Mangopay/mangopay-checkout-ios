@@ -7,12 +7,22 @@
 
 import UIKit
 import Combine
+import PassKit
 
 public class PaymentFormController: UIViewController {
 
     var formView: PaymentFormView!
     var cancelables = Set<AnyCancellable>()
     var cardConfig: CardConfig?
+    
+    static let supportedNetworks: [PKPaymentNetwork] = [
+        .amex,
+        .discover,
+        .masterCard,
+        .visa
+    ]
+        
+    var applePay: WhenThenApplePay?
 
     public init(
         cardConfig: CardConfig? = nil,
@@ -65,6 +75,25 @@ public class PaymentFormController: UIViewController {
                 self.routeTo3DS(with: url)
             }
         }.store(in: &cancelables)
+        
+        formView.onApplePayTapped = {
+            self.applePay = WhenThenApplePay(
+                withMerchantIdentifier: "merchant.co.whenthen.applepay",
+                amount: 200,
+                country: "US",
+                currency: "USD",
+                orderId: "5114e019-9316-4498-a16d-4343fda403eb",
+                flowId: "c23700cf-25a9-4b80-8aa6-3e3169f6d896",
+                delegate: self
+            )
+//            applePay.presentApplePay(in: self)
+            
+            if let paymentRequest = self.applePay?.paymentRequest,
+               let paymentController = PKPaymentAuthorizationViewController(paymentRequest: paymentRequest) {
+                paymentController.delegate = self
+                self.present(paymentController, animated: true, completion: nil)
+            }
+        }
 
         Task {
             let items = try await WhenThenClient.shared.fetchCards(with: nil)
@@ -104,6 +133,7 @@ public class PaymentFormController: UIViewController {
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
+    
 }
 
 extension PaymentFormController: ThreeDSControllerDelegate {
@@ -132,4 +162,65 @@ extension PaymentFormController: ThreeDSControllerDelegate {
     }
     
     
+}
+
+extension PaymentFormController: WhenThenApplePayDelegate {
+
+    public func applePayContext(
+        _ sender: WhenThenApplePay,
+        didSelect shippingMethod: PKShippingMethod,
+        handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void
+    ) {
+        
+    }
+
+    public func applePayContext(
+        _ sender: WhenThenApplePay,
+        didCompleteWith status: WhenThenApplePay.PaymentStatus,
+        error: Error?
+    ) {
+        print("😅 Did complete ", status)
+
+        if let _delegate = formView.viewModel.dropInDelegate  {
+            _delegate.onApplePayCompleteDropIn(status: status)
+        } else if let _delegate = formView.viewModel.elementDelegate {
+            _delegate.onApplePayCompleteElement(status: status)
+        }
+        
+        if status == .success {
+            let text = self.formView.statusLabel.text ?? ""
+            self.formView.statusLabel.text = text.appending("\n \n Succesfully authorised with apple pay \n ==========")
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
+            switch status {
+            case .success:
+                self.showAlert(with: "Succesfully paid", title: "Apple Pay authorised succesfully")
+            case .error:
+                self.showAlert(with: "Failed", title: "Apple Pay authorised failed")
+            default: break
+            }
+        })
+    }
+    
+    
+}
+
+extension PaymentFormController: PKPaymentAuthorizationViewControllerDelegate {
+    
+    public func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    public func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        
+        // Perform basic validation on the provided contact information.
+        
+        applePay?._completePayment(with: payment) { status, error in
+            completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+        }
+        
+    }
+
+
 }

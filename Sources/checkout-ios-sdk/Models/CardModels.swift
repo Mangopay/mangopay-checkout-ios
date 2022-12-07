@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SchemaPackage
 import ApolloAPI
 import Apollo
 
@@ -19,11 +18,11 @@ struct FormData {
     let savePayment: Bool
     let bilingInfo: BillingInfo?
 
-    func toPaymentCardInput() -> PaymentCardInput {
+    func toPaymentCardInput() -> CheckoutSchema.PaymentCardInput {
         
-        let billing = bilingInfo == nil ? GraphQLNullable<BillingAddressInput>(bilingInfo!.toBillingAddressInput()) : nil
+        let billing = bilingInfo == nil ? GraphQLNullable<CheckoutSchema.BillingAddressInput>(bilingInfo!.toBillingAddressInput()) : nil
 
-        let card = PaymentCardInput(
+        let card = CheckoutSchema.PaymentCardInput(
             number: number ?? "",
             expMonth: expMonth ?? 0,
             expYear: expYear ?? 0,
@@ -36,11 +35,11 @@ struct FormData {
         return card
     }
 
-    func toCardDtoInput() -> CardDtoInput {
+    func toCardDtoInput() -> CheckoutSchema.CardDtoInput {
         let _cvc = self.cvc ?? ""
-        let billing = bilingInfo != nil ? GraphQLNullable<AddressDtoInput>(bilingInfo!.toAddressDtoInput()) : nil
+        let billing = bilingInfo != nil ? GraphQLNullable<CheckoutSchema.AddressDtoInput>(bilingInfo!.toAddressDtoInput()) : nil
 
-        let card = CardDtoInput(
+        let card = CheckoutSchema.CardDtoInput(
             number: number ?? "",
             expMonth: expMonth ?? 0,
             expYear: expYear ?? 0,
@@ -64,8 +63,8 @@ struct BillingInfo {
     let state: String?
     let country: String?
     
-    func toBillingAddressInput() -> BillingAddressInput {
-        return BillingAddressInput(
+    func toBillingAddressInput() -> CheckoutSchema.BillingAddressInput {
+        return CheckoutSchema.BillingAddressInput(
             line1: line1?.toGraphQLNullable() ?? nil,
             line2: line2?.toGraphQLNullable() ?? nil,
             city: city?.toGraphQLNullable() ?? nil,
@@ -75,8 +74,8 @@ struct BillingInfo {
         )
     }
 
-    func toAddressDtoInput() -> AddressDtoInput {
-        return AddressDtoInput(
+    func toAddressDtoInput() -> CheckoutSchema.AddressDtoInput {
+        return CheckoutSchema.AddressDtoInput(
             line1: line1?.toGraphQLNullable() ?? nil,
             line2: line2?.toGraphQLNullable() ?? nil,
             city: city?.toGraphQLNullable() ?? nil,
@@ -88,17 +87,17 @@ struct BillingInfo {
 }
 
 struct PaymentDtoInput {
-    var type: PaymentMethodEnum
+    var type: CheckoutSchema.PaymentMethodEnum
     var token: String?
     var walletToken: String?
     var card: FormData?
     var googlePayId: String?
 
-    func toPaymentDtoInput() -> PaymentMethodDtoInput {
-        let card = card != nil ? GraphQLNullable<CardDtoInput>(card!.toCardDtoInput()) : nil
-        let googlePay = googlePayId != nil ? GraphQLNullable<GooglePayInput>(GooglePayInput(transactionId: googlePayId!)) : nil
+    func toPaymentDtoInput() -> CheckoutSchema.PaymentMethodDtoInput {
+        let card = card != nil ? GraphQLNullable<CheckoutSchema.CardDtoInput>(card!.toCardDtoInput()) : nil
+        let googlePay = googlePayId != nil ? GraphQLNullable<CheckoutSchema.GooglePayInput>(CheckoutSchema.GooglePayInput(transactionId: googlePayId!)) : nil
 
-        return PaymentMethodDtoInput(
+        return CheckoutSchema.PaymentMethodDtoInput(
             type: type.rawValue,
             token: token?.toGraphQLNullable() ?? nil,
             walletToken: walletToken?.toGraphQLNullable() ?? nil,
@@ -108,7 +107,7 @@ struct PaymentDtoInput {
     }
 }
 
-struct AuthorisedPayment {
+public struct AuthorisedPayment {
     var orderId: String?
     var flowId: String?
     var _3DSRedirect: String?
@@ -122,8 +121,8 @@ struct AuthorisedPayment {
     struct _3DSecure {
         var redirectUrl: String?
         
-        var toThreeDSecureDtoInput: ThreeDSecureDtoInput {
-            return ThreeDSecureDtoInput(redirectUrl: (redirectUrl ?? "").toGraphQLNullable())
+        var toThreeDSecureDtoInput: CheckoutSchema.ThreeDSecureDtoInput {
+            return CheckoutSchema.ThreeDSecureDtoInput(redirectUrl: (redirectUrl ?? "").toGraphQLNullable())
         }
     }
     
@@ -136,13 +135,13 @@ struct AuthorisedPayment {
 //        var googlePay: GooglePayInput?
 //    }
 
-    func toAuthorisedPaymentInput() -> AuthorisedPaymentInput {
+    func toAuthorisedPaymentInput() -> CheckoutSchema.AuthorisedPaymentInput {
 
         let paymentMethod = paymentMethod.toPaymentDtoInput()
         let headlessMode = GraphQLNullable<Bool>(booleanLiteral: headlessMode)
-        let threeDS = perform3DSecure != nil ? GraphQLNullable<ThreeDSecureDtoInput>(perform3DSecure!.toThreeDSecureDtoInput) : nil
+        let threeDS = perform3DSecure != nil ? GraphQLNullable<CheckoutSchema.ThreeDSecureDtoInput>(perform3DSecure!.toThreeDSecureDtoInput) : nil
 
-        let input = AuthorisedPaymentInput(
+        let input = CheckoutSchema.AuthorisedPaymentInput(
             orderId: (orderId ?? "").toGraphQLNullable(),
             flowId: (flowId ?? "").toGraphQLNullable() ,
             currencyCode: (currencyCode ?? "").toGraphQLNullable(),
@@ -162,10 +161,10 @@ struct ShippingAddress {
     var name: String?
     var phone: String?
     
-    var asDTO: ShippingAddressInput {
-        let billing = address != nil ? GraphQLNullable<BillingAddressInput>(address!.toBillingAddressInput()) : nil
+    var asDTO: CheckoutSchema.ShippingAddressInput {
+        let billing = address != nil ? GraphQLNullable<CheckoutSchema.BillingAddressInput>(address!.toBillingAddressInput()) : nil
         
-        return ShippingAddressInput(
+        return CheckoutSchema.ShippingAddressInput(
             address: billing,
             name: name?.toGraphQLNullable() ?? nil,
             phone: phone?.toGraphQLNullable() ?? nil
@@ -179,8 +178,8 @@ struct Company {
     var taxId: String?
     var vatId: String?
     
-    func toCompanyInput() -> CompanyInput {
-        return CompanyInput(
+    func toCompanyInput() -> CheckoutSchema.CompanyInput {
+        return CheckoutSchema.CompanyInput(
             name: name?.toGraphQLNullable() ?? nil,
             number: number?.toGraphQLNullable() ?? nil,
             taxId: taxId?.toGraphQLNullable() ?? nil,
@@ -193,10 +192,10 @@ public struct CustomerInputData {
     var card: FormData?
     var customer: Customer
     
-    var toDTO: CustomerInput {
-        let card = card != nil ? GraphQLNullable<PaymentCardInput>(card!.toPaymentCardInput()) : nil
+    var toDTO: CheckoutSchema.CustomerInput {
+        let card = card != nil ? GraphQLNullable<CheckoutSchema.PaymentCardInput>(card!.toPaymentCardInput()) : nil
 
-        return CustomerInput(
+        return CheckoutSchema.CustomerInput(
             card: card,
             customer: customer.toDTO
         )
@@ -213,14 +212,14 @@ struct Customer {
     var shippingAddress: ShippingAddress?
     var company: Company?
 
-    var toDTO: VaultCustomerInput {
-        let billing = billingAddress != nil ? GraphQLNullable<BillingAddressInput>(billingAddress!.toBillingAddressInput()) : nil
+    var toDTO: CheckoutSchema.VaultCustomerInput {
+        let billing = billingAddress != nil ? GraphQLNullable<CheckoutSchema.BillingAddressInput>(billingAddress!.toBillingAddressInput()) : nil
 
-        let company = company != nil ? GraphQLNullable<CompanyInput>(company!.toCompanyInput()) : nil
+        let company = company != nil ? GraphQLNullable<CheckoutSchema.CompanyInput>(company!.toCompanyInput()) : nil
         
-        let shippingAddress = shippingAddress != nil ? GraphQLNullable<ShippingAddressInput>(shippingAddress!.asDTO) : nil
+        let shippingAddress = shippingAddress != nil ? GraphQLNullable<CheckoutSchema.ShippingAddressInput>(shippingAddress!.asDTO) : nil
 
-        return VaultCustomerInput(
+        return CheckoutSchema.VaultCustomerInput(
             id: id?.toGraphQLNullable() ?? nil,
             billingAddress: billing,
             description: description?.toGraphQLNullable() ?? nil,
