@@ -93,10 +93,10 @@ class WhenThenTextfield: UIView {
         view.layer.borderWidth = 1
         view.layer.cornerRadius = style.borderType == .round ? 8 : 0
         view.addSubview(hStack)
-        hStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 8).isActive = true
-        hStack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
-        hStack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
-        hStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8).isActive = true
+        hStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 4).isActive = true
+        hStack.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+        hStack.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
+        hStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -4).isActive = true
         return view
     }()
 
@@ -104,7 +104,9 @@ class WhenThenTextfield: UIView {
         text: "",
         color: style.errorColor,
         font: .systemFont(ofSize: 11)
-    )
+    ) { textfield in
+        textfield.heightAnchor.constraint(equalToConstant: 12).isActive = true
+    }
 
     private lazy var vStack = UIStackView.create(
         spacing: 4,
@@ -156,7 +158,7 @@ class WhenThenTextfield: UIView {
         vStack.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         vStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        self.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 72).isActive = true
     }
 
     private func addTextfieldTargets() {

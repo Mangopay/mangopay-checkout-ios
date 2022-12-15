@@ -11,15 +11,18 @@ import ApolloAPI
 import Apollo
 
 public protocol DropInFormDelegate: AnyObject {
+    func onPaymentStarted(sender: PaymentFormViewModel)
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment)
     func onPaymentFailed(sender: PaymentFormViewModel, error: WhenThenError)
     func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus)
 }
 
 public protocol ElementsFormDelegate: AnyObject {
+    func onPaymentStarted(sender: PaymentFormViewModel)
     func onTokenGenerated(tokenisedCard: TokeniseCard)
     func onTokenGenerationFailed(error: Error)
     func onApplePayCompleteElement(status: WhenThenApplePay.PaymentStatus)
+    func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment)
 }
 
 public class PaymentFormViewModel {
@@ -131,7 +134,9 @@ public class PaymentFormViewModel {
         do {
             let getPayment = try await client.getPayment(with: authpayment.id)
             self.statusObserver.send("Succesfully Retrieved payment: \(getPayment.id )")
-            dropInDelegate?.onPaymentCompleted(sender: self, payment: getPayment)
+            DispatchQueue.main.async {
+                self.dropInDelegate?.onPaymentCompleted(sender: self, payment: getPayment)
+            }
         } catch {
             DispatchQueue.main.async {
                 self.dropInDelegate?.onPaymentFailed(

@@ -209,6 +209,12 @@ class PaymentFormView: UIView {
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)
         button.setTitleColor(paymentFormStyle.checkoutButtonTextColor, for: .normal)
+        switch formType {
+        case .dropIn:
+            button.setTitle("Checkout \(dropInOptions?.amountString ?? "")", for: .normal)
+        case .element:
+            button.setTitle("Checkout \(elementOptions?.amountString ?? "")", for: .normal)
+        }
         return button
     }()
 
@@ -239,9 +245,10 @@ class PaymentFormView: UIView {
     var onApplePayTapped: (() -> ())?
 
     private lazy var vStack = UIScrollView.createWithVStack(
-        spacing: 16,
+        spacing: 8,
         alignment: .fill,
         distribution: .fill,
+        padding: UIEdgeInsets(top: 8, left: 0, bottom: 32, right: 0),
         views: [
             headerView,
             cardNumberField,
@@ -270,6 +277,10 @@ class PaymentFormView: UIView {
     var topConstriant: NSLayoutConstraint!
     var viewModel: PaymentFormViewModel!
     var onRightButtonTappedAction: (() -> Void)?
+    var onClosedTapped: (() -> Void)?
+    
+    var dropInOptions: DropInOptions?
+    var elementOptions: ElementsOptions?
     
     var paymentFormStyle: PaymentFormStyle
     
@@ -280,8 +291,16 @@ class PaymentFormView: UIView {
         cvvField
     ]
 
-    init(paymentFormStyle: PaymentFormStyle?, formType: FormType) {
+    init(
+        paymentFormStyle: PaymentFormStyle?,
+        formType: FormType,
+        dropInOptions: DropInOptions? = nil,
+        elementOptions: ElementsOptions? = nil
+    ) {
         self.formType = formType
+        self.dropInOptions = dropInOptions
+        self.elementOptions = elementOptions
+
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
         self.viewModel = PaymentFormViewModel(clientId: WhenThenSDK.clientID)
         super.init(frame: .zero)
@@ -291,6 +310,7 @@ class PaymentFormView: UIView {
         )
         
         setupView()
+        setNavigation()
         loadCountries()
         
         keyboardUtil = KeyboardUtil(
@@ -345,6 +365,21 @@ class PaymentFormView: UIView {
                 
             }
         )
+    }
+
+    func setNavigation() {
+        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 44))
+        self.addSubview(navBar)
+
+        let navItem = UINavigationItem(title: "SomeTitle")
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .close, target: nil, action: #selector(closeTapped))
+        navItem.rightBarButtonItem = doneItem
+
+        navBar.setItems([navItem], animated: false)
+    }
+
+    @objc func closeTapped() {
+        onClosedTapped?()
     }
 
     @objc func onViewTap() {
@@ -584,7 +619,7 @@ extension PaymentFormView: KeyboardUtilDelegate {
 
     func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
         let padding: CGFloat = 180
-        let moveBy = rect.height - safeAreaInsets.bottom - padding
+        let moveBy = rect.height - safeAreaInsets.bottom - padding - 120
         print("🤣 moveBy", moveBy)
         topConstriant.constant = -moveBy
 
