@@ -133,6 +133,8 @@ public class WhenThenClient {
 
         let mutation = CheckoutSchema.AuthorizePaymentMutation(authorisePayment: payment.toAuthorisedPaymentInput())
         
+        print("auth data mutation,", payment.toAuthorisedPaymentInput())
+
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<AuthorizePaymentResponse, Error>) in
             
             apollo2.perform(mutation: mutation)  { result in

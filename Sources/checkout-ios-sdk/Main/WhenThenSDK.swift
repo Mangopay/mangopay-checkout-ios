@@ -21,21 +21,30 @@ public struct ElementsOptions {
     var environment: Ennvironment
     var customerId: String?
     var delegate: ElementsFormDelegate
-    //billing
-    //cvv
+    var amount: Float
+    var currencyCode: String
+    
+    var amountString: String {
+        let priceString = String(format: "\(currencyCode) %.02f", amount)
+        return priceString
+    }
     
     public init(
         apiKey: String,
         style: PaymentFormStyle? = nil,
-        environment: Ennvironment,
         customerId: String? = nil,
+        amount: Float,
+        currencyCode: String,
         delegate: ElementsFormDelegate
     ) {
         self.apiKey = apiKey
         self.style = style
-        self.environment = environment
         self.customerId = customerId
         self.delegate = delegate
+        self.amount = amount
+        self.currencyCode = currencyCode
+        self.environment = apiKey.contains("test") ? .sandbox : .production
+
     }
 }
 
@@ -50,11 +59,15 @@ public struct DropInOptions {
     var currencyCode: String
     var delegate: DropInFormDelegate
 
+    var amountString: String {
+        let priceString = String(format: "\(currencyCode) %.02f", amount)
+        return priceString
+    }
+
     public init(
         apiKey: String,
         orderId: String? = nil,
         style: PaymentFormStyle? = nil,
-        environment: Ennvironment,
         customerId: String? = nil,
         flowId: String,
         amount: Float,
@@ -64,12 +77,12 @@ public struct DropInOptions {
         self.apiKey = apiKey
         self.orderId = orderId
         self.style = style
-        self.environment = environment
         self.customerId = customerId
         self.flowId = flowId
         self.amount = amount
         self.currencyCode = currencyCode
         self.delegate = delegate
+        self.environment = apiKey.contains("test") ? .sandbox : .production
     }
 }
 
@@ -87,8 +100,9 @@ public struct WhenThenSDK {
             cardConfig: cardConfig,
             elementOptions: options
         )
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        viewController.present(nav, animated: true)
     }
 
     public static func buildDropInForm(
@@ -102,8 +116,9 @@ public struct WhenThenSDK {
             cardConfig: cardConfig,
             dropInOptions: options
         )
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        viewController.present(nav, animated: true)
     }
 
     public static func tokeniseCard(apikey: String, card: CheckoutSchema.PaymentCardInput) async throws -> TokeniseCard {

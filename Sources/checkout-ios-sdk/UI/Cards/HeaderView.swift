@@ -32,7 +32,7 @@ class HeaderView: UIView {
     }()
 
     private lazy var vStack = UIStackView.create(
-        spacing: 8,
+        spacing: 4,
         axis: .vertical,
         alignment: .fill,
         distribution: .fill,
@@ -66,7 +66,7 @@ class HeaderView: UIView {
         vStack.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         vStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
 
-        self.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
     func set(_ cards: CardConfig?) {

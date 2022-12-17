@@ -243,13 +243,13 @@ type CompanyApi {
   vatId: String
 }
 
+"""An object scalar"""
+scalar Object
+
 enum CheckoutType {
   HOSTED
   TOKENISATION
 }
-
-"""An object scalar"""
-scalar Object
 
 input IntentShippingInput {
   status: FormStepStatus
@@ -359,6 +359,13 @@ type PaymentsWithFilter {
   data: PaymentFilter
   pageInfo: PageInfo!
   edges: [PaymentEdge]
+}
+
+input PaginationInput {
+  page: Long
+  max: Long
+  orderBy: String
+  asc: Boolean
 }
 
 type DisputeEvidenceFileFormat {

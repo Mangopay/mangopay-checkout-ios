@@ -111,9 +111,12 @@ extension ThreeDSController: WKNavigationDelegate {
     private func handleDismiss(status: String, paymentId: String) {
         switch status {
         case "COMPLETED":
-            self.dismiss(animated: true) { [delegate] in
-                delegate?.onSuccess3D(paymentId: paymentId)
-            }
+//            self.dismiss(animated: true) { [delegate] in
+//                delegate?.onSuccess3D(paymentId: paymentId)
+//            }
+            self.navigationController?.popViewController(animated: true)
+            delegate?.onSuccess3D(paymentId: paymentId)
+
         case "FAILED":
             self.dismiss(animated: true) { [delegate] in
                 delegate?.onFailure3D()

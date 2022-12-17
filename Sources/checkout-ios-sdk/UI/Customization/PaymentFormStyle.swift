@@ -16,7 +16,7 @@ public enum BorderType {
 public class PaymentFormStyle {
     var font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
     var borderType: BorderType = .round
-    var backgroundColor: UIColor = .white
+//    var backgroundColor: UIColor = .white
     var textColor: UIColor = .black
     var placeHolderColor: UIColor = .gray
     var borderColor: UIColor = .gray
@@ -39,7 +39,7 @@ public class PaymentFormStyle {
     ) {
         self.font = font
         self.borderType = borderType
-        self.backgroundColor = backgroundColor
+//        self.backgroundColor = backgroundColor
         self.textColor = textColor
         self.placeHolderColor = placeHolderColor
         self.borderColor = borderColor

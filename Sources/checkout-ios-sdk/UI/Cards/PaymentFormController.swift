@@ -30,11 +30,11 @@ public class PaymentFormController: UIViewController {
         elementOptions: ElementsOptions? = nil
     ) {
         if let dropInOptions = dropInOptions {
-            formView = PaymentFormView(paymentFormStyle: dropInOptions.style, formType: .dropIn)
+            formView = PaymentFormView(paymentFormStyle: dropInOptions.style, formType: .dropIn, dropInOptions: dropInOptions)
         } else if let elementOptions = elementOptions {
-            formView = PaymentFormView(paymentFormStyle: elementOptions.style, formType: .element)
+            formView = PaymentFormView(paymentFormStyle: elementOptions.style, formType: .element, elementOptions: elementOptions)
         } else {
-            formView = PaymentFormView(paymentFormStyle: PaymentFormStyle(), formType: .dropIn)
+            formView = PaymentFormView(paymentFormStyle: dropInOptions?.style, formType: .dropIn, dropInOptions: dropInOptions)
         }
 
         super.init(nibName: nil, bundle: nil)
@@ -52,6 +52,7 @@ public class PaymentFormController: UIViewController {
         super.viewDidLoad()
         setupObservers()
         formView.setCards(cards: self.cardConfig)
+        setNavigation()
     }
 
     public override func loadView() {
@@ -94,6 +95,10 @@ public class PaymentFormController: UIViewController {
                 self.present(paymentController, animated: true, completion: nil)
             }
         }
+        
+        formView.onClosedTapped = {
+            self.dismiss(animated: true)
+        }
 
         Task {
             let items = try await WhenThenClient.shared.fetchCards(with: nil)
@@ -111,11 +116,22 @@ public class PaymentFormController: UIViewController {
 
     }
 
+    func setNavigation() {
+
+        if let _delegate = formView.viewModel.dropInDelegate  {
+            title = "Checkout with DropIn"
+        } else if let _delegate = formView.viewModel.elementDelegate {
+            title = "Checkout with Elements"
+        }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeTapped))
+    }
+
     func routeTo3DS(with url: URL) {
         let vc = ThreeDSController(successUrl: url, failUrl: nil)
         vc.authUrl = url
         vc.delegate = self
-        present(vc, animated: true)
+//        present(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func showAlert(with cardToken: String, title: String) {
@@ -134,6 +150,20 @@ public class PaymentFormController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func setNavigationBar() {
+//        let screenSize: CGRect = UIScreen.main.bounds
+//        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 44))
+//        let navItem = UINavigationItem(title: "")
+//        let doneItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: nil, action: #selector(done))
+//        navItem.rightBarButtonItem = doneItem
+//        navBar.setItems([navItem], animated: false)
+//        self.view.addSubview(navBar)
+    }
+
+    @objc func closeTapped() {
+//        onClosedTapped?()
+        dismiss(animated: true)
+    }
 }
 
 extension PaymentFormController: ThreeDSControllerDelegate {
