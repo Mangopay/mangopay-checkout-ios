@@ -202,7 +202,7 @@ public struct CustomerInputData {
     }
 }
 
-struct Customer {
+public struct Customer {
     var id: String?
     var billingAddress: BillingInfo?
     var description: String?
