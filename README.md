@@ -250,3 +250,11 @@ Headless mode grants the developer complete control as it provides the methods t
             throw error
         }
     ```
+
+
+
+## **Localisation**
+
+The SDK supports localisation, it detects the host app's local and automatically localises.
+
+*We currently only support English and French*
