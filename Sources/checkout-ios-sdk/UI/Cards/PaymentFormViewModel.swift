@@ -100,7 +100,7 @@ public class PaymentFormViewModel {
                 type: .card,
                 token: token
             ),
-            perform3DSecure: AuthorisedPayment._3DSecure(redirectUrl: "https://whenthen.com")
+            perform3DSecure: AuthorisedPayment._3DSecure(redirectUrl: data.threeDSRedirectURL)
         )
 
         do {

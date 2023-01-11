@@ -77,17 +77,27 @@ public class PaymentFormController: UIViewController {
             }
         }.store(in: &cancelables)
         
+        guard let merchantId = formView.dropInOptions?.applePayMerchantId ?? formView.elementOptions?.applePayMerchantId else {
+            return
+        }
+        
+        guard let country = formView.dropInOptions?.countryCode ?? formView.elementOptions?.countryCode else { return }
+
+        guard let currency = formView.dropInOptions?.currencyCode ?? formView.elementOptions?.currencyCode else { return }
+        
+        let orderId = formView.dropInOptions?.orderId
+        let flowId = formView.dropInOptions?.flowId
+
         formView.onApplePayTapped = {
             self.applePay = WhenThenApplePay(
-                withMerchantIdentifier: "merchant.co.whenthen.applepay",
+                withMerchantIdentifier: merchantId,
                 amount: 200,
-                country: "US",
-                currency: "USD",
-                orderId: "5114e019-9316-4498-a16d-4343fda403eb",
-                flowId: "c23700cf-25a9-4b80-8aa6-3e3169f6d896",
+                country: country,
+                currency: currency,
+                orderId: orderId,
+                flowId: flowId,
                 delegate: self
             )
-//            applePay.presentApplePay(in: self)
             
             if let paymentRequest = self.applePay?.paymentRequest,
                let paymentController = PKPaymentAuthorizationViewController(paymentRequest: paymentRequest) {

@@ -20,9 +20,11 @@ public struct ElementsOptions {
     var style: PaymentFormStyle?
     var environment: Ennvironment
     var customerId: String?
-    var delegate: ElementsFormDelegate
     var amount: Float
+    var countryCode: String
     var currencyCode: String
+    var applePayMerchantId: String?
+    var delegate: ElementsFormDelegate
     
     var amountString: String {
         let priceString = String(format: "\(currencyCode) %.02f", amount)
@@ -34,7 +36,9 @@ public struct ElementsOptions {
         style: PaymentFormStyle? = nil,
         customerId: String? = nil,
         amount: Float,
+        countryCode: String,
         currencyCode: String,
+        applePayMerchantId: String? = nil,
         delegate: ElementsFormDelegate
     ) {
         self.apiKey = apiKey
@@ -42,7 +46,9 @@ public struct ElementsOptions {
         self.customerId = customerId
         self.delegate = delegate
         self.amount = amount
+        self.countryCode = countryCode
         self.currencyCode = currencyCode
+        self.applePayMerchantId = applePayMerchantId
         self.environment = apiKey.contains("test") ? .sandbox : .production
 
     }
@@ -56,7 +62,10 @@ public struct DropInOptions {
     var customerId: String?
     var flowId: String
     var amount: Float
+    var countryCode: String
     var currencyCode: String
+    var applePayMerchantId: String?
+    var threeDSRedirectURL: String?
     var delegate: DropInFormDelegate
 
     var amountString: String {
@@ -72,6 +81,9 @@ public struct DropInOptions {
         flowId: String,
         amount: Float,
         currencyCode: String,
+        countryCode: String,
+        applePayMerchantId: String? = nil,
+        threeDSRedirectURL: String? = nil,
         delegate: DropInFormDelegate
     ) {
         self.apiKey = apiKey
@@ -81,8 +93,11 @@ public struct DropInOptions {
         self.flowId = flowId
         self.amount = amount
         self.currencyCode = currencyCode
+        self.countryCode = countryCode
         self.delegate = delegate
         self.environment = apiKey.contains("test") ? .sandbox : .production
+        self.applePayMerchantId = applePayMerchantId
+        self.threeDSRedirectURL = threeDSRedirectURL
     }
 }
 
