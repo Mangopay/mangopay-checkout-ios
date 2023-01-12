@@ -3,8 +3,9 @@
 
 import PackageDescription
 
+//TODO: change name to 'WhenThen-ios-sdk`
 let package = Package(
-    name: "checkout-ios-sdk",
+    name: "WhenThen-ios-sdk",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v11),
@@ -13,8 +14,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "checkout-ios-sdk",
-            targets: ["checkout-ios-sdk"]),
+            name: "WhenThen-ios-sdk",
+            targets: ["WhenThen-ios-sdk"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -25,7 +26,7 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "checkout-ios-sdk",
+            name: "WhenThen-ios-sdk",
             dependencies: [
                 .product(name: "Apollo", package: "apollo-ios"),
             ],

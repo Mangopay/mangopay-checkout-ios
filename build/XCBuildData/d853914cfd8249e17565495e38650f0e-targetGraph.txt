@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+ApolloAPI in checkout-ios-sdk, no dependencies
+Apollo in checkout-ios-sdk, depends on:
+ApolloAPI in checkout-ios-sdk (explicit)
