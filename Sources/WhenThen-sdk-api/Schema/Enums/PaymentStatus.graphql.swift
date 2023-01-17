@@ -19,6 +19,7 @@ public extension CheckoutSchema {
     case needs3DSecure = "NEEDS_3D_SECURE"
     case needsApmAuthorization = "NEEDS_APM_AUTHORIZATION"
     case gatewayHold = "GATEWAY_HOLD"
+    case refundPending = "REFUND_PENDING"
   }
 
 }

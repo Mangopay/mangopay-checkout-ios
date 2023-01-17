@@ -49,6 +49,14 @@ type Customer {
   defaultPaymentMethod: String
 }
 
+input AddressInput {
+  addressLine1: String
+  addressLine2: String
+  postTown: String
+  country: String
+  postCode: String
+}
+
 interface Node {
   id: ID!
 }
@@ -63,8 +71,19 @@ enum Projection {
   MOST_COMMON
 }
 
+input OverseasAccountIdentifierInput {
+  bban: String
+  upic: String
+  iban: String
+  otherAccountNumber: String
+}
+
 """An RFC-3339 compliant DateTime Scalar"""
 scalar DateTime
+
+type PayoutDetails {
+  description: String
+}
 
 type PaymentInternal implements Node {
   id: ID!
@@ -118,6 +137,21 @@ type PaymentCustomer {
   phone: String
 }
 
+input DestinationInput {
+  id: String
+  emailAddress: String
+  address: AddressInput
+  birthdate: String
+  phoneNumber: String
+  countrySpecificDetails: CountrySpecificDetailsInput
+  iban: String
+  name: String
+  type: String
+  accountNumber: String
+  sortCode: String
+  bic: String
+}
+
 type PaymentProcessorToken {
   token: String
 }
@@ -158,6 +192,16 @@ input IntentCartItem {
   totalDiscount: Long
 }
 
+input UltimatePayerInput {
+  name: String
+  bic: String
+  birthDetails: BirthDetailsInput
+  officialIdentification: OfficialIdentificationInput
+  address: AddressInput
+  officialIdDetailOrgs: OfficialIdDetailOrgInput
+  overseasAccountIdentifier: OverseasAccountIdentifierInput
+}
+
 type FlowSummary {
   name: String
   date: DateTime
@@ -184,6 +228,19 @@ type DisputeEvidenceSubmissionResponse {
   processorErrorMessage: String
   processorResponseJson: String
   newDisputeStatus: String
+}
+
+input CreatePayoutInput {
+  reference: String
+  externalReference: String
+  sourceAccountId: String!
+  endToEndReference: String
+  currency: String
+  paymentDate: String
+  amount: String
+  overseasPaymentDetail: OverseasPaymentDetailInput
+  regulatoryReporting: RegulatoryReportingInput
+  destination: DestinationInput
 }
 
 input IntentAmountInput {
@@ -226,6 +283,14 @@ type SettlementReport {
   totalFees: Long
 }
 
+input OfficialIdentificationInput {
+  passportNumber: String
+  socialSecurityNumber: String
+  otherIdNumber: String
+  customerNumber: String
+  drivingLicenceNumber: String
+}
+
 type PaymentCore {
   processorStatus: String
   paymentMethod: PaymentMethodEnum
@@ -234,6 +299,12 @@ type PaymentCore {
 
 input MbwayInput {
   phoneNumber: String!
+}
+
+input ChargeDetailsInput {
+  amount: String
+  bearer: String
+  currency: String
 }
 
 type CompanyApi {
@@ -272,6 +343,13 @@ input AddressDtoInput {
   country: String
 }
 
+input StructuredRegulatoryReportingInput {
+  amount: String
+  code: String
+  information: String
+  currencyCode: String
+}
+
 type DisputeEvidenceForm {
   form: JSON
 }
@@ -287,6 +365,11 @@ type PaymentTimelineInternal {
   flows: [FlowSummaryInternal]
 }
 
+input BirthDetailsInput {
+  countryOfBirth: String
+  cityOfBirth: String
+}
+
 input PaymentFilterDataInput {
   date: FilterDataInput
   dateRange: FilterDataInput
@@ -300,6 +383,11 @@ input PaymentFilterDataInput {
   country: FilterDataInput
   flowId: FilterDataInput
   category: FilterDataInput
+}
+
+input RegulatoryAuthorityInput {
+  authorityName: String
+  authorityCountry: String
 }
 
 type SecureCardInfo {
@@ -482,6 +570,27 @@ enum FormStepStatus {
   FAILED
 }
 
+input OfficialIdDetailOrgInput {
+  certificateOfIncorporationNumber: String
+  employerIdNumber: String
+  siretCode: String
+  dataUniversalNumberingSystem: String
+  taxIdNumber: String
+  eanglnIdentifier: String
+  beiIdentifier: String
+  customerNumber: String
+  countryIdCode: String
+  genericIdentificationIssr: String
+  gs1glnIdentifier: String
+  sirenCode: String
+  bicIdentifier: String
+  chipsUniversalIdentifier: String
+  centralBankIdNumber: String
+  bankPartyIdentification: String
+  clearingIdNumber: String
+  genericIdentification3: String
+}
+
 type Amount {
   rawAmount: Int!
   currency: String
@@ -515,6 +624,13 @@ type IntentCustomer {
   isGuest: Boolean
   email: String
   name: String
+}
+
+type PayoutSchemaInfo {
+  name: String
+  id: String
+  message: String
+  responseCode: String
 }
 
 input HeadlessThreeDSecureDtoInput {
@@ -727,6 +843,7 @@ enum PaymentStatus {
   NEEDS_3D_SECURE
   NEEDS_APM_AUTHORIZATION
   GATEWAY_HOLD
+  REFUND_PENDING
 }
 
 input CompanyInput {
@@ -767,6 +884,18 @@ type PhysicalAddress {
   region: String
   country: String
   postcode: String
+}
+
+input CountrySpecificDetailsInput {
+  bankCode: String
+  chineseId: String
+  bankBranchCode: String
+  province: String
+  business: String
+  bankBranchName: String
+  bankName: String
+  bankAddress: String
+  bankCity: String
 }
 
 input PaymentFilterInput {
@@ -849,9 +978,26 @@ input FilterDataInput {
   selectedVerb: String
 }
 
+input RegulatoryReportingInput {
+  type: String
+  structuredRegulatoryReporting: StructuredRegulatoryReportingInput
+  regulatoryAuthority: RegulatoryAuthorityInput
+}
+
 type PaymentSortData {
   fieldName: String
   order: SortVerb
+}
+
+type PayoutPayment {
+  id: String
+  status: String
+  createdDate: DateTime
+  externalReference: String
+  approvalStatus: String
+  message: String
+  details: PayoutDetails
+  schemeInfo: PayoutSchemaInfo
 }
 
 input PaymentMethodCustomerDtoInput {
@@ -901,6 +1047,7 @@ type PaymentDetails {
 }
 
 type Mutation {
+  createPayout(connectionSmartId: String!, createPayoutInput: CreatePayoutInput!): PayoutPayment
   authorizePayment(authorisePayment: AuthorisedPaymentInput!): Payment
   headlessAuthorizePayment(headlessAuthorisePayment: HeadlessAuthorisedPaymentInput!): Payment
   capturePayment(id: ID!, amount: Long, metadata: JSON): Payment
@@ -1025,6 +1172,13 @@ input StorePaymentDisputeInput {
   evidence: JSON
 }
 
+input OverseasPaymentDetailInput {
+  additionalRemittanceInformation: String
+  originalPaymentDetails: OriginalPaymentDetailsInput
+  chargeDetails: ChargeDetailsInput
+  ultimatePayer: UltimatePayerInput
+}
+
 """A JSON scalar"""
 scalar JSON
 
@@ -1090,7 +1244,7 @@ input HeadlessAuthorisedPaymentInput {
   metadata: JSON
   performHeadless3DSecure: HeadlessThreeDSecureDtoInput
   apmRedirectUrl: String
-  paymentProcessorConnectionId: String!
+  paymentProcessorConnectionId: String
   fraud: JSON
 }
 
@@ -1180,6 +1334,12 @@ type PaymentFilter {
   name: String
   filter: PaymentFilterData
   sort: [PaymentSortData]
+}
+
+input OriginalPaymentDetailsInput {
+  exchangeRate: String
+  amount: String
+  currency: String
 }
 
 type PaymentTimelineEvent {

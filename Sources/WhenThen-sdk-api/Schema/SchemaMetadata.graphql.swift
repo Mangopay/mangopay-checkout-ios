@@ -31,12 +31,12 @@ public extension CheckoutSchema {
 
     public static func objectType(forTypename typename: String) -> Object? {
       switch typename {
-      case "Query": return CheckoutSchema.Objects.Query
       case "Mutation": return CheckoutSchema.Objects.Mutation
       case "CardToken": return CheckoutSchema.Objects.CardToken
       case "Customer": return CheckoutSchema.Objects.Customer
       case "BillingAddressApi": return CheckoutSchema.Objects.BillingAddressApi
       case "ShippingAddressApi": return CheckoutSchema.Objects.ShippingAddressApi
+      case "Query": return CheckoutSchema.Objects.Query
       case "PaymentMethod": return CheckoutSchema.Objects.PaymentMethod
       case "Payment": return CheckoutSchema.Objects.Payment
       case "PaymentInternal": return CheckoutSchema.Objects.PaymentInternal
