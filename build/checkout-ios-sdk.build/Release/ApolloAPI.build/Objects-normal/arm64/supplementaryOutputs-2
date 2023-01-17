@@ -1,8 +1,0 @@
-"/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk/.build/checkouts/apollo-ios/Sources/ApolloAPI/AnyHashableConvertible.swift":
-  objc-header: "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk/build/checkout-ios-sdk.build/Release/ApolloAPI.build/Objects-normal/arm64/ApolloAPI-Swift.h"
-  diagnostics: "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk/build/checkout-ios-sdk.build/Release/ApolloAPI.build/Objects-normal/arm64/ApolloAPI-master.dia"
-  swiftmodule: "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk/build/checkout-ios-sdk.build/Release/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.swiftmodule"
-  abi-baseline-json: "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk/build/checkout-ios-sdk.build/Release/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.abi.json"
-  swiftdoc: "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk/build/checkout-ios-sdk.build/Release/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.swiftdoc"
-  dependencies: "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk/build/checkout-ios-sdk.build/Release/ApolloAPI.build/Objects-normal/arm64/ApolloAPI-master.d"
-  swiftsourceinfo: "/Users/elikemsavie/Codelab/WhenThen/checkout-ios-sdk/build/checkout-ios-sdk.build/Release/ApolloAPI.build/Objects-normal/arm64/ApolloAPI.swiftsourceinfo"

@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "WhenThen-ios-sdk",
+    name: "WhenTheniOSSDK",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v11),
@@ -12,14 +12,14 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "WhenThen-ios-core",
-            targets: ["WhenThen-ios-core"]),
+            name: "WhenThenCoreiOS",
+            targets: ["WhenThenCoreiOS"]),
         .library(
-            name: "WhenThen-sdk-api",
-            targets: ["WhenThen-sdk-api"]),
+            name: "WhenThenSdkAPI",
+            targets: ["WhenThenSdkAPI"]),
         .library(
-            name: "WhenThen-Intent",
-            targets: ["WhenThen-Intent"]),
+            name: "WhenThenIntent",
+            targets: ["WhenThenIntent"]),
     ],
     dependencies: [
         .package(
@@ -29,9 +29,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "WhenThen-ios-core",
+            name: "WhenThenCoreiOS",
             dependencies: [
-                .product(name: "Apollo", package: "apollo-ios"),
+                "WhenThenSdkAPI",
+//                .product(name: "Apollo", package: "apollo-ios"),
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
@@ -39,10 +40,13 @@ let package = Package(
             ]
         ),
         .target(
-            name: "WhenThen-sdk-api",
-            dependencies: []
+            name: "WhenThenSdkAPI",
+            dependencies: [
+                .product(name: "Apollo", package: "apollo-ios"),
+            ]
         ),
-        .target(name: "WhenThen-Intent")
+        .target(name: "WhenThenIntent")
+    
 //        .testTarget(
 //            name: "checkout-ios-sdkTests",
 //            dependencies: ["checkout-ios-sdk"]),

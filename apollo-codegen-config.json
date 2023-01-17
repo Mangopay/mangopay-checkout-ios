@@ -3,11 +3,11 @@
   "input" : {
     "operationSearchPaths" : [
         "./*.graphql",
-        "./Sources/WhenThen-sdk-api/*.graphql"
+        "./Sources/WhenThenSdkAPI/*.graphql"
     ],
     "schemaSearchPaths" : [
        "./*.graphqls",
-       "./Sources/WhenThen-sdk-api/*.graphqls"
+       "./Sources/WhenThenSdkAPI/*.graphqls"
     ]
   },
   "output" : {
@@ -16,10 +16,10 @@
       }
     },
     "schemaTypes" : {
-      "path" : "Sources/WhenThen-sdk-api",
+      "path" : "Sources/WhenThenSdkAPI",
       "moduleType" : {
         "embeddedInTarget" : {
-            "name": "WhenThen-sdk-api"
+            "name": "WhenThenSdkAPI"
         }
       }
     },
@@ -41,6 +41,6 @@
     },
     "downloadTimeout": 60,
     "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
-    "outputPath": "Sources/WhenThen-sdk-api/dowmloaded.graphqls/"
+    "outputPath": "Sources/WhenThenSdkAPI/dowmloaded.graphqls/"
 }
 }
