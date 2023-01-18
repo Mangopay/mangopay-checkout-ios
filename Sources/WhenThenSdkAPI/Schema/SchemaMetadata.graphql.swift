@@ -36,11 +36,17 @@ public extension CheckoutSchema {
       case "Customer": return CheckoutSchema.Objects.Customer
       case "BillingAddressApi": return CheckoutSchema.Objects.BillingAddressApi
       case "ShippingAddressApi": return CheckoutSchema.Objects.ShippingAddressApi
+      case "IntentApi": return CheckoutSchema.Objects.IntentApi
+      case "Amount": return CheckoutSchema.Objects.Amount
+      case "IntentLocation": return CheckoutSchema.Objects.IntentLocation
+      case "IntentCustomer": return CheckoutSchema.Objects.IntentCustomer
+      case "IntentTimeline": return CheckoutSchema.Objects.IntentTimeline
+      case "IntentTimelineStep": return CheckoutSchema.Objects.IntentTimelineStep
+      case "LinkedPayment": return CheckoutSchema.Objects.LinkedPayment
       case "Query": return CheckoutSchema.Objects.Query
       case "PaymentMethod": return CheckoutSchema.Objects.PaymentMethod
       case "Payment": return CheckoutSchema.Objects.Payment
       case "PaymentInternal": return CheckoutSchema.Objects.PaymentInternal
-      case "Amount": return CheckoutSchema.Objects.Amount
       case "PaymentGateway": return CheckoutSchema.Objects.PaymentGateway
       case "PaymentCore": return CheckoutSchema.Objects.PaymentCore
       case "PaymentOutcome": return CheckoutSchema.Objects.PaymentOutcome
@@ -51,6 +57,8 @@ public extension CheckoutSchema {
       case "PaymentCustomer": return CheckoutSchema.Objects.PaymentCustomer
       case "PaymentMethodDetails": return CheckoutSchema.Objects.PaymentMethodDetails
       case "Attachment": return CheckoutSchema.Objects.Attachment
+      case "IntentCart": return CheckoutSchema.Objects.IntentCart
+      case "IntentCartItemType": return CheckoutSchema.Objects.IntentCartItemType
       default: return nil
       }
     }
