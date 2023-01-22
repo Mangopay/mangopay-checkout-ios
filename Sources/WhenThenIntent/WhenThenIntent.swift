@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import WhenThenSdkAPI
+
+class WhenThenIntent {
+    
+}

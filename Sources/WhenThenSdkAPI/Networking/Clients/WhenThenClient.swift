@@ -15,6 +15,11 @@ public typealias ListCustomerCard = CheckoutSchema.ListCustomerCardsQuery.Data.L
 public typealias GetPayment = CheckoutSchema.GetPaymentQuery.Data.GetPayment
 public typealias PaymentCardInput = CheckoutSchema.PaymentCardInput
 
+public typealias IntentCustomerInput = CheckoutSchema.IntentCustomerInput
+public typealias IntentAmountInput = CheckoutSchema.IntentAmountInput
+public typealias IntentCartInput = CheckoutSchema.IntentCartInput
+public typealias IntentLocationInput = CheckoutSchema.IntentLocationInput
+
 
 public class WhenThenClient {
     
@@ -22,7 +27,7 @@ public class WhenThenClient {
     let version1UUID = UUID().version1UUID
     var clientKey: String!
         
-    private(set) lazy var apollo: ApolloClient = {
+    fileprivate(set) lazy var apollo: ApolloClient = {
 
         let apiEndpoint = "https://api.dev.whenthen.co/api/graphql"
         let url = URL(string: apiEndpoint)!
@@ -47,7 +52,7 @@ public class WhenThenClient {
         return ApolloClient(networkTransport: networkTransport, store: store)
     }()
 
-    private(set) lazy var apollo2: ApolloClient = {
+    fileprivate(set) lazy var apollo2: ApolloClient = {
 
         let apiEndpoint = "https://api.dev.whenthen.co/api/graphql"
         let url = URL(string: apiEndpoint)!
@@ -198,5 +203,52 @@ public class WhenThenClient {
                 }
             }
         })
+    }
+}
+
+extension WhenThenClient {
+
+    public func startIntent(
+        trackingId: String,
+        flowId: String,
+        customer: IntentCustomerInput,
+        amount: IntentAmountInput,
+        location: IntentLocationInput,
+        cart: IntentCartInput
+    ) async throws -> CheckoutSchema.StartIntentMutation.Data.StartIntent {
+        
+        let _location = GraphQLNullable<CheckoutSchema.IntentLocationInput>(location)
+        let _customer = GraphQLNullable<CheckoutSchema.IntentCustomerInput>(customer)
+        let _cart = GraphQLNullable<CheckoutSchema.IntentCartInput>(cart)
+
+        let mutation = CheckoutSchema.StartIntentMutation(
+            trackingId: trackingId,
+            paymentFlowId: flowId,
+            customer: _customer,
+            amount: amount,
+            location: _location,
+            cart: _cart
+        )
+        
+        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<CheckoutSchema.StartIntentMutation.Data.StartIntent, Error>) in
+            
+            apollo.perform(mutation: mutation)  { result in
+                switch result {
+                case .success(let reponse):
+                    print("🤣 StartingINtent", reponse.data)
+                    if let startIntent = reponse.data?.startIntent {
+                        continuation.resume(returning: startIntent)
+                    } else if let errrs = reponse.errors {
+                        print("Start Intent error \(errrs)")
+                        continuation.resume(throwing: errrs.first!)
+                    }
+                    
+                case .failure(let error):
+                    print("❌ Failed to startIntent ..")
+                    continuation.resume(throwing: error)
+                }
+            }
+        })
+
     }
 }
