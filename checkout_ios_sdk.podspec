@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-    s.name         = "WhenThen-ios-sdk"
+    s.name         = "WhenTheniOSSDK"
     s.version      = "0.0.1"
     s.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift"
     s.description  = <<-DESC

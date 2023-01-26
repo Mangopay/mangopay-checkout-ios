@@ -3,10 +3,11 @@
   "input" : {
     "operationSearchPaths" : [
         "./*.graphql",
-        "./Sources/checkout-ios-sdk/Core/Network/GraphConfig/*.graphql"
+        "./Sources/WhenThenSdkAPI/*.graphql"
     ],
     "schemaSearchPaths" : [
-       "./*.graphqls"
+       "./*.graphqls",
+       "./Sources/WhenThenSdkAPI/*.graphqls"
     ]
   },
   "output" : {
@@ -15,10 +16,10 @@
       }
     },
     "schemaTypes" : {
-      "path" : "Sources/core-SDK",
+      "path" : "Sources/WhenThenSdkAPI",
       "moduleType" : {
         "embeddedInTarget" : {
-            "name": "core-SDK"
+            "name": "WhenThenSdkAPI"
         }
       }
     },
@@ -40,6 +41,6 @@
     },
     "downloadTimeout": 60,
     "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
-    "outputPath": "./dowmloaded.graphqls/"
+    "outputPath": "Sources/WhenThenSdkAPI/dowmloaded.graphqls/"
 }
 }

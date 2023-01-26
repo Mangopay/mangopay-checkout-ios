@@ -3,40 +3,50 @@
 
 import PackageDescription
 
-//TODO: change name to 'WhenThen-ios-sdk`
 let package = Package(
-    name: "WhenThen-ios-sdk",
+    name: "WhenTheniOSSDK",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v11),
         .iOS(.v13)
     ],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "WhenThen-ios-sdk",
-            targets: ["WhenThen-ios-sdk"]),
+            name: "WhenThenCoreiOS",
+            targets: ["WhenThenCoreiOS"]),
+        .library(
+            name: "WhenThenSdkAPI",
+            targets: ["WhenThenSdkAPI"]),
+        .library(
+            name: "WhenThenIntent",
+            targets: ["WhenThenIntent"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/apollographql/apollo-ios.git", .upToNextMinor(from: "1.0.5")),
-//         .package(url: "https://github.com/realm/SwiftLint", branch: "main"),
+        .package(
+            url: "https://github.com/apollographql/apollo-ios.git",
+            .upToNextMinor(from: "1.0.5")
+        ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "WhenThen-ios-sdk",
+            name: "WhenThenCoreiOS",
             dependencies: [
-                .product(name: "Apollo", package: "apollo-ios"),
+                "WhenThenSdkAPI",
+//                .product(name: "Apollo", package: "apollo-ios"),
             ],
-//            path: "",
             resources: [
-//                .copy("AuthorizePayment.graphql"),
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
             ]
-        )
+        ),
+        .target(
+            name: "WhenThenSdkAPI",
+            dependencies: [
+                .product(name: "Apollo", package: "apollo-ios"),
+            ]
+        ),
+        .target(name: "WhenThenIntent")
+    
 //        .testTarget(
 //            name: "checkout-ios-sdkTests",
 //            dependencies: ["checkout-ios-sdk"]),
