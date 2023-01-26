@@ -1,0 +1,3 @@
+query optimise($intentId: String!) {
+  optimise(intentId: $intentId)
+}

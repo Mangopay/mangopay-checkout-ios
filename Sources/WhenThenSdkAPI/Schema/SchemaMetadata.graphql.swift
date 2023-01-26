@@ -36,6 +36,7 @@ public extension CheckoutSchema {
       case "Customer": return CheckoutSchema.Objects.Customer
       case "BillingAddressApi": return CheckoutSchema.Objects.BillingAddressApi
       case "ShippingAddressApi": return CheckoutSchema.Objects.ShippingAddressApi
+      case "Query": return CheckoutSchema.Objects.Query
       case "IntentApi": return CheckoutSchema.Objects.IntentApi
       case "Amount": return CheckoutSchema.Objects.Amount
       case "IntentLocation": return CheckoutSchema.Objects.IntentLocation
@@ -43,7 +44,6 @@ public extension CheckoutSchema {
       case "IntentTimeline": return CheckoutSchema.Objects.IntentTimeline
       case "IntentTimelineStep": return CheckoutSchema.Objects.IntentTimelineStep
       case "LinkedPayment": return CheckoutSchema.Objects.LinkedPayment
-      case "Query": return CheckoutSchema.Objects.Query
       case "PaymentMethod": return CheckoutSchema.Objects.PaymentMethod
       case "Payment": return CheckoutSchema.Objects.Payment
       case "PaymentInternal": return CheckoutSchema.Objects.PaymentInternal

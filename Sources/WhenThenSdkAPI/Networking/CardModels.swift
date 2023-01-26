@@ -17,7 +17,7 @@ public struct FormData {
     let cvc: String?
     let savePayment: Bool
     let bilingInfo: BillingInfo?
-
+    
     public init(number: String?, name: String?, expMonth: Int?, expYear: Int?, cvc: String?, savePayment: Bool, bilingInfo: BillingInfo?) {
         self.number = number
         self.name = name
@@ -27,11 +27,11 @@ public struct FormData {
         self.savePayment = savePayment
         self.bilingInfo = bilingInfo
     }
-
+    
     public func toPaymentCardInput() -> CheckoutSchema.PaymentCardInput {
         
         let billing = bilingInfo == nil ? GraphQLNullable<CheckoutSchema.BillingAddressInput>(bilingInfo!.toBillingAddressInput()) : nil
-
+        
         let card = CheckoutSchema.PaymentCardInput(
             number: number ?? "",
             expMonth: expMonth ?? 0,
@@ -41,14 +41,14 @@ public struct FormData {
             billingAddress: billing,
             isDefault: true
         )
-       
+        
         return card
     }
-
+    
     func toCardDtoInput() -> CheckoutSchema.CardDtoInput {
         let _cvc = self.cvc ?? ""
         let billing = bilingInfo != nil ? GraphQLNullable<CheckoutSchema.AddressDtoInput>(bilingInfo!.toAddressDtoInput()) : nil
-
+        
         let card = CheckoutSchema.CardDtoInput(
             number: number ?? "",
             expMonth: expMonth ?? 0,
@@ -64,7 +64,7 @@ public struct FormData {
 
 
 public struct BillingInfo {
-//        var __data: ApolloAPI.InputDict
+    //        var __data: ApolloAPI.InputDict
     
     let line1: String?
     let line2: String?
@@ -72,7 +72,7 @@ public struct BillingInfo {
     let postalCode: String?
     let state: String?
     let country: String?
-
+    
     public init(line1: String?, line2: String?, city: String?, postalCode: String?, state: String?, country: String?) {
         self.line1 = line1
         self.line2 = line2
@@ -92,7 +92,7 @@ public struct BillingInfo {
             country: country?.toGraphQLNullable() ?? nil
         )
     }
-
+    
     func toAddressDtoInput() -> CheckoutSchema.AddressDtoInput {
         return CheckoutSchema.AddressDtoInput(
             line1: line1?.toGraphQLNullable() ?? nil,
@@ -111,7 +111,7 @@ public struct PaymentDtoInput {
     var walletToken: String?
     var card: FormData?
     var googlePayId: String?
-
+    
     public init(type: CheckoutSchema.PaymentMethodEnum, token: String? = nil, walletToken: String? = nil, card: FormData? = nil, googlePayId: String? = nil) {
         self.type = type
         self.token = token
@@ -119,11 +119,11 @@ public struct PaymentDtoInput {
         self.card = card
         self.googlePayId = googlePayId
     }
-
+    
     func toPaymentDtoInput() -> CheckoutSchema.PaymentMethodDtoInput {
         let card = card != nil ? GraphQLNullable<CheckoutSchema.CardDtoInput>(card!.toCardDtoInput()) : nil
         let googlePay = googlePayId != nil ? GraphQLNullable<CheckoutSchema.GooglePayInput>(CheckoutSchema.GooglePayInput(transactionId: googlePayId!)) : nil
-
+        
         return CheckoutSchema.PaymentMethodDtoInput(
             type: type.rawValue,
             token: token?.toGraphQLNullable() ?? nil,
@@ -156,7 +156,7 @@ public struct AuthorisedPayment {
             return CheckoutSchema.ThreeDSecureDtoInput(redirectUrl: (redirectUrl ?? "").toGraphQLNullable())
         }
     }
-
+    
     public init(orderId: String? = nil, flowId: String? = nil, _3DSRedirect: String? = nil, amount: String? = nil, currencyCode: String? = nil, paymentMethod: PaymentDtoInput, description: String? = nil, headlessMode: Bool = false, perform3DSecure: _3DSecure? = nil) {
         self.orderId = orderId
         self.flowId = flowId
@@ -170,20 +170,20 @@ public struct AuthorisedPayment {
     }
     
     
-//    struct PaymentMethod {
-//        var type: String?
-//        var token: String?
-//        var walletToken: String?
-//        var card: PaymentCardInput?
-//        var googlePay: GooglePayInput?
-//    }
-
+    //    struct PaymentMethod {
+    //        var type: String?
+    //        var token: String?
+    //        var walletToken: String?
+    //        var card: PaymentCardInput?
+    //        var googlePay: GooglePayInput?
+    //    }
+    
     func toAuthorisedPaymentInput() -> CheckoutSchema.AuthorisedPaymentInput {
-
+        
         let paymentMethod = paymentMethod.toPaymentDtoInput()
         let headlessMode = GraphQLNullable<Bool>(booleanLiteral: headlessMode)
         let threeDS = perform3DSecure != nil ? GraphQLNullable<CheckoutSchema.ThreeDSecureDtoInput>(perform3DSecure!.toThreeDSecureDtoInput) : nil
-
+        
         let input = CheckoutSchema.AuthorisedPaymentInput(
             orderId: (orderId ?? "").toGraphQLNullable(),
             flowId: (flowId ?? "").toGraphQLNullable() ,
@@ -194,7 +194,7 @@ public struct AuthorisedPayment {
             perform3DSecure: threeDS,
             headlessMode: headlessMode
         )
-
+        
         return input
     }
 }
@@ -213,7 +213,7 @@ public struct ShippingAddress {
             phone: phone?.toGraphQLNullable() ?? nil
         )
     }
-
+    
     public init(address: BillingInfo? = nil, name: String? = nil, phone: String? = nil) {
         self.address = address
         self.name = name
@@ -233,7 +233,7 @@ public struct Company {
         self.taxId = taxId
         self.vatId = vatId
     }
-
+    
     func toCompanyInput() -> CheckoutSchema.CompanyInput {
         return CheckoutSchema.CompanyInput(
             name: name?.toGraphQLNullable() ?? nil,
@@ -250,13 +250,13 @@ public struct CustomerInputData {
     
     var toDTO: CheckoutSchema.CustomerInput {
         let card = card != nil ? GraphQLNullable<CheckoutSchema.PaymentCardInput>(card!.toPaymentCardInput()) : nil
-
+        
         return CheckoutSchema.CustomerInput(
             card: card,
             customer: customer.toDTO
         )
     }
-
+    
     public init(card: FormData? = nil, customer: Customer) {
         self.card = card
         self.customer = customer
@@ -272,14 +272,14 @@ public struct Customer {
     var phone: String?
     var shippingAddress: ShippingAddress?
     var company: Company?
-
+    
     var toDTO: CheckoutSchema.VaultCustomerInput {
         let billing = billingAddress != nil ? GraphQLNullable<CheckoutSchema.BillingAddressInput>(billingAddress!.toBillingAddressInput()) : nil
-
+        
         let company = company != nil ? GraphQLNullable<CheckoutSchema.CompanyInput>(company!.toCompanyInput()) : nil
         
         let shippingAddress = shippingAddress != nil ? GraphQLNullable<CheckoutSchema.ShippingAddressInput>(shippingAddress!.asDTO) : nil
-
+        
         return CheckoutSchema.VaultCustomerInput(
             id: id?.toGraphQLNullable() ?? nil,
             billingAddress: billing,
@@ -291,7 +291,7 @@ public struct Customer {
             company: company
         )
     }
-
+    
     public init(id: String? = nil, billingAddress: BillingInfo? = nil, description: String? = nil, email: String? = nil, name: String? = nil, phone: String? = nil, shippingAddress: ShippingAddress? = nil, company: Company? = nil) {
         self.id = id
         self.billingAddress = billingAddress
@@ -302,4 +302,160 @@ public struct Customer {
         self.shippingAddress = shippingAddress
         self.company = company
     }
+    
 }
+
+
+public struct CustomerIntentInput {
+    var id: String?
+    var email: String?
+    var name: String?
+    var isGuest: Bool?
+    
+    public var toDTO: CheckoutSchema.IntentCustomerInput {
+        return CheckoutSchema.IntentCustomerInput(
+            id: id?.toGraphQLNullable() ?? nil,
+            email: email?.toGraphQLNullable() ?? nil,
+            name: name?.toGraphQLNullable() ?? nil,
+            isGuest: GraphQLNullable<Bool>(booleanLiteral: (isGuest ?? false)!)
+        )
+    }
+    
+    public init(id: String? = nil, email: String? = nil, name: String? = nil, isGuest: Bool? = nil) {
+        self.id = id
+        self.email = email
+        self.name = name
+        self.isGuest = isGuest
+    }
+}
+
+public struct AmountInput {
+    var amount: Int?
+    var currency: String?
+    
+    var toDTO: IntentAmountInput {
+        let _amount = amount != nil ? GraphQLNullable<Int>(integerLiteral: amount!) : nil
+        
+        return IntentAmountInput(
+            amount: _amount,
+            currency: currency?.toGraphQLNullable() ?? .none
+        )
+    }
+    
+    public init(amount: Int? = nil, currency: String? = nil) {
+        self.amount = amount
+        self.currency = currency
+    }
+}
+
+public struct LocationInput {
+    var country: String?
+    
+    var toDTO: IntentLocationInput {
+        return IntentLocationInput(country: country?.toGraphQLNullable() ?? nil)
+    }
+    
+    public init(country: String? = nil) {
+        self.country = country
+    }
+}
+
+public struct CartInput {
+    var id: String?
+    var weight: Int?
+    var itemCount: Int?
+    var items: [WTIntentCartItem]?
+    
+    var dto: IntentCartInput {
+        var __items: [CheckoutSchema.IntentCartItem]?
+        if let _items = items?.map({$0.toDTO}) {
+            __items = _items
+        } else {
+            __items = .none
+        }
+        
+        return IntentCartInput(
+            id: id?.toGraphQLNullable() ?? nil,
+            weight: weight?.toGraphQLNullable() ?? nil,
+            itemCount: itemCount?.toGraphQLNullable() ?? nil,
+            items: __items == .none ? .none : .some(__items!)
+        )
+    }
+    
+    init(id: String? = nil, weight: Int? = nil, itemCount: Int? = nil, items: [WTIntentCartItem]? = nil) {
+        self.id = id
+        self.weight = weight
+        self.itemCount = itemCount
+        self.items = items
+    }
+}
+
+public struct WTIntentCartItem {
+    
+    var id: String?
+    var quantity: Int?
+    var title: String?
+    var variantTitle: String?
+    var weight: Int?
+    var taxable: Bool?
+    var requiresShipping: Bool?
+    var price: String?
+    var sku: String
+    var lineTotal: String?
+    var image: String?
+    var discountedPrice: String?
+    var totalDiscount: String?
+    
+    init(id: String? = nil, quantity: Int? = nil, title: String? = nil, variantTitle: String? = nil, weight: Int? = nil, taxable: Bool? = nil, requiresShipping: Bool? = nil, price: String? = nil, sku: String, lineTotal: String? = nil, image: String? = nil, discountedPrice: String? = nil, totalDiscount: String? = nil) {
+        self.id = id
+        self.quantity = quantity
+        self.title = title
+        self.variantTitle = variantTitle
+        self.weight = weight
+        self.taxable = taxable
+        self.requiresShipping = requiresShipping
+        self.price = price
+        self.sku = sku
+        self.lineTotal = lineTotal
+        self.image = image
+        self.discountedPrice = discountedPrice
+        self.totalDiscount = totalDiscount
+    }
+    
+    var toDTO: CheckoutSchema.IntentCartItem {
+        let items =  CheckoutSchema.IntentCartItem(
+            id: id?.toGraphQLNullable() ?? nil,
+            quantity: quantity?.toGraphQLNullable() ?? nil,
+            title: title?.toGraphQLNullable() ?? nil,
+            variantTitle: variantTitle?.toGraphQLNullable() ?? nil,
+            weight: weight?.toGraphQLNullable() ?? nil,
+            taxable: taxable?.toGraphQLNullable() ?? nil,
+            requiresShipping: requiresShipping?.toGraphQLNullable() ?? nil,
+            price: price?.toGraphQLNullable() ?? nil,
+            sku: sku,
+            lineTotal: lineTotal?.toGraphQLNullable() ?? nil,
+            image: image?.toGraphQLNullable() ?? nil,
+            discountedPrice: discountedPrice?.toGraphQLNullable() ?? nil,
+            totalDiscount: totalDiscount?.toGraphQLNullable() ?? nil
+        )
+        return items
+    }
+}
+
+public struct WTShippingDeliveryInput {
+    var status: CheckoutSchema.FormStepStatus?
+    
+    public init(status: CheckoutSchema.FormStepStatus? = nil) {
+        self.status = status
+    }
+    
+    var toShippingDTO: IntentShippingInput {
+        return IntentShippingInput(status: status == nil ? .none : .some(.case(status!)))
+    }
+    
+    var toDeliveryDTO: IntentDeliveryInput {
+        return IntentDeliveryInput(status: status == nil ? .none : .some(.case(status!)))
+    }
+}
+
+
