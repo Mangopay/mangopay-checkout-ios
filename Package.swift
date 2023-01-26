@@ -44,7 +44,12 @@ let package = Package(
                 .product(name: "Apollo", package: "apollo-ios"),
             ]
         ),
-        .target(name: "WhenThenIntent")
+        .target(
+            name: "WhenThenIntent",
+            dependencies: [
+                "WhenThenSdkAPI",
+            ]
+        )
     
 //        .testTarget(
 //            name: "checkout-ios-sdkTests",
