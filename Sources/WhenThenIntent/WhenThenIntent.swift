@@ -10,7 +10,7 @@ import Apollo
 import ApolloAPI
 import WhenThenSdkAPI
 
-class WhenThenIntent {
+public class WhenThenIntent {
     
     var clientKey: String!
     let indempodentKey = UUID().uuidString
@@ -44,33 +44,71 @@ class WhenThenIntent {
         self.clientKey = clientKey
     }
 
+    public func startIntent(
+        trackingId: String,
+        flowId: String,
+        customer: WTCustomerIntentInput? = nil,
+        amount: WTIntentAmountInput? = nil,
+        location: WTIntentLocationInput? = nil,
+        cart: IntentCartInput? = nil
+    ) async throws -> CheckoutSchema.StartIntentMutation.Data.StartIntent {
+
+        print("✅ trackingId", trackingId)
+        print("✅ flowId", flowId)
+        let mutation = CheckoutSchema.StartIntentMutation(
+            trackingId: trackingId,
+            paymentFlowId: flowId,
+            customer: customer?.toDTO ?? nil,
+            amount: amount?.toDTO ?? WTIntentAmountInput(amount: 0, currency: "USD").toDTO,
+            location: location?.toDTO ?? nil,
+            cart: nil
+        )
+        
+        print("🤣 mutationData", mutation)
+        
+        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<CheckoutSchema.StartIntentMutation.Data.StartIntent, Error>) in
+            
+            apollo.perform(mutation: mutation)  { result in
+                switch result {
+                case .success(let reponse):
+                    print("🤣 StartingINtent", reponse.data)
+                    if let startIntent = reponse.data?.startIntent {
+                        continuation.resume(returning: startIntent)
+                    } else if let errrs = reponse.errors {
+                        print("Start Intent error \(errrs)")
+                        continuation.resume(throwing: errrs.first!)
+                    }
+                    
+                case .failure(let error):
+                    print("❌ Failed to startIntent ..")
+                    continuation.resume(throwing: error)
+                }
+            }
+        })
+
+    }
+
     public func updateIntent(
         intentId: String,
-        trackingId: String,
-        customer: IntentCustomerInput,
-        amount: IntentAmountInput,
-        location: IntentLocationInput,
-        shiping: IntentShippingInput,
-        billing: IntentShippingInput,
-        delivery: IntentDeliveryInput
+        trackingId: String?,
+        customer: WTCustomerIntentInput? = nil,
+        amount: WTIntentAmountInput? = nil,
+        location: WTIntentLocationInput? = nil,
+        shipping: WTShippingDeliveryInput? = nil,
+        billing: WTShippingDeliveryInput? = nil,
+        delivery: WTShippingDeliveryInput? = nil
     ) async throws -> CheckoutSchema.UpdateIntentMutation.Data.UpdateIntent {
         
-        let _customer = GraphQLNullable<CheckoutSchema.IntentCustomerInput>(customer)
-        let _amount = GraphQLNullable<CheckoutSchema.IntentAmountInput>(amount)
-        let _location = GraphQLNullable<CheckoutSchema.IntentLocationInput>(location)
-        let _shipping = GraphQLNullable<CheckoutSchema.IntentShippingInput>(shiping)
-        let _billing = GraphQLNullable<CheckoutSchema.IntentShippingInput>(shiping)
-        let _delivery = GraphQLNullable<CheckoutSchema.IntentDeliveryInput>(delivery)
 
         let mutation = CheckoutSchema.UpdateIntentMutation(
             id: intentId,
-            trackingId: trackingId.toGraphQLNullable(),
-            customer: _customer,
-            amount: _amount,
-            shipping: _shipping,
-            delivery: _delivery,
-            billing: _billing,
-            location: _location
+            trackingId: trackingId?.toGraphQLNullable() ?? nil,
+            customer: customer?.toDTO ?? nil,
+            amount: amount?.toDTO ?? nil,
+            shipping: shipping?.toShippingDTO ?? nil,
+            delivery: delivery?.toDeliveryDTO ?? nil,
+            billing: billing?.toShippingDTO ?? nil,
+            location: location?.toDTO ?? nil
         )
 
         return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<CheckoutSchema.UpdateIntentMutation.Data.UpdateIntent, Error>) in
@@ -137,7 +175,7 @@ class WhenThenIntent {
         })
     }
 
-    public func optimiseIntent(_ intentId: String) async throws -> [GraphQLEnum<CheckoutSchema.PaymentMethodEnum>] {
+    public func optimise(_ intentId: String) async throws -> [GraphQLEnum<CheckoutSchema.PaymentMethodEnum>] {
     
         let query = CheckoutSchema.OptimiseQuery(intentId: intentId)
 

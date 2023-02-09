@@ -137,6 +137,7 @@ public struct PaymentDtoInput {
 public struct AuthorisedPayment {
     var orderId: String?
     var flowId: String?
+    var intentId: String?
     var _3DSRedirect: String?
     var amount: String?
     var currencyCode: String?
@@ -157,9 +158,10 @@ public struct AuthorisedPayment {
         }
     }
     
-    public init(orderId: String? = nil, flowId: String? = nil, _3DSRedirect: String? = nil, amount: String? = nil, currencyCode: String? = nil, paymentMethod: PaymentDtoInput, description: String? = nil, headlessMode: Bool = false, perform3DSecure: _3DSecure? = nil) {
+    public init(orderId: String? = nil, flowId: String? = nil, intentId: String? = nil, _3DSRedirect: String? = nil, amount: String? = nil, currencyCode: String? = nil, paymentMethod: PaymentDtoInput, description: String? = nil, headlessMode: Bool = false, perform3DSecure: _3DSecure? = nil) {
         self.orderId = orderId
         self.flowId = flowId
+        self.intentId = intentId
         self._3DSRedirect = _3DSRedirect
         self.amount = amount
         self.currencyCode = currencyCode
@@ -186,7 +188,8 @@ public struct AuthorisedPayment {
         
         let input = CheckoutSchema.AuthorisedPaymentInput(
             orderId: (orderId ?? "").toGraphQLNullable(),
-            flowId: (flowId ?? "").toGraphQLNullable() ,
+            flowId: (flowId ?? "").toGraphQLNullable(),
+            intentId: (intentId ?? "").toGraphQLNullable(),
             currencyCode: (currencyCode ?? "").toGraphQLNullable(),
             amount: (amount ?? "").toGraphQLNullable(),
             paymentMethod: paymentMethod,
@@ -306,7 +309,7 @@ public struct Customer {
 }
 
 
-public struct CustomerIntentInput {
+public struct WTCustomerIntentInput {
     var id: String?
     var email: String?
     var name: String?
@@ -329,11 +332,11 @@ public struct CustomerIntentInput {
     }
 }
 
-public struct AmountInput {
+public struct WTIntentAmountInput {
     var amount: Int?
     var currency: String?
     
-    var toDTO: IntentAmountInput {
+    public var toDTO: IntentAmountInput {
         let _amount = amount != nil ? GraphQLNullable<Int>(integerLiteral: amount!) : nil
         
         return IntentAmountInput(
@@ -348,10 +351,10 @@ public struct AmountInput {
     }
 }
 
-public struct LocationInput {
+public struct WTIntentLocationInput {
     var country: String?
     
-    var toDTO: IntentLocationInput {
+    public var toDTO: IntentLocationInput {
         return IntentLocationInput(country: country?.toGraphQLNullable() ?? nil)
     }
     
@@ -360,7 +363,7 @@ public struct LocationInput {
     }
 }
 
-public struct CartInput {
+public struct WTIntentCartInput {
     var id: String?
     var weight: Int?
     var itemCount: Int?
@@ -449,13 +452,11 @@ public struct WTShippingDeliveryInput {
         self.status = status
     }
     
-    var toShippingDTO: IntentShippingInput {
+    public var toShippingDTO: IntentShippingInput {
         return IntentShippingInput(status: status == nil ? .none : .some(.case(status!)))
     }
     
-    var toDeliveryDTO: IntentDeliveryInput {
+    public var toDeliveryDTO: IntentDeliveryInput {
         return IntentDeliveryInput(status: status == nil ? .none : .some(.case(status!)))
     }
 }
-
-

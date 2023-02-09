@@ -332,6 +332,10 @@ class PaymentFormView: UIView {
             print("🤣 cardType", cardType)
             self.cardNumberField.setRightImage(cardType.icon)
         }
+
+        countryField.didPickHandler = { title, index in
+            self.viewModel.dropInDelegate?.didUpdateBillingInfo(sender: self.viewModel)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -663,7 +667,8 @@ extension PaymentFormView: KeyboardUtilDelegate {
         case cvvField.textfield:
             isFormValid(cvvField)
         case zipCodeField.textfield:
-            isFormValid(cvvField)
+            self.viewModel.dropInDelegate?.didUpdateBillingInfo(sender: self.viewModel)
+            isFormValid(zipCodeField)
         default: break
         }
     }
