@@ -1,0 +1,53 @@
+mutation updateIntent($id: ID!, $trackingId: String, $customer: IntentCustomerInput, $amount: IntentAmountInput, $shipping: IntentShippingInput, $delivery: IntentDeliveryInput, $billing: IntentShippingInput, $location: IntentLocationInput) {
+  updateIntent(id: $id, trackingId: $trackingId, customer: $customer, amount: $amount, shipping: $shipping, delivery: $delivery, billing: $billing, location: $location){
+        id
+        trackingId
+        paymentFlowId
+        status
+        statusDate
+        date
+        currency
+        amount {
+            formattedAmount
+        }
+        location {
+            country
+        }
+        customer {
+            id
+            isGuest
+        }
+        timeline {
+            intentStarted {
+                status
+                date
+            }
+            shipping {
+                status
+                date
+            }
+            delivery {
+                status
+                date
+            }
+            billing {
+                status
+                date
+            }
+            paymentAttempts {
+                status
+                date
+            }
+            completeIntent {
+                status
+                date
+            }
+        }
+        linkedPayments {
+            paymentId
+            status
+            time
+            title
+        }
+    }
+}

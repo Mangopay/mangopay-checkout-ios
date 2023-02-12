@@ -32,7 +32,6 @@ let package = Package(
             name: "WhenThenCoreiOS",
             dependencies: [
                 "WhenThenSdkAPI",
-//                .product(name: "Apollo", package: "apollo-ios"),
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
@@ -45,7 +44,12 @@ let package = Package(
                 .product(name: "Apollo", package: "apollo-ios"),
             ]
         ),
-        .target(name: "WhenThenIntent")
+        .target(
+            name: "WhenThenIntent",
+            dependencies: [
+                "WhenThenSdkAPI",
+            ]
+        )
     
 //        .testTarget(
 //            name: "checkout-ios-sdkTests",

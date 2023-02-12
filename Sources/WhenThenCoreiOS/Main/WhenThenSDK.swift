@@ -55,7 +55,7 @@ public struct ElementsOptions {
     }
 }
 
-public struct DropInOptions {
+public class DropInOptions {
     var apiKey: String
     var orderId: String?
     var style: PaymentFormStyle?
@@ -67,6 +67,7 @@ public struct DropInOptions {
     var currencyCode: String
     var applePayMerchantId: String?
     var threeDSRedirectURL: String?
+    var intentId: String?
     var delegate: DropInFormDelegate
 
     var amountString: String {
@@ -85,6 +86,7 @@ public struct DropInOptions {
         countryCode: String,
         applePayMerchantId: String? = nil,
         threeDSRedirectURL: String? = nil,
+        intentId: String? = nil,
         delegate: DropInFormDelegate
     ) {
         self.apiKey = apiKey
@@ -96,6 +98,7 @@ public struct DropInOptions {
         self.currencyCode = currencyCode
         self.countryCode = countryCode
         self.delegate = delegate
+        self.intentId = intentId
         self.environment = apiKey.contains("test") ? .sandbox : .production
         self.applePayMerchantId = applePayMerchantId
         self.threeDSRedirectURL = threeDSRedirectURL
@@ -105,6 +108,7 @@ public struct DropInOptions {
 public struct WhenThenSDK {
     
     static var clientID: String!
+    private static var paymentFormVC: PaymentFormController!
     
     public static func buildElementForm(
         with options: ElementsOptions,
@@ -112,11 +116,11 @@ public struct WhenThenSDK {
         present viewController: UIViewController
     ) {
         WhenThenSDK.clientID = options.apiKey
-        let vc = PaymentFormController(
+        paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             elementOptions: options
         )
-        let nav = UINavigationController(rootViewController: vc)
+        let nav = UINavigationController(rootViewController: paymentFormVC)
         nav.modalPresentationStyle = .fullScreen
         viewController.present(nav, animated: true)
     }
@@ -128,11 +132,11 @@ public struct WhenThenSDK {
         dropInDelegate: DropInFormDelegate
     ) {
         WhenThenSDK.clientID = options.apiKey
-        let vc = PaymentFormController(
+        paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             dropInOptions: options
         )
-        let nav = UINavigationController(rootViewController: vc)
+        let nav = UINavigationController(rootViewController: paymentFormVC)
         nav.modalPresentationStyle = .fullScreen
         viewController.present(nav, animated: true)
     }
@@ -172,4 +176,12 @@ public struct WhenThenSDK {
     }
 
 
+}
+
+extension WhenThenSDK {
+
+    public static func setIntentId(_ intentId: String) {
+        print("🤣 dropInOptions", paymentFormVC.formView.dropInOptions)
+        paymentFormVC.formView.dropInOptions?.intentId = intentId
+    }
 }

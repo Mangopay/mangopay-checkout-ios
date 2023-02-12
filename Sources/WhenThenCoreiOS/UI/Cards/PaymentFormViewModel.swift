@@ -16,6 +16,7 @@ public protocol DropInFormDelegate: AnyObject {
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment)
     func onPaymentFailed(sender: PaymentFormViewModel, error: WhenThenError)
     func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus)
+    func didUpdateBillingInfo(sender: PaymentFormViewModel)
 }
 
 public protocol ElementsFormDelegate: AnyObject {
@@ -95,6 +96,7 @@ public class PaymentFormViewModel {
         let authData = AuthorisedPayment(
             orderId: data.orderId,
             flowId: data.flowId,
+            intentId: data.intentId,
             amount: String(data.amount),
             currencyCode: data.currencyCode,
             paymentMethod: PaymentDtoInput(
@@ -105,6 +107,7 @@ public class PaymentFormViewModel {
         )
 
         do {
+            print("🤣 data.intentId", data.intentId)
             authpayment = try await client.authorizePayment(payment: authData)
             self.statusObserver.send("Succesfully authorised: \(authpayment.id )")
         } catch {

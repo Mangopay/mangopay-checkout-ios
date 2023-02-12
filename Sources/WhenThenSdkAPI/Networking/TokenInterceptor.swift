@@ -9,17 +9,17 @@ import Foundation
 import Apollo
 import ApolloAPI
 
-class TokenInterceptor: ApolloInterceptor {
+public class TokenInterceptor: ApolloInterceptor {
 
     let token: String
     let indempodentKey: String
 
-    init(token: String, indempodentKey: String) {
+    public init(token: String, indempodentKey: String) {
         self.token = token
         self.indempodentKey = indempodentKey
     }
 
-    func interceptAsync<Operation>(
+    public func interceptAsync<Operation>(
         chain: Apollo.RequestChain,
         request: Apollo.HTTPRequest<Operation>,
         response: Apollo.HTTPResponse<Operation>?,
