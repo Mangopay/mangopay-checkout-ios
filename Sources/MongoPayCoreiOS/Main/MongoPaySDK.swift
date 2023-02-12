@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Apollo
 import ApolloAPI
-import WhenThenSdkAPI
+import MongoPaySdkAPI
 
 public enum Ennvironment {
     case sandbox
@@ -105,7 +105,7 @@ public class DropInOptions {
     }
 }
 
-public struct WhenThenSDK {
+public struct MongoPaySDK {
     
     static var clientID: String!
     private static var paymentFormVC: PaymentFormController!
@@ -115,7 +115,7 @@ public struct WhenThenSDK {
         cardConfig: CardConfig?,
         present viewController: UIViewController
     ) {
-        WhenThenSDK.clientID = options.apiKey
+        MongoPaySDK.clientID = options.apiKey
         paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             elementOptions: options
@@ -131,7 +131,7 @@ public struct WhenThenSDK {
         present viewController: UIViewController,
         dropInDelegate: DropInFormDelegate
     ) {
-        WhenThenSDK.clientID = options.apiKey
+        MongoPaySDK.clientID = options.apiKey
         paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             dropInOptions: options
@@ -178,7 +178,7 @@ public struct WhenThenSDK {
 
 }
 
-extension WhenThenSDK {
+extension MongoPaySDK {
 
     public static func setIntentId(_ intentId: String) {
         print("🤣 dropInOptions", paymentFormVC.formView.dropInOptions)

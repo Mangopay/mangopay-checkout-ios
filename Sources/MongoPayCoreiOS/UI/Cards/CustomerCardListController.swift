@@ -7,7 +7,7 @@
 
 import UIKit
 import Foundation
-import WhenThenSdkAPI
+import MongoPaySdkAPI
 
 class CustomerCardListController: UIViewController {
 

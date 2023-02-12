@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "WhenTheniOSSDK",
+    name: "MongoPayiOSSDK",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v11),
@@ -12,14 +12,14 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "WhenThenCoreiOS",
-            targets: ["WhenThenCoreiOS"]),
+            name: "MongoPayCoreiOS",
+            targets: ["MongoPayCoreiOS"]),
         .library(
-            name: "WhenThenSdkAPI",
-            targets: ["WhenThenSdkAPI"]),
+            name: "MongoPaySdkAPI",
+            targets: ["MongoPaySdkAPI"]),
         .library(
-            name: "WhenThenIntent",
-            targets: ["WhenThenIntent"]),
+            name: "MongoPayIntent",
+            targets: ["MongoPayIntent"]),
     ],
     dependencies: [
         .package(
@@ -29,9 +29,9 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "WhenThenCoreiOS",
+            name: "MongoPayCoreiOS",
             dependencies: [
-                "WhenThenSdkAPI",
+                "MongoPaySdkAPI",
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
@@ -39,15 +39,15 @@ let package = Package(
             ]
         ),
         .target(
-            name: "WhenThenSdkAPI",
+            name: "MongoPaySdkAPI",
             dependencies: [
                 .product(name: "Apollo", package: "apollo-ios"),
             ]
         ),
         .target(
-            name: "WhenThenIntent",
+            name: "MongoPayIntent",
             dependencies: [
-                "WhenThenSdkAPI",
+                "MongoPaySdkAPI",
             ]
         )
     

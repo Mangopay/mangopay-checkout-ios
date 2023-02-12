@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import PassKit
-import WhenThenSdkAPI
+import MongoPaySdkAPI
 
 enum FormType {
     case dropIn
@@ -19,7 +19,7 @@ class PaymentFormView: UIView {
     
     lazy var headerView = HeaderView()
 
-    lazy var cardNumberField = WhenThenTextfield(
+    lazy var cardNumberField = MongoPayTextfield(
         placeholderText: "1234 1234 1234 1234",
         leftImage: UIImage(assetIdentifier: .card_visa),
         keyboardType: .numberPad,
@@ -38,7 +38,7 @@ class PaymentFormView: UIView {
         }
     }
 
-    lazy var cardNameField = WhenThenTextfield(
+    lazy var cardNameField = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_NAME_PLACEHOLDER,
         returnKeyType: .next,
         validationRule: [
@@ -49,7 +49,7 @@ class PaymentFormView: UIView {
         textfieldDelegate: self
     )
 
-    lazy var expiryDateField = WhenThenTextfield(
+    lazy var expiryDateField = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_EXPIRIY_PLACEHOLDER,
         keyboardType: .numberPad,
         returnKeyType: .next,
@@ -61,7 +61,7 @@ class PaymentFormView: UIView {
         textfieldDelegate: self
     )
 
-    lazy var cvvField = WhenThenTextfield(
+    lazy var cvvField = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_CVV,
         keyboardType: .numberPad,
         returnKeyType: .next,
@@ -102,14 +102,14 @@ class PaymentFormView: UIView {
         font: .systemFont(ofSize: 16, weight: .medium)
     )
     
-    lazy var countryField = WhenThenDropDownTextfield(
+    lazy var countryField = MongoPayDropDownTextfield(
         placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
         style: self.paymentFormStyle,
         textfieldDelegate: self
     )
 
-    lazy var zipCodeField = WhenThenTextfield(
+    lazy var zipCodeField = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -135,14 +135,14 @@ class PaymentFormView: UIView {
         textAlignment: .center
     )
 
-    lazy var firstNameTextfield = WhenThenDropDownTextfield(
+    lazy var firstNameTextfield = MongoPayDropDownTextfield(
         placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
         style: self.paymentFormStyle,
         textfieldDelegate: self
     )
 
-    lazy var lastNameTextfield = WhenThenTextfield(
+    lazy var lastNameTextfield = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -154,7 +154,7 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
-    lazy var addressLine1Field = WhenThenTextfield(
+    lazy var addressLine1Field = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -166,7 +166,7 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
-    lazy var addressLine2Field = WhenThenTextfield(
+    lazy var addressLine2Field = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -178,7 +178,7 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
-    lazy var cityAddressField = WhenThenTextfield(
+    lazy var cityAddressField = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -190,7 +190,7 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
-    lazy var stateField = WhenThenTextfield(
+    lazy var stateField = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -303,7 +303,7 @@ class PaymentFormView: UIView {
         self.elementOptions = elementOptions
 
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
-        self.viewModel = PaymentFormViewModel(clientId: WhenThenSDK.clientID)
+        self.viewModel = PaymentFormViewModel(clientId: MongoPaySDK.clientID)
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
             target: self,
