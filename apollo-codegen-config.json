@@ -3,11 +3,11 @@
   "input" : {
     "operationSearchPaths" : [
         "./*.graphql",
-        "./Sources/WhenThenSdkAPI/*.graphql"
+        "./Sources/MongoPaySdkAPI/*.graphql"
     ],
     "schemaSearchPaths" : [
        "./*.graphqls",
-       "./Sources/WhenThenSdkAPI/*.graphqls"
+       "./Sources/MongoPaySdkAPI/*.graphqls"
     ]
   },
   "output" : {
@@ -16,10 +16,10 @@
       }
     },
     "schemaTypes" : {
-      "path" : "Sources/WhenThenSdkAPI",
+      "path" : "Sources/MongoPaySdkAPI",
       "moduleType" : {
         "embeddedInTarget" : {
-            "name": "WhenThenSdkAPI"
+            "name": "MongoPaySdkAPI"
         }
       }
     },

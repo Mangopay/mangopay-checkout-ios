@@ -309,7 +309,7 @@ public struct Customer {
 }
 
 
-public struct WTCustomerIntentInput {
+public struct MGPCustomerIntentInput {
     var id: String?
     var email: String?
     var name: String?
@@ -332,7 +332,7 @@ public struct WTCustomerIntentInput {
     }
 }
 
-public struct WTIntentAmountInput {
+public struct MGPIntentAmountInput {
     var amount: Int?
     var currency: String?
     
@@ -351,7 +351,7 @@ public struct WTIntentAmountInput {
     }
 }
 
-public struct WTIntentLocationInput {
+public struct MGPIntentLocationInput {
     var country: String?
     
     public var toDTO: IntentLocationInput {
@@ -363,11 +363,11 @@ public struct WTIntentLocationInput {
     }
 }
 
-public struct WTIntentCartInput {
+public struct MGPIntentCartInput {
     var id: String?
     var weight: Int?
     var itemCount: Int?
-    var items: [WTIntentCartItem]?
+    var items: [MGPIntentCartItem]?
     
     var dto: IntentCartInput {
         var __items: [CheckoutSchema.IntentCartItem]?
@@ -385,7 +385,7 @@ public struct WTIntentCartInput {
         )
     }
     
-    init(id: String? = nil, weight: Int? = nil, itemCount: Int? = nil, items: [WTIntentCartItem]? = nil) {
+    init(id: String? = nil, weight: Int? = nil, itemCount: Int? = nil, items: [MGPIntentCartItem]? = nil) {
         self.id = id
         self.weight = weight
         self.itemCount = itemCount
@@ -393,7 +393,7 @@ public struct WTIntentCartInput {
     }
 }
 
-public struct WTIntentCartItem {
+public struct MGPIntentCartItem {
     
     var id: String?
     var quantity: Int?
@@ -445,7 +445,7 @@ public struct WTIntentCartItem {
     }
 }
 
-public struct WTShippingDeliveryInput {
+public struct MGPShippingDeliveryInput {
     var status: CheckoutSchema.FormStepStatus?
     
     public init(status: CheckoutSchema.FormStepStatus? = nil) {

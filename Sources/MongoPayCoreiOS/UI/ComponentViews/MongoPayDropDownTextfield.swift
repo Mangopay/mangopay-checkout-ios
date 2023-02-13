@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class WhenThenDropDownTextfield: UIView {
+class MongoPayDropDownTextfield: UIView {
     
     enum Usecase {
         case date
@@ -267,7 +267,7 @@ class WhenThenDropDownTextfield: UIView {
     
 }
 
-extension WhenThenDropDownTextfield: UIPickerViewDelegate, UIPickerViewDataSource {
+extension MongoPayDropDownTextfield: UIPickerViewDelegate, UIPickerViewDataSource {
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

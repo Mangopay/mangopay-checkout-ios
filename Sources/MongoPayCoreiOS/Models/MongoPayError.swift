@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum WhenThenError: Error {
+public enum MongoPayError: Error {
     case onTokenGenerationFailed(reason: String?)
     case onAuthorizePaymentFailed(reason: String?)
 }

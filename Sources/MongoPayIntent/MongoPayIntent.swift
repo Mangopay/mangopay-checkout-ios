@@ -8,9 +8,9 @@
 import Foundation
 import Apollo
 import ApolloAPI
-import WhenThenSdkAPI
+import MongoPaySdkAPI
 
-public class WhenThenIntent {
+public class MongoPayIntent {
     
     var clientKey: String!
     let indempodentKey = UUID().uuidString
@@ -47,9 +47,9 @@ public class WhenThenIntent {
     public func startIntent(
         trackingId: String,
         flowId: String,
-        customer: WTCustomerIntentInput? = nil,
-        amount: WTIntentAmountInput? = nil,
-        location: WTIntentLocationInput? = nil,
+        customer: MGPCustomerIntentInput? = nil,
+        amount: MGPIntentAmountInput? = nil,
+        location: MGPIntentLocationInput? = nil,
         cart: IntentCartInput? = nil
     ) async throws -> CheckoutSchema.StartIntentMutation.Data.StartIntent {
 
@@ -59,7 +59,7 @@ public class WhenThenIntent {
             trackingId: trackingId,
             paymentFlowId: flowId,
             customer: customer?.toDTO ?? nil,
-            amount: amount?.toDTO ?? WTIntentAmountInput(amount: 0, currency: "USD").toDTO,
+            amount: amount?.toDTO ?? MGPIntentAmountInput(amount: 0, currency: "USD").toDTO,
             location: location?.toDTO ?? nil,
             cart: nil
         )
@@ -91,12 +91,12 @@ public class WhenThenIntent {
     public func updateIntent(
         intentId: String,
         trackingId: String?,
-        customer: WTCustomerIntentInput? = nil,
-        amount: WTIntentAmountInput? = nil,
-        location: WTIntentLocationInput? = nil,
-        shipping: WTShippingDeliveryInput? = nil,
-        billing: WTShippingDeliveryInput? = nil,
-        delivery: WTShippingDeliveryInput? = nil
+        customer: MGPCustomerIntentInput? = nil,
+        amount: MGPIntentAmountInput? = nil,
+        location: MGPIntentLocationInput? = nil,
+        shipping: MGPShippingDeliveryInput? = nil,
+        billing: MGPShippingDeliveryInput? = nil,
+        delivery: MGPShippingDeliveryInput? = nil
     ) async throws -> CheckoutSchema.UpdateIntentMutation.Data.UpdateIntent {
         
 

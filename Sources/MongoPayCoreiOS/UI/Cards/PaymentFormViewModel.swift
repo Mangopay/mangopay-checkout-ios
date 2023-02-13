@@ -9,12 +9,12 @@ import Foundation
 import Combine
 import ApolloAPI
 import Apollo
-import WhenThenSdkAPI
+import MongoPaySdkAPI
 
 public protocol DropInFormDelegate: AnyObject {
     func onPaymentStarted(sender: PaymentFormViewModel)
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment)
-    func onPaymentFailed(sender: PaymentFormViewModel, error: WhenThenError)
+    func onPaymentFailed(sender: PaymentFormViewModel, error: MongoPayError)
     func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus)
     func didUpdateBillingInfo(sender: PaymentFormViewModel)
 }
@@ -112,7 +112,7 @@ public class PaymentFormViewModel {
             self.statusObserver.send("Succesfully authorised: \(authpayment.id )")
         } catch {
             guard let graphError = error as? GraphQLError else {
-                let error = WhenThenError.onAuthorizePaymentFailed(reason: nil)
+                let error = MongoPayError.onAuthorizePaymentFailed(reason: nil)
                 dropInDelegate?.onPaymentFailed(sender: self, error: error)
                 return
             }

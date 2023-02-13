@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import WhenThenSdkAPI
+import MongoPaySdkAPI
 
 class CardListCell: UITableViewCell {
 
