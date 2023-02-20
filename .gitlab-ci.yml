@@ -5,8 +5,8 @@ stages:
 build_project:
   stage: build
   script:
-    - xcodebuild clean -workspace ProjectName.xcworkspace -scheme SchemeName | xcpretty
-    - xcodebuild test -workspace ProjectName.xcworkspace -scheme SchemeName -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=15.2' | xcpretty -s
+    - xcodebuild clean -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -scheme -disableAutomaticPackageResolution SchemeName | xcpretty 
+    - xcodebuild test -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -scheme SchemeName -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=15.2' | xcpretty -s
   # tags:
   #  - ios-tag
   #  - version-1.0
