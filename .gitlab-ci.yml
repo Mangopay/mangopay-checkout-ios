@@ -5,7 +5,7 @@ stages:
 build_project:
   stage: build
   script:
-    - xcodebuild clean -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -scheme -disableAutomaticPackageResolution SchemeName | xcpretty 
+    - xcodebuild clean -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -disableAutomaticPackageResolution -scheme SchemeName | xcpretty 
     - xcodebuild test -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -scheme SchemeName -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=15.2' | xcpretty -s
   # tags:
   #  - ios-tag
@@ -15,7 +15,7 @@ archive_build:
   stage: archive
   artifacts:
     paths:
-      - build/ProjectName.ipa
+      - build/CheckoutDemo.ipa
   script:
     - fastlane beta
   # tags:
