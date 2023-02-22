@@ -71,7 +71,7 @@ public class MongoPayIntent {
             apollo.perform(mutation: mutation)  { result in
                 switch result {
                 case .success(let reponse):
-                    print("🤣 StartingINtent", reponse.data)
+//                    print("🤣 StartingINtent", reponse.data)
                     if let startIntent = reponse.data?.startIntent {
                         continuation.resume(returning: startIntent)
                     } else if let errrs = reponse.errors {
@@ -116,7 +116,7 @@ public class MongoPayIntent {
             apollo.perform(mutation: mutation)  { result in
                 switch result {
                 case .success(let reponse):
-                    print("🤣 Updating Intent", reponse.data?.updateIntent)
+//                    print("🤣 Updating Intent", reponse.data?.updateIntent)
                     if let updateIntent = reponse.data?.updateIntent {
                         continuation.resume(returning: updateIntent)
                     } else if let errrs = reponse.errors {

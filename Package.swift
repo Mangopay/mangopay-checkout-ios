@@ -13,7 +13,7 @@ let package = Package(
     products: [
         .library(
             name: "MongoPayCoreiOS",
-            targets: ["MongoPayCoreiOS"]),
+            targets: ["MongoPayCoreiOS", "NethoneSDK"]),
         .library(
             name: "MongoPaySdkAPI",
             targets: ["MongoPaySdkAPI"]),
@@ -49,7 +49,11 @@ let package = Package(
             dependencies: [
                 "MongoPaySdkAPI",
             ]
-        )
+        ),
+        .binaryTarget(
+            name: "NethoneSDK",
+            path: "Integrations/NethoneSDK.xcframework"
+        ),
     
 //        .testTarget(
 //            name: "checkout-ios-sdkTests",
