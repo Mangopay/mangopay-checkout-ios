@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import PassKit
 import MongoPaySdkAPI
+import NethoneSDK
 
 enum FormType {
     case dropIn
@@ -33,6 +34,7 @@ class PaymentFormView: UIView {
         textfieldDelegate: self
     ) { textfield in
         textfield.setRightImage(nil, text: "Choose Card")
+        textfield.accessibilityLabel = "cardNumberField"
         textfield.onRightButtonTappedAction = {
             self.onRightButtonTappedAction?()
         }
@@ -47,7 +49,9 @@ class PaymentFormView: UIView {
         ],
         style: self.paymentFormStyle,
         textfieldDelegate: self
-    )
+    ) { textfield in
+        textfield.accessibilityLabel = "cardNameField"
+    }
 
     lazy var expiryDateField = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_EXPIRIY_PLACEHOLDER,
@@ -59,7 +63,9 @@ class PaymentFormView: UIView {
         ],
         style: self.paymentFormStyle,
         textfieldDelegate: self
-    )
+    ){ textfield in
+        textfield.accessibilityLabel = "expiryDateField"
+    }
 
     lazy var cvvField = MongoPayTextfield(
         placeholderText: LocalizableString.CARD_CVV,
@@ -71,7 +77,9 @@ class PaymentFormView: UIView {
         ],
         style: self.paymentFormStyle,
         textfieldDelegate: self
-    )
+    ) { textfield in
+        textfield.accessibilityLabel = "cvvField"
+    }
     
     private lazy var hStack = UIStackView.create(
         spacing: 8,
@@ -284,6 +292,7 @@ class PaymentFormView: UIView {
     var elementOptions: ElementsOptions?
     
     var paymentFormStyle: PaymentFormStyle
+    var currentAttempt: String?
     
     lazy var forms: [Validatable] = [
         cardNumberField,
@@ -336,6 +345,54 @@ class PaymentFormView: UIView {
         countryField.didPickHandler = { title, index in
             self.viewModel.dropInDelegate?.didUpdateBillingInfo(sender: self.viewModel)
         }
+        initiateNethone()
+    }
+    
+    func initiateNethone() {
+        NTHNethone.setMerchantNumber("428242");
+        let nethoneConfig = NTHAttemptConfiguration()
+        nethoneConfig.sensitiveFields = [
+            "cardNumberField",
+            "cardNameField",
+            "expiryDateField",
+            "cvvField"
+        ]
+
+        registerTextfieldsToNethone()
+        
+        do {
+            try NTHNethone.beginAttempt(with: nethoneConfig)
+            currentAttempt = NTHNethone.attemptReference()
+            print("✅ currentAttempt", currentAttempt)
+        } catch {
+            print("NEthone intiation Errror")
+        }
+    }
+
+    func registerTextfieldsToNethone() {
+        NTHNethone.register(
+            cardNumberField.textfield,
+            mode: .AllData,
+            name: "cardNumberField"
+        )
+
+        NTHNethone.register(
+            cardNameField.textfield,
+            mode: .AllData,
+            name: "cardNameField"
+        )
+
+        NTHNethone.register(
+            expiryDateField.textfield,
+            mode: .AllData,
+            name: "expiryDateField"
+        )
+
+        NTHNethone.register(
+            cvvField.textfield,
+            mode: .AllData,
+            name: "cvvField"
+        )
     }
 
     required init?(coder: NSCoder) {
@@ -392,7 +449,24 @@ class PaymentFormView: UIView {
     }
 
     @objc func onTappedButton() {
-        grabData()
+        finalizeButtonTapped()
+    }
+
+    func finalizeButtonTapped() {
+        do {
+            try NTHNethone.finalizeAttempt(completion: { error in
+                guard error == nil else {
+                    // Handle finalization error.
+                    // For example: internet is down
+                    print("NTHNethone Error")
+                    return
+                }
+                // All data has been delivered to Nethone. Do the actual payment processing
+                self.grabData()
+            })
+        } catch { error
+            print("❌❌❌❌ finalizeAttempt", error)
+        }
     }
 
     @objc func onApplePayBtnTapped() {
