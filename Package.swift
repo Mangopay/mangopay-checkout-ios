@@ -56,7 +56,7 @@ let package = Package(
         .target(
             name: "MangoPayVault",
             dependencies: [
-                "MangoPayVault",
+                "MongoPaySdkAPI",
             ]
         ),
         .binaryTarget(
