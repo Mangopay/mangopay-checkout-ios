@@ -20,6 +20,9 @@ let package = Package(
         .library(
             name: "MongoPayIntent",
             targets: ["MongoPayIntent"]),
+        .library(
+            name: "MangoPayVault",
+            targets: ["MangoPayVault"]),
     ],
     dependencies: [
         .package(
@@ -48,6 +51,12 @@ let package = Package(
             name: "MongoPayIntent",
             dependencies: [
                 "MongoPaySdkAPI",
+            ]
+        ),
+        .target(
+            name: "MangoPayVault",
+            dependencies: [
+                "MangoPayVault",
             ]
         ),
         .binaryTarget(
