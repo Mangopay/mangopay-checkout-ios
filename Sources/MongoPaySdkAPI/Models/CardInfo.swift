@@ -1,14 +1,23 @@
 import Foundation
 
-struct CardInfo: Codable {
-    var accessKeyRef: String?
-    var data: String?
-    var cardNumber: String?
-    var cardExpirationDate: String?
-    var cardCvx: String?
-    var cardType: String?
+public struct CardInfo: Codable {
+    public var accessKeyRef: String?
+    public var data: String?
+    public var cardNumber: String?
+    public var cardExpirationDate: String?
+    public var cardCvx: String?
+    public var cardType: String?
 
-    struct RegistrationData: Codable {
-        var data: String?
+    public struct RegistrationData: Codable {
+        public let RegistrationData: String
+    }
+
+    public init(accessKeyRef: String? = nil, data: String? = nil, cardNumber: String? = nil, cardExpirationDate: String? = nil, cardCvx: String? = nil, cardType: String? = nil) {
+        self.accessKeyRef = accessKeyRef
+        self.data = data
+        self.cardNumber = cardNumber
+        self.cardExpirationDate = cardExpirationDate
+        self.cardCvx = cardCvx
+        self.cardType = cardType
     }
 }

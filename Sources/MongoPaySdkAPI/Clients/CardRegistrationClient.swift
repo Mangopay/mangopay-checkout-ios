@@ -8,44 +8,65 @@
 import Foundation
 
 protocol CardRegistrationClientProtocol {
-    func createCardRegistration(_ card: CardRegistration, clientId: String) async throws -> CardRegistration
+    func createCardRegistration(
+        _ card: CardRegistration,
+        clientId: String,
+        apiKey: String
+    ) async throws -> CardRegistration
     func postCardInfo(_ cardInfo: CardInfo, url: URL) async throws -> CardInfo.RegistrationData
-    func updateCardInfo(_ cardInfo: CardInfo, clientId: String, cardRegistrationId: String) async throws -> CardInfo.RegistrationData
+    func updateCardInfo(_ regData: CardInfo.RegistrationData, clientId: String, cardRegistrationId: String) async throws -> CardRegistration
 }
 
-final class CardRegistrationClient: NetworkUtil, CardRegistrationClientProtocol {
+public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientProtocol {
     
-    func createCardRegistration(_ card: CardRegistration, clientId: String) async throws -> CardRegistration {
+    public init() { }
+
+    func createCardRegistration(
+        _ card: CardRegistration,
+        clientId: String,
+        apiKey: String
+    ) async throws -> CardRegistration {
 
         let url = baseUrl.appendingPathComponent(
             "/\(apiVersion)/\(clientId)/cardregistrations",
             isDirectory: false
         )
         print("🥹 card \(card)")
-
         return try await request(
             url: url,
             method: .post,
             bodyParam: card.toDict(),
             expecting: CardRegistration.self,
+            basicAuthDict: [
+                "username" : clientId,
+                "password": apiKey
+            ],
             verbose: true
         )
     }
     
-    func postCardInfo(_ cardInfo: CardInfo, url: URL) async throws -> CardInfo.RegistrationData {
+    public func postCardInfo(_ cardInfo: CardInfo, url: URL) async throws -> CardInfo.RegistrationData {
 
         print("🥹 cardInfo \(cardInfo)")
 
         return try await request(
             url: url,
             method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/x-www-form-urlencoded",
+            ],
             bodyParam: cardInfo.toDict(),
             expecting: CardInfo.RegistrationData.self,
-            verbose: true
+            verbose: true,
+            useXXForm: true,
+            decodeAsString: true
         )
     }
 
-    func updateCardInfo(_ cardInfo: CardInfo, clientId: String, cardRegistrationId: String) async throws -> CardInfo.RegistrationData {
+    public func updateCardInfo(
+        _ regData: CardInfo.RegistrationData,
+        clientId: String,
+        cardRegistrationId: String) async throws -> CardRegistration {
         
         let url = baseUrl.appendingPathComponent(
             "/\(apiVersion)/\(clientId)/CardRegistrations/\(cardRegistrationId)",
@@ -54,9 +75,12 @@ final class CardRegistrationClient: NetworkUtil, CardRegistrationClientProtocol 
 
         return try await request(
             url: url,
-            method: .post,
-            bodyParam: cardInfo.toDict(),
-            expecting: CardInfo.RegistrationData.self,
+            method: .put,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: regData.toDict(),
+            expecting: CardRegistration.self,
             verbose: true
         )
     }

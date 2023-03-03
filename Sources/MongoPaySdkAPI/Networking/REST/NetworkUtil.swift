@@ -32,7 +32,7 @@ struct NetworkTestData {
 protocol NetworkUtil {
     var baseUrl: URL { get }
     var apiVersion: String { get }
-    var headers: [String: String] { get }
+//    var headers: [String: String] { get }
 }
 
 struct Response<T: Codable, H: Codable> {
@@ -49,7 +49,8 @@ extension NetworkUtil {
     var headers: [String: String] {
         var _headers = [String: String]()
         _headers["Accept"] = "*/*"
-        _headers["Content-Type"] = "application/json"
+//        _headers["Content-Type"] = "application/json"
+        _headers["Content-Type"] = "application/x-www-form-urlencoded"
         return _headers
     }
 
@@ -60,12 +61,15 @@ extension NetworkUtil {
     func request<T: Codable>(
            url: URL,
            method: HTTPMethod,
+           additionalHeaders: [String: String]? = nil,
            bodyParam: [String: Any]? = nil,
            queryParam: [String: Any]? = nil,
-           additionalHeaders: [String: String]? = nil,
            expecting responseType: T.Type,
            authenticate: Bool = true,
-           verbose: Bool = false
+           basicAuthDict: [String: String]? = nil,
+           verbose: Bool = false,
+           useXXForm: Bool = false,
+           decodeAsString: Bool = false
      ) async throws -> T {
          var request: URLRequest
 
@@ -83,24 +87,51 @@ extension NetworkUtil {
              request = URLRequest(url: url)
 
              if let _bodyParam = bodyParam {
-                 let jsonData = try JSONSerialization.data(
-                    withJSONObject: _bodyParam,
-                    options: .prettyPrinted
-                 )
-                 request.httpBody = jsonData
+                 if !useXXForm {
+                     
+                     let jsonData = try JSONSerialization.data(
+                        withJSONObject: _bodyParam,
+                        options: .prettyPrinted
+                     )
+                     request.httpBody = jsonData
+                     
+                 } else {
+                     var components = URLComponents(string: url.absoluteString)!
+                     components.queryItems = _bodyParam.map({ (arg) -> URLQueryItem in
+                         let (key, value) = arg
+                         return URLQueryItem(name: key, value: "\(value)")
+                     })
+                     request.httpBody = components.query?.data(using: .utf8)
+                 }
+                 }
              }
-         }
-
+ 
+ 
          request.httpMethod = method.rawValue
 
          additionalHeaders?.forEach {(request.addValue($0.value, forHTTPHeaderField: $0.key))}
+         
+         
+         if let basicAuthData = basicAuthDict {
+             if let username = basicAuthData["username"], let password = basicAuthData["password"] {
+    
+                 let authDataStr = String(format: "%@:%@", username, password)
+                 let authData = authDataStr.data(using: String.Encoding.utf8)!
+                 let base64LoginString = authData.base64EncodedString()
+                 
+                 request.addValue("Bearer \(base64LoginString)", forHTTPHeaderField: "Authorization")
+             }
+
+         }
+
 
          let (data, response) = try await URLSession.shared.asyncData(for: request)
          let result = try self.processResponse(
             responseData: data,
             response: response,
             responseType: responseType,
-            verbose: verbose
+            verbose: verbose,
+            decodeAsString: decodeAsString
          )
          return result
      }
@@ -114,10 +145,11 @@ private extension NetworkUtil {
           responseData: Data?,
           response: URLResponse?,
           responseType: T.Type,
-          verbose: Bool = false
+          verbose: Bool = false,
+          decodeAsString: Bool = false
       ) throws -> T {
 
-        guard let data = responseData else {
+        guard var data = responseData else {
             throw NetworkError.noDataReturned
         }
 
@@ -134,18 +166,13 @@ private extension NetworkUtil {
                 print("RESPONSE [\(statusCode)] -", String(data: data, encoding: .utf8))
             }
         }
-        guard let data = responseData else {
-            throw NetworkError.noDataReturned
-        }
-
-        guard let response = response as? HTTPURLResponse else {
-            throw NetworkError.noResponse
-
-        }
 
         do {
             switch statusCode {
             case 200..<300:
+                if decodeAsString {
+                    data = try decodeAsDataString(data)
+                }
                 return try decode(data)
 
             case 300..<400:
@@ -207,6 +234,38 @@ private extension NetworkUtil {
 
         return try decoder.decode(T.self, from: data)
     }
+
+    func decodeAsString(_ data: Data) -> String {
+        let str = String(decoding: data, as: UTF8.self)
+        let data = [
+            "key": str
+        ]
+        return str
+    }
+
+    func decodeAsDataString(_ data: Data) throws -> Data {
+        let str = String(decoding: data, as: UTF8.self)
+        let dataDict = [
+            "RegistrationData": str
+        ]
+
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dataDict, options: .prettyPrinted)
+            return jsonData
+        } catch {
+            print(error.localizedDescription)
+            throw error
+        }
+    }
+    
+    func generic<T>(parameter: AnyObject, type: T.Type) -> Bool {
+        if parameter is T {
+            return true
+        } else {
+            return false
+        }
+    }
+
 
 }
 

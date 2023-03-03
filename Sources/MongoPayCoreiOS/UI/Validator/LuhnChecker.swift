@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct LuhnChecker {
+public struct LuhnChecker {
     
-    func luhnCheck(_ number: String) -> Bool {
+    public static func luhnCheck(_ number: String) -> Bool {
         var sum = 0
         let digitStrings = number.reversed().map { String($0) }
         

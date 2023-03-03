@@ -9,7 +9,7 @@ import Foundation
 
 extension Date {
 
-    init?(_ string: String, format: String) {
+    public init?(_ string: String, format: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.calendar = Calendar(identifier: .gregorian)
