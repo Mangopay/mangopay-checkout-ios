@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum MongoPayError: Error {
+public enum MangoPayError: Error {
     case onTokenGenerationFailed(reason: String?)
     case onAuthorizePaymentFailed(reason: String?)
 }

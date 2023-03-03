@@ -1,5 +1,5 @@
 #
-#  Be sure to run `pod spec lint MongoPayiOSSDK.podspec' to ensure this is a
+#  Be sure to run `pod spec lint MangoPayiOSSDK.podspec' to ensure this is a
 #  valid spec and to remove all comments including this before submitting the spec.
 #
 #  To learn more about Podspec attributes see https://guides.cocoapods.org/syntax/podspec.html
@@ -15,7 +15,7 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  spec.name         = "MongoPayiOSSDK"
+  spec.name         = "MangoPayiOSSDK"
   spec.version      = "0.0.1"
   spec.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift."
 
@@ -57,7 +57,6 @@ Pod::Spec.new do |spec|
   spec.author             = { "Elikem Savie" => "elikem@menaget.com" }
   # Or just: spec.author    = "Elikem Savie"
   # spec.authors            = { "Elikem Savie" => "elikem@menaget.com" }
-  # spec.social_media_url   = "https://twitter.com/Elikem Savie"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

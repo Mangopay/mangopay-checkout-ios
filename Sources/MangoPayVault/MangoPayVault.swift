@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import MongoPaySdkAPI
-import MongoPayCoreiOS
+import MangoPaySdkAPI
+import MangoPayCoreiOS
 
 public protocol MangoPayVaultDelegate: AnyObject {
     func onSuccess(card: CardRegistration)

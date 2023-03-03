@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Apollo
 import ApolloAPI
-import MongoPaySdkAPI
+import MangoPaySdkAPI
 
 public enum Ennvironment {
     case sandbox
@@ -105,7 +105,7 @@ public class DropInOptions {
     }
 }
 
-public struct MongoPaySDK {
+public struct MangoPaySDK {
     
     static var clientID: String!
     private static var paymentFormVC: PaymentFormController!
@@ -115,7 +115,7 @@ public struct MongoPaySDK {
         cardConfig: CardConfig?,
         present viewController: UIViewController
     ) {
-        MongoPaySDK.clientID = options.apiKey
+        MangoPaySDK.clientID = options.apiKey
         paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             elementOptions: options
@@ -131,7 +131,7 @@ public struct MongoPaySDK {
         present viewController: UIViewController,
         dropInDelegate: DropInFormDelegate
     ) {
-        MongoPaySDK.clientID = options.apiKey
+        MangoPaySDK.clientID = options.apiKey
         paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             dropInOptions: options
@@ -178,7 +178,7 @@ public struct MongoPaySDK {
 
 }
 
-extension MongoPaySDK {
+extension MangoPaySDK {
 
     public static func setIntentId(_ intentId: String) {
         print("🤣 dropInOptions", paymentFormVC.formView.dropInOptions)

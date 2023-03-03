@@ -7,7 +7,7 @@
 
 import UIKit
 import Foundation
-import MongoPaySdkAPI
+import MangoPaySdkAPI
 
 class CustomerCardListController: UIViewController {
 

@@ -6,7 +6,10 @@
 //
 
 import UIKit
-import checkout_ios_sdk
+import MongoPayCoreiOS
+import MongoPaySdkAPI
+import MongoPayIntent
+import MangoPayVault
 
 class ViewController: UIViewController {
 
@@ -32,12 +35,14 @@ class ViewController: UIViewController {
         let elementOptions = ElementsOptions(
             apiKey: "ct_test_kpOoHuu5pSzJGABP",
             style: style,
-            environment: .sandbox,
             customerId: nil,
+            amount: 200,
+            countryCode: "US",
+            currencyCode: "USD",
             delegate: self
         )
 
-        WhenThenSDK.buildElementForm(
+        MongoPaySDK.buildElementForm(
             with: elementOptions,
             cardConfig: cardConfig,
             present: self
@@ -59,15 +64,16 @@ class ViewController: UIViewController {
             apiKey: "ct_test_kpOoHuu5pSzJGABP",
             orderId: nil,
             style: style,
-            environment: .sandbox,
             customerId: nil,
             flowId: "c23700cf-25a9-4b80-8aa6-3e3169f6d896",
             amount: 2000,
             currencyCode: "EUR",
+            countryCode: "US",
             delegate: self
         )
-
-        WhenThenSDK.buildDropInForm(
+  
+        
+        MongoPaySDK.buildDropInForm(
             with: dropInOptions,
             cardConfig: cardConfig,
             present: self,
@@ -75,16 +81,87 @@ class ViewController: UIViewController {
         )
     }
 
+    @IBAction func didTapPayline(_ sender: UIButton) {
+
+        let resObj = CardRegistration(
+            id: "163585699",
+            creationDate: 1677743338,
+            userID: "158091557",
+            accessKey: "1X0m87dmM2LiwFgxPLBJ",
+            preregistrationData: "ObMObfSdwRfyE4QClGtUc4qM8dLio0rp1vE4zmvS-FGYMCuEiVEd26Hn9C20q7Ka2ddFLVXdicolcUIkv_kKEA",
+            cardType: "CB_VISA_MASTERCARD",
+            cardRegistrationURLStr: "https://homologation-webpayment.payline.com/webpayment/getToken",
+            currency: "EUR",
+            status: "CREATED"
+        )
+
+        let cardInfo = CardInfo(
+            accessKeyRef: resObj.accessKey,
+            data: resObj.preregistrationData,
+            cardNumber: "4970101122334422",
+            cardExpirationDate: "1024",
+            cardCvx: "123"
+        )
+
+        MangoPayVault().tokenisePaymentMethod(
+            clientId: "checkoutsquatest",
+            with: cardInfo,
+            cardRegistration: resObj,
+            delegate: self
+        )
+    }
+
+    func startIntent() {
+        Task {
+            do  {
+                let client = WhenThenClient(clientKey: "ct_test_KOShHY5fj7Zoh35l")
+                
+                let data = try await client.startIntent(
+                    trackingId: UUID().uuidString,
+                    flowId: "c23700cf-25a9-4b80-8aa6-3e3169f6d896"
+                )
+            } catch {
+                //error
+            }
+        }
+    }
+
+}
+
+extension ViewController: MangoPayVaultDelegate {
+    
+    func onSuccess(card: MongoPaySdkAPI.CardRegistration) {
+        print("✅ Succesfull", card)
+    }
+    
+    func onFailure(error: Error) {
+        print("✅ failed", error)
+    }
+    
+    
 }
 
 extension ViewController: DropInFormDelegate {
+
+    func didUpdateBillingInfo(sender: PaymentFormViewModel) {
+        
+    }
+
+    func onPaymentStarted(sender: PaymentFormViewModel) {
+        
+    }
+    
+    func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus) {
+        
+    }
+    
 
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment) {
         print("❤️ onPaymentCompleted \(payment)")
 //        self.showAlert(with: payment.id, title: "Payment Succesfully Completed")
     }
 
-    func onPaymentFailed(sender: PaymentFormViewModel, error: WhenThenError) {
+    func onPaymentFailed(sender: PaymentFormViewModel, error: MongoPayError) {
         print("❌ onPaymentFailed \(error)")
     }
     
@@ -92,8 +169,16 @@ extension ViewController: DropInFormDelegate {
 
 extension ViewController: ElementsFormDelegate {
 
+    func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment) {
+        
+    }
+    
+    func onApplePayCompleteElement(status: WhenThenApplePay.PaymentStatus) {
+        
+    }
+    
+
     func onTokenGenerated(tokenisedCard: TokeniseCard) {
-        print("😀😀😀")
         print("Element Token Succesfully Generated \(tokenisedCard.token)")
         self.showAlert(with: tokenisedCard.token, title: "Tokenised Card")
     }

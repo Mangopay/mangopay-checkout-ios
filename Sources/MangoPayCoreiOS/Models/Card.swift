@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import MongoPaySdkAPI
+import MangoPaySdkAPI
 
 public enum CardType: String, Codable, CaseIterable {
     case amex = "AMEX"

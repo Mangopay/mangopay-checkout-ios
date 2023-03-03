@@ -8,9 +8,9 @@
 import Foundation
 import Apollo
 import ApolloAPI
-import MongoPaySdkAPI
+import MangoPaySdkAPI
 
-public class MongoPayIntent {
+public class MangoPayIntent {
     
     var clientKey: String!
     let indempodentKey = UUID().uuidString

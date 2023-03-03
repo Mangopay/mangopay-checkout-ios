@@ -7,7 +7,7 @@
 
 import Foundation
 import PassKit
-import MongoPaySdkAPI
+import MangoPaySdkAPI
 
 public protocol WhenThenApplePayDelegate {
 
@@ -202,7 +202,7 @@ extension WhenThenApplePay: PKPaymentAuthorizationViewControllerDelegate {
         
         Task {
             do {
-                let authpayment = try await MongoPaySDK.authorizePayment(apikey: MongoPaySDK.clientID, paymentData: authData)
+                let authpayment = try await MangoPaySDK.authorizePayment(apikey: MangoPaySDK.clientID, paymentData: authData)
                 handleFinalState(.success, nil)
             } catch {
                 handleFinalState(.error, error)

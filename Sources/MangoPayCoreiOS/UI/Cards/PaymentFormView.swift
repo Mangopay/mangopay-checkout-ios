@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import PassKit
-import MongoPaySdkAPI
+import MangoPaySdkAPI
 import NethoneSDK
 
 enum FormType {
@@ -20,7 +20,7 @@ class PaymentFormView: UIView {
     
     lazy var headerView = HeaderView()
 
-    lazy var cardNumberField = MongoPayTextfield(
+    lazy var cardNumberField = MangoPayTextfield(
         placeholderText: "1234 1234 1234 1234",
         leftImage: UIImage(assetIdentifier: .card_visa),
         keyboardType: .numberPad,
@@ -40,7 +40,7 @@ class PaymentFormView: UIView {
         }
     }
 
-    lazy var cardNameField = MongoPayTextfield(
+    lazy var cardNameField = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_NAME_PLACEHOLDER,
         returnKeyType: .next,
         validationRule: [
@@ -53,7 +53,7 @@ class PaymentFormView: UIView {
         textfield.accessibilityLabel = "cardNameField"
     }
 
-    lazy var expiryDateField = MongoPayTextfield(
+    lazy var expiryDateField = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_EXPIRIY_PLACEHOLDER,
         keyboardType: .numberPad,
         returnKeyType: .next,
@@ -67,7 +67,7 @@ class PaymentFormView: UIView {
         textfield.accessibilityLabel = "expiryDateField"
     }
 
-    lazy var cvvField = MongoPayTextfield(
+    lazy var cvvField = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_CVV,
         keyboardType: .numberPad,
         returnKeyType: .next,
@@ -110,14 +110,14 @@ class PaymentFormView: UIView {
         font: .systemFont(ofSize: 16, weight: .medium)
     )
     
-    lazy var countryField = MongoPayDropDownTextfield(
+    lazy var countryField = MangoPayDropDownTextfield(
         placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
         style: self.paymentFormStyle,
         textfieldDelegate: self
     )
 
-    lazy var zipCodeField = MongoPayTextfield(
+    lazy var zipCodeField = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -143,14 +143,14 @@ class PaymentFormView: UIView {
         textAlignment: .center
     )
 
-    lazy var firstNameTextfield = MongoPayDropDownTextfield(
+    lazy var firstNameTextfield = MangoPayDropDownTextfield(
         placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
         showDropDownIcon: true,
         style: self.paymentFormStyle,
         textfieldDelegate: self
     )
 
-    lazy var lastNameTextfield = MongoPayTextfield(
+    lazy var lastNameTextfield = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -162,7 +162,7 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
-    lazy var addressLine1Field = MongoPayTextfield(
+    lazy var addressLine1Field = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -174,7 +174,7 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
-    lazy var addressLine2Field = MongoPayTextfield(
+    lazy var addressLine2Field = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -186,7 +186,7 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
-    lazy var cityAddressField = MongoPayTextfield(
+    lazy var cityAddressField = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -198,7 +198,7 @@ class PaymentFormView: UIView {
         textF.textfield.autocorrectionType = .no
     }
 
-    lazy var stateField = MongoPayTextfield(
+    lazy var stateField = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
         returnKeyType: .done,
         validationRule: [
@@ -312,7 +312,7 @@ class PaymentFormView: UIView {
         self.elementOptions = elementOptions
 
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
-        self.viewModel = PaymentFormViewModel(clientId: MongoPaySDK.clientID)
+        self.viewModel = PaymentFormViewModel(clientId: MangoPaySDK.clientID)
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
             target: self,

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MongoPaySdkAPI
+import MangoPaySdkAPI
 
 class CardListCell: UITableViewCell {
 

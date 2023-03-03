@@ -16,7 +16,7 @@ enum TextFieldState {
     case greyedOut
 }
 
-class MongoPayTextfield: UIView {
+class MangoPayTextfield: UIView {
 
     var onEditingBegin: (() -> Void)?
     var onEditingDidEnd: (() -> Void)?
@@ -128,7 +128,7 @@ class MongoPayTextfield: UIView {
         allowsInteraction: Bool = true,
         style: PaymentFormStyle,
         textfieldDelegate: UITextFieldDelegate? = nil,
-        textfield: ((MongoPayTextfield) -> Void)? = nil
+        textfield: ((MangoPayTextfield) -> Void)? = nil
     ) {
         self.validationRules = validationRule
         self.placeholderText = placeholderText
@@ -238,7 +238,7 @@ class MongoPayTextfield: UIView {
     }
 }
 
-extension MongoPayTextfield: Validatable {
+extension MangoPayTextfield: Validatable {
     var inputData: String {
         return trimmedText ?? ""
     }
