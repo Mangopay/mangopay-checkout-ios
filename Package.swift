@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MongoPayiOSSDK",
+    name: "MangoPayiOSSDK",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v11),
@@ -12,14 +12,14 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MongoPayCoreiOS",
-            targets: ["MongoPayCoreiOS", "NethoneSDK"]),
+            name: "MangoPayCoreiOS",
+            targets: ["MangoPayCoreiOS", "NethoneSDK"]),
         .library(
-            name: "MongoPaySdkAPI",
-            targets: ["MongoPaySdkAPI"]),
+            name: "MangoPaySdkAPI",
+            targets: ["MangoPaySdkAPI"]),
         .library(
-            name: "MongoPayIntent",
-            targets: ["MongoPayIntent"]),
+            name: "MangoPayIntent",
+            targets: ["MangoPayIntent"]),
         .library(
             name: "MangoPayVault",
             targets: ["MangoPayVault"]),
@@ -32,9 +32,9 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MongoPayCoreiOS",
+            name: "MangoPayCoreiOS",
             dependencies: [
-                "MongoPaySdkAPI",
+                "MangoPaySdkAPI",
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
@@ -42,21 +42,22 @@ let package = Package(
             ]
         ),
         .target(
-            name: "MongoPaySdkAPI",
+            name: "MangoPaySdkAPI",
             dependencies: [
                 .product(name: "Apollo", package: "apollo-ios"),
             ]
         ),
         .target(
-            name: "MongoPayIntent",
+            name: "MangoPayIntent",
             dependencies: [
-                "MongoPaySdkAPI",
+                "MangoPaySdkAPI",
             ]
         ),
         .target(
             name: "MangoPayVault",
             dependencies: [
-                "MongoPaySdkAPI",
+                "MangoPaySdkAPI",
+                "MangoPayCoreiOS"
             ]
         ),
         .binaryTarget(

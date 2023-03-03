@@ -3,11 +3,11 @@
   "input" : {
     "operationSearchPaths" : [
         "./*.graphql",
-        "./Sources/MongoPaySdkAPI/*.graphql"
+        "./Sources/MangoPaySdkAPI/*.graphql"
     ],
     "schemaSearchPaths" : [
        "./*.graphqls",
-       "./Sources/MongoPaySdkAPI/*.graphqls"
+       "./Sources/MangoPaySdkAPI/*.graphqls"
     ]
   },
   "output" : {
@@ -16,10 +16,10 @@
       }
     },
     "schemaTypes" : {
-      "path" : "Sources/MongoPaySdkAPI",
+      "path" : "Sources/MangoPaySdkAPI",
       "moduleType" : {
         "embeddedInTarget" : {
-            "name": "MongoPaySdkAPI"
+            "name": "MangoPaySdkAPI"
         }
       }
     },
@@ -41,6 +41,6 @@
     },
     "downloadTimeout": 60,
     "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
-    "outputPath": "Sources/WhenThenSdkAPI/dowmloaded.graphqls/"
+    "outputPath": "Sources/MangoPaySdkAPI/dowmloaded.graphqls/"
 }
 }
