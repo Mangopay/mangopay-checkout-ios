@@ -474,7 +474,7 @@ class PaymentFormView: UIView {
     }
 
     func grabData() {
-        let formData = FormData(
+        let formData = CardData(
             number: cardNumberField.text,
             name: cardNameField.text,
             expMonth: expiryMonth,

@@ -2,7 +2,7 @@
   "schemaName" : "CheckoutSchema",
   "input" : {
     "operationSearchPaths" : [
-        "./*.graphql",
+        "./Sources/MangoPaySdkAPI/*.graphql",
         "./Sources/MangoPaySdkAPI/*.graphql"
     ],
     "schemaSearchPaths" : [

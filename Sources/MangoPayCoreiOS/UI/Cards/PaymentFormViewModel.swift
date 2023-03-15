@@ -29,7 +29,7 @@ public protocol ElementsFormDelegate: AnyObject {
 
 public class PaymentFormViewModel {
     
-    var formData: FormData?
+    var formData: CardData?
     var client: WhenThenClient!
     var tokenObserver = PassthroughSubject<TokeniseCard, Never>()
     var statusObserver = PassthroughSubject<String, Never>()
