@@ -31,12 +31,8 @@ public extension CheckoutSchema {
 
     public static func objectType(forTypename typename: String) -> Object? {
       switch typename {
-      case "Mutation": return CheckoutSchema.Objects.Mutation
-      case "CardToken": return CheckoutSchema.Objects.CardToken
-      case "Customer": return CheckoutSchema.Objects.Customer
-      case "BillingAddressApi": return CheckoutSchema.Objects.BillingAddressApi
-      case "ShippingAddressApi": return CheckoutSchema.Objects.ShippingAddressApi
       case "Query": return CheckoutSchema.Objects.Query
+      case "Mutation": return CheckoutSchema.Objects.Mutation
       case "IntentApi": return CheckoutSchema.Objects.IntentApi
       case "Amount": return CheckoutSchema.Objects.Amount
       case "IntentLocation": return CheckoutSchema.Objects.IntentLocation
@@ -45,6 +41,10 @@ public extension CheckoutSchema {
       case "IntentTimelineStep": return CheckoutSchema.Objects.IntentTimelineStep
       case "LinkedPayment": return CheckoutSchema.Objects.LinkedPayment
       case "PaymentMethod": return CheckoutSchema.Objects.PaymentMethod
+      case "CardToken": return CheckoutSchema.Objects.CardToken
+      case "Customer": return CheckoutSchema.Objects.Customer
+      case "BillingAddressApi": return CheckoutSchema.Objects.BillingAddressApi
+      case "ShippingAddressApi": return CheckoutSchema.Objects.ShippingAddressApi
       case "Payment": return CheckoutSchema.Objects.Payment
       case "PaymentInternal": return CheckoutSchema.Objects.PaymentInternal
       case "PaymentGateway": return CheckoutSchema.Objects.PaymentGateway

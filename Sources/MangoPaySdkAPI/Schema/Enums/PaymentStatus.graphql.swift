@@ -5,6 +5,7 @@ import ApolloAPI
 
 public extension CheckoutSchema {
   enum PaymentStatus: String, EnumType {
+    case draft = "DRAFT"
     case active = "ACTIVE"
     case inactive = "INACTIVE"
     case authorised = "AUTHORISED"
@@ -20,6 +21,8 @@ public extension CheckoutSchema {
     case needsApmAuthorization = "NEEDS_APM_AUTHORIZATION"
     case gatewayHold = "GATEWAY_HOLD"
     case refundPending = "REFUND_PENDING"
+    case refundFailed = "REFUND_FAILED"
+    case noAnswerFromPsp = "NO_ANSWER_FROM_PSP"
   }
 
 }

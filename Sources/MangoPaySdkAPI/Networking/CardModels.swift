@@ -9,14 +9,31 @@ import Foundation
 import ApolloAPI
 import Apollo
 
-public struct FormData {
+public protocol Cardable {
+    var cardNumber: String? { get }
+    var cardExpirationDate: String? { get }
+    var cvc: String? { get }
+}
+
+public struct CardData: Cardable {
     let number: String?
     let name: String?
     let expMonth: Int?
     let expYear: Int?
-    let cvc: String?
+    public let cvc: String?
     let savePayment: Bool
     let bilingInfo: BillingInfo?
+
+    public var cardNumber: String? {
+        return number
+    }
+
+    public var cardExpirationDate: String? {
+        guard let _month = expMonth, let _year = expYear else { return nil }
+        let monthStr = String(_month)
+        let yearStr = String(_year)
+        return [monthStr, yearStr].joined(separator: "")
+    }
     
     public init(number: String?, name: String?, expMonth: Int?, expYear: Int?, cvc: String?, savePayment: Bool, bilingInfo: BillingInfo?) {
         self.number = number
@@ -109,10 +126,10 @@ public struct PaymentDtoInput {
     var type: CheckoutSchema.PaymentMethodEnum
     var token: String?
     var walletToken: String?
-    var card: FormData?
+    var card: CardData?
     var googlePayId: String?
     
-    public init(type: CheckoutSchema.PaymentMethodEnum, token: String? = nil, walletToken: String? = nil, card: FormData? = nil, googlePayId: String? = nil) {
+    public init(type: CheckoutSchema.PaymentMethodEnum, token: String? = nil, walletToken: String? = nil, card: CardData? = nil, googlePayId: String? = nil) {
         self.type = type
         self.token = token
         self.walletToken = walletToken
@@ -248,7 +265,7 @@ public struct Company {
 }
 
 public struct CustomerInputData {
-    var card: FormData?
+    var card: CardData?
     var customer: Customer
     
     var toDTO: CheckoutSchema.CustomerInput {
@@ -260,7 +277,7 @@ public struct CustomerInputData {
         )
     }
     
-    public init(card: FormData? = nil, customer: Customer) {
+    public init(card: CardData? = nil, customer: Customer) {
         self.card = card
         self.customer = customer
     }

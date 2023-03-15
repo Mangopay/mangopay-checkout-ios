@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum CardValidationError: Error {
+public enum CardValidationError: Error {
     
     case cardNumberRqd
     case cardNumberInvalid

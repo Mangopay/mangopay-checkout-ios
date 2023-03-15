@@ -23,6 +23,7 @@ input IntentCustomerInput {
 }
 
 type Query {
+  listEnrolledAuthenticators(accessToken: String!): [EnrolledAuthenticatorDevice]
   getPayment(id: ID!): Payment
   getIntent(id: ID!): IntentApi!
   listPayments(startDate: DateTime, endDate: DateTime, status: [PaymentStatus], first: Int, last: Int, after: String, before: String, minAmount: Int, maxAmount: Int, data: PaymentFilterInput): PaymentsWithFilter
@@ -81,6 +82,10 @@ input OverseasAccountIdentifierInput {
 """An RFC-3339 compliant DateTime Scalar"""
 scalar DateTime
 
+type AuthorizationRedirect {
+  gatewayRedirectUrl: String
+}
+
 type PayoutDetails {
   description: String
 }
@@ -135,6 +140,10 @@ type PaymentCustomer {
   email: String
   name: String
   phone: String
+  description: String
+  billingAddress: BillingAddressApi
+  shippingAddress: ShippingAddressApi
+  company: CompanyApi
 }
 
 input DestinationInput {
@@ -209,6 +218,15 @@ type FlowSummary {
   flowInstanceId: String
 }
 
+enum RefundStatus {
+  DRAFT
+  PENDING
+  SUCCEEDED
+  FAILED
+  NO_ANSWER_FROM_PSP
+  NO_ANSWER_FROM_MGP
+}
+
 type CheckoutPaymentGateway {
   id: String!
   name: String!
@@ -261,28 +279,6 @@ input PaymentMethodInput {
   bankAccount: PaymentBankAccountInput
 }
 
-type SettlementReport {
-  id: ID
-  settlementBatchId: String
-  teamId: ID
-  sourceId: String
-  merchantReference: String
-  paymentMethod: PaymentMethodEnum
-  type: String
-  grossCurrency: String
-  grossDebit: Long
-  grossCredit: Long
-  exchangeRate: Long
-  netCurrency: String
-  netDebit: Long
-  netCredit: Long
-  commission: Long
-  markup: Long
-  schemeFees: Long
-  interchange: Long
-  totalFees: Long
-}
-
 input OfficialIdentificationInput {
   passportNumber: String
   socialSecurityNumber: String
@@ -314,13 +310,13 @@ type CompanyApi {
   vatId: String
 }
 
+"""An object scalar"""
+scalar Object
+
 enum CheckoutType {
   HOSTED
   TOKENISATION
 }
-
-"""An object scalar"""
-scalar Object
 
 input IntentShippingInput {
   status: FormStepStatus
@@ -438,6 +434,14 @@ input PaymentBankAccountInput {
   product: String
 }
 
+type EnrolledAuthenticatorDevice {
+  id: String
+  authenticatorType: String
+  oobChannel: String
+  name: String
+  active: Boolean
+}
+
 type PaymentEdge {
   node: PaymentInternal
   cursor: String!
@@ -463,6 +467,12 @@ type DisputeEvidenceFileFormat {
 
 input IntentLocationInput {
   country: String
+}
+
+type RefundInternal {
+  refundSourceId: String
+  status: RefundStatus
+  amount: Long
 }
 
 enum DataType {
@@ -532,6 +542,7 @@ enum DataType {
   USER
   UUID
   FLOW_ID_LIST
+  CORE_REFUND
 }
 
 type FilterData {
@@ -802,6 +813,10 @@ type CardToken {
   card: PaymentMethod
 }
 
+type MfaTokenResponse {
+  mfaToken: String
+}
+
 type IntentCart {
   id: String!
   weight: Int!
@@ -829,6 +844,7 @@ type DisputeTimelineEvent {
 }
 
 enum PaymentStatus {
+  DRAFT
   ACTIVE
   INACTIVE
   AUTHORISED
@@ -844,6 +860,19 @@ enum PaymentStatus {
   NEEDS_APM_AUTHORIZATION
   GATEWAY_HOLD
   REFUND_PENDING
+  REFUND_FAILED
+  NO_ANSWER_FROM_PSP
+}
+
+type Auth0GeneralTokenResponse {
+  error: String
+  errorDescription: String
+  mfaToken: String
+  accessToken: String
+  tokenType: String
+  idToken: String
+  scope: String
+  expiresIn: String
 }
 
 input CompanyInput {
@@ -965,6 +994,7 @@ type Payment implements Node {
   metadata: JSON
   paymentMethodDetails: PaymentMethodDetails
   attachments: [Attachment]
+  authorizationRedirect: AuthorizationRedirect
 }
 
 enum IntentStatus {
@@ -1004,6 +1034,11 @@ input PaymentMethodCustomerDtoInput {
   id: String
   email: String
   name: String
+  description: String
+  phone: String
+  billingAddress: BillingAddressInput
+  shippingAddress: ShippingAddressInput
+  company: CompanyInput
 }
 
 """Long type"""
@@ -1048,6 +1083,12 @@ type PaymentDetails {
 
 type Mutation {
   createPayout(connectionSmartId: String!, createPayoutInput: CreatePayoutInput!): PayoutPayment
+  generateMfaToken(username: String!, password: String!): MfaTokenResponse
+  verifyMfaToken(bindingCode: String!, mfaToken: String!, authenticatorType: String!): VerifiedMfaTokenResponse
+  pproProcessReconciliationFilesRefundFailedJob: Boolean
+  pproProcessReconciliationFilesRefundSucceededJob: Boolean
+  pproProcessReconciliationFilesRefundFailed(date: String): Boolean
+  pproProcessReconciliationFilesRefundSucceeded(date: String): Boolean
   authorizePayment(authorisePayment: AuthorisedPaymentInput!): Payment
   headlessAuthorizePayment(headlessAuthorisePayment: HeadlessAuthorisedPaymentInput!): Payment
   capturePayment(id: ID!, amount: Long, metadata: JSON): Payment
@@ -1103,27 +1144,6 @@ type PaymentMethodDetails {
   country: String
   brand: String
   name: String
-}
-
-input SettlementReportInput {
-  id: ID
-  settlementBatchId: String
-  sourceId: String
-  merchantReference: String
-  paymentMethod: PaymentMethodEnum
-  type: String
-  grossCurrency: String
-  grossDebit: Long
-  grossCredit: Long
-  exchangeRate: Long
-  netCurrency: String
-  netDebit: Long
-  netCredit: Long
-  commission: Long
-  markup: Long
-  schemeFees: Long
-  interchange: Long
-  totalFees: Long
 }
 
 enum ComparisonOperator {
@@ -1229,6 +1249,12 @@ enum PaymentMethodEnum {
   VOLT
   MBWAY
   MULTIBANCO
+}
+
+type VerifiedMfaTokenResponse {
+  accessToken: String
+  tokenType: String
+  expiresIn: String
 }
 
 input HeadlessAuthorisedPaymentInput {
