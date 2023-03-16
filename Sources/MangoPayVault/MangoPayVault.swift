@@ -104,9 +104,14 @@ public class MangoPayVault {
                     cardRegistrationId: cardId
                 )
                 
-                delegate.onSuccess(card: updateRes)
+                DispatchQueue.main.async {
+                    delegate.onSuccess(card: updateRes)
+                }
+                
             } catch {
-                delegate.onFailure(error: error)
+                DispatchQueue.main.async {
+                    delegate.onFailure(error: error)
+                }
             }
         }
         
@@ -127,9 +132,13 @@ public class MangoPayVault {
                 ).createCustomer(
                     with: CustomerInputData(customer: customer)
                 )
-                delegate.onCustomerCreatedSuccessfully(customerId: customerRes)
+                DispatchQueue.main.async {
+                    delegate.onCustomerCreatedSuccessfully(customerId: customerRes)
+                }
             } catch {
-                delegate.onCustomerCreationFailed(error: error)
+                DispatchQueue.main.async {
+                    delegate.onCustomerCreationFailed(error: error)
+                }
             }
         }
     }
@@ -149,9 +158,13 @@ public class MangoPayVault {
             do {
                 let resPaymentMethods = try await client.getPaymentMethodsForCustomer(customerId)
                 let paymentMethods = resPaymentMethods.compactMap({$0})
-                delegate.onSucessfullyFetchPaymentMethods(paymentMthods: paymentMethods)
+                DispatchQueue.main.async {
+                    delegate.onSucessfullyFetchPaymentMethods(paymentMthods: paymentMethods)
+                }
             } catch {
-                delegate.onFetchPaymentMethodsFailure(error: error)
+                DispatchQueue.main.async {
+                    delegate.onFetchPaymentMethodsFailure(error: error)
+                }
             }
         }
     }
