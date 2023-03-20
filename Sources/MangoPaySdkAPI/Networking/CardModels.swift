@@ -30,7 +30,8 @@ public struct CardData: Cardable {
 
     public var cardExpirationDate: String? {
         guard let _month = expMonth, let _year = expYear else { return nil }
-        let monthStr = String(_month)
+        var monthStr = String(_month)
+        monthStr = _month < 10 ? "0" + monthStr : monthStr
         let yearStr = String(_year)
         return [monthStr, yearStr].joined(separator: "")
     }
@@ -47,7 +48,7 @@ public struct CardData: Cardable {
     
     public func toPaymentCardInput() -> CheckoutSchema.PaymentCardInput {
         
-        let billing = bilingInfo == nil ? GraphQLNullable<CheckoutSchema.BillingAddressInput>(bilingInfo!.toBillingAddressInput()) : nil
+        let billing = bilingInfo != nil ? GraphQLNullable<CheckoutSchema.BillingAddressInput>(bilingInfo!.toBillingAddressInput()) : nil
         
         let card = CheckoutSchema.PaymentCardInput(
             number: number ?? "",
