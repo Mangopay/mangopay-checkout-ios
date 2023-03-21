@@ -16,7 +16,7 @@ enum TextFieldState {
     case greyedOut
 }
 
-class MangoPayTextfield: UIView {
+public class MangoPayTextfield: UIView {
 
     var onEditingBegin: (() -> Void)?
     var onEditingDidEnd: (() -> Void)?
