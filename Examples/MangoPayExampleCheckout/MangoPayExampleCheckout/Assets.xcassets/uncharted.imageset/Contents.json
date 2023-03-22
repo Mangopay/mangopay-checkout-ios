@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "nathan-drake-uncharted-4-a-thief-s-end-ps4-wallpaper-preview.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
