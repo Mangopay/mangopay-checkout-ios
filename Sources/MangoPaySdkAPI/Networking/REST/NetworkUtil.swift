@@ -159,13 +159,13 @@ private extension NetworkUtil {
     
         let statusCode = response.statusCode
     
-        if verbose {
-            if let payload = try? jsonSerializeOrError(data) {
-                print("RESPONSE [\(statusCode)] -", payload)
-            } else {
-                print("RESPONSE [\(statusCode)] -", String(data: data, encoding: .utf8))
-            }
-        }
+//        if verbose {
+//            if let payload = try? jsonSerializeOrError(data) {
+//                print("RESPONSE [\(statusCode)] -", payload)
+//            } else {
+//                print("RESPONSE [\(statusCode)] -", String(data: data, encoding: .utf8))
+//            }
+//        }
 
         do {
             switch statusCode {
@@ -235,13 +235,13 @@ private extension NetworkUtil {
         return try decoder.decode(T.self, from: data)
     }
 
-    func decodeAsString(_ data: Data) -> String {
-        let str = String(decoding: data, as: UTF8.self)
-        let data = [
-            "key": str
-        ]
-        return str
-    }
+//    func decodeAsString(_ data: Data) -> String {
+//        let str = String(decoding: data, as: UTF8.self)
+//        let data = [
+//            "key": str
+//        ]
+//        return str
+//    }
 
     func decodeAsDataString(_ data: Data) throws -> Data {
         let str = String(decoding: data, as: UTF8.self)

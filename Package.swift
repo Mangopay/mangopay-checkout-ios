@@ -64,10 +64,11 @@ let package = Package(
             name: "NethoneSDK",
             path: "Integrations/NethoneSDK.xcframework"
         ),
-    
-//        .testTarget(
-//            name: "checkout-ios-sdkTests",
-//            dependencies: ["checkout-ios-sdk"]),
+        .testTarget(
+            name: "Tests",
+            dependencies: ["MangoPayVault"],
+            path: "Tests"
+        )
 //        .plugin(name: "SwiftLintCommandPlugin.swift",
 //                capability: .command(
 //                    intent: .sourceCodeFormatting(),
