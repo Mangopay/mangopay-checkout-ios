@@ -2,7 +2,7 @@
 variables:
   DEVELOPMENT_BRANCH: "develop"
   RELEASE_BRANCH: "main"
-  DEMO_PATH: "Examples/MangoPayExampleCheckout"
+  DEMO_PATH: "$CI_PROJECT_DIR/Examples/MangoPayExampleCheckout"
   DEMO_ARCHIVE_PATH: "$DEMO_PATH/build/Archive.xcarchive"
   DEMO_IPA_PATH: "$DEMO_PATH/build/MangoPayExampleCheckout.xcarchive"
 
@@ -16,6 +16,7 @@ build_project:
   stage: build
   script:
      - echo "build"
+     - echo $CI_PROJECT_DIR
     #- xcodebuild clean -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -disableAutomaticPackageResolution -scheme SchemeName | xcpretty 
     #- xcodebuild test -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -scheme SchemeName -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=15.2' | xcpretty -s
   # tags:
@@ -28,7 +29,7 @@ archive_build:
     paths:
       - $DEMO_IPA_PATH
   script:
-    - xcodebuild -project Examples/MangoPayExampleCheckout.xcodeproj -scheme MangoPayExampleCheckout -archivePath Examples/MangoPayExampleCheckout/build/Archive.xcarchive archive
+    - xcodebuild -project $DEMO_PATH.xcodeproj -scheme MangoPayExampleCheckout -archivePath Examples/MangoPayExampleCheckout/build/Archive.xcarchive archive
     - xcodebuild -exportArchive -archivePath $DEMO_ARCHIVE_PATH -exportPath Examples/MangoPayExampleCheckout -exportOptionsPlist Examples/MangoPayExampleCheckout/MangoPayExampleCheckout/Info.plist
   # tags:
   #   - ios-tag
