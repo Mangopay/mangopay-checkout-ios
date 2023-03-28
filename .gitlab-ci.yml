@@ -2,9 +2,10 @@
 variables:
   DEVELOPMENT_BRANCH: "develop"
   RELEASE_BRANCH: "main"
+  DEMO_PROJECT_NAME: "MangoPayExampleCheckout"
   DEMO_PATH: "$CI_PROJECT_DIR/Examples/MangoPayExampleCheckout"
   DEMO_ARCHIVE_PATH: "$DEMO_PATH/build/Archive.xcarchive"
-  DEMO_IPA_PATH: "$DEMO_PATH/build/MangoPayExampleCheckout.xcarchive"
+  DEMO_IPA_PATH: "$DEMO_PATH/build/MangoPayExampleCheckout.ipa"
 
 
 stages:
@@ -29,8 +30,8 @@ archive_build:
     paths:
       - $DEMO_IPA_PATH
   script:
-    - xcodebuild -project $DEMO_PATH.xcodeproj -scheme MangoPayExampleCheckout -archivePath Examples/MangoPayExampleCheckout/build/Archive.xcarchive archive
-    - xcodebuild -exportArchive -archivePath $DEMO_ARCHIVE_PATH -exportPath Examples/MangoPayExampleCheckout -exportOptionsPlist Examples/MangoPayExampleCheckout/MangoPayExampleCheckout/Info.plist
+    - xcodebuild -project $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj -scheme $DEMO_PROJECT_NAME -archivePath $DEMO_ARCHIVE_PATH archive
+    - xcodebuild -exportArchive -archivePath $DEMO_ARCHIVE_PATH -exportPath $DEMO_PATH/build -exportOptionsPlist $DEMO_PATH/$DEMO_PROJECT_NAME/Info.plist
   # tags:
   #   - ios-tag
   #   - version-1.0
