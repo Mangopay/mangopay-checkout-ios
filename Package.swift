@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MongoPayiOSSDK",
+    name: "MangoPayiOSSDK",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v11),
@@ -12,14 +12,17 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MongoPayCoreiOS",
-            targets: ["MongoPayCoreiOS"]),
+            name: "MangoPayCoreiOS",
+            targets: ["MangoPayCoreiOS", "NethoneSDK"]),
         .library(
-            name: "MongoPaySdkAPI",
-            targets: ["MongoPaySdkAPI"]),
+            name: "MangoPaySdkAPI",
+            targets: ["MangoPaySdkAPI"]),
         .library(
-            name: "MongoPayIntent",
-            targets: ["MongoPayIntent"]),
+            name: "MangoPayIntent",
+            targets: ["MangoPayIntent"]),
+        .library(
+            name: "MangoPayVault",
+            targets: ["MangoPayVault"]),
     ],
     dependencies: [
         .package(
@@ -29,9 +32,9 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MongoPayCoreiOS",
+            name: "MangoPayCoreiOS",
             dependencies: [
-                "MongoPaySdkAPI",
+                "MangoPaySdkAPI",
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
@@ -39,17 +42,28 @@ let package = Package(
             ]
         ),
         .target(
-            name: "MongoPaySdkAPI",
+            name: "MangoPaySdkAPI",
             dependencies: [
                 .product(name: "Apollo", package: "apollo-ios"),
             ]
         ),
         .target(
-            name: "MongoPayIntent",
+            name: "MangoPayIntent",
             dependencies: [
-                "MongoPaySdkAPI",
+                "MangoPaySdkAPI",
             ]
-        )
+        ),
+        .target(
+            name: "MangoPayVault",
+            dependencies: [
+                "MangoPaySdkAPI",
+                "MangoPayCoreiOS"
+            ]
+        ),
+        .binaryTarget(
+            name: "NethoneSDK",
+            path: "Integrations/NethoneSDK.xcframework"
+        ),
     
 //        .testTarget(
 //            name: "checkout-ios-sdkTests",

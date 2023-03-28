@@ -1,0 +1,76 @@
+query getIntent($id: ID!) {
+    getIntent(id: $id) {
+        id
+        trackingId
+        paymentFlowId
+        status
+        statusDate
+        date
+        currency
+        amount {
+            formattedAmount
+            rawAmount
+        }
+        location {
+            country
+        }
+        customer {
+            id
+            isGuest
+            email
+            name
+        }
+        timeline {
+            intentStarted {
+                status
+                date
+            }
+            shipping {
+                status
+                date
+            }
+            delivery {
+                status
+                date
+            }
+            billing {
+                status
+                date
+            }
+            paymentAttempts {
+                status
+                date
+            }
+            completeIntent {
+                status
+                date
+            }
+        }
+        linkedPayments {
+            paymentId
+            status
+            time
+            title
+        }
+        cart {
+            id
+            weight
+            itemCount
+            items {
+                id
+                quantity
+                title
+                variantTitle
+                weight
+                taxable
+                requiresShipping
+                price
+                sku
+                lineTotal
+                image
+                discountedPrice
+                totalDiscount
+            }
+        }
+    }
+}
