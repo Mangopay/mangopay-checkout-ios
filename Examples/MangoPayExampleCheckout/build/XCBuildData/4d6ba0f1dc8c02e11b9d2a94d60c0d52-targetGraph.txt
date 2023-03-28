@@ -1,0 +1,6 @@
+Target dependency graph (3 targets)
+netfox in netfox, no dependencies
+netfox in netfox, depends on:
+netfox in netfox (explicit)
+MangoPayExampleCheckout in MangoPayExampleCheckout, depends on:
+netfox in netfox (explicit)
