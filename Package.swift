@@ -66,7 +66,11 @@ let package = Package(
         ),
         .testTarget(
             name: "Tests",
-            dependencies: ["MangoPayVault"],
+            dependencies: [
+                "MangoPayVault",
+                "MangoPaySdkAPI",
+                "MangoPayCoreiOS"
+            ],
             path: "Tests"
         )
 //        .plugin(name: "SwiftLintCommandPlugin.swift",

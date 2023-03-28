@@ -216,7 +216,7 @@ public class MangoPayVault {
         }
     }
     
-    private func validateCard(with cardInfo: Cardable) throws -> Bool {
+    func validateCard(with cardInfo: Cardable) throws -> Bool {
         
         guard let cardNum = cardInfo.cardNumber else {
             throw CardValidationError.cardNumberRqd
@@ -238,7 +238,7 @@ public class MangoPayVault {
             throw CardValidationError.expDateInvalid
         }
         
-        if !(cvv.count >= 3 || cvv.count <= 4) {
+        if !(cvv.count >= 3 && cvv.count <= 4) {
             throw CardValidationError.cvvInvalid
         }
         
