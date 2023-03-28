@@ -30,8 +30,8 @@ archive_build:
     paths:
       - $DEMO_IPA_PATH
   script:
-    - xcodebuild -project $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj -scheme $DEMO_PROJECT_NAME -archivePath $DEMO_ARCHIVE_PATH archive
-    - xcodebuild -exportArchive -archivePath $DEMO_ARCHIVE_PATH -exportPath $DEMO_PATH/build -exportOptionsPlist $DEMO_PATH/$DEMO_PROJECT_NAME/Info.plist
+    - xcodebuild -project $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj -allowProvisioningUpdates -scheme $DEMO_PROJECT_NAME -archivePath $DEMO_ARCHIVE_PATH archive
+    - xcodebuild -exportArchive -archivePath $DEMO_ARCHIVE_PATH -allowProvisioningUpdates -exportPath $DEMO_PATH/build -exportOptionsPlist $DEMO_PATH/$DEMO_PROJECT_NAME/Info.plist
   # tags:
   #   - ios-tag
   #   - version-1.0
