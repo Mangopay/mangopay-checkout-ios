@@ -51,6 +51,7 @@
 		98835AFD29C9DC9E0085F51C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98835AFE29C9DC9E0085F51C /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		98835B1129C9DDA70085F51C /* MangoPayExampleCheckout.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MangoPayExampleCheckout.entitlements; sourceTree = "<group>"; };
+		989C4EAB29D40DBF007D45F8 /* MangoPayiOSSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MangoPayiOSSDK; path = ../..; sourceTree = "<group>"; };
 		98C3894528F7DBCA0000BD84 /* MangoPayExampleCheckout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangoPayExampleCheckout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98CA46A429C14C1500992C9E /* MangoPayiOSSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MangoPayiOSSDK; path = ../../../Codelab/WhenThen/MangoPayiOSSDK; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				98CA46A429C14C1500992C9E /* MangoPayiOSSDK */,
+				989C4EAB29D40DBF007D45F8 /* MangoPayiOSSDK */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
