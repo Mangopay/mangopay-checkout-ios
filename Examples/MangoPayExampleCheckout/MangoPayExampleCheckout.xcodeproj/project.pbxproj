@@ -393,7 +393,7 @@
 				CODE_SIGN_ENTITLEMENTS = MangoPayExampleCheckout/MangoPayExampleCheckout.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 32324M49Q5;
+				DEVELOPMENT_TEAM = ZPQX25J7UP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MangoPayExampleCheckout/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -422,7 +422,7 @@
 				CODE_SIGN_ENTITLEMENTS = MangoPayExampleCheckout/MangoPayExampleCheckout.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 32324M49Q5;
+				DEVELOPMENT_TEAM = ZPQX25J7UP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MangoPayExampleCheckout/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
