@@ -36,7 +36,7 @@ public enum Provider: String {
 
 public class MangoPayVault {
     
-    private let client = CardRegistrationClient()
+    private var paylineClient: CardRegistrationClientProtocol?
     private var wtClient: WhenThenClientSessionProtocol?
 
     let provider: Provider
@@ -55,6 +55,10 @@ public class MangoPayVault {
 
     func setWtClient(wtClient: WhenThenClientSessionProtocol) {
         self.wtClient = wtClient
+    }
+
+    func setPaylineClient(paylineClient: CardRegistrationClientProtocol) {
+        self.paylineClient = paylineClient
     }
 
     public func tokenise(
@@ -141,16 +145,19 @@ public class MangoPayVault {
         
         guard let _clientToken = clientToken else { return }
 
+        if paylineClient == nil {
+            paylineClient = CardRegistrationClient()
+        }
 
         Task {
             do {
                 guard let url = _cardRegistration.registrationURL else { return }
 
-                let redData = try await client.postCardInfo(_card, url: url)
+                let redData = try await paylineClient!.postCardInfo(_card, url: url)
                 
                 guard let cardId = _cardRegistration.id else { return }
                 
-                let updateRes = try await client.updateCardInfo(
+                let updateRes = try await paylineClient!.updateCardInfo(
                     redData,
                     clientId: _clientToken,
                     cardRegistrationId: cardId

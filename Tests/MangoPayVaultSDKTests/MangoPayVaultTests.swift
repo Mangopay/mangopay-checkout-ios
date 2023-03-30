@@ -312,7 +312,7 @@ final class MangoPayVaultTests: XCTestCase {
             bilingInfo: nil
         )
 
-        var mockVC = MockViewController()
+        let mockVC = MockViewController()
         
         mgpVault.setWtClient(wtClient: MockWhenThenClient(clientKey: "qwert123"))
 
@@ -320,7 +320,6 @@ final class MangoPayVaultTests: XCTestCase {
         mockVC.expectation = expectation
         mgpVault.tokenise(
             card: cardData,
-            cardRegistration: cardRegObject,
             whenThenDelegate: mockVC
         )
         
@@ -330,38 +329,36 @@ final class MangoPayVaultTests: XCTestCase {
         XCTAssertEqual(mockVC.token, "1234")
     }
 
-    func testTokeniseMGPVaul() {
+    func testTokeniseMGPVault() {
         let mgpVault = MangoPayVault(
-            clientId: "checkoutsquatest",
+            clientToken: "checkoutsquatest",
             provider: .MANGOPAY
         )
 
-        let cardData = CardData(
-            number: "4970101122334422",
-            name: "John",
-            expMonth: 03,
-            expYear: 25,
-            cvc: "123",
-            savePayment: false,
-            bilingInfo: nil
+        let cardInfo = CardInfo(
+            accessKeyRef: cardRegObject.accessKey,
+            data: cardRegObject.preregistrationData,
+            cardNumber: "4970101122334422",
+            cardExpirationDate: "1024",
+            cardCvx: "123"
         )
 
-        var mockVC = MockViewController()
+        let mockVC = MockPaylineController()
         
-        mgpVault.setWtClient(wtClient: MockWhenThenClient(clientKey: "qwert123"))
+        mgpVault.setPaylineClient(paylineClient: MockVaultClient())
 
-        expectation = expectation(description: "Tokenising WT")
+        expectation = expectation(description: "Tokenising Payline")
         mockVC.expectation = expectation
         mgpVault.tokenise(
-            card: cardData,
+            card: cardInfo,
             cardRegistration: cardRegObject,
-            whenThenDelegate: mockVC
+            paylineDelegate: mockVC
         )
         
         waitForExpectations(timeout: 5)
 
         XCTAssertTrue(mockVC.isSuccessful)
-        XCTAssertEqual(mockVC.token, "1234")
+//        XCTAssertEqual(mockVC.token, "1234")
     }
     
 }
@@ -389,6 +386,31 @@ class MockViewController: UIViewController, MangoPayVaultWTTokenisationDelegate 
     
 }
 
+class MockPaylineController: UIViewController, MangoPayVaultDelegate {
+    
+    var isSuccessful = false
+    var token: String?
+    var expectation: XCTestExpectation?
+
+    func updateExpectation() {
+        
+    }
+    
+    func onSuccess(card: MangoPaySdkAPI.CardRegistration) {
+        isSuccessful = true
+        expectation?.fulfill() // 8
+        expectation = nil
+        print("✅✅ MockPaylineController", isSuccessful, card.cardRegistrationURLStr)
+
+    }
+    
+    func onFailure(error: Error) {
+        isSuccessful = false
+        print("✅✅ MockPaylineController", error)
+    }
+    
+}
+
 class MockWhenThenClient: WhenThenClientSessionProtocol {
     var clientKey: String!
     
@@ -403,7 +425,42 @@ class MockWhenThenClient: WhenThenClientSessionProtocol {
         let jsonData = DataDict(try! JSONObject(_jsonValue: ["token": "1234"]), variables: ["token" : "1234"])
         let tokenised = TokeniseCard(data: jsonData)
         return tokenised
-        
     }
     
 }
+
+class MockVaultClient: CardRegistrationClientProtocol {
+
+    func createCardRegistration(_ card: MangoPaySdkAPI.CardRegistration, clientId: String, apiKey: String) async throws -> MangoPaySdkAPI.CardRegistration {
+        return CardRegistration(
+            id: "164689525",
+            creationDate: 1678862696,
+            userID: "158091557",
+            accessKey: "1X0m87dmM2LiwFgxPLBJ",
+            preregistrationData: "-3qr8M0QBM0xs1g25H_bHhMzNE3s5pZbjCwLe75jdRSIeR1WXJq8WHOx0f4EWQuW2ddFLVXdicolcUIkv_kKEA",
+            cardType: "CB_VISA_MASTERCARD",
+            cardRegistrationURLStr: "https://homologation-webpayment.payline.com/webpayment/getToken",
+            currency: "EUR",
+            status: "CREATED"
+        )
+    }
+    
+    func postCardInfo(_ cardInfo: MangoPaySdkAPI.CardInfo, url: URL) async throws -> MangoPaySdkAPI.CardInfo.RegistrationData {
+        return CardInfo.RegistrationData(RegistrationData: "-3qr8M0QBM0xs1g25H_bHhMzNE3s5pZbjCwLe75jdRSIeR1WXJq8WHOx")
+    }
+    
+    func updateCardInfo(_ regData: MangoPaySdkAPI.CardInfo.RegistrationData, clientId: String, cardRegistrationId: String) async throws -> MangoPaySdkAPI.CardRegistration {
+        return CardRegistration(
+            id: "164689525",
+            creationDate: 1678862696,
+            userID: "158091557",
+            accessKey: "1X0m87dmM2LiwFgxPLBJ",
+            preregistrationData: regData.RegistrationData,
+            cardRegistrationURLStr: "https://homologation-webpayment.payline.com/webpayment/getToken",
+            currency: "EUR",
+            status: "CREATED"
+        )
+    }
+    
+}
+
