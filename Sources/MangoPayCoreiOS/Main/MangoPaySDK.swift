@@ -145,7 +145,7 @@ public struct MangoPaySDK {
 
         let client = WhenThenClient(clientKey: apikey)
         do {
-            let tokenisedCard = try await client.tokenizeCard(with: card)
+            let tokenisedCard = try await client.tokenizeCard(with: card, customer: nil)
             return tokenisedCard
         } catch {
             throw error

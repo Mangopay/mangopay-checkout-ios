@@ -37,6 +37,8 @@ public enum Provider: String {
 public class MangoPayVault {
     
     private let client = CardRegistrationClient()
+    private var wtClient: WhenThenClientSessionProtocol?
+
     let provider: Provider
     private let clientToken: String?
     private let clientId: String?
@@ -49,6 +51,10 @@ public class MangoPayVault {
         self.clientToken = clientToken
         self.clientId = clientId
         self.provider = provider
+    }
+
+    func setWtClient(wtClient: WhenThenClientSessionProtocol) {
+        self.wtClient = wtClient
     }
 
     public func tokenise(
@@ -99,11 +105,13 @@ public class MangoPayVault {
         guard let _clientId = clientId else { return }
 
         Task {
-            let client = WhenThenClient(clientKey: _clientId)
+            if wtClient == nil {
+                wtClient = WhenThenClient(clientKey: _clientId)
+            }
             
             do {
-                let tokenisedCard = try await client.tokenizeCard(
-                    with: _card.toPaymentCardInput()
+                let tokenisedCard = try await wtClient!.tokenizeCard(
+                    with: _card.toPaymentCardInput(), customer: nil
                 )
                 DispatchQueue.main.async {
                     delegate?.onSuccess(tokenisedCard: tokenisedCard)

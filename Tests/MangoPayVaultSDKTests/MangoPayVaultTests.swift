@@ -9,6 +9,7 @@ import XCTest
 @testable import MangoPayVault
 @testable import MangoPaySdkAPI
 @testable import MangoPayCoreiOS
+import Combine
 
 final class MangoPayVaultTests: XCTestCase {
 
@@ -35,6 +36,10 @@ final class MangoPayVaultTests: XCTestCase {
             cardCvx: "123"
         )
     }
+
+    var isSuccessful = false
+    var token: String?
+    var expectation: XCTestExpectation?
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -290,4 +295,115 @@ final class MangoPayVaultTests: XCTestCase {
             XCTAssertTrue(valError == CardValidationError.cvvRqd)
         }
     }
+
+    func testTokeniseWhenThen() {
+        let mgpVault = MangoPayVault(
+            clientId: "checkoutsquatest",
+            provider: .WHENTHEN
+        )
+
+        let cardData = CardData(
+            number: "4970101122334422",
+            name: "John",
+            expMonth: 03,
+            expYear: 25,
+            cvc: "123",
+            savePayment: false,
+            bilingInfo: nil
+        )
+
+        var mockVC = MockViewController()
+        
+        mgpVault.setWtClient(wtClient: MockWhenThenClient(clientKey: "qwert123"))
+
+        expectation = expectation(description: "Tokenising WT")
+        mockVC.expectation = expectation
+        mgpVault.tokenise(
+            card: cardData,
+            cardRegistration: cardRegObject,
+            whenThenDelegate: mockVC
+        )
+        
+        waitForExpectations(timeout: 5)
+
+        XCTAssertTrue(mockVC.isSuccessful)
+        XCTAssertEqual(mockVC.token, "1234")
+    }
+
+    func testTokeniseMGPVaul() {
+        let mgpVault = MangoPayVault(
+            clientId: "checkoutsquatest",
+            provider: .MANGOPAY
+        )
+
+        let cardData = CardData(
+            number: "4970101122334422",
+            name: "John",
+            expMonth: 03,
+            expYear: 25,
+            cvc: "123",
+            savePayment: false,
+            bilingInfo: nil
+        )
+
+        var mockVC = MockViewController()
+        
+        mgpVault.setWtClient(wtClient: MockWhenThenClient(clientKey: "qwert123"))
+
+        expectation = expectation(description: "Tokenising WT")
+        mockVC.expectation = expectation
+        mgpVault.tokenise(
+            card: cardData,
+            cardRegistration: cardRegObject,
+            whenThenDelegate: mockVC
+        )
+        
+        waitForExpectations(timeout: 5)
+
+        XCTAssertTrue(mockVC.isSuccessful)
+        XCTAssertEqual(mockVC.token, "1234")
+    }
+    
+}
+
+class MockViewController: UIViewController, MangoPayVaultWTTokenisationDelegate {
+
+    var isSuccessful = false
+    var token: String?
+    var expectation: XCTestExpectation?
+
+    func updateExpectation() {
+        
+    }
+
+    func onSuccess(tokenisedCard: MangoPaySdkAPI.TokeniseCard) {
+        isSuccessful = true
+        token = tokenisedCard.token
+        expectation?.fulfill() // 8
+        expectation = nil
+    }
+    
+    func onFailure(error: Error) {
+        isSuccessful = false
+    }
+    
+}
+
+class MockWhenThenClient: WhenThenClientSessionProtocol {
+    var clientKey: String!
+    
+    init(clientKey: String) {
+        self.clientKey = clientKey
+    }
+    
+    func tokenizeCard(
+        with card: MangoPaySdkAPI.CheckoutSchema.PaymentCardInput,
+        customer: MangoPaySdkAPI.Customer?
+    ) async throws -> MangoPaySdkAPI.TokeniseCard {
+        let jsonData = DataDict(try! JSONObject(_jsonValue: ["token": "1234"]), variables: ["token" : "1234"])
+        let tokenised = TokeniseCard(data: jsonData)
+        return tokenised
+        
+    }
+    
 }
