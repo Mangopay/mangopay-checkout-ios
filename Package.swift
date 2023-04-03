@@ -35,7 +35,10 @@ let package = Package(
             name: "MangoPayCoreiOS",
             dependencies: [
                 "MangoPaySdkAPI",
+<<<<<<< HEAD
 //                .targetItem(name: "MangoPaySdkAPI", condition: .when(platforms: [.iOS]))
+=======
+>>>>>>> ci-config
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
@@ -65,6 +68,7 @@ let package = Package(
             name: "NethoneSDK",
             path: "Integrations/NethoneSDK.xcframework"
         ),
+<<<<<<< HEAD
         .testTarget(
             name: "Tests",
             dependencies: [
@@ -77,6 +81,12 @@ let package = Package(
 //                .unsafeFlags(["-enable-testing-search-paths"]),
 //            ]
         )
+=======
+    
+//        .testTarget(
+//            name: "checkout-ios-sdkTests",
+//            dependencies: ["checkout-ios-sdk"]),
+>>>>>>> ci-config
 //        .plugin(name: "SwiftLintCommandPlugin.swift",
 //                capability: .command(
 //                    intent: .sourceCodeFormatting(),
