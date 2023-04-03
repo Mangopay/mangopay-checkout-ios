@@ -186,7 +186,7 @@ final class MangoPayVaultTests: XCTestCase {
         let cardInfo = CardInfo(
             accessKeyRef: cardRegObject.accessKey,
             data: cardRegObject.preregistrationData,
-            cardNumber: "4970101122334422",
+            cardNumber: "42424242424242",
             cardExpirationDate: "1024",
             cardCvx: "123"
         )
@@ -358,7 +358,6 @@ final class MangoPayVaultTests: XCTestCase {
         waitForExpectations(timeout: 5)
 
         XCTAssertTrue(mockVC.isSuccessful)
-//        XCTAssertEqual(mockVC.token, "1234")
     }
     
 }
@@ -398,15 +397,13 @@ class MockPaylineController: UIViewController, MangoPayVaultDelegate {
     
     func onSuccess(card: MangoPaySdkAPI.CardRegistration) {
         isSuccessful = true
-        expectation?.fulfill() // 8
+        expectation?.fulfill()
         expectation = nil
-        print("✅✅ MockPaylineController", isSuccessful, card.cardRegistrationURLStr)
 
     }
     
     func onFailure(error: Error) {
         isSuccessful = false
-        print("✅✅ MockPaylineController", error)
     }
     
 }

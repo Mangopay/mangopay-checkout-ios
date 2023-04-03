@@ -49,8 +49,8 @@ extension NetworkUtil {
     var headers: [String: String] {
         var _headers = [String: String]()
         _headers["Accept"] = "*/*"
-//        _headers["Content-Type"] = "application/json"
         _headers["Content-Type"] = "application/x-www-form-urlencoded"
+        _headers["X-SDK-Version"] = "1.0.0"
         return _headers
     }
 
