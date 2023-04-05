@@ -13,7 +13,7 @@ stages:
   - archive
   - deploy
   
-build_project:
+build-test-project:
   stage: build
   script:
      - echo "build"
@@ -23,7 +23,7 @@ build_project:
   # tags:
   #  - ios-tag
   #  - version-1.0
-archive_build:
+archive-build:
   dependencies: []
   stage: archive
   artifacts:
@@ -37,3 +37,15 @@ archive_build:
   #   - version-1.0
   only:
     - ci-config
+
+deploy-archive:
+  stage: deploy
+  interruptible: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == $DEVELOPMENT_BRANCH || ($CI_COMMIT_BRANCH == $RELEASE_BRANCH)
+  script:
+     - echo "Deploying demo archive to Browserstack"
+     - curl -u $BROWSERSTACK_API_KEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$DEMO_IPA_PATH"
+
+      
+
