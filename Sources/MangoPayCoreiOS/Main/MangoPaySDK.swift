@@ -6,10 +6,13 @@
 //
 
 import Foundation
-import UIKit
 import Apollo
 import ApolloAPI
 import MangoPaySdkAPI
+
+#if os(iOS)
+import UIKit
+#endif
 
 public enum Ennvironment {
     case sandbox

@@ -6,10 +6,12 @@
 //
 
 import Foundation
-import UIKit
 import PassKit
 import MangoPaySdkAPI
 //import NethoneSDK
+#if os(iOS)
+import UIKit
+#endif
 
 enum FormType {
     case dropIn
@@ -282,7 +284,7 @@ class PaymentFormView: UIView {
         stackView.setCustomSpacing(32, after: self.applePayButton)
     }
 
-    var keyboardUtil: KeyboardUtil?
+//    var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
     var viewModel: PaymentFormViewModel!
     var onRightButtonTappedAction: (() -> Void)?

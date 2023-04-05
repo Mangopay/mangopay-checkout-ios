@@ -5,10 +5,12 @@
 //  Created by Elikem Savie on 13/10/2022.
 //
 
-import UIKit
 import Combine
 import PassKit
 //import NethoneSDK
+#if os(iOS)
+import UIKit
+#endif
 
 public class PaymentFormController: UIViewController {
 

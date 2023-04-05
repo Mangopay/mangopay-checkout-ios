@@ -6,8 +6,10 @@
 //
 
 import Foundation
-import UIKit
 import MangoPaySdkAPI
+#if os(iOS)
+import UIKit
+#endif
 
 public enum CardType: String, Codable, CaseIterable {
     case amex = "AMEX"

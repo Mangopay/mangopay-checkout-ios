@@ -5,8 +5,10 @@
 //  Created by Elikem Savie on 16/10/2022.
 //
 
-import UIKit
 import Foundation
+#if os(iOS)
+import UIKit
+#endif
 
 protocol KeyboardUtilDelegate: class {
     func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double)
