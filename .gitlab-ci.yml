@@ -18,8 +18,8 @@ build-test-project:
   script:
      - echo "build"
      - echo $CI_PROJECT_DIR
-    #- xcodebuild clean -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -disableAutomaticPackageResolution -scheme SchemeName | xcpretty 
-    #- xcodebuild test -workspace examples/CheckoutiOSDemoApp/CheckoutiOSDemoApp.xcodeproj/project.xcworkspace -scheme SchemeName -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=15.2' | xcpretty -s
+     - xcodebuild clean -workspace $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj/project.xcworkspace -disableAutomaticPackageResolution -scheme $DEMO_PROJECT_NAME | xcpretty 
+     - xcodebuild test -workspace $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj/project.xcworkspace -scheme $DEMO_PROJECT_NAME -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=15.2' | xcpretty -s
   # tags:
   #  - ios-tag
   #  - version-1.0
