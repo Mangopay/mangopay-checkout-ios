@@ -36,7 +36,9 @@ public enum Provider: String {
 
 public class MangoPayVault {
     
-    private let client = CardRegistrationClient()
+    private var paylineClient: CardRegistrationClientProtocol?
+    private var wtClient: WhenThenClientSessionProtocol?
+
     let provider: Provider
     private let clientToken: String?
     private let clientId: String?
@@ -44,11 +46,19 @@ public class MangoPayVault {
     public init(
         clientToken: String? = nil,
         clientId: String? = nil,
-        provider: Provider
+        provider: Provider = .MANGOPAY
     ) {
         self.clientToken = clientToken
         self.clientId = clientId
         self.provider = provider
+    }
+
+    func setWtClient(wtClient: WhenThenClientSessionProtocol) {
+        self.wtClient = wtClient
+    }
+
+    func setPaylineClient(paylineClient: CardRegistrationClientProtocol) {
+        self.paylineClient = paylineClient
     }
 
     public func tokenise(
@@ -99,11 +109,13 @@ public class MangoPayVault {
         guard let _clientId = clientId else { return }
 
         Task {
-            let client = WhenThenClient(clientKey: _clientId)
+            if wtClient == nil {
+                wtClient = WhenThenClient(clientKey: _clientId)
+            }
             
             do {
-                let tokenisedCard = try await client.tokenizeCard(
-                    with: _card.toPaymentCardInput()
+                let tokenisedCard = try await wtClient!.tokenizeCard(
+                    with: _card.toPaymentCardInput(), customer: nil
                 )
                 DispatchQueue.main.async {
                     delegate?.onSuccess(tokenisedCard: tokenisedCard)
@@ -133,16 +145,19 @@ public class MangoPayVault {
         
         guard let _clientToken = clientToken else { return }
 
+        if paylineClient == nil {
+            paylineClient = CardRegistrationClient()
+        }
 
         Task {
             do {
                 guard let url = _cardRegistration.registrationURL else { return }
 
-                let redData = try await client.postCardInfo(_card, url: url)
+                let redData = try await paylineClient!.postCardInfo(_card, url: url)
                 
                 guard let cardId = _cardRegistration.id else { return }
                 
-                let updateRes = try await client.updateCardInfo(
+                let updateRes = try await paylineClient!.updateCardInfo(
                     redData,
                     clientId: _clientToken,
                     cardRegistrationId: cardId
@@ -216,7 +231,7 @@ public class MangoPayVault {
         }
     }
     
-    private func validateCard(with cardInfo: Cardable) throws -> Bool {
+    func validateCard(with cardInfo: Cardable) throws -> Bool {
         
         guard let cardNum = cardInfo.cardNumber else {
             throw CardValidationError.cardNumberRqd
@@ -238,7 +253,7 @@ public class MangoPayVault {
             throw CardValidationError.expDateInvalid
         }
         
-        if !(cvv.count >= 3 || cvv.count <= 4) {
+        if !(cvv.count >= 3 && cvv.count <= 4) {
             throw CardValidationError.cvvInvalid
         }
         

@@ -7,7 +7,7 @@ let package = Package(
     name: "MangoPayiOSSDK",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v11),
+        .macOS(.v10_15),
         .iOS(.v13)
     ],
     products: [
@@ -35,6 +35,8 @@ let package = Package(
             name: "MangoPayCoreiOS",
             dependencies: [
                 "MangoPaySdkAPI",
+//                .targetItem(name: "MangoPaySdkAPI", condition: .when(platforms: [.iOS]))
+
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
@@ -64,10 +66,19 @@ let package = Package(
             name: "NethoneSDK",
             path: "Integrations/NethoneSDK.xcframework"
         ),
-    
-//        .testTarget(
-//            name: "checkout-ios-sdkTests",
-//            dependencies: ["checkout-ios-sdk"]),
+        .testTarget(
+            name: "Tests",
+            dependencies: [
+                "MangoPayVault",
+                "MangoPaySdkAPI",
+                "MangoPayCoreiOS"
+            ],
+            path: "Tests"
+//            swiftSettings: [
+//                .unsafeFlags(["-enable-testing-search-paths"]),
+//            ]
+        )
+
 //        .plugin(name: "SwiftLintCommandPlugin.swift",
 //                capability: .command(
 //                    intent: .sourceCodeFormatting(),

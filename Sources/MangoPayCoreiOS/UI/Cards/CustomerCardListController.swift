@@ -5,9 +5,11 @@
 //  Created by Elikem Savie on 30/10/2022.
 //
 
-import UIKit
 import Foundation
 import MangoPaySdkAPI
+#if os(iOS)
+import UIKit
+#endif
 
 class CustomerCardListController: UIViewController {
 

@@ -5,7 +5,9 @@
 //  Created by Elikem Savie on 25/04/2022.
 //
 
+#if os(iOS)
 import UIKit
+#endif
 
 extension UIImage {
 

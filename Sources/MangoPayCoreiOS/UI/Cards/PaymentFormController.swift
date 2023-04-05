@@ -5,10 +5,12 @@
 //  Created by Elikem Savie on 13/10/2022.
 //
 
-import UIKit
 import Combine
 import PassKit
-import NethoneSDK
+//import NethoneSDK
+#if os(iOS)
+import UIKit
+#endif
 
 public class PaymentFormController: UIViewController {
 
@@ -174,11 +176,11 @@ public class PaymentFormController: UIViewController {
 
     @objc func closeTapped() {
 //        onClosedTapped?()
-        do {
-            try NTHNethone.cancelAttempt()
-        } catch {
-            print("❌ Error cancelling Attempt")
-        }
+//        do {
+//            try NTHNethone.cancelAttempt()
+//        } catch {
+//            print("❌ Error cancelling Attempt")
+//        }
         dismiss(animated: true)
     }
 }

@@ -23,12 +23,19 @@ public typealias IntentLocationInput = CheckoutSchema.IntentLocationInput
 public typealias IntentShippingInput = CheckoutSchema.IntentShippingInput
 public typealias IntentDeliveryInput = CheckoutSchema.IntentDeliveryInput
 
+public protocol WhenThenClientSessionProtocol {
+    var clientKey: String! { get set }
+    func tokenizeCard(
+        with card: CheckoutSchema.PaymentCardInput,
+        customer: Customer?
+    ) async throws -> TokeniseCard
+}
 
-public class WhenThenClient {
+public class WhenThenClient: WhenThenClientSessionProtocol {
     
     let indempodentKey = UUID().uuidString
     let version1UUID = UUID().version1UUID
-    var clientKey: String!
+    public var clientKey: String!
         
     fileprivate(set) lazy var apollo: ApolloClient = {
 
@@ -107,7 +114,7 @@ public class WhenThenClient {
 
     public func tokenizeCard(
         with card: CheckoutSchema.PaymentCardInput,
-        customer: Customer? = nil
+        customer: Customer?
     ) async throws -> TokeniseCard {
         
         let y = GraphQLNullable<CheckoutSchema.PaymentCardInput>(card)

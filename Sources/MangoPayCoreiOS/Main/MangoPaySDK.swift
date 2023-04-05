@@ -6,10 +6,13 @@
 //
 
 import Foundation
-import UIKit
 import Apollo
 import ApolloAPI
 import MangoPaySdkAPI
+
+#if os(iOS)
+import UIKit
+#endif
 
 public enum Ennvironment {
     case sandbox
@@ -145,7 +148,7 @@ public struct MangoPaySDK {
 
         let client = WhenThenClient(clientKey: apikey)
         do {
-            let tokenisedCard = try await client.tokenizeCard(with: card)
+            let tokenisedCard = try await client.tokenizeCard(with: card, customer: nil)
             return tokenisedCard
         } catch {
             throw error

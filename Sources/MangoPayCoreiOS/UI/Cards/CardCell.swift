@@ -5,7 +5,9 @@
 //  Created by Elikem Savie on 13/10/2022.
 //
 
+#if os(iOS)
 import UIKit
+#endif
 
 class CardCell: UICollectionViewCell {
     static let id = "\(CardCell.self)"

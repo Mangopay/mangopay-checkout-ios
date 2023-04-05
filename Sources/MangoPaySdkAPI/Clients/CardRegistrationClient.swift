@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CardRegistrationClientProtocol {
+public protocol CardRegistrationClientProtocol {
     func createCardRegistration(
         _ card: CardRegistration,
         clientId: String,
@@ -21,7 +21,7 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
     
     public init() { }
 
-    func createCardRegistration(
+    public func createCardRegistration(
         _ card: CardRegistration,
         clientId: String,
         apiKey: String

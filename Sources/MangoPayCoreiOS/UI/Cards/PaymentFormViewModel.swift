@@ -52,7 +52,7 @@ public class PaymentFormViewModel {
         guard let inputData = formData?.toPaymentCardInput() else { return }
 
         do {
-            let tokenisedCard = try await client.tokenizeCard(with: inputData)
+            let tokenisedCard = try await client.tokenizeCard(with: inputData, customer: nil)
     
             DispatchQueue.main.async {
                 self.tokenObserver.send(tokenisedCard)
@@ -73,7 +73,7 @@ public class PaymentFormViewModel {
         
         if let _data = inputData {
             do {
-                tokenisedCard = try await client.tokenizeCard(with: _data)
+                tokenisedCard = try await client.tokenizeCard(with: _data, customer: nil)
                 self.statusObserver.send("Succesfully Tokenised: \(tokenisedCard!.token )")
             } catch {
                 DispatchQueue.main.async {
