@@ -46,7 +46,7 @@ public class MangoPayVault {
     public init(
         clientToken: String? = nil,
         clientId: String? = nil,
-        provider: Provider
+        provider: Provider = .MANGOPAY
     ) {
         self.clientToken = clientToken
         self.clientId = clientId
