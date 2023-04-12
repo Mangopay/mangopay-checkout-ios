@@ -1,51 +1,51 @@
-
-variables:
-  DEVELOPMENT_BRANCH: "develop"
-  RELEASE_BRANCH: "main"
-  DEMO_PROJECT_NAME: "MangoPayExampleCheckout"
-  DEMO_PATH: "$CI_PROJECT_DIR/Examples/MangoPayExampleCheckout"
-  DEMO_ARCHIVE_PATH: "$DEMO_PATH/build/Archive.xcarchive"
-  DEMO_IPA_PATH: "$DEMO_PATH/build/MangoPayExampleCheckout.ipa"
-
-
-stages:
-  - build
-  - archive
-  - deploy
-  
-build-test-project:
-  stage: build
-  script:
-     - echo "build"
-     - echo $CI_PROJECT_DIR
-     - xcodebuild clean -workspace $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj/project.xcworkspace -disableAutomaticPackageResolution -scheme $DEMO_PROJECT_NAME | xcpretty 
-     - xcodebuild test -workspace $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj/project.xcworkspace -scheme $DEMO_PROJECT_NAME -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=15.2' | xcpretty -s
-  # tags:
-  #  - ios-tag
-  #  - version-1.0
-archive-build:
-  dependencies: []
-  stage: archive
-  artifacts:
-    paths:
-      - $DEMO_IPA_PATH
-  script:
-    - xcodebuild -project $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj -allowProvisioningUpdates -scheme $DEMO_PROJECT_NAME -archivePath $DEMO_ARCHIVE_PATH archive
-    - xcodebuild -exportArchive -archivePath $DEMO_ARCHIVE_PATH -allowProvisioningUpdates -exportPath $DEMO_PATH/build -exportOptionsPlist $DEMO_PATH/$DEMO_PROJECT_NAME/Info.plist -exportProvisioningProfile "com.whenthen.checkout.WhenThenExampleCheckout"
-  # tags:
-  #   - ios-tag
-  #   - version-1.0
-  only:
-    - ci-config
-
-deploy-archive:
-  stage: deploy
-  interruptible: true
-  rules:
-    - if: $CI_COMMIT_BRANCH == $DEVELOPMENT_BRANCH || ($CI_COMMIT_BRANCH == $RELEASE_BRANCH)
-  script:
-     - echo "Deploying demo archive to Browserstack"
-     - curl -u $BROWSERSTACK_API_KEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$DEMO_IPA_PATH"
-
-      
-
+#
+#variables:
+#  DEVELOPMENT_BRANCH: "develop"
+#  RELEASE_BRANCH: "main"
+#  DEMO_PROJECT_NAME: "MangoPayExampleCheckout"
+#  DEMO_PATH: "$CI_PROJECT_DIR/Examples/MangoPayExampleCheckout"
+#  DEMO_ARCHIVE_PATH: "$DEMO_PATH/build/Archive.xcarchive"
+#  DEMO_IPA_PATH: "$DEMO_PATH/build/MangoPayExampleCheckout.ipa"
+#
+#
+#stages:
+#  - build
+#  - archive
+#  - deploy
+#  
+#build-test-project:
+#  stage: build
+#  script:
+#     - echo "build"
+#     - echo $CI_PROJECT_DIR
+#     - xcodebuild clean -workspace $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj/project.xcworkspace -disableAutomaticPackageResolution -scheme $DEMO_PROJECT_NAME | xcpretty 
+#     - xcodebuild test -workspace $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj/project.xcworkspace -scheme $DEMO_PROJECT_NAME -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=15.2' | xcpretty -s
+#  # tags:
+#  #  - ios-tag
+#  #  - version-1.0
+#archive-build:
+#  dependencies: []
+#  stage: archive
+#  artifacts:
+#    paths:
+#      - $DEMO_IPA_PATH
+#  script:
+#    - xcodebuild -project $DEMO_PATH/$DEMO_PROJECT_NAME.xcodeproj -allowProvisioningUpdates -scheme $DEMO_PROJECT_NAME -archivePath $DEMO_ARCHIVE_PATH archive
+#    - xcodebuild -exportArchive -archivePath $DEMO_ARCHIVE_PATH -allowProvisioningUpdates -exportPath $DEMO_PATH/build -exportOptionsPlist $DEMO_PATH/$DEMO_PROJECT_NAME/Info.plist -exportProvisioningProfile "com.whenthen.checkout.WhenThenExampleCheckout"
+#  # tags:
+#  #   - ios-tag
+#  #   - version-1.0
+#  only:
+#    - ci-config
+#
+#deploy-archive:
+#  stage: deploy
+#  interruptible: true
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == $DEVELOPMENT_BRANCH || ($CI_COMMIT_BRANCH == $RELEASE_BRANCH)
+#  script:
+#     - echo "Deploying demo archive to Browserstack"
+#     - curl -u $BROWSERSTACK_API_KEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$DEMO_IPA_PATH"
+#
+#      
+#
