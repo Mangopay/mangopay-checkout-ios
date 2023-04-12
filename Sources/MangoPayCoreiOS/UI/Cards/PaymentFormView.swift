@@ -284,7 +284,7 @@ class PaymentFormView: UIView {
         stackView.setCustomSpacing(32, after: self.applePayButton)
     }
 
-//    var keyboardUtil: KeyboardUtil?
+    var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
     var viewModel: PaymentFormViewModel!
     var onRightButtonTappedAction: (() -> Void)?

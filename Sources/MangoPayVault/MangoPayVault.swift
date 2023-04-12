@@ -42,15 +42,18 @@ public class MangoPayVault {
     let provider: Provider
     private let clientToken: String?
     private let clientId: String?
+    private let cardRegistration: CardRegistration?
 
     public init(
         clientToken: String? = nil,
         clientId: String? = nil,
+        cardRegistration: CardRegistration? = nil,
         provider: Provider = .MANGOPAY
     ) {
         self.clientToken = clientToken
         self.clientId = clientId
         self.provider = provider
+        self.cardRegistration = cardRegistration
     }
 
     func setWtClient(wtClient: WhenThenClientSessionProtocol) {
@@ -61,22 +64,22 @@ public class MangoPayVault {
         self.paylineClient = paylineClient
     }
 
-    public func tokenise(
+    public func tokeniseCard(
         card: Cardable,
-        cardRegistration: CardRegistration? = nil,
         paylineDelegate: MangoPayVaultDelegate? = nil,
         whenThenDelegate: MangoPayVaultWTTokenisationDelegate? = nil
     ) {
         do {
             let isValidCard = try validateCard(with: card)
             guard isValidCard else { return }
+            guard let _cardRegistration = cardRegistration else { return }
             switch provider {
             case .WHENTHEN:
                 tokeniseWT(card: card, delegate: whenThenDelegate)
             case .MANGOPAY:
                 tokeniseMGP(
                     with: card,
-                    cardRegistration: cardRegistration,
+                    cardRegistration: _cardRegistration,
                     delegate: paylineDelegate
                 )
             }

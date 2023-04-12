@@ -1,8 +1,6 @@
 {
   "pins" : [
     {
-<<<<<<< HEAD
-=======
       "identity" : "apollo-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apollographql/apollo-ios.git",
@@ -21,7 +19,6 @@
       }
     },
     {
->>>>>>> ci-config
       "identity" : "netfox",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kasketis/netfox",
@@ -29,8 +26,6 @@
         "revision" : "557576032736fd3140422baefb68b8f76c55088f",
         "version" : "1.21.0"
       }
-<<<<<<< HEAD
-=======
     },
     {
       "identity" : "sqlite.swift",
@@ -58,7 +53,6 @@
         "revision" : "937e904258d22af6e447a0b72c0bc67583ef64a2",
         "version" : "1.0.4"
       }
->>>>>>> ci-config
     }
   ],
   "version" : 2

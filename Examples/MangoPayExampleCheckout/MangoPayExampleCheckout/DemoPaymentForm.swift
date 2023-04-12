@@ -61,7 +61,7 @@ class DemoPaymentForm: UIViewController {
         )
 
         showLoader(true)
-        mgpVault.tokenise(card: cardInfo, whenThenDelegate: self)
+        mgpVault.tokeniseCard(card: cardInfo, whenThenDelegate: self)
     }
     
     func grabData() -> CardInfo {
@@ -102,14 +102,14 @@ class DemoPaymentForm: UIViewController {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
+            cardRegistration: resObj,
             provider: .MANGOPAY
         )
         
         showLoader(true)
         
-        mgpVault.tokenise(
+        mgpVault.tokeniseCard(
             card: card,
-            cardRegistration: resObj,
             paylineDelegate: self
         )
     }
@@ -121,7 +121,7 @@ class DemoPaymentForm: UIViewController {
         )
 
         showLoader(true)
-        mgpVault.tokenise(card: card, whenThenDelegate: self)
+        mgpVault.tokeniseCard(card: card, whenThenDelegate: self)
     }
 }
 
