@@ -5,7 +5,9 @@
 //  Created by Elikem Savie on 21/06/2022.
 //
 
+#if os(iOS)
 import UIKit
+#endif
 
 class IconImage: UIImageView {
 

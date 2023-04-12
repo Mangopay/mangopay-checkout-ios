@@ -6,10 +6,12 @@
 //
 
 import Foundation
-import UIKit
 import PassKit
 import MangoPaySdkAPI
-import NethoneSDK
+//import NethoneSDK
+#if os(iOS)
+import UIKit
+#endif
 
 enum FormType {
     case dropIn
@@ -282,7 +284,7 @@ class PaymentFormView: UIView {
         stackView.setCustomSpacing(32, after: self.applePayButton)
     }
 
-    var keyboardUtil: KeyboardUtil?
+//    var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
     var viewModel: PaymentFormViewModel!
     var onRightButtonTappedAction: (() -> Void)?
@@ -349,50 +351,50 @@ class PaymentFormView: UIView {
     }
     
     func initiateNethone() {
-        NTHNethone.setMerchantNumber("428242");
-        let nethoneConfig = NTHAttemptConfiguration()
-        nethoneConfig.sensitiveFields = [
-            "cardNumberField",
-            "cardNameField",
-            "expiryDateField",
-            "cvvField"
-        ]
-
-        registerTextfieldsToNethone()
-        
-        do {
-            try NTHNethone.beginAttempt(with: nethoneConfig)
-            currentAttempt = NTHNethone.attemptReference()
-            print("✅ currentAttempt", currentAttempt)
-        } catch {
-            print("NEthone intiation Errror")
-        }
+//        NTHNethone.setMerchantNumber("428242");
+//        let nethoneConfig = NTHAttemptConfiguration()
+//        nethoneConfig.sensitiveFields = [
+//            "cardNumberField",
+//            "cardNameField",
+//            "expiryDateField",
+//            "cvvField"
+//        ]
+//
+//        registerTextfieldsToNethone()
+//
+//        do {
+//            try NTHNethone.beginAttempt(with: nethoneConfig)
+//            currentAttempt = NTHNethone.attemptReference()
+//            print("✅ currentAttempt", currentAttempt)
+//        } catch {
+//            print("NEthone intiation Errror")
+//        }
     }
 
     func registerTextfieldsToNethone() {
-        NTHNethone.register(
-            cardNumberField.textfield,
-            mode: .AllData,
-            name: "cardNumberField"
-        )
-
-        NTHNethone.register(
-            cardNameField.textfield,
-            mode: .AllData,
-            name: "cardNameField"
-        )
-
-        NTHNethone.register(
-            expiryDateField.textfield,
-            mode: .AllData,
-            name: "expiryDateField"
-        )
-
-        NTHNethone.register(
-            cvvField.textfield,
-            mode: .AllData,
-            name: "cvvField"
-        )
+//        NTHNethone.register(
+//            cardNumberField.textfield,
+//            mode: .AllData,
+//            name: "cardNumberField"
+//        )
+//
+//        NTHNethone.register(
+//            cardNameField.textfield,
+//            mode: .AllData,
+//            name: "cardNameField"
+//        )
+//
+//        NTHNethone.register(
+//            expiryDateField.textfield,
+//            mode: .AllData,
+//            name: "expiryDateField"
+//        )
+//
+//        NTHNethone.register(
+//            cvvField.textfield,
+//            mode: .AllData,
+//            name: "cvvField"
+//        )
     }
 
     required init?(coder: NSCoder) {
@@ -453,20 +455,20 @@ class PaymentFormView: UIView {
     }
 
     func finalizeButtonTapped() {
-        do {
-            try NTHNethone.finalizeAttempt(completion: { error in
-                guard error == nil else {
-                    // Handle finalization error.
-                    // For example: internet is down
-                    print("NTHNethone Error")
-                    return
-                }
-                // All data has been delivered to Nethone. Do the actual payment processing
-                self.grabData()
-            })
-        } catch { error
-            print("❌❌❌❌ finalizeAttempt", error)
-        }
+//        do {
+//            try NTHNethone.finalizeAttempt(completion: { error in
+//                guard error == nil else {
+//                    // Handle finalization error.
+//                    // For example: internet is down
+//                    print("NTHNethone Error")
+//                    return
+//                }
+//                // All data has been delivered to Nethone. Do the actual payment processing
+//                self.grabData()
+//            })
+//        } catch { error
+//            print("❌❌❌❌ finalizeAttempt", error)
+//        }
     }
 
     @objc func onApplePayBtnTapped() {

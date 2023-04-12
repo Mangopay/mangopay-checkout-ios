@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#endif
 
 enum TextFieldState {
     case error
@@ -16,7 +18,7 @@ enum TextFieldState {
     case greyedOut
 }
 
-class MangoPayTextfield: UIView {
+public class MangoPayTextfield: UIView {
 
     var onEditingBegin: (() -> Void)?
     var onEditingDidEnd: (() -> Void)?

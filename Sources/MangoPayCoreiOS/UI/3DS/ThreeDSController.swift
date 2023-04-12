@@ -5,8 +5,10 @@
 //  Created by Elikem Savie on 12/11/2022.
 //
 
-import UIKit
 import WebKit
+#if os(iOS)
+import UIKit
+#endif
 
 public protocol ThreeDSControllerDelegate: AnyObject {
     func onSuccess3D(paymentId: String)

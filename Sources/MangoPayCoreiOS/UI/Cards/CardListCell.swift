@@ -5,8 +5,10 @@
 //  Created by Elikem Savie on 28/10/2022.
 //
 
-import UIKit
 import MangoPaySdkAPI
+#if os(iOS)
+import UIKit
+#endif
 
 class CardListCell: UITableViewCell {
 
