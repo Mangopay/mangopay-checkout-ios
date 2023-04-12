@@ -133,12 +133,12 @@ class ViewController: UIViewController {
         showLoader(true)
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
+            cardRegistration: resObj,
             provider: .MANGOPAY
         )
 
-        mgpVault.tokenise(
+        mgpVault.tokeniseCard(
             card: cardInfo,
-            cardRegistration: resObj,
             paylineDelegate: self
         )
     }
@@ -160,7 +160,7 @@ class ViewController: UIViewController {
         )
 
         showLoader(true)
-        mgpVault.tokenise(card: cardInfo, whenThenDelegate: self)
+        mgpVault.tokeniseCard(card: cardInfo, whenThenDelegate: self)
 
     }
     

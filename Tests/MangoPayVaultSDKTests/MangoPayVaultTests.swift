@@ -318,7 +318,7 @@ final class MangoPayVaultTests: XCTestCase {
 
         expectation = expectation(description: "Tokenising WT")
         mockVC.expectation = expectation
-        mgpVault.tokenise(
+        mgpVault.tokeniseCard(
             card: cardData,
             whenThenDelegate: mockVC
         )
