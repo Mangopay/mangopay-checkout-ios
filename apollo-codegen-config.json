@@ -1,0 +1,46 @@
+{
+  "schemaName" : "CheckoutSchema",
+  "input" : {
+    "operationSearchPaths" : [
+        "./Sources/MangoPaySdkAPI/*.graphql",
+        "./Sources/MangoPaySdkAPI/*.graphql"
+    ],
+    "schemaSearchPaths" : [
+       "./*.graphqls",
+       "./Sources/MangoPaySdkAPI/*.graphqls"
+    ]
+  },
+  "output" : {
+    "testMocks" : {
+      "none" : {
+      }
+    },
+    "schemaTypes" : {
+      "path" : "Sources/MangoPaySdkAPI",
+      "moduleType" : {
+        "embeddedInTarget" : {
+            "name": "MangoPaySdkAPI"
+        }
+      }
+    },
+    "operations" : {
+      "inSchemaModule" : {
+      }
+    }
+  },
+  "schemaDownloadConfiguration": {
+    "downloadMethod": {
+        "introspection": {
+            "endpointURL": "https://api.dev.whenthen.co/api/graphql",
+            "httpMethod": {
+                "POST": {}
+            },
+            "includeDeprecatedInputValues": false,
+            "outputFormat": "SDL"
+        }
+    },
+    "downloadTimeout": 60,
+    "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
+    "outputPath": "Sources/MangoPaySdkAPI/dowmloaded.graphqls/"
+}
+}
