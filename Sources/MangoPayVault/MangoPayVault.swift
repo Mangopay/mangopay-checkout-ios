@@ -64,7 +64,7 @@ public class MangoPayVault {
         clientId: String? = nil,
         cardRegistration: CardRegistration? = nil,
         provider: Provider = .MANGOPAY,
-        environment: Environment = .sandbox
+        environment: Environment
     ) {
         self.clientToken = clientToken
         self.clientId = clientId
