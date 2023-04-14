@@ -26,7 +26,6 @@
 		98835B1029C9DC9E0085F51C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835AFE29C9DC9E0085F51C /* SceneDelegate.swift */; };
 		98B6BE2029E6FFF100E9C30A /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE1F29E6FFF100E9C30A /* netfox */; };
 		98B6BE2229E6FFFA00E9C30A /* MangoPayCoreiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE2129E6FFFA00E9C30A /* MangoPayCoreiOS */; };
-		98B6BE2429E6FFFA00E9C30A /* MangoPayIntent in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE2329E6FFFA00E9C30A /* MangoPayIntent */; };
 		98B6BE2629E6FFFA00E9C30A /* MangoPaySdkAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE2529E6FFFA00E9C30A /* MangoPaySdkAPI */; };
 		98B6BE2829E6FFFA00E9C30A /* MangoPayVault in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE2729E6FFFA00E9C30A /* MangoPayVault */; };
 /* End PBXBuildFile section */
@@ -61,7 +60,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				98B6BE2029E6FFF100E9C30A /* netfox in Frameworks */,
-				98B6BE2429E6FFFA00E9C30A /* MangoPayIntent in Frameworks */,
 				98B6BE2629E6FFFA00E9C30A /* MangoPaySdkAPI in Frameworks */,
 				98B6BE2829E6FFFA00E9C30A /* MangoPayVault in Frameworks */,
 				98B6BE2229E6FFFA00E9C30A /* MangoPayCoreiOS in Frameworks */,
@@ -149,7 +147,6 @@
 			packageProductDependencies = (
 				98B6BE1F29E6FFF100E9C30A /* netfox */,
 				98B6BE2129E6FFFA00E9C30A /* MangoPayCoreiOS */,
-				98B6BE2329E6FFFA00E9C30A /* MangoPayIntent */,
 				98B6BE2529E6FFFA00E9C30A /* MangoPaySdkAPI */,
 				98B6BE2729E6FFFA00E9C30A /* MangoPayVault */,
 			);
@@ -484,10 +481,6 @@
 		98B6BE2129E6FFFA00E9C30A /* MangoPayCoreiOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MangoPayCoreiOS;
-		};
-		98B6BE2329E6FFFA00E9C30A /* MangoPayIntent */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MangoPayIntent;
 		};
 		98B6BE2529E6FFFA00E9C30A /* MangoPaySdkAPI */ = {
 			isa = XCSwiftPackageProductDependency;

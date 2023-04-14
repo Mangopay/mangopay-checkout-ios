@@ -123,8 +123,6 @@ class ViewController: UIViewController {
         )
 
         let cardInfo = CardInfo(
-            accessKeyRef: resObj.accessKey,
-            data: resObj.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "123"
