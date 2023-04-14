@@ -19,7 +19,11 @@ public protocol CardRegistrationClientProtocol {
 
 public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientProtocol {
     
-    public init() { }
+    var baseUrl: URL!
+
+    public init(url: URL) {
+        self.baseUrl = url
+    }
 
     public func createCardRegistration(
         _ card: CardRegistration,
@@ -31,7 +35,7 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
             "/\(apiVersion)/\(clientId)/cardregistrations",
             isDirectory: false
         )
-        print("🥹 card \(card)")
+
         return try await request(
             url: url,
             method: .post,
@@ -46,8 +50,6 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
     }
     
     public func postCardInfo(_ cardInfo: CardInfo, url: URL) async throws -> CardInfo.RegistrationData {
-
-        print("🥹 cardInfo \(cardInfo)")
 
         return try await request(
             url: url,

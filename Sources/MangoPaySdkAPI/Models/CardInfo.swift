@@ -2,8 +2,6 @@ import Foundation
 
 public struct CardInfo: Codable, Cardable {
     
-    public var accessKeyRef: String?
-    public var data: String?
     public var cardNumber: String?
     public var cardExpirationDate: String?
     public var cardCvx: String?
@@ -29,9 +27,12 @@ public struct CardInfo: Codable, Cardable {
         public let RegistrationData: String
     }
 
-    public init(accessKeyRef: String? = nil, data: String? = nil, cardNumber: String? = nil, cardExpirationDate: String? = nil, cardCvx: String? = nil, cardType: String? = nil) {
-        self.accessKeyRef = accessKeyRef
-        self.data = data
+    public init(
+        cardNumber: String? = nil,
+        cardExpirationDate: String? = nil,
+        cardCvx: String? = nil,
+        cardType: String? = nil
+    ) {
         self.cardNumber = cardNumber
         self.cardExpirationDate = cardExpirationDate
         self.cardCvx = cardCvx

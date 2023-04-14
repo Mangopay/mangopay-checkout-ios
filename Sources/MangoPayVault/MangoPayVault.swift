@@ -34,6 +34,20 @@ public enum Provider: String {
     case MANGOPAY
 }
 
+public enum Environment: String {
+    case sandbox
+    case prod
+
+    var url: URL {
+        switch self {
+        case .sandbox:
+            return URL(string: "https://api.sandbox.mangopay.com")!
+        case .prod:
+            return URL(string: "https://api.mangopay.com")!
+        }
+    }
+}
+
 public class MangoPayVault {
     
     private var paylineClient: CardRegistrationClientProtocol?
@@ -43,17 +57,20 @@ public class MangoPayVault {
     private let clientToken: String?
     private let clientId: String?
     private let cardRegistration: CardRegistration?
+    private let environment: Environment!
 
     public init(
         clientToken: String? = nil,
         clientId: String? = nil,
         cardRegistration: CardRegistration? = nil,
-        provider: Provider = .MANGOPAY
+        provider: Provider = .MANGOPAY,
+        environment: Environment = .sandbox
     ) {
         self.clientToken = clientToken
         self.clientId = clientId
         self.provider = provider
         self.cardRegistration = cardRegistration
+        self.environment = environment
     }
 
     func setWtClient(wtClient: WhenThenClientSessionProtocol) {
@@ -149,7 +166,7 @@ public class MangoPayVault {
         guard let _clientToken = clientToken else { return }
 
         if paylineClient == nil {
-            paylineClient = CardRegistrationClient()
+            paylineClient = CardRegistrationClient(url: environment.url)
         }
 
         Task {
