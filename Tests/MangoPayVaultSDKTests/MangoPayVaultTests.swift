@@ -29,8 +29,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     var cardInfo: CardInfo {
         return CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "123"
@@ -52,8 +50,6 @@ final class MangoPayVaultTests: XCTestCase {
     func testValidation_date_expiration_success() {
 
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "123"
@@ -71,8 +67,6 @@ final class MangoPayVaultTests: XCTestCase {
     func testValidation_date_expiration_failure() {
 
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1020",
             cardCvx: "123"
@@ -94,8 +88,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_date_expiration_required_success() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "123"
@@ -117,8 +109,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_date_expiration_required_failure() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardCvx: "123"
         )
@@ -139,8 +129,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_cardNumber_required_success() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "123"
@@ -162,8 +150,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_cardNumber_required_failure() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardExpirationDate: "1024",
             cardCvx: "123"
         )
@@ -184,8 +170,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_cardNumber_valid_success() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "42424242424242",
             cardExpirationDate: "1024",
             cardCvx: "123"
@@ -207,8 +191,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_cardNumber_valid_failure() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4129939187355598",
             cardExpirationDate: "1024",
             cardCvx: "123"
@@ -230,8 +212,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_cvv_valid_success() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "1234"
@@ -253,8 +233,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_cvv_valid_failure() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "12899"
@@ -276,8 +254,6 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testValidation_cvv_required_failure() {
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024"
         )
@@ -336,8 +312,6 @@ final class MangoPayVaultTests: XCTestCase {
         )
 
         let cardInfo = CardInfo(
-            accessKeyRef: cardRegObject.accessKey,
-            data: cardRegObject.preregistrationData,
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "123"
@@ -349,9 +323,8 @@ final class MangoPayVaultTests: XCTestCase {
 
         expectation = expectation(description: "Tokenising Payline")
         mockVC.expectation = expectation
-        mgpVault.tokenise(
+        mgpVault.tokeniseCard(
             card: cardInfo,
-            cardRegistration: cardRegObject,
             paylineDelegate: mockVC
         )
         
