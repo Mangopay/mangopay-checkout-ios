@@ -57,7 +57,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         let isvalid = (try? mgpVault.validateCard(with: cardInfo)) ?? false
@@ -74,7 +75,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -95,7 +97,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -115,7 +118,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -136,7 +140,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -156,7 +161,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -177,7 +183,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -198,7 +205,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -219,7 +227,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -240,7 +249,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -260,7 +270,8 @@ final class MangoPayVaultTests: XCTestCase {
         
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         do {
@@ -275,7 +286,8 @@ final class MangoPayVaultTests: XCTestCase {
     func testTokeniseWhenThen() {
         let mgpVault = MangoPayVault(
             clientId: "checkoutsquatest",
-            provider: .WHENTHEN
+            provider: .WHENTHEN,
+            environment: .sandbox
         )
 
         let cardData = CardData(
@@ -308,7 +320,8 @@ final class MangoPayVaultTests: XCTestCase {
     func testTokeniseMGPVault() {
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            provider: .MANGOPAY
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
 
         let cardInfo = CardInfo(
