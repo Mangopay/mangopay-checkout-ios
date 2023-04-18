@@ -30,7 +30,7 @@ struct NetworkTestData {
 }
 
 protocol NetworkUtil {
-    var baseUrl: URL { get }
+//    var baseUrl: URL { get }
     var apiVersion: String { get }
 //    var headers: [String: String] { get }
 }
@@ -42,9 +42,9 @@ struct Response<T: Codable, H: Codable> {
 
 extension NetworkUtil {
 
-    var baseUrl: URL {
-        return URL(string: "https://api.sandbox.mangopay.com")!
-    }
+//    var baseUrl: URL {
+//        return URL(string: "https://api.sandbox.mangopay.com")!
+//    }
 
     var headers: [String: String] {
         var _headers = [String: String]()
