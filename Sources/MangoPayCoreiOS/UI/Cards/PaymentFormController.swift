@@ -26,7 +26,7 @@ public class PaymentFormController: UIViewController {
         .visa
     ]
         
-    var applePay: WhenThenApplePay?
+    var applePay: MangoPayApplePay?
 
     public init(
         cardConfig: CardConfig? = nil,
@@ -93,7 +93,7 @@ public class PaymentFormController: UIViewController {
         let flowId = formView.dropInOptions?.flowId
 
         formView.onApplePayTapped = {
-            self.applePay = WhenThenApplePay(
+            self.applePay = MangoPayApplePay(
                 withMerchantIdentifier: merchantId,
                 amount: 200,
                 country: country,
@@ -213,10 +213,10 @@ extension PaymentFormController: ThreeDSControllerDelegate {
     
 }
 
-extension PaymentFormController: WhenThenApplePayDelegate {
+extension PaymentFormController: MangoPayApplePayDelegate {
 
     public func applePayContext(
-        _ sender: WhenThenApplePay,
+        _ sender: MangoPayApplePay,
         didSelect shippingMethod: PKShippingMethod,
         handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void
     ) {
@@ -224,8 +224,8 @@ extension PaymentFormController: WhenThenApplePayDelegate {
     }
 
     public func applePayContext(
-        _ sender: WhenThenApplePay,
-        didCompleteWith status: WhenThenApplePay.PaymentStatus,
+        _ sender: MangoPayApplePay,
+        didCompleteWith status: MangoPayApplePay.PaymentStatus,
         error: Error?
     ) {
         print("😅 Did complete ", status)

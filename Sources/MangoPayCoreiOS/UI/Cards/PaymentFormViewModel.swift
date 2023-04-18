@@ -15,7 +15,7 @@ public protocol DropInFormDelegate: AnyObject {
     func onPaymentStarted(sender: PaymentFormViewModel)
     func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment)
     func onPaymentFailed(sender: PaymentFormViewModel, error: MangoPayError)
-    func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus)
+    func onApplePayCompleteDropIn(status: MangoPayApplePay.PaymentStatus)
     func didUpdateBillingInfo(sender: PaymentFormViewModel)
 }
 
@@ -23,7 +23,7 @@ public protocol ElementsFormDelegate: AnyObject {
     func onPaymentStarted(sender: PaymentFormViewModel)
     func onTokenGenerated(tokenisedCard: TokeniseCard)
     func onTokenGenerationFailed(error: Error)
-    func onApplePayCompleteElement(status: WhenThenApplePay.PaymentStatus)
+    func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus)
     func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment)
 }
 
