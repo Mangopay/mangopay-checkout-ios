@@ -367,7 +367,7 @@ class PaymentFormView: UIView {
 //            currentAttempt = NTHNethone.attemptReference()
 //            print("✅ currentAttempt", currentAttempt)
 //        } catch {
-//            print("NEthone intiation Errror")
+//            print("Nethone intiation Error")
 //        }
     }
 
@@ -503,6 +503,7 @@ class PaymentFormView: UIView {
             state: "Accra",
             country: "Ghana"
         )
+
         var customer = Customer(
             billingAddress: billingInfo,
             description: "Happy Customer",
