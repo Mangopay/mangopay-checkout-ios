@@ -414,7 +414,11 @@ class MockWhenThenClient: WhenThenClientSessionProtocol {
 
 class MockVaultClient: CardRegistrationClientProtocol {
 
-    func createCardRegistration(_ card: MangoPaySdkAPI.CardRegistration, clientId: String, apiKey: String) async throws -> MangoPaySdkAPI.CardRegistration {
+    func createCardRegistration(
+        _ card: MangoPaySdkAPI.CardRegistration.Initiate,
+        clientId: String,
+        apiKey: String
+    ) async throws -> MangoPaySdkAPI.CardRegistration {
         return CardRegistration(
             id: "164689525",
             creationDate: 1678862696,
