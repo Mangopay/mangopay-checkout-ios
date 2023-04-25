@@ -8,7 +8,7 @@
 import UIKit
 import MangoPayVault
 import MangoPaySdkAPI
-import MangoPayIntent
+//import MangoPayIntent
 import MangoPayVault
 
 class DemoPaymentForm: UIViewController {
@@ -17,14 +17,21 @@ class DemoPaymentForm: UIViewController {
     @IBOutlet weak var cvvTextfield: UITextField!
     @IBOutlet weak var expiryTextfield: UITextField!
     
+    @IBOutlet weak var mmExpiryField: UITextField!
+    @IBOutlet weak var yyExpiryField: UITextField!
     
     @IBOutlet weak var activityMonitor: UIActivityIndicatorView!
+    
+    var configuration: Configuration!
+    var cardRegistration: CardRegistration!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         showLoader(false)
+        
     }
     
     func showLoader(_ show: Bool) {
@@ -37,7 +44,9 @@ class DemoPaymentForm: UIViewController {
     }
     
     @IBAction func didTapPay(_ sender: UIButton) {
-        let card = grabData()
+        guard let card = grabData() else {
+            return
+        }
         payline(card: card)
     }
     
@@ -56,25 +65,60 @@ class DemoPaymentForm: UIViewController {
         )
 
         let mgpVault = MangoPayVault(
-            clientId: "ct_test_9i8jZIEdWnTI4rsu",
-            provider: .WHENTHEN
+            clientId: configuration.clientId,
+            provider: .WHENTHEN,
+            environment: .sandbox
         )
 
         showLoader(true)
         mgpVault.tokeniseCard(card: cardInfo, whenThenDelegate: self)
     }
+
+    func createCardReg(
+        cardReg: CardRegistration.Initiate,
+        clientId: String,
+        apiKey: String
+    ) async -> CardRegistration? {
+        do {
+            showLoader(true)
+
+            let regResponse = try await CardRegistrationClient(
+                url: Environment.sandbox.url
+            ).createCardRegistration(
+                cardReg,
+                clientId: clientId,
+                apiKey: apiKey
+            )
+            showLoader(false)
+
+            return regResponse
+        } catch {
+            print("❌ Error Creating Card Registration")
+            showLoader(false)
+            return nil
+        }
+
+    }
     
-    func grabData() -> CardInfo {
-        var card = CardInfo()
-        card.cardNumber = cardNumberTextfield.text
-        card.cardCvx = cvvTextfield.text
-        card.cardExpirationDate = "0224"
-        return card
+    func grabData() -> CardInfo? {
+
+        guard let cardNum = cardNumberTextfield.text,
+              let cvv = cvvTextfield.text,
+              let month = mmExpiryField.text,
+              let year = yyExpiryField.text else { return nil }
+        
+        let expStr = month + year
+        
+        return CardInfo(
+            cardNumber: cardNum,
+            cardExpirationDate: expStr,
+            cardCvx: cvv
+       )
     }
 
     func grabDataMGP() -> CardData {
         var card = CardData(
-            number: "4970101122334422",
+            number: "497010711111119",
             name: "Visa",
             expMonth: 6,
             expYear: 26,
@@ -88,22 +132,35 @@ class DemoPaymentForm: UIViewController {
     
     func payline(card: CardInfo) {
         
-        let resObj = CardRegistration(
-            id: "164747858",
-            creationDate: 1679320385,
-            userID: "158091557",
-            accessKey: "1X0m87dmM2LiwFgxPLBJ",
-            preregistrationData: "pMUiqKEKexdo_NolxfBziXiNDy4f6lZFLr2ONrDmqw-AZdAtiS8ON_lZopm5b8Er2ddFLVXdicolcUIkv_kKEA",
-            cardType: "CB_VISA_MASTERCARD",
-            cardRegistrationURLStr: "https://homologation-webpayment.payline.com/webpayment/getToken",
-            currency: "EUR",
-            status: "CREATED"
-        )
+//        let resObj = CardRegistration(
+//            id: "164747858",
+//            creationDate: 1679320385,
+//            userID: "158091557",
+//            accessKey: "1X0m87dmM2LiwFgxPLBJ",
+//            preregistrationData: "pMUiqKEKexdo_NolxfBziXiNDy4f6lZFLr2ONrDmqw-AZdAtiS8ON_lZopm5b8Er2ddFLVXdicolcUIkv_kKEA",
+//            cardType: "CB_VISA_MASTERCARD",
+//            cardRegistrationURLStr: "https://homologation-webpayment.payline.com/webpayment/getToken",
+//            currency: "EUR",
+//            status: "CREATED"
+//        )
         
+  
+        
+//        return CardData(
+//            number: cardNum,
+//            name: "Visa",
+//            expMonth: Int(month),
+//            expYear: Int(year),
+//            cvc: cvv,
+//            savePayment: false,
+//            bilingInfo: nil
+//        )
+
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
-            cardRegistration: resObj,
-            provider: .MANGOPAY
+            clientToken: configuration.clientId,
+            cardRegistration: cardRegistration,
+            provider: .MANGOPAY,
+            environment: .sandbox
         )
         
         showLoader(true)
@@ -116,8 +173,8 @@ class DemoPaymentForm: UIViewController {
 
     func mgpTokenise(card: CardData) {
         let mgpVault = MangoPayVault(
-            clientId: "ct_test_TAb7Sb6fmXqTplUH",
-            provider: .WHENTHEN
+            clientId: configuration.clientId,
+            provider: .WHENTHEN, environment: .sandbox
         )
 
         showLoader(true)

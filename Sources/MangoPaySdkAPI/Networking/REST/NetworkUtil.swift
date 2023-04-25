@@ -66,9 +66,13 @@ extension NetworkUtil {
     var deviceType: String {
         UIDevice.current.name
     }
+    
+    var deviceOS: String {
+        return UIDevice.current.systemVersion
+    }
 
     var userAgent: String {
-        "MangoPayiOSSDK App; \(sdkVersion);\(deviceType)"
+        "MangoPayiOSSDK App; \(sdkVersion); \(deviceType), \(deviceOS)"
     }
 
     func request<T: Codable>(
