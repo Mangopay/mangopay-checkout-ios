@@ -13,8 +13,8 @@ Pod::Spec.new do |s|
     s.platform     = :ios, "10.0"
     s.source       = { :git => "https://gitlab.com/mangopay/checkout-ios-sdk", :tag => "#{s.version}" }
   
-    s.source_files = 'Sources/MangoPayIntent/*.swift'
-    s.dependency    `MangoPaySdkAPI`, s.version.to_s
+    s.source_files = 'MangoPayIntent/*.swift'
+    s.dependency    'MangoPaySdkAPI', s.version.to_s
 
   end
   

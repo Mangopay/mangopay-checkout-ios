@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
     s.platform     = :ios, "10.0"
     s.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => s.version }
   
-    s.source_files = 'Sources/MangoPaySdkAPI/*.swift'
+    s.source_files = 'MangoPaySdkAPI/*.swift'
     s.dependency     'Apollo', '~> 1.0.0'
 
   end
