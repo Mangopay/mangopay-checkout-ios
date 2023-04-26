@@ -9,17 +9,17 @@ import Foundation
 import PassKit
 import MangoPaySdkAPI
 
-public protocol WhenThenApplePayDelegate {
+public protocol MangoPayApplePayDelegate {
 
      func applePayContext(
-        _ sender: WhenThenApplePay,
+        _ sender: MangoPayApplePay,
         didSelect shippingMethod: PKShippingMethod,
         handler: @escaping (_ update: PKPaymentRequestShippingMethodUpdate) -> Void
     )
 
     func applePayContext(
-        _ sender: WhenThenApplePay,
-        didCompleteWith status: WhenThenApplePay.PaymentStatus,
+        _ sender: MangoPayApplePay,
+        didCompleteWith status: MangoPayApplePay.PaymentStatus,
         error: Error?
     )
 
@@ -32,7 +32,7 @@ public protocol WhenThenApplePayDelegate {
 
 }
 
-public class WhenThenApplePay: NSObject {
+public class MangoPayApplePay: NSObject {
 
      public enum PaymentStatus {
         case success
@@ -48,7 +48,7 @@ public class WhenThenApplePay: NSObject {
     }
 
     var authorizationController: PKPaymentAuthorizationViewController?
-    var delegate: WhenThenApplePayDelegate?
+    var delegate: MangoPayApplePayDelegate?
     var paymentState: PaymentState = .notStarted
     var orderId: String?
     var flowId: String?
@@ -73,7 +73,7 @@ public class WhenThenApplePay: NSObject {
         currency currencyCode: String,
         orderId: String?,
         flowId: String?,
-        delegate: WhenThenApplePayDelegate
+        delegate: MangoPayApplePayDelegate
     ) {
         self.orderId = orderId
         self.flowId = flowId
@@ -124,7 +124,7 @@ public class WhenThenApplePay: NSObject {
     }
 }
 
-extension WhenThenApplePay: PKPaymentAuthorizationViewControllerDelegate {
+extension MangoPayApplePay: PKPaymentAuthorizationViewControllerDelegate {
     
     public func paymentAuthorizationViewControllerWillAuthorizePayment(_ controller: PKPaymentAuthorizationViewController) {
         print("✅ Authorisinggg")
