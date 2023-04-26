@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum HTTPMethod: String {
     case options = "OPTIONS"
@@ -49,13 +50,29 @@ extension NetworkUtil {
     var headers: [String: String] {
         var _headers = [String: String]()
         _headers["Accept"] = "*/*"
-        _headers["Content-Type"] = "application/x-www-form-urlencoded"
         _headers["X-SDK-Version"] = "1.0.0"
+        _headers["User-Agent"] = userAgent
         return _headers
     }
 
     var apiVersion: String {
         return "v2.01"
+    }
+
+    var sdkVersion: String {
+        return "1.0.0"
+    }
+
+    var deviceType: String {
+        UIDevice.current.name
+    }
+    
+    var deviceOS: String {
+        return UIDevice.current.systemVersion
+    }
+
+    var userAgent: String {
+        "MangoPayiOSSDK App; \(sdkVersion); \(deviceType), \(deviceOS)"
     }
 
     func request<T: Codable>(
@@ -109,17 +126,19 @@ extension NetworkUtil {
  
          request.httpMethod = method.rawValue
 
+         headers.forEach {(request.addValue($0.value, forHTTPHeaderField: $0.key))}
          additionalHeaders?.forEach {(request.addValue($0.value, forHTTPHeaderField: $0.key))}
          
          
          if let basicAuthData = basicAuthDict {
-             if let username = basicAuthData["username"], let password = basicAuthData["password"] {
+             if let username = basicAuthData["Username"], let password = basicAuthData["Password"] {
     
                  let authDataStr = String(format: "%@:%@", username, password)
                  let authData = authDataStr.data(using: String.Encoding.utf8)!
                  let base64LoginString = authData.base64EncodedString()
                  
-                 request.addValue("Bearer \(base64LoginString)", forHTTPHeaderField: "Authorization")
+                 let str = "Y2hlY2tvdXRzcXVhdGVzdDo3Zk9mdnQzb3p2NnZrQXAxUGFocTU2aFJSWFlxSnFOWFE0RDU4djVRQ3dUb2NDVldXQw=="
+                 request.addValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
              }
 
          }

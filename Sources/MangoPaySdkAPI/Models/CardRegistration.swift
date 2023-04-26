@@ -8,6 +8,18 @@
 import Foundation
 
 public struct CardRegistration: Codable {
+    
+    public struct Initiate: Codable {
+        var UserId: String
+        var Currency: String
+        var CardType: String
+
+        public init(UserId: String, Currency: String, CardType: String) {
+            self.UserId = UserId
+            self.Currency = Currency
+            self.CardType = CardType
+        }
+    }
 
     public var id, tag, userID: String?
     public var creationDate: Int?

@@ -8,7 +8,7 @@
 import UIKit
 import MangoPayCoreiOS
 import MangoPaySdkAPI
-import MangoPayIntent
+//import MangoPayIntent
 import MangoPayVault
 
 class ViewController: UIViewController {
@@ -132,7 +132,7 @@ class ViewController: UIViewController {
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
             cardRegistration: resObj,
-            provider: .MANGOPAY
+            provider: .MANGOPAY, environment: .sandbox
         )
 
         mgpVault.tokeniseCard(
@@ -154,7 +154,7 @@ class ViewController: UIViewController {
 
         let mgpVault = MangoPayVault(
             clientId: "ct_test_9i8jZIEdWnTI4rsu",
-            provider: .WHENTHEN
+            provider: .WHENTHEN, environment: .sandbox
         )
 
         showLoader(true)
@@ -199,7 +199,7 @@ extension ViewController: DropInFormDelegate {
         
     }
     
-    func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus) {
+    func onApplePayCompleteDropIn(status: MangoPayApplePay.PaymentStatus) {
         
     }
     
@@ -221,7 +221,7 @@ extension ViewController: ElementsFormDelegate {
         
     }
     
-    func onApplePayCompleteElement(status: WhenThenApplePay.PaymentStatus) {
+    func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus) {
         
     }
     

@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum ValidationRules: String {
+public enum ValidationRules: String {
 
     case invalidCardNumber
     case cardNumberRequired
@@ -18,6 +18,7 @@ enum ValidationRules: String {
     case cvvRequired
     case dateRequired
     case textTooShort
+    case fieldRequired
 
     var reason: String {
         switch self {
@@ -37,11 +38,13 @@ enum ValidationRules: String {
             return LocalizableString.ERROR_EXPIRED_DATE_REQUIRED
         case .textTooShort:
             return LocalizableString.ERROR_TEXT_TOO_SHORT
+        case .fieldRequired:
+            return "Field required"
         }
     }
 }
 
-protocol Validatable {
+public protocol Validatable {
     var validationRules: [ValidationRules] { get set }
     var inputData: String { get }
     var identifier: String { get }
@@ -50,7 +53,7 @@ protocol Validatable {
     func triggerError(message: String)
 }
 
-protocol FormValidatable {
+public protocol FormValidatable {
     var forms: [Validatable] { get set }
     func areFormsValid() -> Bool
     func areFormsValidShowingError() -> Bool
@@ -58,16 +61,16 @@ protocol FormValidatable {
 }
 
 extension FormValidatable {
-    func areFormsValid() -> Bool {
+    public func areFormsValid() -> Bool {
         return !forms.contains(where: {$0.containsValidInput() == false})
     }
 
-    func areFormsValidShowingError() -> Bool {
+    public func areFormsValidShowingError() -> Bool {
         forms.forEach({$0.containsValidInputWithError()})
         return !forms.contains(where: {$0.containsValidInput() == false})
     }
 
-    func isFormValid(_ form: Validatable) -> Bool {
+    public func isFormValid(_ form: Validatable) -> Bool {
         let _form = forms.first(where: {$0.identifier == form.identifier})
         let _ = _form?.containsValidInputWithError()
         return _form?.containsValidInput() ?? false
@@ -77,13 +80,13 @@ extension FormValidatable {
 
 extension Validatable {
     @discardableResult
-    func containsValidInput() -> Bool {
+    public func containsValidInput() -> Bool {
         let validator = Validator(item: self)
         return validator.isValid(triggeringError: false)
     }
 
     @discardableResult
-    func containsValidInputWithError() -> Bool {
+    public func containsValidInputWithError() -> Bool {
         let validator = Validator(item: self)
         return validator.isValid(triggeringError: true)
     }
@@ -93,18 +96,18 @@ class Validator<T: Validatable> {
 
     let item: T
 
-    init(item: T) {
+    public init(item: T) {
         self.item = item
     }
     
-    func validate(using rule: ValidationRules, triggerError: Bool) -> Bool {
+    public func validate(using rule: ValidationRules, triggerError: Bool) -> Bool {
         switch rule {
         case .invalidCardNumber:
             let cardNumber = item.inputData
             let isValid = cardNumber.count >= 13
             (triggerError && !isValid) ? item.triggerError(message: rule.reason) : ()
             return isValid
-        case .cardNumberRequired, .fullNameRequired, .cvvRequired, .dateRequired:
+        case .cardNumberRequired, .fullNameRequired, .fieldRequired, .cvvRequired, .dateRequired:
             let isEmpty = item.inputData.isEmpty
             (triggerError && isEmpty) ? item.triggerError(message: rule.reason) : ()
             return !isEmpty
@@ -122,7 +125,7 @@ class Validator<T: Validatable> {
         }
     }
 
-    func isValid(triggeringError triggerError: Bool) -> Bool {
+    public func isValid(triggeringError triggerError: Bool) -> Bool {
         return !item.validationRules.contains(
             where: { validate(using: $0, triggerError: triggerError) == false }
         )

@@ -184,7 +184,6 @@ public struct MangoPaySDK {
 extension MangoPaySDK {
 
     public static func setIntentId(_ intentId: String) {
-        print("🤣 dropInOptions", paymentFormVC.formView.dropInOptions)
         paymentFormVC.formView.dropInOptions?.intentId = intentId
     }
 }

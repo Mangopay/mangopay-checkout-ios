@@ -8,7 +8,7 @@
 import UIKit
 import MangoPayCoreiOS
 import MangoPaySdkAPI
-import MangoPayIntent
+//import MangoPayIntent
 
 struct Product {
     let name: String
@@ -128,53 +128,53 @@ class ProductListController: UIViewController {
     }
 
     func startIntent(amount: Int) {
-        let intentClient = MangoPayIntent(clientKey: apikey)
-        let trackingId = UUID().uuidString
-        let amountInt = amount
-        Task {
-            do {
-                let indtentData = try await intentClient.startIntent(
-                    trackingId: trackingId,
-                    flowId: flowID,
-                    amount: MGPIntentAmountInput(amount: amountInt, currency: "USD"),
-                    location: MGPIntentLocationInput(country: "USA")
-                )
-                self.intentId = indtentData.id
-                MangoPaySDK.setIntentId(indtentData.id)
-//                print("🤣 indtentData", indtentData)
-            } catch {
-                print("❌❌ Intent Error", error)
-            }
-            
-        }
+//        let intentClient = MangoPayIntent(clientKey: apikey)
+//        let trackingId = UUID().uuidString
+//        let amountInt = amount
+//        Task {
+//            do {
+//                let indtentData = try await intentClient.startIntent(
+//                    trackingId: trackingId,
+//                    flowId: flowID,
+//                    amount: MGPIntentAmountInput(amount: amountInt, currency: "USD"),
+//                    location: MGPIntentLocationInput(country: "USA")
+//                )
+//                self.intentId = indtentData.id
+//                MangoPaySDK.setIntentId(indtentData.id)
+////                print("🤣 indtentData", indtentData)
+//            } catch {
+//                print("❌❌ Intent Error", error)
+//            }
+//
+//        }
     }
 }
 
 extension ProductListController: DropInFormDelegate {
 
     func didUpdateBillingInfo(sender: PaymentFormViewModel) {
-        let intentClient = MangoPayIntent(clientKey: apikey)
-        
-        Task {
-            do {
-                let indtentData = try await intentClient.updateIntent(
-                    intentId: intentId,
-                    trackingId: nil,
-                    shipping: MGPShippingDeliveryInput(status: .inProgress))
-                self.intentId = indtentData.id
-                MangoPaySDK.setIntentId(indtentData.id)
-//                print("🤣 updateIntent", indtentData)
-            } catch {
-                print("❌❌ Intent Error", error)
-            }
-        }
+//        let intentClient = MangoPayIntent(clientKey: apikey)
+//        
+//        Task {
+//            do {
+//                let indtentData = try await intentClient.updateIntent(
+//                    intentId: intentId,
+//                    trackingId: nil,
+//                    shipping: MGPShippingDeliveryInput(status: .inProgress))
+//                self.intentId = indtentData.id
+//                MangoPaySDK.setIntentId(indtentData.id)
+////                print("🤣 updateIntent", indtentData)
+//            } catch {
+//                print("❌❌ Intent Error", error)
+//            }
+//        }
     }
     
     func onPaymentStarted(sender: PaymentFormViewModel) {
         
     }
     
-    func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus) {
+    func onApplePayCompleteDropIn(status: MangoPayApplePay.PaymentStatus) {
         
     }
     
@@ -197,7 +197,7 @@ extension ProductListController: ElementsFormDelegate {
         
     }
     
-    func onApplePayCompleteElement(status: WhenThenApplePay.PaymentStatus) {
+    func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus) {
         
     }
     

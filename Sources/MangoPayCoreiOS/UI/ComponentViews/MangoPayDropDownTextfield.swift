@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 #endif
 
-class MangoPayDropDownTextfield: UIView {
+public class MangoPayDropDownTextfield: UIView {
     
-    enum Usecase {
+    public enum Usecase {
         case date
         case normal
     }
@@ -38,7 +38,7 @@ class MangoPayDropDownTextfield: UIView {
         return picker
     }()
     
-    var text: String? {
+    public var text: String? {
         get {
             return textfield.text?.trimmingCharacters(in: .whitespaces)
         }
@@ -62,7 +62,7 @@ class MangoPayDropDownTextfield: UIView {
         }
     }
 
-    var errorText: String? {
+    public var errorText: String? {
         didSet {
             errorLabel.text = errorText
         }
@@ -74,10 +74,12 @@ class MangoPayDropDownTextfield: UIView {
         font: .systemFont(ofSize: 11)
     )
 
+    var placeholderText: String?
+
     var usecase: Usecase = .normal
     var style: PaymentFormStyle
 
-    lazy var textfield: UITextField = {
+    public lazy var textfield: UITextField = {
         let view = UITextField()
         view.tintColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -144,7 +146,7 @@ class MangoPayDropDownTextfield: UIView {
         return toolbar
     }()
 
-    init(
+    public init(
         placeholderText: String? = nil,
         showDropDownIcon: Bool = true,
         usecase: Usecase = .normal,
@@ -154,6 +156,7 @@ class MangoPayDropDownTextfield: UIView {
         self.showDropDownIcon = showDropDownIcon
         self.usecase = usecase
         self.style = style
+        self.placeholderText = placeholderText
         super.init(frame: .zero)
         setupView()
 
@@ -181,7 +184,7 @@ class MangoPayDropDownTextfield: UIView {
         vStack.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         vStack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        self.heightAnchor.constraint(equalToConstant: 60).isActive = true
+//        self.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
 
     func updateViewWith(state: TextFieldState) {
@@ -234,12 +237,12 @@ class MangoPayDropDownTextfield: UIView {
         textfield.attributedPlaceholder = placeholderText
     }
 
-    func update(with data: [String]) {
+    public func update(with data: [String]) {
         self.data = data
         pickerView.reloadAllComponents()
     }
 
-    func setResponsder() {
+    public func setResponsder() {
         textfield.becomeFirstResponder()
     }
 
@@ -271,26 +274,26 @@ class MangoPayDropDownTextfield: UIView {
 
 extension MangoPayDropDownTextfield: UIPickerViewDelegate, UIPickerViewDataSource {
 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return data.count
     }
 
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if let handler = didPickHandler {
             handler(data[row], row)
         }
         return data[row]
     }
 
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+    public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 30
     }
 
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if row < data.count {
             let option = data[row]
             selectedItem = option

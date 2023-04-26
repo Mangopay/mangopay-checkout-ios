@@ -6,8 +6,6 @@
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
-        <key>method</key>
-        <string>app-store</string>
 		<key>UISceneConfigurations</key>
 		<dict>
 			<key>UIWindowSceneSessionRoleApplication</key>
@@ -22,6 +20,8 @@
 				</dict>
 			</array>
 		</dict>
+		<key>method</key>
+		<string>app-store</string>
 	</dict>
 </dict>
 </plist>

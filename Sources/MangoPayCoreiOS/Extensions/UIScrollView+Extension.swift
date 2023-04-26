@@ -12,7 +12,7 @@ import UIKit
 
 extension UIScrollView {
 
-    static func createWithVStack(
+    public static func createWithVStack(
         spacing: CGFloat,
         alignment: UIStackView.Alignment = .fill,
         distribution: UIStackView.Distribution = .fill,

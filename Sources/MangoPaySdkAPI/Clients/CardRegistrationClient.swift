@@ -9,7 +9,7 @@ import Foundation
 
 public protocol CardRegistrationClientProtocol {
     func createCardRegistration(
-        _ card: CardRegistration,
+        _ card: CardRegistration.Initiate,
         clientId: String,
         apiKey: String
     ) async throws -> CardRegistration
@@ -26,7 +26,7 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
     }
 
     public func createCardRegistration(
-        _ card: CardRegistration,
+        _ card: CardRegistration.Initiate,
         clientId: String,
         apiKey: String
     ) async throws -> CardRegistration {
@@ -39,11 +39,14 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
         return try await request(
             url: url,
             method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
             bodyParam: card.toDict(),
             expecting: CardRegistration.self,
             basicAuthDict: [
-                "username" : clientId,
-                "password": apiKey
+                "Username" : clientId,
+                "Password": apiKey
             ],
             verbose: true
         )

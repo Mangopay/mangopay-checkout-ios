@@ -26,22 +26,22 @@ public class MangoPayTextfield: UIView {
     var onRightButtonTappedAction: (() -> Void)?
     let placeholderText: String?
     
-    var validationRules: [ValidationRules]
+    public var validationRules: [ValidationRules]
 
-    var errorText: String? {
+    public var errorText: String? {
         didSet {
             errorLabel.text = errorText
         }
     }
 
-    var text: String? {
+    public var text: String? {
         get { return textfield.text?.trimmingCharacters(in: .whitespaces) }
         set { textfield.text = newValue }
     }
 
     var trimmedText: String? { return textfield.text?.trimmingCharacters(in: .whitespaces) }
 
-    lazy var textfield: UITextField = {
+    public lazy var textfield: UITextField = {
         let view = UITextField()
         view.font = style.font
         view.textColor = style.textColor
@@ -120,7 +120,7 @@ public class MangoPayTextfield: UIView {
     
     var style: PaymentFormStyle
 
-    init(
+    public init(
         placeholderText: String? = nil,
         leftImage: UIImage? = nil,
         rightImage: UIImage? = nil,
@@ -188,7 +188,7 @@ public class MangoPayTextfield: UIView {
 //        rightImageButton.setTitle(text, for: .normal)
     }
 
-    func setResponsder() {
+    public func setResponsder() {
         textfield.becomeFirstResponder()
     }
             
@@ -241,15 +241,15 @@ public class MangoPayTextfield: UIView {
 }
 
 extension MangoPayTextfield: Validatable {
-    var inputData: String {
+    public var inputData: String {
         return trimmedText ?? ""
     }
 
-    func triggerError(message: String) {
+    public func triggerError(message: String) {
         showError(message: message)
     }
 
-    var identifier: String {
+    public var identifier: String {
         return placeholderText ?? ""
     }
 }
