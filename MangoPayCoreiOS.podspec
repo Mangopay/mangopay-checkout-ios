@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "MangoPayCoreiOS"
-  spec.version      = "0.0.1"
+  spec.version      = "0.0.2"
   spec.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift."
 
   spec.description  = <<-DESC
@@ -20,8 +20,5 @@ Pod::Spec.new do |spec|
 
   spec.source       = { :git => "https://gitlab.com/mangopay/checkout-ios-sdk", :tag => "#{spec.version}" }
   spec.source_files  = "MangoPayCoreiOS/*.swift"
-
-
-  spec.dependency    `Sources/MangoPaySdkAPI`
 
 end

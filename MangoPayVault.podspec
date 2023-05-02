@@ -10,12 +10,12 @@ Pod::Spec.new do |s|
     s.swift_version = "5.0"
     s.license      = "MIT"
     s.author       = { "Elikem Savie" => "elikem@menaget.com" }
-    s.platform     = :ios, "10.0"
+    s.platform     = :ios, "13.0"
     s.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => s.version }
   
     s.source_files = 'MangoPayVault/*.swift'
-    s.dependency    `MangoPaySdkAPI`, spec.version.to_s
-    s.dependency    `MangoPayiOSSDK`, spec.version.to_s
+    s.dependency    'MangoPaySdkAPI', s.version.to_s
+    s.dependency    'MangoPayiOSSDK', s.version.to_s
 
   end
   
