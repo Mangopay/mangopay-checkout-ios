@@ -5,7 +5,11 @@
 // Any changes to this file will not be overwritten by future
 // code generation execution.
 
+#if !COCOAPODS
 import ApolloAPI
+#else
+import Apollo
+#endif
 
 enum SchemaConfiguration: ApolloAPI.SchemaConfiguration {
   static func cacheKeyInfo(for type: Object, object: JSONObject) -> CacheKeyInfo? {

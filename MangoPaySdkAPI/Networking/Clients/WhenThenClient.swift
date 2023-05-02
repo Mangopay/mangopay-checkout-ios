@@ -7,7 +7,9 @@
 
 import Foundation
 import Apollo
+#if !COCOAPODS
 import ApolloAPI
+#endif
 
 public typealias TokeniseCard = CheckoutSchema.TokeniseCardMutation.Data.TokeniseCard
 public typealias AuthorizePaymentResponse = CheckoutSchema.AuthorizePaymentMutation.Data.AuthorizePayment
