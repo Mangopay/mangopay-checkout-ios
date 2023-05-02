@@ -6,8 +6,10 @@
 //
 
 import Foundation
-import ApolloAPI
 import Apollo
+#if !COCOAPODS
+import ApolloAPI
+#endif
 
 public protocol Cardable {
     var cardNumber: String? { get }
