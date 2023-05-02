@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
     s.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => s.version, :branch => "feature/cocoapod_deployment" }
     #s.source       = { :git => "https://gitlab.com/mangopay/checkout-ios-sdk", :tag => "#{s.version}" }
   
-    s.source_files = 'MangoPaySdkAPI/*.swift'
+    s.source_files = 'MangoPaySdkAPI/**/*.swift'
     s.dependency     'Apollo', '~> 1.0.0'
 
   end
