@@ -2,13 +2,13 @@
   "schemaName" : "CheckoutSchema",
   "input" : {
     "operationSearchPaths" : [
-        "./Sources/MangoPaySdkAPI/*.graphql",
-        "./Sources/MangoPaySdkAPI/*.graphql"
+        "./MangoPaySdkAPI/*.graphql",
+        "./MangoPaySdkAPI/*.graphql"
     ],
     "schemaSearchPaths" : [
        "./*.graphqls",
-       "./Sources/MangoPaySdkAPI/*.graphqls"
-    ]
+       "./MangoPaySdkAPI/*.graphqls"
+    ] 
   },
   "output" : {
     "testMocks" : {
@@ -16,7 +16,7 @@
       }
     },
     "schemaTypes" : {
-      "path" : "Sources/MangoPaySdkAPI",
+      "path" : "./MangoPaySdkAPI",
       "moduleType" : {
         "embeddedInTarget" : {
             "name": "MangoPaySdkAPI"
@@ -41,6 +41,6 @@
     },
     "downloadTimeout": 60,
     "headers": [{"key":"Authorization", "value": "Bearer sk_test_f39ZtDHRJ1Fj0gFTw2Ws8yHR5dxLDM5U"}],
-    "outputPath": "Sources/MangoPaySdkAPI/dowmloaded.graphqls/"
+    "outputPath": "./MangoPaySdkAPI/downloaded.graphqls/"
 }
 }
