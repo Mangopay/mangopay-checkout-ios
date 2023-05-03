@@ -14,10 +14,10 @@ public protocol MangoPayVaultDelegate: AnyObject {
     func onFailure(error: Error)
 }
 
-public protocol MangoPayVaultWTTokenisationDelegate: AnyObject {
-    func onSuccess(tokenisedCard: TokeniseCard)
-    func onFailure(error: Error)
-}
+//public protocol MangoPayVaultWTTokenisationDelegate: AnyObject {
+//    func onSuccess(tokenisedCard: TokeniseCard)
+//    func onFailure(error: Error)
+//}
 
 public protocol MangoPayVaultCreateCustomerDelegate: AnyObject {
     func onCustomerCreatedSuccessfully(customerId: String)
@@ -83,8 +83,8 @@ public class MangoPayVault {
 
     public func tokeniseCard(
         card: Cardable,
-        paylineDelegate: MangoPayVaultDelegate? = nil,
-        whenThenDelegate: MangoPayVaultWTTokenisationDelegate? = nil
+        paylineDelegate: MangoPayVaultDelegate? = nil
+//        whenThenDelegate: MangoPayVaultWTTokenisationDelegate? = nil
     ) {
         do {
             let isValidCard = try validateCard(with: card)
@@ -102,10 +102,10 @@ public class MangoPayVault {
             }
         } catch {
             switch provider {
-            case .WHENTHEN:
-                DispatchQueue.main.async {
-                    whenThenDelegate?.onFailure(error: error)
-                }
+            case .WHENTHEN: break
+//                DispatchQueue.main.async {
+//                    whenThenDelegate?.onFailure(error: error)
+//                }
             case .MANGOPAY:
                 DispatchQueue.main.async {
                     paylineDelegate?.onFailure(error: error)
@@ -195,33 +195,33 @@ public class MangoPayVault {
         
     }
 
-    public func createCustomer(
-        _ customer: Customer,
-        delegate: MangoPayVaultCreateCustomerDelegate
-    ) {
-        guard provider == .WHENTHEN else {
-            return
-        }
-
-        guard let _clientId = clientId else { return }
-
-        Task {
-            do {
-                let customerRes = try await WhenThenClient(
-                    clientKey: _clientId
-                ).createCustomer(
-                    with: CustomerInputData(customer: customer)
-                )
-                DispatchQueue.main.async {
-                    delegate.onCustomerCreatedSuccessfully(customerId: customerRes)
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    delegate.onCustomerCreationFailed(error: error)
-                }
-            }
-        }
-    }
+//    public func createCustomer(
+//        _ customer: Customer,
+//        delegate: MangoPayVaultCreateCustomerDelegate
+//    ) {
+//        guard provider == .WHENTHEN else {
+//            return
+//        }
+//
+//        guard let _clientId = clientId else { return }
+//
+//        Task {
+//            do {
+//                let customerRes = try await WhenThenClient(
+//                    clientKey: _clientId
+//                ).createCustomer(
+//                    with: CustomerInputData(customer: customer)
+//                )
+//                DispatchQueue.main.async {
+//                    delegate.onCustomerCreatedSuccessfully(customerId: customerRes)
+//                }
+//            } catch {
+//                DispatchQueue.main.async {
+//                    delegate.onCustomerCreationFailed(error: error)
+//                }
+//            }
+//        }
+//    }
 
 //    public func getPaymentMethods(
 //        customerId: String,
@@ -236,7 +236,7 @@ public class MangoPayVault {
 //
 //        Task {
 //            let client = WhenThenClient(clientKey: _clientId)
-//    
+//
 //            do {
 //                let resPaymentMethods = try await client.getPaymentMethodsForCustomer(customerId)
 //                let paymentMethods = resPaymentMethods.compactMap({$0})

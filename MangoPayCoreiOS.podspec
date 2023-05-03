@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "MangoPayCoreiOS"
-  spec.version      = "0.0.37-beta"
+  spec.version      = "0.0.38-beta"
   spec.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift."
 
   spec.description  = <<-DESC
