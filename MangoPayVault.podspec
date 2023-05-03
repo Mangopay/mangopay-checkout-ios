@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "MangoPayVault"
-    s.version      = "0.0.20-beta"
+    s.version      = "0.0.21-beta"
     s.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift"
     s.description  = <<-DESC
     Checkout API Client and Payment Form Utilities in Swift.
@@ -11,8 +11,8 @@ Pod::Spec.new do |s|
     s.license      = "MIT"
     s.author       = { "Elikem Savie" => "elikem@menaget.com" }
     s.platform     = :ios, "13.0"
-    s.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => s.version }
-  
+    s.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => s.version, :branch => "feature/cocoapod_deployment" }
+
     s.source_files = 'MangoPayVault/*.swift'
     s.dependency    'MangoPaySdkAPI', s.version.to_s
     #s.dependency    'MangoPayiOSSDK', s.version.to_s
