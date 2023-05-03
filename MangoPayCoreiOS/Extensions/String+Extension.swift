@@ -6,9 +6,6 @@
 //
 
 import Foundation
-import ApolloAPI
-import Apollo
-//import SchemaPackage
 
 extension String {
     
@@ -33,7 +30,7 @@ extension String {
 }
 
 extension String {
-    func toGraphQLNullable() -> GraphQLNullable<String> {
-        return GraphQLNullable<String>(stringLiteral: self)
-    }
+//    func toGraphQLNullable() -> GraphQLNullable<String> {
+//        return GraphQLNullable<String>(stringLiteral: self)
+//    }
 }
