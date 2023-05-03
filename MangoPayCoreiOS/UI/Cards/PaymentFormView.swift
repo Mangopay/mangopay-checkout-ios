@@ -339,8 +339,7 @@ class PaymentFormView: UIView {
 //        expiryDateField.text = "12/26"
         
         cardNumberField.onEditingChanged = { text in
-            let cardType = LuhnChecker.getCreditCardType(cardNumber: text)
-            print("🤣 cardType", cardType)
+            let cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
             self.cardNumberField.setRightImage(cardType.icon)
         }
 
@@ -624,7 +623,7 @@ extension PaymentFormView: UITextFieldDelegate {
                 return false
             }
             
-            let cardType = LuhnChecker.getCreditCardType(
+            let cardType = CardTypeChecker.getCreditCardType(
                 cardNumber: text.trimmingCharacters(in: .whitespaces)
             )
             cardNumberField.setLeftImage(cardType.icon)
