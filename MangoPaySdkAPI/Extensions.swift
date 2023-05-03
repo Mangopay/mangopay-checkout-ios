@@ -6,10 +6,6 @@
 //
 
 import Foundation
-import Apollo
-#if !COCOAPODS
-import ApolloAPI
-#endif
 
 extension UUID {
 

@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
     s.name         = "MangoPayIntent"
-    s.version      = "0.0.15g-beta"
+    s.version      = "0.0.15-beta"
     s.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift"
     s.description  = <<-DESC
     Checkout API Client and Payment Form Utilities in Swift.
-    This library contains methods to implement a payment form as well as UI elements.
+    This library contains methods to implement qa payment form as well as UI elements.
                      DESC
     s.homepage     = "https://www.mangopay.com"
     s.swift_version = "5.0"

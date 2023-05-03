@@ -6,6 +6,10 @@
 //
 
 import Foundation
+import Apollo
+#if !COCOAPODS
+import ApolloAPI
+#endif
 
 extension GraphQLNullable {
     static func makeString(_ text: String) -> GraphQLNullable<String> {
