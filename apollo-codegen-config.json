@@ -8,7 +8,7 @@
     "schemaSearchPaths" : [
        "./*.graphqls",
        "./MangoPaySdkAPI/*.graphqls"
-    ] 
+    ]
   },
   "output" : {
     "testMocks" : {

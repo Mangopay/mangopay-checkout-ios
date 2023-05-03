@@ -11,12 +11,6 @@ import Apollo
 import ApolloAPI
 #endif
 
-extension GraphQLNullable {
-    static func makeString(_ text: String) -> GraphQLNullable<String> {
-        return GraphQLNullable<String>(stringLiteral: text)
-    }
-}
-
 extension UUID {
 
     var version1UUID: String {
@@ -52,24 +46,6 @@ extension String {
     func fromBase64() -> String {
         let base64Decode = Data(base64Encoded: self)!
         return String(data: base64Decode, encoding: .utf8)!
-    }
-}
-
-extension String {
-    public func toGraphQLNullable() -> GraphQLNullable<String> {
-        return GraphQLNullable<String>(stringLiteral: self)
-    }
-}
-
-extension Int {
-    public func toGraphQLNullable() -> GraphQLNullable<Int> {
-        return GraphQLNullable<Int>(integerLiteral: self)
-    }
-}
-
-extension Bool {
-    public func toGraphQLNullable() -> GraphQLNullable<Bool> {
-        return GraphQLNullable<Bool>(booleanLiteral: self)
     }
 }
 
