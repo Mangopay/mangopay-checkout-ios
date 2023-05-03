@@ -11,12 +11,6 @@ import Apollo
 import ApolloAPI
 #endif
 
-public protocol Cardable {
-    var cardNumber: String? { get }
-    var cardExpirationDate: String? { get }
-    var cvc: String? { get }
-}
-
 public struct CardData: Cardable {
     let number: String?
     let name: String?

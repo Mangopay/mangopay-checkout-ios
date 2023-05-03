@@ -1,5 +1,11 @@
 import Foundation
 
+public protocol Cardable {
+    var cardNumber: String? { get }
+    var cardExpirationDate: String? { get }
+    var cvc: String? { get }
+}
+
 public struct CardInfo: Codable, Cardable {
     
     public var cardNumber: String?
