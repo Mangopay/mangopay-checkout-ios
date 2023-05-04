@@ -202,9 +202,9 @@ extension ProductListController: ElementsFormDelegate {
     }
     
 
-    func onTokenGenerated(tokenisedCard: TokeniseCard) {
-        print("Element Token Succesfully Generated \(tokenisedCard.token)")
-        self.showAlert(with: tokenisedCard.token, title: "Payment Sucessful 🎉🎉🎉")
+    func onTokenGenerated(tokenizedCard: tokenizeCard) {
+        print("Element Token Succesfully Generated \(tokenizedCard.token)")
+        self.showAlert(with: tokenizedCard.token, title: "Payment Sucessful 🎉🎉🎉")
     }
     
     func onTokenGenerationFailed(error: Error) {

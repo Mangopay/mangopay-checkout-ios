@@ -100,9 +100,9 @@ class ViewController: UIViewController {
  cardRegData(optional)
  
  remove CardData from init
- send it to tokenise
+ send it to tokenize
  
- func tokeniseCard(
+ func tokenizeCard(
  card: Cardable,
  
  
@@ -135,7 +135,7 @@ class ViewController: UIViewController {
             provider: .MANGOPAY, environment: .sandbox
         )
 
-        mgpVault.tokeniseCard(
+        mgpVault.tokenizeCard(
             card: cardInfo,
             paylineDelegate: self
         )
@@ -158,7 +158,7 @@ class ViewController: UIViewController {
         )
 
         showLoader(true)
-        mgpVault.tokeniseCard(card: cardInfo, whenThenDelegate: self)
+        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
 
     }
     
@@ -166,9 +166,9 @@ class ViewController: UIViewController {
 
 extension ViewController: MangoPayVaultWTTokenisationDelegate {
 
-    func onSuccess(tokenisedCard: MangoPaySdkAPI.TokeniseCard) {
+    func onSuccess(tokenizedCard: MangoPaySdkAPI.tokenizeCard) {
         showLoader(false)
-        showAlert(with: tokenisedCard.id, title: "Successful 🎉")
+        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
 
     }
     
@@ -226,9 +226,9 @@ extension ViewController: ElementsFormDelegate {
     }
     
 
-    func onTokenGenerated(tokenisedCard: TokeniseCard) {
-        print("Element Token Succesfully Generated \(tokenisedCard.token)")
-        self.showAlert(with: tokenisedCard.token, title: "Tokenised Card")
+    func onTokenGenerated(tokenizedCard: tokenizeCard) {
+        print("Element Token Succesfully Generated \(tokenizedCard.token)")
+        self.showAlert(with: tokenizedCard.token, title: "tokenized Card")
     }
     
     func onTokenGenerationFailed(error: Error) {

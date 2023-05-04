@@ -52,7 +52,7 @@ class DemoPaymentForm: UIViewController {
     
     @IBAction func didTapPayWT(_ sender: UIButton) {
         let card = grabDataMGP()
-        mgpTokenise(card: card)
+        mgptokenize(card: card)
         
         let cardInfo = CardData(
             number: "4970101122334422",
@@ -71,7 +71,7 @@ class DemoPaymentForm: UIViewController {
         )
 
         showLoader(true)
-        mgpVault.tokeniseCard(card: cardInfo, whenThenDelegate: self)
+        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
     }
 
     func createCardReg(
@@ -165,28 +165,28 @@ class DemoPaymentForm: UIViewController {
         
         showLoader(true)
         
-        mgpVault.tokeniseCard(
+        mgpVault.tokenizeCard(
             card: card,
             paylineDelegate: self
         )
     }
 
-    func mgpTokenise(card: CardData) {
+    func mgptokenize(card: CardData) {
         let mgpVault = MangoPayVault(
             clientId: configuration.clientId,
             provider: .WHENTHEN, environment: .sandbox
         )
 
         showLoader(true)
-        mgpVault.tokeniseCard(card: card, whenThenDelegate: self)
+        mgpVault.tokenizeCard(card: card, whenThenDelegate: self)
     }
 }
 
 extension DemoPaymentForm: MangoPayVaultWTTokenisationDelegate {
     
-    func onSuccess(tokenisedCard: MangoPaySdkAPI.TokeniseCard) {
+    func onSuccess(tokenizedCard: MangoPaySdkAPI.tokenizeCard) {
         showLoader(false)
-        showAlert(with: tokenisedCard.id, title: "Successful 🎉")
+        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
         
     }
     
