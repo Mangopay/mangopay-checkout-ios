@@ -339,7 +339,7 @@ final class MangoPayVaultTests: XCTestCase {
         mgpVault.tokenizeCard(
             card: cardInfo,
             cardRegistration: cardRegObject,
-            paylineDelegate: mockVC
+            delegate: mockVC
         )
         
         waitForExpectations(timeout: 5)

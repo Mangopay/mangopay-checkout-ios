@@ -51,27 +51,27 @@ class DemoPaymentForm: UIViewController {
     }
     
     @IBAction func didTapPayWT(_ sender: UIButton) {
-        let card = grabDataMGP()
-        mgptokenize(card: card)
-        
-        let cardInfo = CardData(
-            number: "4970101122334422",
-            name: "Visa",
-            expMonth: 6,
-            expYear: 26,
-            cvc: "123",
-            savePayment: false,
-            bilingInfo: nil
-        )
-
-        let mgpVault = MangoPayVault(
-            clientId: configuration.clientId,
-            provider: .WHENTHEN,
-            environment: .sandbox
-        )
-
-        showLoader(true)
-        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
+//        let card = grabDataMGP()
+//        mgptokenize(card: card)
+//
+//        let cardInfo = CardData(
+//            number: "4970101122334422",
+//            name: "Visa",
+//            expMonth: 6,
+//            expYear: 26,
+//            cvc: "123",
+//            savePayment: false,
+//            bilingInfo: nil
+//        )
+//
+//        let mgpVault = MangoPayVault(
+//            clientId: configuration.clientId,
+//            provider: .WHENTHEN,
+//            environment: .sandbox
+//        )
+//
+//        showLoader(true)
+//        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
     }
 
     func createCardReg(
@@ -167,34 +167,38 @@ class DemoPaymentForm: UIViewController {
         
         mgpVault.tokenizeCard(
             card: card,
-            paylineDelegate: self
+            delegate: self
         )
     }
 
     func mgptokenize(card: CardData) {
-        let mgpVault = MangoPayVault(
-            clientId: configuration.clientId,
-            provider: .WHENTHEN, environment: .sandbox
-        )
-
-        showLoader(true)
-        mgpVault.tokenizeCard(card: card, whenThenDelegate: self)
+//        let mgpVault = MangoPayVault(
+//            clientId: configuration.clientId,
+//            provider: .WHENTHEN, environment: .sandbox
+//        )
+//
+//        showLoader(true)
+//        mgpVault.tokenizeCard(
+//            card: card,
+//            cardRegistration: cardRegistration,
+//            whenThenDelegate: self
+//        )
     }
 }
 
-extension DemoPaymentForm: MangoPayVaultWTTokenisationDelegate {
-    
-    func onSuccess(tokenizedCard: MangoPaySdkAPI.tokenizeCard) {
-        showLoader(false)
-        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
-        
-    }
-    
-}
+//extension DemoPaymentForm: MangoPayVaultWTTokenisationDelegate {
+//
+//    func onSuccess(tokenizedCard: MangoPaySdkAPI.tokenizeCard) {
+//        showLoader(false)
+//        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
+//
+//    }
+//
+//}
 
 extension DemoPaymentForm: MangoPayVaultDelegate {
     
-    func onSuccess(card: MangoPaySdkAPI.CardRegistration) {
+    func onSuccess(card: CardRegistration) {
         showLoader(false)
         showAlert(with: card.accessKey ?? "", title: "Successful 🎉")
     }

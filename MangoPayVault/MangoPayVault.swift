@@ -82,8 +82,8 @@ public class MangoPayVault {
     public func tokenizeCard(
         card: Cardable,
         cardRegistration: CardRegistration? = nil,
-        paylineDelegate: MangoPayVaultDelegate? = nil
-g    ) {
+        delegate: MangoPayVaultDelegate? = nil
+    ) {
         do {
             let isValidCard = try validateCard(with: card)
             guard isValidCard else { return }
@@ -95,7 +95,7 @@ g    ) {
                 tokenizeMGP(
                     with: card,
                     cardRegistration: _cardRegistration,
-                    delegate: paylineDelegate
+                    delegate: delegate
                 )
             }
         } catch {
@@ -106,7 +106,7 @@ g    ) {
 //                }
             case .MANGOPAY:
                 DispatchQueue.main.async {
-                    paylineDelegate?.onFailure(error: error)
+                    delegate?.onFailure(error: error)
                 }
             }
         }

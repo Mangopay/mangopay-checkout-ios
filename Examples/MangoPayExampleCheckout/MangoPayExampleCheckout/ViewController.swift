@@ -131,12 +131,12 @@ class ViewController: UIViewController {
         showLoader(true)
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            cardRegistration: resObj,
             provider: .MANGOPAY, environment: .sandbox
         )
 
         mgpVault.tokenizeCard(
             card: cardInfo,
+            cardRegistration: resObj,
             paylineDelegate: self
         )
     }
@@ -157,26 +157,26 @@ class ViewController: UIViewController {
             provider: .WHENTHEN, environment: .sandbox
         )
 
-        showLoader(true)
-        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
+//        showLoader(true)
+//        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
 
     }
     
 }
 
-extension ViewController: MangoPayVaultWTTokenisationDelegate {
-
-    func onSuccess(tokenizedCard: MangoPaySdkAPI.tokenizeCard) {
-        showLoader(false)
-        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
-
-    }
-    
-}
+//extension ViewController: MangoPayVaultWTTokenisationDelegate {
+//
+//    func onSuccess(tokenizedCard: .okenizeCard) {
+//        showLoader(false)
+//        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
+//
+//    }
+//
+//}
 
 extension ViewController: MangoPayVaultDelegate {
     
-    func onSuccess(card: MangoPaySdkAPI.CardRegistration) {
+    func onSuccess(card: CardRegistration) {
         showLoader(false)
         showAlert(with: "", title: "Successful 🎉")
     }
