@@ -168,7 +168,7 @@ class ConfigurationController: UIViewController {
     lazy var paymentButton: UIButton = {
        let button = UIButton()
         button.backgroundColor = .purple
-        button.setTitle("Initialise", for: .normal)
+        button.setTitle("Initialize", for: .normal)
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)

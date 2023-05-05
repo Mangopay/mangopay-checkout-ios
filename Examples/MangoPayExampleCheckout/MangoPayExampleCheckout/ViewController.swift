@@ -100,9 +100,9 @@ class ViewController: UIViewController {
  cardRegData(optional)
  
  remove CardData from init
- send it to tokenise
+ send it to tokenize
  
- func tokeniseCard(
+ func tokenizeCard(
  card: Cardable,
  
  
@@ -131,12 +131,12 @@ class ViewController: UIViewController {
         showLoader(true)
         let mgpVault = MangoPayVault(
             clientToken: "checkoutsquatest",
-            cardRegistration: resObj,
             provider: .MANGOPAY, environment: .sandbox
         )
 
-        mgpVault.tokeniseCard(
+        mgpVault.tokenizeCard(
             card: cardInfo,
+            cardRegistration: resObj,
             paylineDelegate: self
         )
     }
@@ -157,26 +157,26 @@ class ViewController: UIViewController {
             provider: .WHENTHEN, environment: .sandbox
         )
 
-        showLoader(true)
-        mgpVault.tokeniseCard(card: cardInfo, whenThenDelegate: self)
+//        showLoader(true)
+//        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
 
     }
     
 }
 
-extension ViewController: MangoPayVaultWTTokenisationDelegate {
-
-    func onSuccess(tokenisedCard: MangoPaySdkAPI.TokeniseCard) {
-        showLoader(false)
-        showAlert(with: tokenisedCard.id, title: "Successful 🎉")
-
-    }
-    
-}
+//extension ViewController: MangoPayVaultWTTokenisationDelegate {
+//
+//    func onSuccess(tokenizedCard: .okenizeCard) {
+//        showLoader(false)
+//        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
+//
+//    }
+//
+//}
 
 extension ViewController: MangoPayVaultDelegate {
     
-    func onSuccess(card: MangoPaySdkAPI.CardRegistration) {
+    func onSuccess(card: CardRegistration) {
         showLoader(false)
         showAlert(with: "", title: "Successful 🎉")
     }
@@ -226,9 +226,9 @@ extension ViewController: ElementsFormDelegate {
     }
     
 
-    func onTokenGenerated(tokenisedCard: TokeniseCard) {
-        print("Element Token Succesfully Generated \(tokenisedCard.token)")
-        self.showAlert(with: tokenisedCard.token, title: "Tokenised Card")
+    func onTokenGenerated(tokenizedCard: tokenizeCard) {
+        print("Element Token Succesfully Generated \(tokenizedCard.token)")
+        self.showAlert(with: tokenizedCard.token, title: "tokenized Card")
     }
     
     func onTokenGenerationFailed(error: Error) {

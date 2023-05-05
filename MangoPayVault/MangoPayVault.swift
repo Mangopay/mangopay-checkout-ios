@@ -15,7 +15,7 @@ public protocol MangoPayVaultDelegate: AnyObject {
 }
 
 //public protocol MangoPayVaultWTTokenisationDelegate: AnyObject {
-//    func onSuccess(tokenisedCard: TokeniseCard)
+//    func onSuccess(tokenizedCard: tokenizeCard)
 //    func onFailure(error: Error)
 //}
 
@@ -56,20 +56,18 @@ public class MangoPayVault {
     let provider: Provider
     private let clientToken: String?
     private let clientId: String?
-    private let cardRegistration: CardRegistration?
+//    private let cardRegistration: CardRegistration?
     private let environment: Environment!
 
     public init(
         clientToken: String? = nil,
         clientId: String? = nil,
-        cardRegistration: CardRegistration? = nil,
         provider: Provider = .MANGOPAY,
         environment: Environment
     ) {
         self.clientToken = clientToken
         self.clientId = clientId
         self.provider = provider
-        self.cardRegistration = cardRegistration
         self.environment = environment
     }
 
@@ -81,10 +79,10 @@ public class MangoPayVault {
         self.paylineClient = paylineClient
     }
 
-    public func tokeniseCard(
+    public func tokenizeCard(
         card: Cardable,
-        paylineDelegate: MangoPayVaultDelegate? = nil
-//        whenThenDelegate: MangoPayVaultWTTokenisationDelegate? = nil
+        cardRegistration: CardRegistration? = nil,
+        delegate: MangoPayVaultDelegate? = nil
     ) {
         do {
             let isValidCard = try validateCard(with: card)
@@ -92,12 +90,12 @@ public class MangoPayVault {
             guard let _cardRegistration = cardRegistration else { return }
             switch provider {
             case .WHENTHEN: break
-//                tokeniseWT(card: card, delegate: whenThenDelegate)
+//                tokenizeWT(card: card, delegate: whenThenDelegate)
             case .MANGOPAY:
-                tokeniseMGP(
+                tokenizeMGP(
                     with: card,
                     cardRegistration: _cardRegistration,
-                    delegate: paylineDelegate
+                    delegate: delegate
                 )
             }
         } catch {
@@ -108,14 +106,14 @@ public class MangoPayVault {
 //                }
             case .MANGOPAY:
                 DispatchQueue.main.async {
-                    paylineDelegate?.onFailure(error: error)
+                    delegate?.onFailure(error: error)
                 }
             }
         }
         
     }
 
-//    private func tokeniseWT(
+//    private func tokenizeWT(
 //        card: Cardable,
 //        delegate: MangoPayVaultWTTokenisationDelegate?
 //    ) {
@@ -134,11 +132,11 @@ public class MangoPayVault {
 //            }
 //
 //            do {
-//                let tokenisedCard = try await wtClient!.tokenizeCard(
+//                let tokenizedCard = try await wtClient!.tokenizeCard(
 //                    with: _card.toPaymentCardInput(), customer: nil
 //                )
 //                DispatchQueue.main.async {
-//                    delegate?.onSuccess(tokenisedCard: tokenisedCard)
+//                    delegate?.onSuccess(tokenizedCard: tokenizedCard)
 //                }
 //            } catch {
 //                DispatchQueue.main.async {
@@ -149,7 +147,7 @@ public class MangoPayVault {
 //
 //    }
 
-    private func tokeniseMGP(
+    private func tokenizeMGP(
         with card: Cardable,
         cardRegistration: CardRegistration?,
         delegate: MangoPayVaultDelegate? = nil

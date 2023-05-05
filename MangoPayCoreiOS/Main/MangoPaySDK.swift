@@ -144,12 +144,12 @@ public struct MangoPaySDK {
         viewController.present(nav, animated: true)
     }
 
-    public static func tokeniseCard(apikey: String, card: PaymentCardInput) async throws -> TokeniseCard {
+    public static func tokeniseCard(apikey: String, card: PaymentCardInput) async throws -> TokenizeCard {
 
         let client = WhenThenClient(clientKey: apikey)
         do {
-            let tokenisedCard = try await client.tokenizeCard(with: card, customer: nil)
-            return tokenisedCard
+            let tokenizedCard = try await client.tokenizeCard(with: card, customer: nil)
+            return tokenizedCard
         } catch {
             throw error
         }

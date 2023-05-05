@@ -77,8 +77,8 @@ let elementOptions = ElementsOptions(
 
         }
 
-        func onTokenGenerated(tokenisedCard: TokeniseCard) {
-            print("Element Token Succesfully Generated \(tokenisedCard.token)")
+        func onTokenGenerated(tokenizedCard: tokenizeCard) {
+            print("Element Token Succesfully Generated \(tokenizedCard.token)")
         }
 
         func onTokenGenerationFailed(error: Error) {
@@ -161,7 +161,7 @@ let elementOptions = ElementsOptions(
 
 Headless mode grants the developer complete control as it provides the methods to make direct network calls through the SDK
 
-1. **Tokenisation**
+1. **Tokenization**
    ```swift
         let cardInputData = FormData(
         number: "4242424242424242",
@@ -181,7 +181,7 @@ Headless mode grants the developer complete control as it provides the methods t
     )
 
     do {
-        let tokenResponse = try await MangoPaySDK.tokeniseCard(
+        let tokenResponse = try await MangoPaySDK.tokenizeCard(
             apikey: "ct_test_kpOoHuu5pSzJGABP",
             card: cardInput
         )
@@ -191,7 +191,7 @@ Headless mode grants the developer complete control as it provides the methods t
    ```
 
 
-2. **Authorisation** 
+2. **Authorization** 
    ```swift
     let authData = AuthorisedPayment(
         orderId: nil,
@@ -253,8 +253,8 @@ Headless mode grants the developer complete control as it provides the methods t
 
 
 
-## **Localisation**
+## **Localization**
 
-The SDK supports localisation, it detects the host app's local and automatically localises.
+The SDK supports localization, it detects the host app's local and automatically localises.
 
 *We currently only support English and French*

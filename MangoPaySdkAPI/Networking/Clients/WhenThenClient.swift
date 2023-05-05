@@ -11,7 +11,7 @@ import Apollo
 import ApolloAPI
 #endif
 
-public typealias TokeniseCard = CheckoutSchema.TokeniseCardMutation.Data.TokeniseCard
+public typealias TokenizeCard = CheckoutSchema.TokeniseCardMutation.Data.TokeniseCard
 public typealias AuthorizePaymentResponse = CheckoutSchema.AuthorizePaymentMutation.Data.AuthorizePayment
 public typealias ListCustomerCard = CheckoutSchema.ListCustomerCardsQuery.Data.ListCustomerCard
 public typealias GetPayment = CheckoutSchema.GetPaymentQuery.Data.GetPayment
@@ -30,7 +30,7 @@ public protocol WhenThenClientSessionProtocol {
     func tokenizeCard(
         with card: CheckoutSchema.PaymentCardInput,
         customer: Customer?
-    ) async throws -> TokeniseCard
+    ) async throws -> TokenizeCard
 }
 
 public class WhenThenClient: WhenThenClientSessionProtocol {
@@ -117,7 +117,7 @@ public class WhenThenClient: WhenThenClientSessionProtocol {
     public func tokenizeCard(
         with card: CheckoutSchema.PaymentCardInput,
         customer: Customer?
-    ) async throws -> TokeniseCard {
+    ) async throws -> TokenizeCard {
         
         let y = GraphQLNullable<CheckoutSchema.PaymentCardInput>(card)
         let paymentMethodInput = CheckoutSchema.PaymentMethodInput(card: y)
@@ -129,7 +129,7 @@ public class WhenThenClient: WhenThenClientSessionProtocol {
         
         let mutation = CheckoutSchema.TokeniseCardMutation(data: tokenInput)
 
-        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<TokeniseCard, Error>) in
+        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<TokenizeCard, Error>) in
             apollo.perform(mutation: mutation) { result in
                 switch result {
                 case .success(let reponse):

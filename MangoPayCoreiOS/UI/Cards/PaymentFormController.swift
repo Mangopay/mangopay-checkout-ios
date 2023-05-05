@@ -64,8 +64,8 @@ public class PaymentFormController: UIViewController {
     }
 
     func setupObservers() {
-        formView.viewModel.tokenObserver.sink { tokenised in
-            self.showAlert(with: tokenised.token, title: "Tokenised Card")
+        formView.viewModel.tokenObserver.sink { tokenized in
+            self.showAlert(with: tokenized.token, title: "tokenized Card")
         }.store(in: &cancelables)
 
         formView.viewModel.statusObserver.sink { status in

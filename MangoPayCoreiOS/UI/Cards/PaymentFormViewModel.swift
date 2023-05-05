@@ -21,7 +21,7 @@ public protocol DropInFormDelegate: AnyObject {
 
 public protocol ElementsFormDelegate: AnyObject {
     func onPaymentStarted(sender: PaymentFormViewModel)
-    func onTokenGenerated(tokenisedCard: TokeniseCard)
+    func onTokenGenerated(tokenizedCard: TokenizeCard)
     func onTokenGenerationFailed(error: Error)
     func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus)
     func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment)
@@ -31,7 +31,7 @@ public class PaymentFormViewModel {
     
     var formData: CardData?
     var client: WhenThenClient!
-    var tokenObserver = PassthroughSubject<TokeniseCard, Never>()
+    var tokenObserver = PassthroughSubject<TokenizeCard, Never>()
     var statusObserver = PassthroughSubject<String, Never>()
     var trigger3DSObserver = PassthroughSubject<URL, Never>()
 
@@ -48,15 +48,15 @@ public class PaymentFormViewModel {
 //        client.fetchCards(with: nil)
     }
 
-    func tokeniseCard() async {
+    func tokenizeCard() async {
         guard let inputData = formData?.toPaymentCardInput() else { return }
 
         do {
-            let tokenisedCard = try await client.tokenizeCard(with: inputData, customer: nil)
+            let tokenizedCard = try await client.tokenizeCard(with: inputData, customer: nil)
     
             DispatchQueue.main.async {
-                self.tokenObserver.send(tokenisedCard)
-                self.elementDelegate?.onTokenGenerated(tokenisedCard: tokenisedCard)
+                self.tokenObserver.send(tokenizedCard)
+                self.elementDelegate?.onTokenGenerated(tokenizedCard: tokenizedCard)
             }
         } catch {
             DispatchQueue.main.async {
@@ -68,13 +68,13 @@ public class PaymentFormViewModel {
 
     func performDropin(with inputData: PaymentCardInput?, cardToken: String?) async {
         
-        var tokenisedCard: TokeniseCard?
+        var tokenizedCard: TokenizeCard?
         var authpayment: AuthorizePaymentResponse!
         
         if let _data = inputData {
             do {
-                tokenisedCard = try await client.tokenizeCard(with: _data, customer: nil)
-                self.statusObserver.send("Succesfully Tokenised: \(tokenisedCard!.token )")
+                tokenizedCard = try await client.tokenizeCard(with: _data, customer: nil)
+                self.statusObserver.send("Succesfully tokenized: \(tokenizedCard!.token )")
             } catch {
                 DispatchQueue.main.async {
                     print("❌❌ Error tokeninsing Card \(error.localizedDescription)")
@@ -84,7 +84,7 @@ public class PaymentFormViewModel {
             }
         }
 
-        let token = tokenisedCard != nil ? tokenisedCard?.token : cardToken
+        let token = tokenizedCard != nil ? tokenizedCard?.token : cardToken
     
         guard let token = token else {
             print("❌ token is nil")
@@ -169,10 +169,10 @@ public class PaymentFormViewModel {
 
     func createCustomer(with customerInput: CustomerInputData) async {
         do {
-            let tokenisedCard = try await client.createCustomer(with: customerInput)
+            let tokenizedCard = try await client.createCustomer(with: customerInput)
             DispatchQueue.main.async {
                 print("DONEEE ")
-                print(" 🤣 tokenisedCard", tokenisedCard)
+                print(" 🤣 tokenizedCard", tokenizedCard)
             }
         } catch {
             print("❌❌ Error createCustomer Card \(error.localizedDescription)")

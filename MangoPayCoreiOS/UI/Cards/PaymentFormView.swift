@@ -540,7 +540,7 @@ class PaymentFormView: UIView {
             case .dropIn:
                 await viewModel.performDropin(with: formData.toPaymentCardInput(), cardToken: nil)
             case .element:
-                await viewModel.tokeniseCard()
+                await viewModel.tokenizeCard()
             }
             activitySpiner.stopAnimating()
         }
