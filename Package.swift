@@ -35,9 +35,8 @@ let package = Package(
             name: "MangoPayCoreiOS",
             dependencies: [
                 "MangoPaySdkAPI",
-//                .targetItem(name: "MangoPaySdkAPI", condition: .when(platforms: [.iOS]))
-
             ],
+            path: "MangoPayCoreiOS",
             resources: [
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
@@ -47,20 +46,23 @@ let package = Package(
             name: "MangoPaySdkAPI",
             dependencies: [
                 .product(name: "Apollo", package: "apollo-ios"),
-            ]
+            ],
+            path: "MangoPaySdkAPI"
         ),
         .target(
             name: "MangoPayIntent",
             dependencies: [
                 "MangoPaySdkAPI",
-            ]
+            ],
+            path: "MangoPayIntent"
         ),
         .target(
             name: "MangoPayVault",
             dependencies: [
                 "MangoPaySdkAPI",
                 "MangoPayCoreiOS"
-            ]
+            ],
+            path: "MangoPayVault"
         ),
         .binaryTarget(
             name: "NethoneSDK",

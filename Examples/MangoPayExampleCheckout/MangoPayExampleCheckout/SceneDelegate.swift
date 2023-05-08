@@ -51,13 +51,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
-//WhenThenExampleCheckout
-//
-//xcodebuild -project WhenThenExampleCheckout.xcodeproj -scheme WhenThenExampleCheckout -archivePath  /Users/elikemsavie/Library/Developer/Xcode/Archives archive
-//
-//
-//xcodebuild -exportArchive -archivePath /Users/elikemsavie/Library/Developer/Xcode/Archives.xcarchive -exportPath /Export/ -exportOptionsPlist WhenThenExampleCheckout/Info.plist
-//
-//
-//xcodebuild -project MangoPayiOSDemoApp.xcodeproj -scheme MangoPayiOSDemoApp -archivePath  /Users/elikemsavie/Library/Developer/Xcode/Archives archive

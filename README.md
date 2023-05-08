@@ -10,7 +10,7 @@
 
 
 ## Integration
-WhenThen Checkout SDK can be installed via SPM(highly recomended) or Cocoa Pods.
+MangoPay Checkout SDK can be installed via SPM(highly recomended) or Cocoa Pods.
 
 ## Swift Package Manager
 
@@ -73,12 +73,12 @@ let elementOptions = ElementsOptions(
             
         }
 
-        func onApplePayCompleteElement(status: WhenThenApplePay.PaymentStatus) {
+        func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus) {
 
         }
 
-        func onTokenGenerated(tokenisedCard: TokeniseCard) {
-            print("Element Token Succesfully Generated \(tokenisedCard.token)")
+        func onTokenGenerated(tokenizedCard: tokenizeCard) {
+            print("Element Token Succesfully Generated \(tokenizedCard.token)")
         }
 
         func onTokenGenerationFailed(error: Error) {
@@ -114,7 +114,7 @@ let elementOptions = ElementsOptions(
             
         }
         
-        func onApplePayCompleteDropIn(status: WhenThenApplePay.PaymentStatus) {
+        func onApplePayCompleteDropIn(status: MangoPayApplePay.PaymentStatus) {
             //success
             //error
             //userCancellation
@@ -124,7 +124,7 @@ let elementOptions = ElementsOptions(
         func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment) {
         }
 
-        func onPaymentFailed(sender: PaymentFormViewModel, error: WhenThenError) {
+        func onPaymentFailed(sender: PaymentFormViewModel, error: MangoPayError) {
         }
         
     }
@@ -134,7 +134,7 @@ let elementOptions = ElementsOptions(
 6. Present in Host Controller
 
     ```swift
-    WhenThenSDK.buildDropInForm(
+    MangoPaySDK.buildDropInForm(
         with: dropInOptions,
         cardConfig: cardConfig,
         present: self,
@@ -161,7 +161,7 @@ let elementOptions = ElementsOptions(
 
 Headless mode grants the developer complete control as it provides the methods to make direct network calls through the SDK
 
-1. **Tokenisation**
+1. **Tokenization**
    ```swift
         let cardInputData = FormData(
         number: "4242424242424242",
@@ -181,7 +181,7 @@ Headless mode grants the developer complete control as it provides the methods t
     )
 
     do {
-        let tokenResponse = try await WhenThenSDK.tokeniseCard(
+        let tokenResponse = try await MangoPaySDK.tokenizeCard(
             apikey: "ct_test_kpOoHuu5pSzJGABP",
             card: cardInput
         )
@@ -191,7 +191,7 @@ Headless mode grants the developer complete control as it provides the methods t
    ```
 
 
-2. **Authorisation** 
+2. **Authorization** 
    ```swift
     let authData = AuthorisedPayment(
         orderId: nil,
@@ -205,7 +205,7 @@ Headless mode grants the developer complete control as it provides the methods t
     )
 
     do {
-        let tokenResponse = try await WhenThenSDK.authorizePayment(
+        let tokenResponse = try await MangoPaySDK.authorizePayment(
             apikey: "ct_test_kpOoHuu5pSzJGABP",
             paymentData: cardInput
         )
@@ -217,7 +217,7 @@ Headless mode grants the developer complete control as it provides the methods t
 
 3. **Creating a Customer**
     ```swift
-      let client = WhenThenClient(clientKey: apiKey)
+      let client = MangoPayClient(clientKey: apiKey)
         
         let cardInputData = FormData(
             number: "4242424242424242",
@@ -253,8 +253,8 @@ Headless mode grants the developer complete control as it provides the methods t
 
 
 
-## **Localisation**
+## **Localization**
 
-The SDK supports localisation, it detects the host app's local and automatically localises.
+The SDK supports localization, it detects the host app's local and automatically localises.
 
 *We currently only support English and French*
