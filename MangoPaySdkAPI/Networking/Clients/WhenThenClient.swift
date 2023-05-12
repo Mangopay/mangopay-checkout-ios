@@ -177,6 +177,19 @@ public class WhenThenClient: WhenThenClientSessionProtocol {
         })
     }
 
+    public func authorizePaymentPayIn(payment: AuthorizePayIn) async throws -> AuthorizePayIn {
+
+        let client = CardRegistrationClient(env: .sandbox)
+
+        do {
+            let authRes = try await client.authorizePayIn(payment, clientId: clientKey)
+            return authRes
+        } catch {
+            print("❌ Failed to authorizePayment -> PayIn..")
+            throw error
+        }
+    }
+
     public func createCustomer(with customer: CustomerInputData) async throws -> String {
         
         let mutation = CheckoutSchema.CreateCustomerMutation(data: customer.toDTO)

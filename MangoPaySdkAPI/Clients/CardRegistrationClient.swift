@@ -25,6 +25,10 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
         self.baseUrl = url
     }
 
+    public init(env: Environment) {
+        self.baseUrl = env.url
+    }
+
     public func createCardRegistration(
         _ card: CardRegistration.Initiate,
         clientId: String,
@@ -86,6 +90,28 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
             ],
             bodyParam: regData.toDict(),
             expecting: CardRegistration.self,
+            verbose: true
+        )
+    }
+
+    public func authorizePayIn(
+        _ authorizeData: AuthorizePayIn,
+        clientId: String
+    ) async throws -> AuthorizePayIn {
+
+        let url = baseUrl.appendingPathComponent(
+            "/\(apiVersion)/\(clientId)/payins/card/direct",
+            isDirectory: false
+        )
+
+        return try await request(
+            url: url,
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: authorizeData.toDict(),
+            expecting: AuthorizePayIn.self,
             verbose: true
         )
     }

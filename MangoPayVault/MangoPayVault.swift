@@ -34,19 +34,19 @@ public enum Provider: String {
     case MANGOPAY
 }
 
-public enum Environment: String {
-    case sandbox
-    case prod
-
-    public var url: URL {
-        switch self {
-        case .sandbox:
-            return URL(string: "https://testing3-api.mangopay.com")!
-        case .prod:
-            return URL(string: "https://api.mangopay.com")!
-        }
-    }
-}
+//public enum Environment: String {
+//    case sandbox
+//    case prod
+//
+//    public var url: URL {
+//        switch self {
+//        case .sandbox:
+//            return URL(string: "https://testing3-api.mangopay.com")!
+//        case .prod:
+//            return URL(string: "https://api.mangopay.com")!
+//        }
+//    }
+//}
 
 public class MangoPayVault {
     

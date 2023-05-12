@@ -106,6 +106,14 @@ public class PaymentFormViewModel {
             perform3DSecure: AuthorisedPayment._3DSecure(redirectUrl: data.threeDSRedirectURL)
         )
 
+//        let payIndata = AuthorizePayIn(
+//            authorID: "AUTHOR_ID",
+//            debitedFunds: DebitedFunds(
+//                currency: data.currencyCode,
+//                amount: Int(data.amount)
+//            )
+//        )
+
         do {
             print("🤣 data.intentId", data.intentId)
             authpayment = try await client.authorizePayment(payment: authData)
