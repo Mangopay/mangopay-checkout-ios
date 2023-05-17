@@ -180,7 +180,7 @@ public class MangoPayVault {
                     clientId: _clientToken,
                     cardRegistrationId: cardId
                 )
-                
+                print("🤣 updateRes", updateRes)
                 DispatchQueue.main.async {
                     delegate?.onSuccess(card: updateRes)
                 }

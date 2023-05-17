@@ -15,6 +15,8 @@ public protocol CardRegistrationClientProtocol {
     ) async throws -> CardRegistration
     func postCardInfo(_ cardInfo: CardInfo, url: URL) async throws -> CardInfo.RegistrationData
     func updateCardInfo(_ regData: CardInfo.RegistrationData, clientId: String, cardRegistrationId: String) async throws -> CardRegistration
+    func authorizePayIn(_ authorizeData: AuthorizePayIn, clientId: String) async throws -> AuthorizePayIn
+    func getPayIn(clientId: String, payInId: String) async throws -> PayIn
 }
 
 public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientProtocol {
@@ -115,5 +117,43 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
             verbose: true
         )
     }
+
+    public func getPayIn(clientId: String, payInId: String) async throws -> PayIn {
+        let url = baseUrl.appendingPathComponent(
+            "/\(apiVersion)/\(clientId)/payins/\(payInId)",
+            isDirectory: false
+        )
+
+        return try await request(
+            url: url,
+            method: .get,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: nil,
+            expecting: PayIn.self,
+            verbose: true
+        )
+    }
+
+    public func fetchPayInCards(clientId: String, userId: String, active: Bool) async throws -> [PayInCard] {
+        let url = baseUrl.appendingPathComponent(
+            "/\(apiVersion)/\(clientId)/users/\(userId)/cards",
+            isDirectory: false
+        )
+
+        return try await request(
+            url: url,
+            method: .get,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: nil,
+            queryParam: ["Active": active],
+            expecting: [PayInCard].self,
+            verbose: true
+        )
+    }
+
     
 }

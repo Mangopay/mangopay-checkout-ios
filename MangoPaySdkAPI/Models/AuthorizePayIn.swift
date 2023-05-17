@@ -106,6 +106,18 @@ public struct BrowserInfo: Codable {
     var userAgent: String?
     var javascriptEnabled: Bool?
 
+    public init(acceptHeader: String? = nil, javaEnabled: Bool? = nil, language: String? = nil, colorDepth: Int? = nil, screenHeight: Int? = nil, screenWidth: Int? = nil, timeZoneOffset: Int? = nil, userAgent: String? = nil, javascriptEnabled: Bool? = nil) {
+        self.acceptHeader = acceptHeader
+        self.javaEnabled = javaEnabled
+        self.language = language
+        self.colorDepth = colorDepth
+        self.screenHeight = screenHeight
+        self.screenWidth = screenWidth
+        self.timeZoneOffset = timeZoneOffset
+        self.userAgent = userAgent
+        self.javascriptEnabled = javascriptEnabled
+    }
+
     enum CodingKeys: String, CodingKey {
         case acceptHeader = "AcceptHeader"
         case javaEnabled = "JavaEnabled"

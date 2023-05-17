@@ -31,6 +31,10 @@ public struct CardInfo: Codable, Cardable {
 
     public struct RegistrationData: Codable {
         public let RegistrationData: String
+        
+        public init(RegistrationData: String) {
+            self.RegistrationData = RegistrationData
+        }
     }
 
     public init(

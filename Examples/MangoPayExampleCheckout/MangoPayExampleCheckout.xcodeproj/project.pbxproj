@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		984017312A143EBE00BB5CC6 /* MangoPayCoreiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 984017302A143EBE00BB5CC6 /* MangoPayCoreiOS */; };
+		984017332A143EBE00BB5CC6 /* MangoPayIntent in Frameworks */ = {isa = PBXBuildFile; productRef = 984017322A143EBE00BB5CC6 /* MangoPayIntent */; };
+		984017352A143EBE00BB5CC6 /* MangoPaySdkAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 984017342A143EBE00BB5CC6 /* MangoPaySdkAPI */; };
+		984017372A143EBE00BB5CC6 /* MangoPayVault in Frameworks */ = {isa = PBXBuildFile; productRef = 984017362A143EBE00BB5CC6 /* MangoPayVault */; };
 		9842CE1329F1AC2B00AA36C0 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9842CE1229F1AC2B00AA36C0 /* IQKeyboardManagerSwift */; };
 		9859559329EFC4A3001154E3 /* ConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9859559229EFC4A3001154E3 /* ConfigurationController.swift */; };
 		9859559529F143C2001154E3 /* Segue+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9859559429F143C2001154E3 /* Segue+Additions.swift */; };
@@ -28,12 +32,10 @@
 		98835B0E29C9DC9E0085F51C /* CongratsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98835AFC29C9DC9E0085F51C /* CongratsView.xib */; };
 		98835B1029C9DC9E0085F51C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835AFE29C9DC9E0085F51C /* SceneDelegate.swift */; };
 		98B6BE2029E6FFF100E9C30A /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE1F29E6FFF100E9C30A /* netfox */; };
-		98B6BE2229E6FFFA00E9C30A /* MangoPayCoreiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE2129E6FFFA00E9C30A /* MangoPayCoreiOS */; };
-		98B6BE2629E6FFFA00E9C30A /* MangoPaySdkAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE2529E6FFFA00E9C30A /* MangoPaySdkAPI */; };
-		98B6BE2829E6FFFA00E9C30A /* MangoPayVault in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE2729E6FFFA00E9C30A /* MangoPayVault */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9840172F2A143DDD00BB5CC6 /* MangoPayiOSSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MangoPayiOSSDK; path = ../..; sourceTree = "<group>"; };
 		9859559229EFC4A3001154E3 /* ConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationController.swift; sourceTree = "<group>"; };
 		9859559429F143C2001154E3 /* Segue+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Segue+Additions.swift"; sourceTree = "<group>"; };
 		98835AE929C9DC9E0085F51C /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,7 +57,6 @@
 		98835AFD29C9DC9E0085F51C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98835AFE29C9DC9E0085F51C /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		98835B1129C9DDA70085F51C /* MangoPayExampleCheckout.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MangoPayExampleCheckout.entitlements; sourceTree = "<group>"; };
-		98B6BE1D29E6FD6300E9C30A /* MangoPayiOSSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MangoPayiOSSDK; path = ../..; sourceTree = "<group>"; };
 		98C3894528F7DBCA0000BD84 /* MangoPayExampleCheckout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangoPayExampleCheckout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -64,11 +65,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				984017352A143EBE00BB5CC6 /* MangoPaySdkAPI in Frameworks */,
+				984017332A143EBE00BB5CC6 /* MangoPayIntent in Frameworks */,
 				9842CE1329F1AC2B00AA36C0 /* IQKeyboardManagerSwift in Frameworks */,
+				984017372A143EBE00BB5CC6 /* MangoPayVault in Frameworks */,
 				98B6BE2029E6FFF100E9C30A /* netfox in Frameworks */,
-				98B6BE2629E6FFFA00E9C30A /* MangoPaySdkAPI in Frameworks */,
-				98B6BE2829E6FFFA00E9C30A /* MangoPayVault in Frameworks */,
-				98B6BE2229E6FFFA00E9C30A /* MangoPayCoreiOS in Frameworks */,
+				984017312A143EBE00BB5CC6 /* MangoPayCoreiOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,7 +126,7 @@
 		98C3895D28F7DC560000BD84 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				98B6BE1D29E6FD6300E9C30A /* MangoPayiOSSDK */,
+				9840172F2A143DDD00BB5CC6 /* MangoPayiOSSDK */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -154,10 +156,11 @@
 			name = MangoPayExampleCheckout;
 			packageProductDependencies = (
 				98B6BE1F29E6FFF100E9C30A /* netfox */,
-				98B6BE2129E6FFFA00E9C30A /* MangoPayCoreiOS */,
-				98B6BE2529E6FFFA00E9C30A /* MangoPaySdkAPI */,
-				98B6BE2729E6FFFA00E9C30A /* MangoPayVault */,
 				9842CE1229F1AC2B00AA36C0 /* IQKeyboardManagerSwift */,
+				984017302A143EBE00BB5CC6 /* MangoPayCoreiOS */,
+				984017322A143EBE00BB5CC6 /* MangoPayIntent */,
+				984017342A143EBE00BB5CC6 /* MangoPaySdkAPI */,
+				984017362A143EBE00BB5CC6 /* MangoPayVault */,
 			);
 			productName = WhenThenExampleCheckout;
 			productReference = 98C3894528F7DBCA0000BD84 /* MangoPayExampleCheckout.app */;
@@ -493,6 +496,22 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		984017302A143EBE00BB5CC6 /* MangoPayCoreiOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MangoPayCoreiOS;
+		};
+		984017322A143EBE00BB5CC6 /* MangoPayIntent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MangoPayIntent;
+		};
+		984017342A143EBE00BB5CC6 /* MangoPaySdkAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MangoPaySdkAPI;
+		};
+		984017362A143EBE00BB5CC6 /* MangoPayVault */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MangoPayVault;
+		};
 		9842CE1229F1AC2B00AA36C0 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9842CE1129F1AC2B00AA36C0 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
@@ -502,18 +521,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98B6BE1E29E6FE8600E9C30A /* XCRemoteSwiftPackageReference "netfox" */;
 			productName = netfox;
-		};
-		98B6BE2129E6FFFA00E9C30A /* MangoPayCoreiOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MangoPayCoreiOS;
-		};
-		98B6BE2529E6FFFA00E9C30A /* MangoPaySdkAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MangoPaySdkAPI;
-		};
-		98B6BE2729E6FFFA00E9C30A /* MangoPayVault */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MangoPayVault;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

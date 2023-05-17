@@ -181,7 +181,7 @@ class ConfigurationController: UIViewController {
         showLoader(false)
         setupUI()
         setupData()
-//        setDummyData()
+        setDummyData()
     }
     
     func setupUI() {

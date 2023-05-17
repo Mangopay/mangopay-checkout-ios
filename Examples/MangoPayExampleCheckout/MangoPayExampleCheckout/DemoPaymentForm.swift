@@ -31,6 +31,7 @@ class DemoPaymentForm: UIViewController {
         
         // Do any additional setup after loading the view.
         showLoader(false)
+        peformAuthorize()
         
     }
     
@@ -48,6 +49,15 @@ class DemoPaymentForm: UIViewController {
             return
         }
         payline(card: card)
+    }
+
+    @IBAction func didTapAuthorize(_ sender: UIButton) {
+    }
+    
+    @IBAction func didTapGetPayIn(_ sender: UIButton) {
+    }
+
+    @IBAction func didTapListCard(_ sender: Any) {
     }
     
     @IBAction func didTapPayWT(_ sender: UIButton) {
@@ -129,6 +139,69 @@ class DemoPaymentForm: UIViewController {
            
         return card
     }
+
+    func peformAuthorize() {
+        let client = WhenThenClient(
+            clientKey: "12345",
+            environment: .sandbox
+        )
+
+        Task {
+            let authPay = AuthorizePayIn(
+                tag: "6658353",
+                authorID: "6658353",
+                creditedUserID: "6658353",
+                debitedFunds: DebitedFunds(currency: "EUR", amount: 20),
+                fees: DebitedFunds(currency: "EUR", amount: 2),
+                creditedWalletID: "6658354",
+                cardID: "randomCard",
+                statementDescriptor: "statementDescriptor",
+                browserInfo: BrowserInfo()
+                
+            )
+            do {
+                let authPay = try await client.authorizePaymentPayIn(payment: authPay)
+            } catch {
+                print("❌ error", error)
+            }
+        }
+    }
+
+    func peformGetPayIn() {
+        let client = WhenThenClient(
+            clientKey: "12345",
+            environment: .sandbox
+        )
+
+        Task {
+            do {
+                let payIn = try await client.getPayIn(payInId: "lol")
+                DispatchQueue.main.async {
+                    self.showAlert(with: payIn.cardID ?? "lol", title: "Successful 🎉")
+                }
+            } catch {
+                print("❌ error", error)
+            }
+        }
+    }
+
+//    func peformGetPayIn() {
+//        let client = WhenThenClient(
+//            clientKey: "12345",
+//            environment: .sandbox
+//        )
+
+//        Task {
+//            do {
+//                let cards = try await client.listPayInCards(userId: "", isActive: true)
+//                DispatchQueue.main.async {
+//                    self.showAlert(with: payIn.cardID ?? "lol", title: "Successful 🎉")
+//                }
+//            } catch {
+//                print("❌ error", error)
+//            }
+//        }
+//    }
     
     func payline(card: CardInfo) {
         
@@ -158,7 +231,6 @@ class DemoPaymentForm: UIViewController {
 
         let mgpVault = MangoPayVault(
             clientToken: configuration.clientId,
-            cardRegistration: cardRegistration,
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -167,6 +239,7 @@ class DemoPaymentForm: UIViewController {
         
         mgpVault.tokenizeCard(
             card: card,
+            cardRegistration: cardRegistration,
             delegate: self
         )
     }

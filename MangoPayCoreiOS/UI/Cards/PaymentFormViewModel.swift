@@ -30,7 +30,7 @@ public protocol ElementsFormDelegate: AnyObject {
 public class PaymentFormViewModel {
     
     var formData: CardData?
-    var client: WhenThenClient!
+    var client: MangoPayClient!
     var tokenObserver = PassthroughSubject<TokenizeCard, Never>()
     var statusObserver = PassthroughSubject<String, Never>()
     var trigger3DSObserver = PassthroughSubject<URL, Never>()
@@ -41,7 +41,7 @@ public class PaymentFormViewModel {
     var dropInData: DropInOptions?
 
     init(clientId: String) {
-        self.client = WhenThenClient(clientKey: clientId)
+        self.client = MangoPayClient(clientKey: clientId)
     }
 
     func fetchCards() {
