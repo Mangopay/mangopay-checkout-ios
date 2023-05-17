@@ -137,7 +137,7 @@ class ViewController: UIViewController {
         mgpVault.tokenizeCard(
             card: cardInfo,
             cardRegistration: resObj,
-            paylineDelegate: self
+            delegate: self
         )
     }
 
@@ -226,7 +226,7 @@ extension ViewController: ElementsFormDelegate {
     }
     
 
-    func onTokenGenerated(tokenizedCard: tokenizeCard) {
+    func onTokenGenerated(tokenizedCard: TokenizeCard) {
         print("Element Token Succesfully Generated \(tokenizedCard.token)")
         self.showAlert(with: tokenizedCard.token, title: "tokenized Card")
     }
