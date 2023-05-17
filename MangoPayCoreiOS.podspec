@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios
   spec.ios.deployment_target = "13.0"
 
-  spec.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => "#{spec.version}", :branch => "main" }
+  spec.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => "#{spec.version}", :branch => "develop" }
 
   spec.source_files  = "MangoPayCoreiOS/UI/Validator/LuhnChecker.swift", "MangoPayCoreiOS/Extensions/*.swift"
   
