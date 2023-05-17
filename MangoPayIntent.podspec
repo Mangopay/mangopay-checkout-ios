@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     s.license      = "MIT"
     s.author       = { "Checkout.com Integration" => "integration@checkout.com" }
     s.platform     = :ios, "13.0"
-    s.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => s.version, :branch => "feature/cocoapod_deployment" }
+    s.source       = { :git => "https://gitlab.com/whenthen/checkout-ios-sdk", :tag => s.version, :branch => "main" }
 
     s.source_files = 'MangoPayIntent/*.swift'
 
