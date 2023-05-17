@@ -158,7 +158,6 @@ class DemoPaymentForm: UIViewController {
 
         let mgpVault = MangoPayVault(
             clientToken: configuration.clientId,
-            cardRegistration: cardRegistration,
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -167,6 +166,7 @@ class DemoPaymentForm: UIViewController {
         
         mgpVault.tokenizeCard(
             card: card,
+            cardRegistration: cardRegistration,
             delegate: self
         )
     }

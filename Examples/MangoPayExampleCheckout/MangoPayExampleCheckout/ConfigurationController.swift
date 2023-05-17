@@ -181,7 +181,7 @@ class ConfigurationController: UIViewController {
         showLoader(false)
         setupUI()
         setupData()
-//        setDummyData()
+        setDummyData()
     }
     
     func setupUI() {
@@ -293,11 +293,17 @@ class ConfigurationController: UIViewController {
     }
 
     func setDummyData() {
-        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
-        clientField.text = "12345"
-        creditedUserField.text = "6658353"
-        creditedWalletField.text = "6658354"
-        authorField.text = "6658353"
+//        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
+//        clientField.text = "12345"
+//        creditedUserField.text = "6658353"
+//        creditedWalletField.text = "6658354"
+//        authorField.text = "6658353"
+        
+        apiKeyField.text = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+        clientField.text = "checkoutsquatest"
+        creditedUserField.text = "158091557"
+        creditedWalletField.text = "159834019"
+        authorField.text = "158091557"
     }
 
 }
