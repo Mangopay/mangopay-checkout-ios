@@ -11,7 +11,8 @@ public struct PayInCard: Codable {
     var expirationDate, alias, cardType, cardProvider: String?
     var country, product, bankCode: String?
     var active: Bool?
-    var currency, validity, userID, id: String?
+    var currency, validity, userID: String?
+    public var id: String?
     var tag: String?
     var creationDate: Int?
     var fingerprint: String?

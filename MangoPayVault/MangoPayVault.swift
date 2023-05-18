@@ -158,7 +158,6 @@ public class MangoPayVault {
             return
         }
     
-        guard let _card = card as? CardInfo else { return }
         
         guard let _cardRegistration = cardRegistration else { return }
         
@@ -171,6 +170,11 @@ public class MangoPayVault {
         Task {
             do {
                 guard let url = _cardRegistration.registrationURL else { return }
+                
+                guard var _card = card as? CardInfo else { return }
+
+                _card.accessKeyRef = _cardRegistration.accessKey
+                _card.data = _cardRegistration.preregistrationData
 
                 let redData = try await paylineClient!.postCardInfo(_card, url: url)
                 

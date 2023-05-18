@@ -14,7 +14,7 @@ public enum Environment: String {
     public var url: URL {
         switch self {
         case .sandbox:
-            return URL(string: "https://testing3-api.mangopay.com")!
+            return URL(string: "https://api.sandbox.mangopay.com")!
         case .prod:
             return URL(string: "https://api.mangopay.com")!
         }

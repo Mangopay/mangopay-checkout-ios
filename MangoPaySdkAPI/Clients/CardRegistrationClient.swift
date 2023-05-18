@@ -15,8 +15,9 @@ public protocol CardRegistrationClientProtocol {
     ) async throws -> CardRegistration
     func postCardInfo(_ cardInfo: CardInfo, url: URL) async throws -> CardInfo.RegistrationData
     func updateCardInfo(_ regData: CardInfo.RegistrationData, clientId: String, cardRegistrationId: String) async throws -> CardRegistration
-    func authorizePayIn(_ authorizeData: AuthorizePayIn, clientId: String) async throws -> AuthorizePayIn
-    func getPayIn(clientId: String, payInId: String) async throws -> PayIn
+    func authorizePayIn(_ authorizeData: AuthorizePayIn, clientId: String, apiKey: String) async throws -> AuthorizePayIn
+    func getPayIn(clientId: String, apiKey: String, payInId: String) async throws -> PayIn
+    func fetchPayInCards(clientId: String, apiKey: String, userId: String, active: Bool) async throws -> [PayInCard]
 }
 
 public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientProtocol {
@@ -98,7 +99,8 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
 
     public func authorizePayIn(
         _ authorizeData: AuthorizePayIn,
-        clientId: String
+        clientId: String,
+        apiKey: String
     ) async throws -> AuthorizePayIn {
 
         let url = baseUrl.appendingPathComponent(
@@ -114,11 +116,15 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
             ],
             bodyParam: authorizeData.toDict(),
             expecting: AuthorizePayIn.self,
+            basicAuthDict: [
+                "Username" : clientId,
+                "Password": apiKey
+            ],
             verbose: true
         )
     }
 
-    public func getPayIn(clientId: String, payInId: String) async throws -> PayIn {
+    public func getPayIn(clientId: String, apiKey: String, payInId: String) async throws -> PayIn {
         let url = baseUrl.appendingPathComponent(
             "/\(apiVersion)/\(clientId)/payins/\(payInId)",
             isDirectory: false
@@ -132,11 +138,15 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
             ],
             bodyParam: nil,
             expecting: PayIn.self,
+            basicAuthDict: [
+                "Username" : clientId,
+                "Password": apiKey
+            ],
             verbose: true
         )
     }
 
-    public func fetchPayInCards(clientId: String, userId: String, active: Bool) async throws -> [PayInCard] {
+    public func fetchPayInCards(clientId: String, apiKey: String, userId: String, active: Bool) async throws -> [PayInCard] {
         let url = baseUrl.appendingPathComponent(
             "/\(apiVersion)/\(clientId)/users/\(userId)/cards",
             isDirectory: false
@@ -151,6 +161,10 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
             bodyParam: nil,
             queryParam: ["Active": active],
             expecting: [PayInCard].self,
+            basicAuthDict: [
+                "Username" : clientId,
+                "Password": apiKey
+            ],
             verbose: true
         )
     }

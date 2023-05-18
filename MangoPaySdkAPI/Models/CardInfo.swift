@@ -12,6 +12,8 @@ public struct CardInfo: Codable, Cardable {
     public var cardExpirationDate: String?
     public var cardCvx: String?
     public var cardType: String?
+    public var accessKeyRef: String?
+    public var data: String?
 
     public var cvc: String? {
         return cardCvx
@@ -41,12 +43,16 @@ public struct CardInfo: Codable, Cardable {
         cardNumber: String? = nil,
         cardExpirationDate: String? = nil,
         cardCvx: String? = nil,
-        cardType: String? = nil
+        cardType: String? = nil,
+        accessKeyRef: String? = nil,
+        data: String? = nil
     ) {
         self.cardNumber = cardNumber
         self.cardExpirationDate = cardExpirationDate
         self.cardCvx = cardCvx
         self.cardType = cardType
+        self.accessKeyRef = accessKeyRef
+        self.data = data
     }
 }
 

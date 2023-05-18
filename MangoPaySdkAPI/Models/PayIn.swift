@@ -22,7 +22,7 @@ public struct PayIn: Codable {
     var culture: String?
     var securityInfo: SecurityInfo?
     var statementDescriptor: String?
-    var browserInfo: String?
+    var browserInfo: BrowserInfo?
     var ipAddress: String?
     var billing, shipping: Ing?
     var requested3DSVersion, applied3DSVersion, recurringPayinRegistrationID: String?
@@ -63,7 +63,7 @@ public struct PayIn: Codable {
         case recurringPayinRegistrationID = "RecurringPayinRegistrationId"
     }
 
-    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, authorID: String? = nil, creditedUserID: String? = nil, debitedFunds: CreditedFunds? = nil, creditedFunds: CreditedFunds? = nil, fees: CreditedFunds? = nil, status: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionDate: Int? = nil, type: String? = nil, nature: String? = nil, creditedWalletID: String? = nil, debitedWalletID: String? = nil, paymentType: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String? = nil, secureModeReturnURL: String? = nil, secureModeRedirectURL: String? = nil, secureModeNeeded: Bool? = nil, culture: String? = nil, securityInfo: SecurityInfo? = nil, statementDescriptor: String? = nil, browserInfo: String? = nil, ipAddress: String? = nil, billing: Ing? = nil, shipping: Ing? = nil, requested3DSVersion: String? = nil, applied3DSVersion: String? = nil, recurringPayinRegistrationID: String? = nil) {
+    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, authorID: String? = nil, creditedUserID: String? = nil, debitedFunds: CreditedFunds? = nil, creditedFunds: CreditedFunds? = nil, fees: CreditedFunds? = nil, status: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionDate: Int? = nil, type: String? = nil, nature: String? = nil, creditedWalletID: String? = nil, debitedWalletID: String? = nil, paymentType: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String? = nil, secureModeReturnURL: String? = nil, secureModeRedirectURL: String? = nil, secureModeNeeded: Bool? = nil, culture: String? = nil, securityInfo: SecurityInfo? = nil, statementDescriptor: String? = nil, browserInfo: BrowserInfo? = nil, ipAddress: String? = nil, billing: Ing? = nil, shipping: Ing? = nil, requested3DSVersion: String? = nil, applied3DSVersion: String? = nil, recurringPayinRegistrationID: String? = nil) {
         self.id = id
         self.tag = tag
         self.creationDate = creationDate

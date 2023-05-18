@@ -254,7 +254,7 @@ class ConfigurationController: UIViewController {
             showLoader(true)
 
             let regResponse = try await CardRegistrationClient(
-                url: Environment.sandbox.url
+                env: .sandbox
             ).createCardRegistration(
                 cardReg,
                 clientId: clientId,

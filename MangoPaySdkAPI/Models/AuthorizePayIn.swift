@@ -9,7 +9,7 @@ import Foundation
 
 public struct AuthorizePayIn: Codable {
 
-    var tag, authorID, creditedUserID: String?
+    public var id, tag, authorID, creditedUserID: String?
     var debitedFunds, fees: DebitedFunds?
     var creditedWalletID, secureMode, cardID: String?
     var secureModeReturnURL, secureModeRedirectURL: String?
@@ -19,6 +19,7 @@ public struct AuthorizePayIn: Codable {
     var billing, shipping: Ing?
 
     enum CodingKeys: String, CodingKey {
+        case id = "Id"
         case tag = "Tag"
         case authorID = "AuthorId"
         case creditedUserID = "CreditedUserId"
@@ -45,11 +46,11 @@ public struct AuthorizePayIn: Codable {
         creditedWalletID: String,
         secureMode: String? = nil,
         cardID: String,
-        secureModeReturnURL: String? = nil,
+        secureModeReturnURL: String,
         secureModeRedirectURL: String? = nil,
         statementDescriptor: String,
         browserInfo: BrowserInfo? = nil,
-        ipAddress: String? = nil,
+        ipAddress: String,
         billing: Ing? = nil,
         shipping: Ing? = nil
     ) {
@@ -76,6 +77,11 @@ public struct Ing: Codable {
     var firstName, lastName: String?
     var address: Address?
 
+    public init(firstName: String? = nil, lastName: String? = nil, address: Address? = nil) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.address = address
+    }
     enum CodingKeys: String, CodingKey {
         case firstName = "FirstName"
         case lastName = "LastName"
@@ -95,6 +101,15 @@ public struct Address: Codable {
         case postalCode = "PostalCode"
         case country = "Country"
     }
+
+    public init(addressLine1: String? = nil, addressLine2: String? = nil, city: String? = nil, region: String? = nil, postalCode: String? = nil, country: String? = nil) {
+        self.addressLine1 = addressLine1
+        self.addressLine2 = addressLine2
+        self.city = city
+        self.region = region
+        self.postalCode = postalCode
+        self.country = country
+    }
 }
 
 
@@ -106,7 +121,17 @@ public struct BrowserInfo: Codable {
     var userAgent: String?
     var javascriptEnabled: Bool?
 
-    public init(acceptHeader: String? = nil, javaEnabled: Bool? = nil, language: String? = nil, colorDepth: Int? = nil, screenHeight: Int? = nil, screenWidth: Int? = nil, timeZoneOffset: Int? = nil, userAgent: String? = nil, javascriptEnabled: Bool? = nil) {
+    public init(
+        acceptHeader: String? = "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+        javaEnabled: Bool? = true,
+        language: String? = "FR-FR",
+        colorDepth: Int? = 4,
+        screenHeight: Int? = 1800,
+        screenWidth: Int? = 400,
+        timeZoneOffset: Int? = 60,
+        userAgent: String? =  "Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+        javascriptEnabled: Bool? = true
+    ) {
         self.acceptHeader = acceptHeader
         self.javaEnabled = javaEnabled
         self.language = language

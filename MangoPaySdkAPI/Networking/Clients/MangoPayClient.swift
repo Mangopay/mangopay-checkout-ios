@@ -27,6 +27,7 @@ public typealias IntentDeliveryInput = CheckoutSchema.IntentDeliveryInput
 
 public protocol MangoPayClientSessionProtocol {
     var clientKey: String! { get set }
+    var apiKey: String! { get set }
     func tokenizeCard(
         with card: CheckoutSchema.PaymentCardInput,
         customer: Customer?
@@ -45,7 +46,8 @@ public protocol MangoPayinProtocol {
 }
 
 public class MangoPayClient: MangoPayClientSessionProtocol {
-    
+    public var apiKey: String!
+
     let indempodentKey = UUID().uuidString
     let version1UUID = UUID().version1UUID
     public var clientKey: String!
@@ -105,8 +107,9 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
         self.clientKey = clientKey
     }
 
-    public init(clientKey: String, environment: Environment) {
+    public init(clientKey: String, apiKey: String, environment: Environment) {
         self.clientKey = clientKey
+        self.apiKey = apiKey
         self.environment = environment
     }
 
@@ -261,7 +264,7 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
         let client = CardRegistrationClient(env: .sandbox)
 
         do {
-            let authRes = try await client.authorizePayIn(payment, clientId: clientKey)
+            let authRes = try await client.authorizePayIn(payment, clientId: clientKey, apiKey: apiKey)
             return authRes
         } catch {
             print("❌ Failed to authorizePayment -> PayIn..")
@@ -274,7 +277,7 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
         let client = CardRegistrationClient(env: .sandbox)
 
         do {
-            let payIn = try await client.getPayIn(clientId: clientKey, payInId: payInId)
+            let payIn = try await client.getPayIn(clientId: clientKey, apiKey: apiKey, payInId: payInId)
             return payIn
         } catch {
             print("❌ Failed to Get PayIn -> PayIn..")
@@ -287,7 +290,7 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
         let client = CardRegistrationClient(env: .sandbox)
 
         do {
-            let payInCards = try await client.fetchPayInCards(clientId: clientKey, userId: userId, active: isActive)
+            let payInCards = try await client.fetchPayInCards(clientId: clientKey, apiKey: apiKey, userId: userId, active: isActive)
             return payInCards
         } catch {
             print("❌ Failed to fetchPayInCards -> PayIn..")
