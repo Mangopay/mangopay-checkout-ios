@@ -146,7 +146,7 @@ public struct MangoPaySDK {
 
     public static func tokeniseCard(apikey: String, card: PaymentCardInput) async throws -> TokenizeCard {
 
-        let client = WhenThenClient(clientKey: apikey)
+        let client = MangoPayClient(clientKey: apikey)
         do {
             let tokenizedCard = try await client.tokenizeCard(with: card, customer: nil)
             return tokenizedCard
@@ -157,7 +157,7 @@ public struct MangoPaySDK {
 
     public static func authorizePayment(apikey: String, paymentData: AuthorisedPayment) async throws -> AuthorizePaymentResponse {
 
-        let client = WhenThenClient(clientKey: apikey)
+        let client = MangoPayClient(clientKey: apikey)
         do {
             let authorizedPayment = try await client.authorizePayment(payment: paymentData)
             return authorizedPayment
@@ -168,7 +168,7 @@ public struct MangoPaySDK {
 
     public static func createCustomer(apiKey: String, customer: CustomerInputData) async throws -> String {
         
-        let client = WhenThenClient(clientKey: apiKey)
+        let client = MangoPayClient(clientKey: apiKey)
 
         do {
             let customerId = try await client.createCustomer(with: customer)

@@ -106,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1808.6956521739132" y="97.767857142857139"/>
+            <point key="canvasLocation" x="2010" y="-259"/>
         </scene>
         <!--Product List Controller-->
         <scene sceneID="Jq6-KG-GGV">
@@ -196,15 +196,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="oXm-Aw-UKs">
                                 <rect key="frame" x="32" y="240" width="350" height="152"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="4970107111111119" borderStyle="roundedRect" placeholder="Card Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="azU-ym-Jrb">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Card Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="azU-ym-Jrb">
                                         <rect key="frame" x="0.0" y="0.0" width="350" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CVV" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBi-9D-Kv1">
                                         <rect key="frame" x="0.0" y="59" width="350" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="yBE-u6-XZo">
                                         <rect key="frame" x="0.0" y="118" width="350" height="34"/>
@@ -224,11 +224,10 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5q-cm-wRt">
-                                <rect key="frame" x="129" y="493" width="146" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5q-cm-wRt">
+                                <rect key="frame" x="112.5" y="493" width="189" height="34.5"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Pay with Payline"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Tokenize With Payline"/>
                                 <connections>
                                     <action selector="didTapPay:" destination="mrx-6a-c3N" eventType="touchUpInside" id="Lwj-d8-hiC"/>
                                 </connections>
@@ -236,13 +235,49 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="WUs-ll-ydt">
                                 <rect key="frame" x="197" y="423" width="20" height="20"/>
                             </activityIndicatorView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yk2-uX-sPD">
-                                <rect key="frame" x="116" y="550" width="172" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yk2-uX-sPD">
+                                <rect key="frame" x="121" y="535.5" width="172" height="34.5"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Pay with MangoPay"/>
                                 <connections>
                                     <action selector="didTapPayWT:" destination="mrx-6a-c3N" eventType="touchUpInside" id="Pju-Zo-Ju2"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwF-HW-tmk">
+                                <rect key="frame" x="0.0" y="578" width="414" height="1"/>
+                                <color key="backgroundColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="GqK-05-syK"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sNV-lT-Bbx">
+                                <rect key="frame" x="158.5" y="584" width="97" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="P7m-Qb-zO6"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Authorize"/>
+                                <connections>
+                                    <action selector="didTapAuthorize:" destination="mrx-6a-c3N" eventType="touchUpInside" id="B2Q-HN-V2f"/>
+                                    <action selector="didTapPayWT:" destination="mrx-6a-c3N" eventType="touchUpInside" id="VV3-5w-fkH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cjz-hA-z2B">
+                                <rect key="frame" x="158.5" y="627" width="97" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Get PayIn"/>
+                                <connections>
+                                    <action selector="didTapGetPayIn:" destination="mrx-6a-c3N" eventType="touchUpInside" id="JjL-4x-BBQ"/>
+                                    <action selector="didTapPayWT:" destination="mrx-6a-c3N" eventType="touchUpInside" id="Wvd-ej-dmj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cig-fW-pcY">
+                                <rect key="frame" x="121.5" y="670" width="171" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="List Customer Card"/>
+                                <connections>
+                                    <action selector="didTapListCard:" destination="mrx-6a-c3N" eventType="touchUpInside" id="gkS-Mm-ky0"/>
+                                    <action selector="didTapPayWT:" destination="mrx-6a-c3N" eventType="touchUpInside" id="PGv-75-eaM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -250,14 +285,29 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="U2W-Xa-f4S" firstAttribute="leading" secondItem="0Ln-WY-NZZ" secondAttribute="leading" constant="50" id="1Sa-vG-chc"/>
+                            <constraint firstItem="uwF-HW-tmk" firstAttribute="top" secondItem="Yk2-uX-sPD" secondAttribute="bottom" constant="8" id="4pL-1b-gMJ"/>
+                            <constraint firstItem="Yk2-uX-sPD" firstAttribute="centerX" secondItem="0Ln-WY-NZZ" secondAttribute="centerX" id="5F3-lY-Y3A"/>
+                            <constraint firstItem="b5q-cm-wRt" firstAttribute="centerX" secondItem="0Ln-WY-NZZ" secondAttribute="centerX" id="7Vx-hU-bUn"/>
                             <constraint firstItem="WUs-ll-ydt" firstAttribute="centerY" secondItem="0Ln-WY-NZZ" secondAttribute="centerY" id="8NL-vh-LrV"/>
+                            <constraint firstItem="uwF-HW-tmk" firstAttribute="leading" secondItem="0Ln-WY-NZZ" secondAttribute="leading" id="H9b-G8-aAf"/>
                             <constraint firstItem="U2W-Xa-f4S" firstAttribute="top" secondItem="0Ln-WY-NZZ" secondAttribute="top" constant="48" id="IN1-G4-S5s"/>
+                            <constraint firstItem="cjz-hA-z2B" firstAttribute="top" secondItem="sNV-lT-Bbx" secondAttribute="bottom" constant="8" id="Pc6-Cn-Loe"/>
                             <constraint firstItem="WUs-ll-ydt" firstAttribute="centerX" secondItem="0Ln-WY-NZZ" secondAttribute="centerX" id="XKC-1z-nl0"/>
+                            <constraint firstItem="b5q-cm-wRt" firstAttribute="top" secondItem="oXm-Aw-UKs" secondAttribute="bottom" constant="101" id="XZ7-cL-Nah"/>
+                            <constraint firstItem="sNV-lT-Bbx" firstAttribute="centerX" secondItem="0Ln-WY-NZZ" secondAttribute="centerX" id="ZwX-fL-Iay"/>
                             <constraint firstItem="0Ln-WY-NZZ" firstAttribute="trailing" secondItem="U2W-Xa-f4S" secondAttribute="trailing" constant="50" id="bY8-Pz-znW"/>
                             <constraint firstItem="0Ln-WY-NZZ" firstAttribute="trailing" secondItem="oXm-Aw-UKs" secondAttribute="trailing" constant="32" id="cOh-Ga-Lhv"/>
+                            <constraint firstItem="Cig-fW-pcY" firstAttribute="height" secondItem="sNV-lT-Bbx" secondAttribute="height" id="hLC-4X-QvC"/>
+                            <constraint firstItem="cjz-hA-z2B" firstAttribute="centerX" secondItem="sNV-lT-Bbx" secondAttribute="centerX" id="jMJ-Ne-1Z8"/>
                             <constraint firstItem="oXm-Aw-UKs" firstAttribute="top" secondItem="U2W-Xa-f4S" secondAttribute="bottom" constant="50" id="jVF-PS-vi9"/>
+                            <constraint firstItem="0Ln-WY-NZZ" firstAttribute="trailing" secondItem="uwF-HW-tmk" secondAttribute="trailing" id="ksc-vI-EiF"/>
                             <constraint firstItem="oXm-Aw-UKs" firstAttribute="centerX" secondItem="0Ln-WY-NZZ" secondAttribute="centerX" id="lA6-nv-emF"/>
+                            <constraint firstItem="Yk2-uX-sPD" firstAttribute="top" secondItem="b5q-cm-wRt" secondAttribute="bottom" constant="8" id="maR-qb-gt3"/>
+                            <constraint firstItem="Cig-fW-pcY" firstAttribute="centerX" secondItem="cjz-hA-z2B" secondAttribute="centerX" id="mcd-3E-NZq"/>
                             <constraint firstItem="oXm-Aw-UKs" firstAttribute="leading" secondItem="0Ln-WY-NZZ" secondAttribute="leading" constant="32" id="ohx-jC-1s4"/>
+                            <constraint firstItem="Cig-fW-pcY" firstAttribute="top" secondItem="cjz-hA-z2B" secondAttribute="bottom" constant="8" symbolic="YES" id="rlt-Jt-et8"/>
+                            <constraint firstItem="cjz-hA-z2B" firstAttribute="height" secondItem="sNV-lT-Bbx" secondAttribute="height" id="zrX-2o-66L"/>
+                            <constraint firstItem="sNV-lT-Bbx" firstAttribute="top" secondItem="uwF-HW-tmk" secondAttribute="bottom" constant="5" id="zsX-r0-OWh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="E3J-hk-wGy"/>
@@ -278,7 +328,7 @@
                     <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                 </textField>
             </objects>
-            <point key="canvasLocation" x="888" y="-259"/>
+            <point key="canvasLocation" x="886.95652173913049" y="-259.15178571428572"/>
         </scene>
         <!--Configuration Controller-->
         <scene sceneID="cSh-Ez-ZAw">
@@ -341,8 +391,109 @@
             </objects>
             <point key="canvasLocation" x="-875.36231884057975" y="97.767857142857139"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="gBl-w0-9gB">
+            <objects>
+                <viewController id="mZx-6f-u8P" customClass="ViewController" customModule="MangoPayExampleCheckout" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fDb-RY-kBv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0B-bO-e96">
+                                <rect key="frame" x="107" y="435" width="200" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="efP-sf-a6U"/>
+                                    <constraint firstAttribute="height" constant="40" id="rcY-3Z-p4r"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Elements Checkout"/>
+                                <connections>
+                                    <action selector="didTapElementCheckout:" destination="mZx-6f-u8P" eventType="touchUpInside" id="QPF-QE-f0I"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0g-qm-ZAM">
+                                <rect key="frame" x="107" y="495" width="200" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="0jT-Ef-XgW"/>
+                                    <constraint firstAttribute="height" constant="40" id="kny-HV-cYe"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="DropIn Checkout"/>
+                                <connections>
+                                    <action selector="didTapDropInCheckout:" destination="mZx-6f-u8P" eventType="touchUpInside" id="A1I-BY-YEn"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WhenThen Example Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALk-TJ-soV">
+                                <rect key="frame" x="50" y="133" width="314" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="75b-af-mNd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz8-y7-tS6">
+                                <rect key="frame" x="107" y="555" width="200" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="EfI-Lh-QGo"/>
+                                    <constraint firstAttribute="height" constant="40" id="YeN-00-i2u"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="MGP Vault Payline"/>
+                                <connections>
+                                    <action selector="didTapPayline:" destination="mZx-6f-u8P" eventType="touchUpInside" id="VEM-Ps-Kqj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jh0-P1-LgA">
+                                <rect key="frame" x="107" y="603" width="200" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Dmg-rO-RTW"/>
+                                    <constraint firstAttribute="width" constant="200" id="EcH-9k-TrT"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="MGP Vault WhenThen"/>
+                                <connections>
+                                    <action selector="didTapVaultWT:" destination="mZx-6f-u8P" eventType="touchUpInside" id="dZp-LS-WAL"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="qeY-j5-MuD">
+                                <rect key="frame" x="197" y="435" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="NGm-pS-9yx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qeY-j5-MuD" firstAttribute="centerY" secondItem="NGm-pS-9yx" secondAttribute="centerY" constant="-10" id="0VK-Tv-bmz"/>
+                            <constraint firstItem="ALk-TJ-soV" firstAttribute="leading" secondItem="NGm-pS-9yx" secondAttribute="leading" constant="50" id="1sc-fP-pcp"/>
+                            <constraint firstItem="Z0g-qm-ZAM" firstAttribute="top" secondItem="P0B-bO-e96" secondAttribute="bottom" constant="20" id="617-ME-ojf"/>
+                            <constraint firstItem="P0B-bO-e96" firstAttribute="centerY" secondItem="NGm-pS-9yx" secondAttribute="centerY" id="Cjy-pv-3V9"/>
+                            <constraint firstItem="Z0g-qm-ZAM" firstAttribute="trailing" secondItem="P0B-bO-e96" secondAttribute="trailing" id="Jz6-my-dFS"/>
+                            <constraint firstItem="Jh0-P1-LgA" firstAttribute="leading" secondItem="Gz8-y7-tS6" secondAttribute="leading" id="Kwt-mg-hid"/>
+                            <constraint firstItem="Gz8-y7-tS6" firstAttribute="trailing" secondItem="Z0g-qm-ZAM" secondAttribute="trailing" id="O6g-tB-SFq"/>
+                            <constraint firstItem="Jh0-P1-LgA" firstAttribute="trailing" secondItem="Gz8-y7-tS6" secondAttribute="trailing" id="ONJ-o7-dXF"/>
+                            <constraint firstItem="qeY-j5-MuD" firstAttribute="centerX" secondItem="NGm-pS-9yx" secondAttribute="centerX" id="Z0c-si-SJw"/>
+                            <constraint firstItem="Jh0-P1-LgA" firstAttribute="top" secondItem="Gz8-y7-tS6" secondAttribute="bottom" constant="8" symbolic="YES" id="cmy-VS-aMe"/>
+                            <constraint firstItem="Gz8-y7-tS6" firstAttribute="leading" secondItem="Z0g-qm-ZAM" secondAttribute="leading" id="d6L-Zm-miX"/>
+                            <constraint firstItem="NGm-pS-9yx" firstAttribute="trailing" secondItem="ALk-TJ-soV" secondAttribute="trailing" constant="50" id="fQH-WN-eU1"/>
+                            <constraint firstItem="P0B-bO-e96" firstAttribute="centerX" secondItem="NGm-pS-9yx" secondAttribute="centerX" id="gXU-jz-ZWi"/>
+                            <constraint firstItem="Gz8-y7-tS6" firstAttribute="top" secondItem="Z0g-qm-ZAM" secondAttribute="bottom" constant="20" id="iTA-Pd-2hX"/>
+                            <constraint firstItem="Z0g-qm-ZAM" firstAttribute="leading" secondItem="P0B-bO-e96" secondAttribute="leading" id="qWB-bc-JD8"/>
+                            <constraint firstItem="ALk-TJ-soV" firstAttribute="top" secondItem="NGm-pS-9yx" secondAttribute="top" constant="85" id="sX7-x9-9rX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="qeY-j5-MuD" id="vKu-wN-fEO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uwU-3h-drd" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2009" y="542"/>
+        </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

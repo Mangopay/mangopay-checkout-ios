@@ -14,20 +14,10 @@ public protocol MangoPayVaultDelegate: AnyObject {
     func onFailure(error: Error)
 }
 
-//public protocol MangoPayVaultWTTokenisationDelegate: AnyObject {
-//    func onSuccess(tokenizedCard: tokenizeCard)
-//    func onFailure(error: Error)
-//}
-
 public protocol MangoPayVaultCreateCustomerDelegate: AnyObject {
     func onCustomerCreatedSuccessfully(customerId: String)
     func onCustomerCreationFailed(error: Error)
 }
-
-//public protocol MangoPayVaultPaymentMethodsDelegate: AnyObject {
-//    func onSucessfullyFetchPaymentMethods(paymentMthods: [GetPaymentMethod])
-//    func onFetchPaymentMethodsFailure(error: Error)
-//}
 
 public enum Provider: String {
     case WHENTHEN
@@ -52,29 +42,18 @@ public enum Environment: String {
 public class MangoPayVault {
     
     private var paylineClient: CardRegistrationClientProtocol?
-//    private var wtClient: WhenThenClientSessionProtocol?
 
-    let provider: Provider
     private let clientToken: String?
-    private let clientId: String?
-//    private let cardRegistration: CardRegistration?
     private let environment: Environment!
 
     public init(
         clientToken: String? = nil,
-        clientId: String? = nil,
         provider: Provider = .MANGOPAY,
         environment: Environment
     ) {
         self.clientToken = clientToken
-        self.clientId = clientId
-        self.provider = provider
         self.environment = environment
     }
-
-//    func setWtClient(wtClient: WhenThenClientSessionProtocol) {
-//        self.wtClient = wtClient
-//    }
 
     func setPaylineClient(paylineClient: CardRegistrationClientProtocol) {
         self.paylineClient = paylineClient
@@ -89,64 +68,19 @@ public class MangoPayVault {
             let isValidCard = try validateCard(with: card)
             guard isValidCard else { return }
             guard let _cardRegistration = cardRegistration else { return }
-            switch provider {
-            case .WHENTHEN: break
-//                tokenizeWT(card: card, delegate: whenThenDelegate)
-            case .MANGOPAY:
-                tokenizeMGP(
-                    with: card,
-                    cardRegistration: _cardRegistration,
-                    delegate: delegate
-                )
-            }
+            
+            tokenizeMGP(
+                with: card,
+                cardRegistration: _cardRegistration,
+                delegate: delegate
+            )
         } catch {
-            switch provider {
-            case .WHENTHEN: break
-//                DispatchQueue.main.async {
-//                    whenThenDelegate?.onFailure(error: error)
-//                }
-            case .MANGOPAY:
-                DispatchQueue.main.async {
-                    delegate?.onFailure(error: error)
-                }
+            DispatchQueue.main.async {
+                delegate?.onFailure(error: error)
             }
         }
         
     }
-
-//    private func tokenizeWT(
-//        card: Cardable,
-//        delegate: MangoPayVaultWTTokenisationDelegate?
-//    ) {
-//
-//        guard provider == .WHENTHEN else {
-//            return
-//        }
-//
-//        guard let _card = card as? CardData else { return }
-//
-//        guard let _clientId = clientId else { return }
-//
-//        Task {
-//            if wtClient == nil {
-//                wtClient = WhenThenClient(clientKey: _clientId)
-//            }
-//
-//            do {
-//                let tokenizedCard = try await wtClient!.tokenizeCard(
-//                    with: _card.toPaymentCardInput(), customer: nil
-//                )
-//                DispatchQueue.main.async {
-//                    delegate?.onSuccess(tokenizedCard: tokenizedCard)
-//                }
-//            } catch {
-//                DispatchQueue.main.async {
-//                    delegate?.onFailure(error: error)
-//                }
-//            }
-//        }
-//
-//    }
 
     private func tokenizeMGP(
         with card: Cardable,
@@ -154,12 +88,6 @@ public class MangoPayVault {
         delegate: MangoPayVaultDelegate? = nil
     ) {
 
-        guard provider == .MANGOPAY else {
-            return
-        }
-    
-        guard let _card = card as? CardInfo else { return }
-        
         guard let _cardRegistration = cardRegistration else { return }
         
         guard let _clientToken = clientToken else { return }
@@ -171,6 +99,11 @@ public class MangoPayVault {
         Task {
             do {
                 guard let url = _cardRegistration.registrationURL else { return }
+                
+                guard var _card = card as? CardInfo else { return }
+
+                _card.accessKeyRef = _cardRegistration.accessKey
+                _card.data = _cardRegistration.preregistrationData
 
                 let redData = try await paylineClient!.postCardInfo(_card, url: url)
                 
@@ -181,7 +114,6 @@ public class MangoPayVault {
                     clientId: _clientToken,
                     cardRegistrationId: cardId
                 )
-                
                 DispatchQueue.main.async {
                     delegate?.onSuccess(card: updateRes)
                 }
@@ -194,62 +126,6 @@ public class MangoPayVault {
         
     }
 
-//    public func createCustomer(
-//        _ customer: Customer,
-//        delegate: MangoPayVaultCreateCustomerDelegate
-//    ) {
-//        guard provider == .WHENTHEN else {
-//            return
-//        }
-//
-//        guard let _clientId = clientId else { return }
-//
-//        Task {
-//            do {
-//                let customerRes = try await WhenThenClient(
-//                    clientKey: _clientId
-//                ).createCustomer(
-//                    with: CustomerInputData(customer: customer)
-//                )
-//                DispatchQueue.main.async {
-//                    delegate.onCustomerCreatedSuccessfully(customerId: customerRes)
-//                }
-//            } catch {
-//                DispatchQueue.main.async {
-//                    delegate.onCustomerCreationFailed(error: error)
-//                }
-//            }
-//        }
-//    }
-
-//    public func getPaymentMethods(
-//        customerId: String,
-//        clientToken: String,
-//        delegate: MangoPayVaultPaymentMethodsDelegate
-//    ) {
-//        guard provider == .WHENTHEN else {
-//            return
-//        }
-//
-//        guard let _clientId = clientId else { return }
-//
-//        Task {
-//            let client = WhenThenClient(clientKey: _clientId)
-//
-//            do {
-//                let resPaymentMethods = try await client.getPaymentMethodsForCustomer(customerId)
-//                let paymentMethods = resPaymentMethods.compactMap({$0})
-//                DispatchQueue.main.async {
-//                    delegate.onSucessfullyFetchPaymentMethods(paymentMthods: paymentMethods)
-//                }
-//            } catch {
-//                DispatchQueue.main.async {
-//                    delegate.onFetchPaymentMethodsFailure(error: error)
-//                }
-//            }
-//        }
-//    }
-    
     func validateCard(with cardInfo: Cardable) throws -> Bool {
         
         guard let cardNum = cardInfo.cardNumber else {

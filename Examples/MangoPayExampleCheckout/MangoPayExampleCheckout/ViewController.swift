@@ -142,37 +142,10 @@ class ViewController: UIViewController {
     }
 
     @IBAction func didTapVaultWT(_ sender: UIButton) {
-        let cardInfo = CardData(
-            number: "4970101122334422",
-            name: "Visa",
-            expMonth: 6,
-            expYear: 26,
-            cvc: "123",
-            savePayment: false,
-            bilingInfo: nil
-        )
-
-        let mgpVault = MangoPayVault(
-            clientId: "ct_test_9i8jZIEdWnTI4rsu",
-            provider: .WHENTHEN, environment: .sandbox
-        )
-
-//        showLoader(true)
-//        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
 
     }
     
 }
-
-//extension ViewController: MangoPayVaultWTTokenisationDelegate {
-//
-//    func onSuccess(tokenizedCard: .okenizeCard) {
-//        showLoader(false)
-//        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
-//
-//    }
-//
-//}
 
 extension ViewController: MangoPayVaultDelegate {
     

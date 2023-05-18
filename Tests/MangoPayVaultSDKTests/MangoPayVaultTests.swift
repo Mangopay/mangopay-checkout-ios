@@ -395,7 +395,7 @@ class MockPaylineController: UIViewController, MangoPayVaultDelegate {
     
 }
 
-class MockWhenThenClient: WhenThenClientSessionProtocol {
+class MockWhenThenClient: MangoPayClientSessionProtocol {
     var clientKey: String!
     
     init(clientKey: String) {
@@ -414,6 +414,48 @@ class MockWhenThenClient: WhenThenClientSessionProtocol {
 }
 
 class MockVaultClient: CardRegistrationClientProtocol {
+    func authorizePayIn(_ authorizeData: MangoPaySdkAPI.AuthorizePayIn, clientId: String) async throws -> AuthorizePayIn {
+        return AuthorizePayIn(
+            authorID: "sadqw",
+            debitedFunds: DebitedFunds(currency: "USD", amount: 20),
+            fees: DebitedFunds(currency: "USD", amount: 20),
+            creditedWalletID: "sfq31f",
+            cardID: "cardId313",
+            statementDescriptor: "sdqw"
+        )
+    }
+    
+    func getPayIn(clientId: String, payInId: String) async throws -> PayIn {
+        return PayIn(
+            id: "149625824",
+            tag: "Custom",
+            creationDate: 1661159886,
+            authorID: "146476890",
+            creditedUserID: "146476890",
+            debitedFunds: CreditedFunds(currency: "EUR", amount: 4500),
+            creditedFunds: CreditedFunds(currency: "EUR", amount: 4455),
+            fees: CreditedFunds(currency: "EUR", amount: 45),
+            status: "SUCCEEDED",
+            type: "PAYIN",
+            nature: "REGULAR",
+            creditedWalletID: "148968396",
+            paymentType: "CARD",
+            executionType: "DIRECT",
+            billing: Ing(
+                firstName: "Nat",
+                lastName: "Doe",
+                address: Address(
+                    addressLine1: "4 Oasis street",
+                    addressLine2: "The Oasis",
+                    city: "Paris",
+                    region: "Ile de France",
+                    postalCode: "75001",
+                    country: "FR"
+                )
+            )
+        )
+    }
+    
 
     func createCardRegistration(
         _ card: MangoPaySdkAPI.CardRegistration.Initiate,
