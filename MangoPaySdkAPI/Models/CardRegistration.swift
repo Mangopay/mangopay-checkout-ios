@@ -40,14 +40,14 @@ public struct CardRegistration: Codable {
     public var accessKey, preregistrationData, registrationData, cardID: String?
     public var cardType: String?
     public var cardRegistrationURLStr: String?
-    public var resultCode, resultMessage, currency, status: String?
+    public var currency, status: String?
     
     public var registrationURL: URL? {
         guard let urlStr = cardRegistrationURLStr else { return nil }
         return URL(string: urlStr)
     }
 
-    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, userID: String? = nil, accessKey: String? = nil, preregistrationData: String? = nil, registrationData: String? = nil, cardID: String? = nil, cardType: String? = nil, cardRegistrationURLStr: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, currency: String? = nil, status: String? = nil) {
+    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, userID: String? = nil, accessKey: String? = nil, preregistrationData: String? = nil, registrationData: String? = nil, cardID: String? = nil, cardType: String? = nil, cardRegistrationURLStr: String? = nil, currency: String? = nil, status: String? = nil) {
         self.id = id
         self.tag = tag
         self.creationDate = creationDate
@@ -58,8 +58,6 @@ public struct CardRegistration: Codable {
         self.cardID = cardID
         self.cardType = cardType
         self.cardRegistrationURLStr = cardRegistrationURLStr
-        self.resultCode = resultCode
-        self.resultMessage = resultMessage
         self.currency = currency
         self.status = status
     }
@@ -75,8 +73,6 @@ public struct CardRegistration: Codable {
         case cardID = "CardId"
         case cardType = "CardType"
         case cardRegistrationURLStr = "CardRegistrationURL"
-        case resultCode = "ResultCode"
-        case resultMessage = "ResultMessage"
         case currency = "Currency"
         case status = "Status"
     }
