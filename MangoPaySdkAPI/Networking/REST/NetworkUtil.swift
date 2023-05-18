@@ -50,7 +50,7 @@ extension NetworkUtil {
     var headers: [String: String] {
         var _headers = [String: String]()
         _headers["Accept"] = "*/*"
-        _headers["X-SDK-Version"] = "1.0.0"
+        _headers["X-SDK-Version"] = "0.0.40-beta"
         _headers["User-Agent"] = userAgent
         return _headers
     }
