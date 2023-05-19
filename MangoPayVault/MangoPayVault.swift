@@ -43,15 +43,15 @@ public class MangoPayVault {
     
     private var paylineClient: CardRegistrationClientProtocol?
 
-    private let clientToken: String?
+    private let clientId: String?
     private let environment: Environment!
 
     public init(
-        clientToken: String? = nil,
+        clientId: String? = nil,
         provider: Provider = .MANGOPAY,
         environment: Environment
     ) {
-        self.clientToken = clientToken
+        self.clientId = clientId
         self.environment = environment
     }
 
@@ -90,7 +90,7 @@ public class MangoPayVault {
 
         guard let _cardRegistration = cardRegistration else { return }
         
-        guard let _clientToken = clientToken else { return }
+        guard let _clientId = clientId else { return }
 
         if paylineClient == nil {
             paylineClient = CardRegistrationClient(url: environment.url)
@@ -111,7 +111,7 @@ public class MangoPayVault {
                 
                 let updateRes = try await paylineClient!.updateCardInfo(
                     redData,
-                    clientId: _clientToken,
+                    clientId: _clientId,
                     cardRegistrationId: cardId
                 )
                 DispatchQueue.main.async {
