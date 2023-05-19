@@ -24,7 +24,7 @@ class DemoPaymentForm: UIViewController {
     
     var configuration: Configuration!
     var cardRegistration: CardRegistration!
-
+    var createdPayIn: AuthorizePayIn?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,30 +50,24 @@ class DemoPaymentForm: UIViewController {
         payline(card: card)
     }
     
-    @IBAction func didTapPayWT(_ sender: UIButton) {
-//        let card = grabDataMGP()
-//        mgptokenize(card: card)
-//
-//        let cardInfo = CardData(
-//            number: "4970101122334422",
-//            name: "Visa",
-//            expMonth: 6,
-//            expYear: 26,
-//            cvc: "123",
-//            savePayment: false,
-//            bilingInfo: nil
-//        )
-//
-//        let mgpVault = MangoPayVault(
-//            clientId: configuration.clientId,
-//            provider: .WHENTHEN,
-//            environment: .sandbox
-//        )
-//
-//        showLoader(true)
-//        mgpVault.tokenizeCard(card: cardInfo, whenThenDelegate: self)
+    @IBAction func didTapAuthorize(_ sender: UIButton) {
+        guard let _card = cardRegistration else { return }
+        peformAuthorize(with: _card)
     }
-
+    
+    @IBAction func didTapGetPayIn(_ sender: UIButton) {
+        guard let _createdPayIn = createdPayIn else { return }
+        peformGetPayIn()
+    }
+    
+    @IBAction func didTapListCard(_ sender: Any) {
+        guard let _createdPayIn = createdPayIn else { return }
+        getCustomerCards()
+    }
+    
+    @IBAction func didTapPayWT(_ sender: UIButton) {
+    }
+    
     func createCardReg(
         cardReg: CardRegistration.Initiate,
         clientId: String,
@@ -81,27 +75,27 @@ class DemoPaymentForm: UIViewController {
     ) async -> CardRegistration? {
         do {
             showLoader(true)
-
+            
             let regResponse = try await CardRegistrationClient(
-                url: Environment.sandbox.url
+                env: .sandbox
             ).createCardRegistration(
                 cardReg,
                 clientId: clientId,
                 apiKey: apiKey
             )
             showLoader(false)
-
+            
             return regResponse
         } catch {
             print("❌ Error Creating Card Registration")
             showLoader(false)
             return nil
         }
-
+        
     }
     
     func grabData() -> CardInfo? {
-
+        
         guard let cardNum = cardNumberTextfield.text,
               let cvv = cvvTextfield.text,
               let month = mmExpiryField.text,
@@ -113,9 +107,9 @@ class DemoPaymentForm: UIViewController {
             cardNumber: cardNum,
             cardExpirationDate: expStr,
             cardCvx: cvv
-       )
+        )
     }
-
+    
     func grabDataMGP() -> CardData {
         var card = CardData(
             number: "497010711111119",
@@ -126,36 +120,94 @@ class DemoPaymentForm: UIViewController {
             savePayment: false,
             bilingInfo: nil
         )
-           
+        
         return card
     }
     
+    func peformAuthorize(with tokenisedCard: CardRegistration) {
+        showLoader(true)
+        
+        let client = MangoPayClient(
+            clientKey: "checkoutsquatest",
+            apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
+            environment: .sandbox
+        )
+        
+        Task {
+            let authPay = AuthorizePayIn(
+                tag: tokenisedCard.tag ?? "Random tag",
+                authorID: "158091557",
+                creditedUserID: "158091557",
+                debitedFunds: DebitedFunds(currency: "EUR", amount: 20),
+                fees: DebitedFunds(currency: "EUR", amount: 2),
+                creditedWalletID: "159834019",
+                cardID: tokenisedCard.cardID ?? "" ,
+                secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+                statementDescriptor: "MangoPay",
+                browserInfo: BrowserInfo(),
+                ipAddress: "1c10:17fe:65db:25b7:1784:ce36:43ce:c610",
+                shipping: Ing(firstName: "Elikem", lastName: "Savie", address: Address(addressLine1: "Accra", addressLine2: "Ghana", city: "Accra", region: "Accra", postalCode: "00000", country: "FR")
+                             )
+                
+            )
+            do {
+                let payIn = try await client.authorizePaymentPayIn(payment: authPay)
+                print("✅ success", payIn)
+                self.createdPayIn = payIn
+                showLoader(false)
+                self.showAlert(with: payIn.id ?? "", title: "Successfully Authorized Card 🎉")
+                
+            } catch {
+                print("❌ error", error)
+                showLoader(false)
+                self.showAlert(with: "", title: "❌ Authorized Card Failed")
+            }
+        }
+    }
+    
+    func peformGetPayIn() {
+        guard let payId = createdPayIn?.id else { return }
+        let client = MangoPayClient(
+            clientKey: "checkoutsquatest",
+            apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
+            environment: .sandbox
+        )
+        
+        Task {
+            do {
+                let payIn = try await client.getPayIn(payInId: payId)
+                DispatchQueue.main.async {
+                    self.showAlert(with: payIn.cardID ?? "lol", title: "Successful 🎉")
+                }
+            } catch {
+                print("❌ error", error)
+            }
+        }
+    }
+
+    func getCustomerCards() {
+        guard let payId = createdPayIn?.id else { return }
+        let client = MangoPayClient(
+            clientKey: "checkoutsquatest",
+            apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
+            environment: .sandbox
+        )
+        
+        Task {
+            do {
+                let payIn = try await client.listPayInCards(userId: "158091557", isActive: true)
+                let cards = payIn.compactMap({$0.id}).joined(separator: ",")
+                DispatchQueue.main.async {
+                    self.showAlert(with: cards, title: "Cards 🎉")
+                }
+            } catch {
+                print("❌ error", error)
+            }
+        }
+    }
+
     func payline(card: CardInfo) {
         
-//        let resObj = CardRegistration(
-//            id: "164747858",
-//            creationDate: 1679320385,
-//            userID: "158091557",
-//            accessKey: "1X0m87dmM2LiwFgxPLBJ",
-//            preregistrationData: "pMUiqKEKexdo_NolxfBziXiNDy4f6lZFLr2ONrDmqw-AZdAtiS8ON_lZopm5b8Er2ddFLVXdicolcUIkv_kKEA",
-//            cardType: "CB_VISA_MASTERCARD",
-//            cardRegistrationURLStr: "https://homologation-webpayment.payline.com/webpayment/getToken",
-//            currency: "EUR",
-//            status: "CREATED"
-//        )
-        
-  
-        
-//        return CardData(
-//            number: cardNum,
-//            name: "Visa",
-//            expMonth: Int(month),
-//            expYear: Int(year),
-//            cvc: cvv,
-//            savePayment: false,
-//            bilingInfo: nil
-//        )
-
         let mgpVault = MangoPayVault(
             clientToken: configuration.clientId,
             provider: .MANGOPAY,
@@ -170,37 +222,15 @@ class DemoPaymentForm: UIViewController {
             delegate: self
         )
     }
-
-    func mgptokenize(card: CardData) {
-//        let mgpVault = MangoPayVault(
-//            clientId: configuration.clientId,
-//            provider: .WHENTHEN, environment: .sandbox
-//        )
-//
-//        showLoader(true)
-//        mgpVault.tokenizeCard(
-//            card: card,
-//            cardRegistration: cardRegistration,
-//            whenThenDelegate: self
-//        )
-    }
+    
 }
-
-//extension DemoPaymentForm: MangoPayVaultWTTokenisationDelegate {
-//
-//    func onSuccess(tokenizedCard: MangoPaySdkAPI.tokenizeCard) {
-//        showLoader(false)
-//        showAlert(with: tokenizedCard.id, title: "Successful 🎉")
-//
-//    }
-//
-//}
 
 extension DemoPaymentForm: MangoPayVaultDelegate {
     
     func onSuccess(card: CardRegistration) {
         showLoader(false)
-        showAlert(with: card.accessKey ?? "", title: "Successful 🎉")
+        showAlert(with: card.cardID ?? "Null", title: "Successful 🎉")
+        self.cardRegistration = card
     }
     
     func onFailure(error: Error) {
