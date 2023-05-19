@@ -37,6 +37,9 @@ before_script:
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
 
+  - yum install -y git
+  - git --version
+
 #   - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
 #   - chmod 644 ~/.ssh/known_hosts
 
