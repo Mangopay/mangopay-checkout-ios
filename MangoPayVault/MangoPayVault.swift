@@ -107,6 +107,17 @@ public class MangoPayVault {
 
                 let redData = try await paylineClient!.postCardInfo(_card, url: url)
                 
+                guard redData.RegistrationData.hasPrefix("data") else {
+                    DispatchQueue.main.async {
+                        delegate?.onFailure(
+                            error: NSError(
+                                domain: "Mangopay API Error",
+                                code: 143
+                            )
+                        )
+                    }
+                    return
+                }
                 guard let cardId = _cardRegistration.id else { return }
                 
                 let updateRes = try await paylineClient!.updateCardInfo(
