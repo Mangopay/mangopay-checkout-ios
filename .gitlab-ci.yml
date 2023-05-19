@@ -84,7 +84,19 @@ deploy-to-cocoapod:
       - tags
  when: manual
     
-deploy-to-github:
+
+deploy-main-github:
+ stage: deploy
+ interruptible: true
+ script:
+    - git remote add github-mirror git@github.com:Mangopay/mangopay-ios-sdk.git
+    - git push github-mirror main
+ only:
+    refs:
+      - $CI_COMMIT_BRANCH == "main"
+ when: manual
+
+deploy-tag-github:
  stage: deploy
  interruptible: true
  script:
@@ -94,4 +106,3 @@ deploy-to-github:
     refs:
       - tags
  when: manual
-
