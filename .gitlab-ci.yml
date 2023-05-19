@@ -1,18 +1,52 @@
-#
-#variables:
-#  DEVELOPMENT_BRANCH: "develop"
-#  RELEASE_BRANCH: "main"
-#  DEMO_PROJECT_NAME: "MangoPayExampleCheckout"
-#  DEMO_PATH: "$CI_PROJECT_DIR/Examples/MangoPayExampleCheckout"
-#  DEMO_ARCHIVE_PATH: "$DEMO_PATH/build/Archive.xcarchive"
-#  DEMO_IPA_PATH: "$DEMO_PATH/build/MangoPayExampleCheckout.ipa"
-#
-#
-#stages:
-#  - build
-#  - archive
-#  - deploy
-#  
+
+variables:
+ DEVELOPMENT_BRANCH: "develop"
+ RELEASE_BRANCH: "main"
+ DEMO_PROJECT_NAME: "MangoPayExampleCheckout"
+ DEMO_PATH: "$CI_PROJECT_DIR/Examples/MangoPayExampleCheckout"
+ DEMO_ARCHIVE_PATH: "$DEMO_PATH/build/Archive.xcarchive"
+ DEMO_IPA_PATH: "$DEMO_PATH/build/MangoPayExampleCheckout.ipa"
+
+stages:
+ - build
+ - archive
+ - deploy
+
+before_script:
+  ##
+  ## Install ssh-agent if not already installed, it is required by Docker.
+  ## (change apt-get to yum if you use an RPM-based image)
+  ##
+  - ls -lah ~/.ssh
+#   - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+
+#   ##
+#   ## Run ssh-agent (inside the build environment)
+#   ##
+#   - eval $(ssh-agent -s)
+
+#   ##
+#   ## Give the right permissions, otherwise ssh-add will refuse to add files
+#   ## Add the SSH key stored in SSH_PRIVATE_KEY file type CI/CD variable to the agent store
+#   ##
+#   - chmod 400 "$SSH_PRIVATE_KEY"
+#   - ssh-add "$SSH_PRIVATE_KEY"
+
+#   ##
+#   ## Create the SSH directory and give it the right permissions
+#   ##
+#   - mkdir -p ~/.ssh
+#   - chmod 700 ~/.ssh
+
+#   - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
+#   - chmod 644 ~/.ssh/known_hosts
+
+  ## Optionally, if you will be using any Git commands, set the user name and
+  ## and email.
+  ##
+  # - git config --global user.email "user@example.com"
+  # - git config --global user.name "User name"
+
 #build-test-project:
 #  stage: build
 #  script:
@@ -46,6 +80,21 @@
 #  script:
 #     - echo "Deploying demo archive to Browserstack"
 #     - curl -u $BROWSERSTACK_API_KEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$DEMO_IPA_PATH"
-#
-#      
-#
+
+deploy-archive:
+ stage: build
+ interruptible: true
+ script:
+    - echo "Deploying demo archive to Browserstack"
+
+deploy-to-github:
+ stage: deploy
+ interruptible: true
+ script:
+    - echo -e "Deploing to Github"
+    #- git remote add public-repo https://github.com/Mangopay/mangopay-ios-sdk.git
+ only:
+    refs:
+      - tags
+ when: manual
+
