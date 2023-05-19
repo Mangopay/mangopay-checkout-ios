@@ -14,7 +14,7 @@ MangoPay Checkout SDK can be installed via SPM(highly recomended) or Cocoa Pods.
 
 ## Swift Package Manager
 
-Use repository URL (https://github.com/checkout/frames-ios) and select range of versions `1.0.0` and wait for it to install.
+Use repository URL (https://github.com/Mangopay/mangopay-ios-sdk) and select the main and wait for it to install.
 
 ## Get Started
 
