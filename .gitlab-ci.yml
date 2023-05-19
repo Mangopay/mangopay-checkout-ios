@@ -83,19 +83,24 @@ before_script:
 #     - echo "Deploying demo archive to Browserstack"
 #     - curl -u $BROWSERSTACK_API_KEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@$DEMO_IPA_PATH"
 
-deploy-archive:
- stage: build
- interruptible: true
- script:
-    - echo "Deploying demo archive to Browserstack"
-    - git remote add public-repo https://github.com/Mangopay/mangopay-ios-sdk.git
+# deploy-archive:
+#  stage: build
+#  interruptible: true
+#  script:
+#     - echo "Deploying v${CI_COMMIT_TAG} to Github"
+#     - git remote add github https://github.com/Mangopay/mangopay-ios-sdk.git
+#     - git push github main
+#     - git push github ${CI_COMMIT_TAG}
 
+    
 deploy-to-github:
  stage: deploy
  interruptible: true
  script:
-    - echo -e "Deploing to Github"
-    #- git remote add public-repo https://github.com/Mangopay/mangopay-ios-sdk.git
+    - echo "Deploying v${CI_COMMIT_TAG} to Github"
+    - git remote add github https://github.com/Mangopay/mangopay-ios-sdk.git
+    - git push github main
+    - git push github ${CI_COMMIT_TAG}
  only:
     refs:
       - tags
