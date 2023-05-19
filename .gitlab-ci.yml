@@ -98,9 +98,9 @@ deploy-to-github:
  interruptible: true
  script:
     - echo -e "Deploying v${CI_COMMIT_TAG} to Github"
-    - git remote add github git@github.com:Mangopay/mangopay-ios-sdk.git
+    - git remote add github-mirror git@github.com:Mangopay/mangopay-ios-sdk.git
     # - git push github main
-    - git push github ${CI_COMMIT_TAG}
+    - git push github-mirror ${CI_COMMIT_TAG}
  only:
     refs:
       - tags
