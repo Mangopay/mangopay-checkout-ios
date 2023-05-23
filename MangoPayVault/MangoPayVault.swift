@@ -111,8 +111,9 @@ public class MangoPayVault {
                     DispatchQueue.main.async {
                         delegate?.onFailure(
                             error: NSError(
-                                domain: "Mangopay API Error",
-                                code: 143
+                                domain: "Payline API error: \(redData.RegistrationData)",
+                                code: 143,
+                                userInfo: ["Error": redData.RegistrationData]
                             )
                         )
                     }
