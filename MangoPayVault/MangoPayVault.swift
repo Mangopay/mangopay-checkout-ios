@@ -105,14 +105,16 @@ public class MangoPayVault {
                 _card.accessKeyRef = _cardRegistration.accessKey
                 _card.data = _cardRegistration.preregistrationData
 
-                let redData = try await paylineClient!.postCardInfo(_card, url: url)
+                let redData = try await self.paylineClient!.postCardInfo(_card, url: url)
                 
-                guard redData.RegistrationData.hasPrefix("data") else {
+                guard !redData.RegistrationData.hasPrefix("errorCode") else {
+                    let code = String(redData.RegistrationData.split(separator: "=").last ?? "")
                     DispatchQueue.main.async {
                         delegate?.onFailure(
                             error: NSError(
-                                domain: "Mangopay API Error",
-                                code: 143
+                                domain: "Payline API error: \(redData.RegistrationData)",
+                                code: Int(code) ?? 09101,
+                                userInfo: ["Error": redData.RegistrationData]
                             )
                         )
                     }
