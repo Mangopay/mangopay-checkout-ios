@@ -91,7 +91,7 @@ deploy-main-github:
     - if: $CI_COMMIT_BRANCH == "dev-test"
  script:
     - git remote add github-mirror git@github.com:Mangopay/mangopay-ios-sdk.git
-    - git push github-mirror test
+    - git push github-mirror dev-test
  when: manual
 
 deploy-tag-github:
