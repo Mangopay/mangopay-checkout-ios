@@ -88,7 +88,7 @@ deploy-main-github:
  stage: deploy
  interruptible: true
  rules:
-    - if: $CI_COMMIT_BRANCH == "test"
+    - if: $CI_COMMIT_BRANCH == "dev-test"
  script:
     - git remote add github-mirror git@github.com:Mangopay/mangopay-ios-sdk.git
     - git push github-mirror test
