@@ -35,7 +35,7 @@ public protocol MangoPayClientSessionProtocol {
 }
 
 public protocol MangoPayinProtocol {
-    var clientKey: String! { get set }
+    var apiKey: String! { get set }
     var environment: Environment { get set }
 
     func createCardRegistration(_ card: MangoPaySdkAPI.CardRegistration.Initiate, clientId: String, apiKey: String) async throws -> CardRegistration
@@ -52,6 +52,7 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
     let version1UUID = UUID().version1UUID
     public var clientKey: String!
     public var environment: Environment = .sandbox
+    var payClient: CardRegistrationClient!
         
     fileprivate(set) lazy var apollo: ApolloClient = {
 
@@ -107,10 +108,11 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
         self.clientKey = clientKey
     }
 
-    public init(clientKey: String, apiKey: String, environment: Environment) {
+    public init(clientKey: String, apiKey: String = "", environment: Environment) {
         self.clientKey = clientKey
         self.apiKey = apiKey
         self.environment = environment
+        self.payClient = CardRegistrationClient(env: environment)
     }
 
     public func fetchCards(with customerId: String?) async throws -> [ListCustomerCard] {
@@ -261,10 +263,8 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
 
     public func authorizePaymentPayIn(payment: AuthorizePayIn) async throws -> AuthorizePayIn {
 
-        let client = CardRegistrationClient(env: .sandbox)
-
         do {
-            let authRes = try await client.authorizePayIn(payment, clientId: clientKey, apiKey: apiKey)
+            let authRes = try await payClient.authorizePayIn(payment, clientId: clientKey, apiKey: apiKey)
             return authRes
         } catch {
             print("❌ Failed to authorizePayment -> PayIn..")
@@ -274,10 +274,8 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
 
     public func getPayIn(payInId: String) async throws -> PayIn {
 
-        let client = CardRegistrationClient(env: .sandbox)
-
         do {
-            let payIn = try await client.getPayIn(clientId: clientKey, apiKey: apiKey, payInId: payInId)
+            let payIn = try await payClient.getPayIn(clientId: clientKey, apiKey: apiKey, payInId: payInId)
             return payIn
         } catch {
             print("❌ Failed to Get PayIn -> PayIn..")
@@ -287,10 +285,8 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
 
     public func listPayInCards(userId: String, isActive: Bool) async throws -> [PayInCard] {
 
-        let client = CardRegistrationClient(env: .sandbox)
-
         do {
-            let payInCards = try await client.fetchPayInCards(clientId: clientKey, apiKey: apiKey, userId: userId, active: isActive)
+            let payInCards = try await payClient.fetchPayInCards(clientId: clientKey, apiKey: apiKey, userId: userId, active: isActive)
             return payInCards
         } catch {
             print("❌ Failed to fetchPayInCards -> PayIn..")
@@ -300,10 +296,8 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
 
     public func createCardRegistration(card: CardRegistration.Initiate, clientId: String, apiKey: String) async throws -> CardRegistration {
 
-        let client = CardRegistrationClient(env: .sandbox)
-
         do {
-            let createdCard = try await client.createCardRegistration(card, clientId: clientId, apiKey: apiKey)
+            let createdCard = try await payClient.createCardRegistration(card, clientId: clientId, apiKey: apiKey)
             return createdCard
         } catch {
             print("❌ Failed to createCardRegistration -> PayIn..")

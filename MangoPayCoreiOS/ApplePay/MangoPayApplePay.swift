@@ -202,7 +202,7 @@ extension MangoPayApplePay: PKPaymentAuthorizationViewControllerDelegate {
         
         Task {
             do {
-                let authpayment = try await MangoPaySDK.authorizePayment(apikey: MangoPaySDK.clientID, paymentData: authData)
+                let authpayment = try await MangoPaySDK.authorizePayment(apikey: MangoPaySDK.apiKey, paymentData: authData)
                 handleFinalState(.success, nil)
             } catch {
                 handleFinalState(.error, error)

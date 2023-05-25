@@ -79,6 +79,7 @@ class ProductListController: UIViewController {
         
         let elementOptions = ElementsOptions(
             apiKey: "ct_test_aSk3Ht5l9aCdjSaI",
+            clientId: "",
             style: style,
             customerId: nil,
             amount: selectedProduct.price,
@@ -106,6 +107,7 @@ class ProductListController: UIViewController {
         
         let dropInOptions = DropInOptions(
             apiKey: apikey,
+            clientId: "",
             orderId: nil,
             style: style,
             customerId: nil,

@@ -46,6 +46,7 @@ class ViewController: UIViewController {
         
         let elementOptions = ElementsOptions(
             apiKey: "ct_test_kpOoHuu5pSzJGABP",
+            clientId: "",
             style: style,
             customerId: nil,
             amount: 200,
@@ -74,6 +75,7 @@ class ViewController: UIViewController {
         
         let dropInOptions = DropInOptions(
             apiKey: "ct_test_kpOoHuu5pSzJGABP",
+            clientId: "",
             orderId: nil,
             style: style,
             customerId: nil,

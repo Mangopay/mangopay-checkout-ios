@@ -314,7 +314,12 @@ class PaymentFormView: UIView {
         self.elementOptions = elementOptions
 
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
-        self.viewModel = PaymentFormViewModel(clientId: MangoPaySDK.clientID)
+        self.viewModel = PaymentFormViewModel(
+            clientId: MangoPaySDK.clientId,
+            apiKey: MangoPaySDK.apiKey,
+            environment: (elementOptions?.environment ?? dropInOptions?.environment) ?? .sandbox
+        )
+    
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
             target: self,

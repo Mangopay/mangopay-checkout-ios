@@ -44,6 +44,10 @@ public class PaymentFormViewModel {
         self.client = MangoPayClient(clientKey: clientId)
     }
 
+    init(clientId: String, apiKey: String, environment: Environment) {
+        self.client = MangoPayClient(clientKey: clientId, apiKey: apiKey, environment: environment)
+    }
+
     func fetchCards() {
 //        client.fetchCards(with: nil)
     }

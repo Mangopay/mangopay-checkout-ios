@@ -14,15 +14,16 @@ import MangoPaySdkAPI
 import UIKit
 #endif
 
-public enum Ennvironment {
-    case sandbox
-    case production
-}
+//public enum Ennvironment {
+//    case sandbox
+//    case production
+//}
 
 public struct ElementsOptions {
     var apiKey: String
+    var clientId: String
     var style: PaymentFormStyle?
-    var environment: Ennvironment
+    var environment: Environment
     var customerId: String?
     var amount: Float
     var countryCode: String
@@ -37,6 +38,7 @@ public struct ElementsOptions {
     
     public init(
         apiKey: String,
+        clientId: String,
         style: PaymentFormStyle? = nil,
         customerId: String? = nil,
         amount: Float,
@@ -46,6 +48,7 @@ public struct ElementsOptions {
         delegate: ElementsFormDelegate
     ) {
         self.apiKey = apiKey
+        self.clientId = clientId
         self.style = style
         self.customerId = customerId
         self.delegate = delegate
@@ -53,16 +56,17 @@ public struct ElementsOptions {
         self.countryCode = countryCode
         self.currencyCode = currencyCode
         self.applePayMerchantId = applePayMerchantId
-        self.environment = apiKey.contains("test") ? .sandbox : .production
+        self.environment = apiKey.contains("test") ? .sandbox : .prod
 
     }
 }
 
 public class DropInOptions {
     var apiKey: String
+    var clientId: String
     var orderId: String?
     var style: PaymentFormStyle?
-    var environment: Ennvironment
+    var environment: Environment
     var customerId: String?
     var flowId: String
     var amount: Float
@@ -80,6 +84,7 @@ public class DropInOptions {
 
     public init(
         apiKey: String,
+        clientId: String,
         orderId: String? = nil,
         style: PaymentFormStyle? = nil,
         customerId: String? = nil,
@@ -93,6 +98,7 @@ public class DropInOptions {
         delegate: DropInFormDelegate
     ) {
         self.apiKey = apiKey
+        self.clientId = clientId
         self.orderId = orderId
         self.style = style
         self.customerId = customerId
@@ -102,7 +108,7 @@ public class DropInOptions {
         self.countryCode = countryCode
         self.delegate = delegate
         self.intentId = intentId
-        self.environment = apiKey.contains("test") ? .sandbox : .production
+        self.environment = apiKey.contains("test") ? .sandbox : .prod
         self.applePayMerchantId = applePayMerchantId
         self.threeDSRedirectURL = threeDSRedirectURL
     }
@@ -110,7 +116,8 @@ public class DropInOptions {
 
 public struct MangoPaySDK {
     
-    static var clientID: String!
+    static var apiKey: String!
+    static var clientId: String!
     private static var paymentFormVC: PaymentFormController!
     
     public static func buildElementForm(
@@ -118,7 +125,8 @@ public struct MangoPaySDK {
         cardConfig: CardConfig?,
         present viewController: UIViewController
     ) {
-        MangoPaySDK.clientID = options.apiKey
+        MangoPaySDK.apiKey = options.apiKey
+        MangoPaySDK.clientId = options.clientId
         paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             elementOptions: options
@@ -134,7 +142,7 @@ public struct MangoPaySDK {
         present viewController: UIViewController,
         dropInDelegate: DropInFormDelegate
     ) {
-        MangoPaySDK.clientID = options.apiKey
+        MangoPaySDK.apiKey = options.apiKey
         paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             dropInOptions: options
