@@ -209,7 +209,7 @@ class DemoPaymentForm: UIViewController {
     func payline(card: CardInfo) {
         
         let mgpVault = MangoPayVault(
-            clientToken: configuration.clientId,
+            clientId: configuration.clientId,
             provider: .MANGOPAY,
             environment: .sandbox
         )

@@ -130,7 +130,7 @@ class ViewController: UIViewController {
         
         showLoader(true)
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY, environment: .sandbox
         )
 
