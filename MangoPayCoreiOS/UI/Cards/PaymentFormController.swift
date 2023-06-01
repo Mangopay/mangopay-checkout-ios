@@ -233,7 +233,7 @@ extension PaymentFormController: MangoPayApplePayDelegate {
         if let _delegate = formView.viewModel.dropInDelegate  {
             _delegate.onApplePayCompleteDropIn(status: status)
         } else if let _delegate = formView.viewModel.elementDelegate {
-            _delegate.onApplePayCompleteElement(status: status)
+//            _delegate.onApplePayCompleteElement(status: status)
         }
         
         if status == .success {

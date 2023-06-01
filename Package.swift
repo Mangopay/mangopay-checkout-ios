@@ -35,6 +35,7 @@ let package = Package(
             name: "MangoPayCoreiOS",
             dependencies: [
                 "MangoPaySdkAPI",
+                "MangoPayVault"
             ],
             path: "MangoPayCoreiOS",
             resources: [
@@ -59,8 +60,7 @@ let package = Package(
         .target(
             name: "MangoPayVault",
             dependencies: [
-                "MangoPaySdkAPI",
-                "MangoPayCoreiOS"
+                "MangoPaySdkAPI"
             ],
             path: "MangoPayVault"
         ),

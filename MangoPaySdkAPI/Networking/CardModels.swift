@@ -58,6 +58,18 @@ public struct CardData: Cardable {
         
         return card
     }
+
+    public func toPaymentCardInfo() -> CardInfo {
+        
+        let expStr = (expMonth ?? 0) + (expYear ?? 0)
+        
+        return CardInfo(
+            cardNumber: number,
+            cardExpirationDate: String(expStr),
+            cardCvx: cvc
+        )
+        
+    }
     
     func toCardDtoInput() -> CheckoutSchema.CardDtoInput {
         let _cvc = self.cvc ?? ""

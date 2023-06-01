@@ -28,6 +28,7 @@
 		98835B0E29C9DC9E0085F51C /* CongratsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98835AFC29C9DC9E0085F51C /* CongratsView.xib */; };
 		98835B1029C9DC9E0085F51C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98835AFE29C9DC9E0085F51C /* SceneDelegate.swift */; };
 		98B6BE2029E6FFF100E9C30A /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 98B6BE1F29E6FFF100E9C30A /* netfox */; };
+		98D3C77D2A1FABE90064BDC3 /* ElementCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3C77C2A1FABE90064BDC3 /* ElementCardController.swift */; };
 		98F6CAEB2A156BB2007677F0 /* MangoPayCoreiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 98F6CAEA2A156BB2007677F0 /* MangoPayCoreiOS */; };
 		98F6CAED2A156BB2007677F0 /* MangoPayIntent in Frameworks */ = {isa = PBXBuildFile; productRef = 98F6CAEC2A156BB2007677F0 /* MangoPayIntent */; };
 		98F6CAEF2A156BB2007677F0 /* MangoPaySdkAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 98F6CAEE2A156BB2007677F0 /* MangoPaySdkAPI */; };
@@ -57,6 +58,7 @@
 		98835AFE29C9DC9E0085F51C /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		98835B1129C9DDA70085F51C /* MangoPayExampleCheckout.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MangoPayExampleCheckout.entitlements; sourceTree = "<group>"; };
 		98C3894528F7DBCA0000BD84 /* MangoPayExampleCheckout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangoPayExampleCheckout.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D3C77C2A1FABE90064BDC3 /* ElementCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCardController.swift; sourceTree = "<group>"; };
 		98F6CAE92A156A65007677F0 /* MangoPayiOSSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MangoPayiOSSDK; path = ../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +103,7 @@
 				98835AFC29C9DC9E0085F51C /* CongratsView.xib */,
 				98835AFD29C9DC9E0085F51C /* Info.plist */,
 				98835AFE29C9DC9E0085F51C /* SceneDelegate.swift */,
+				98D3C77C2A1FABE90064BDC3 /* ElementCardController.swift */,
 			);
 			path = MangoPayExampleCheckout;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				98835B0129C9DC9E0085F51C /* UIViewController+extensions.swift in Sources */,
 				98835B0929C9DC9E0085F51C /* ProductListController.swift in Sources */,
 				98835B0029C9DC9E0085F51C /* DemoPaymentForm.swift in Sources */,
+				98D3C77D2A1FABE90064BDC3 /* ElementCardController.swift in Sources */,
 				9859559529F143C2001154E3 /* Segue+Additions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,7 +413,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MangoPayExampleCheckout/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -440,7 +444,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MangoPayExampleCheckout/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

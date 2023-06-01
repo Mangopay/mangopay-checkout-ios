@@ -7,7 +7,6 @@
 
 import Foundation
 import MangoPaySdkAPI
-import MangoPayCoreiOS
 
 public protocol MangoPayVaultDelegate: AnyObject {
     func onSuccess(card: CardRegistration)
@@ -22,21 +21,6 @@ public protocol MangoPayVaultCreateCustomerDelegate: AnyObject {
 public enum Provider: String {
     case WHENTHEN
     case MANGOPAY
-}
-
-public enum Environment: String {
-    case sandbox
-    case prod
-
-    public var url: URL {
-        switch self {
-        case .sandbox:
-//            return URL(string: "https://testing3-api.mangopay.com")!
-            return URL(string: "https://api.sandbox.mangopay.com")!
-        case .prod:
-            return URL(string: "https://api.mangopay.com")!
-        }
-    }
 }
 
 public class MangoPayVault {
@@ -153,7 +137,7 @@ public class MangoPayVault {
             throw CardValidationError.cvvRqd
         }
         
-        if !LuhnChecker.luhnCheck(cardNum) {
+        if !VaultLuhnChecker.luhnCheck(cardNum) {
             throw CardValidationError.cardNumberInvalid
         }
         
@@ -176,7 +160,15 @@ extension MangoPayVault {
         let currentYear = Calendar.current.component(.year, from: Date())
         let currentMonth = Calendar.current.component(.month, from: Date())
         
-        guard let actualDate = Date(dateStr, format: "MMYY") else { return false }
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.dateFormat = "MMYY"
+        dateFormatter.amSymbol = "am"
+        dateFormatter.pmSymbol = "pm"
+        guard let actualDate = dateFormatter.date(from: dateStr) else { return false }
+
+//        guard let actualDate = Date(dateStr, format: "MMYY") else { return false }
         let enteredYear = Calendar.current.dateComponents([.year], from: actualDate).year ?? 0
         let enteredMonth = Calendar.current.dateComponents([.month], from: actualDate).month ?? 0
 

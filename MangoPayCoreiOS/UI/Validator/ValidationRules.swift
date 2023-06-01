@@ -17,6 +17,7 @@ public enum ValidationRules: String {
     case cardExpired
     case cvvRequired
     case dateRequired
+    case dateExpired
     case textTooShort
     case fieldRequired
 
@@ -36,6 +37,8 @@ public enum ValidationRules: String {
             return LocalizableString.ERROR_CVC_REQUIRED
         case .dateRequired:
             return LocalizableString.ERROR_EXPIRED_DATE_REQUIRED
+        case .dateExpired:
+            return LocalizableString.ERROR_EXPIRED_DATE
         case .textTooShort:
             return LocalizableString.ERROR_TEXT_TOO_SHORT
         case .fieldRequired:
@@ -122,7 +125,43 @@ class Validator<T: Validatable> {
             let isTooShort = item.inputData.count <= 2
             (triggerError && isTooShort) ? item.triggerError(message: rule.reason) : ()
             return !isTooShort
+        case .dateExpired:
+            let isValid = isExpDateValid(dateStr: item.inputData)
+            (triggerError && !isValid) ? item.triggerError(message: rule.reason) : ()
+            return isValid
         }
+    }
+
+    func isExpDateValid(dateStr: String) -> Bool {
+
+        let currentYear = Calendar.current.component(.year, from: Date()) // This will give you current year (i.e. if 2019 then it will be 19)
+        let currentMonth = Calendar.current.component(.month, from: Date()) // This will
+        print(dateStr) // This is MM/YY Entered by user
+        
+        guard let actualDate = Date(dateStr, format: "MM/yy") else { return false }
+        let enteredYear = Calendar.current.dateComponents([.year], from: actualDate).year ?? 0
+        let enteredMonth = Calendar.current.dateComponents([.month], from: actualDate).month ?? 0
+
+        if enteredYear > currentYear {
+            if (1 ... 12).contains(enteredMonth) {
+                return true
+            } else {
+                return false
+            }
+        } else if currentYear == enteredYear {
+            if enteredMonth >= currentMonth {
+                if (1 ... 12).contains(enteredMonth) {
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+
     }
 
     public func isValid(triggeringError triggerError: Bool) -> Bool {

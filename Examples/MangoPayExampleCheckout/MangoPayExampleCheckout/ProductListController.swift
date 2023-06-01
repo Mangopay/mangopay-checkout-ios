@@ -65,34 +65,39 @@ class ProductListController: UIViewController {
     }
 
     func didTapElementCheckout(selectedProduct: Product) {
-        let cardConfig = CardConfig(supportedCardBrands: [.visa, .amex])
-                            
-        let style = PaymentFormStyle(
-            font: .systemFont(ofSize: 10),
-            borderType: .round,
-            textColor: .black,
-            placeHolderColor: .gray,
-            errorColor: .red,
-            checkoutButtonTextColor: .white,
-            checkoutButtonBackgroundColor: .black
-        )
-        
-        let elementOptions = ElementsOptions(
-            apiKey: "ct_test_aSk3Ht5l9aCdjSaI",
-            clientId: "",
-            style: style,
-            customerId: nil,
-            amount: selectedProduct.price,
-            countryCode: "US",
-            currencyCode: "USD",
-            delegate: self
-        )
+//        let cardConfig = CardConfig(supportedCardBrands: [.visa, .amex])
+//                            
+//        let style = PaymentFormStyle(
+//            font: .systemFont(ofSize: 10),
+//            borderType: .round,
+//            textColor: .black,
+//            placeHolderColor: .gray,
+//            errorColor: .red,
+//            checkoutButtonTextColor: .white,
+//            checkoutButtonBackgroundColor: .black
+//        )
+//        
+//        let elementOptions = ElementsOptions(
+//            apiKey: "ct_test_aSk3Ht5l9aCdjSaI",
+//            clientId: "",
+//            style: style,
+//            customerId: nil,
+//            amount: selectedProduct.price,
+//            countryCode: "US",
+//            currencyCode: "USD",
+//            delegate: self
+//        )
+//
+//        MangoPaySDK.buildElementForm(
+//            with: elementOptions,
+//            cardConfig: cardConfig,
+//            present: self
+//        )
 
-        MangoPaySDK.buildElementForm(
-            with: elementOptions,
-            cardConfig: cardConfig,
-            present: self
-        )
+        let viewController = ElementCardController()
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .coverVertical
+        present(viewController, animated: true)
     }
     
      func didTapDropInCheckout(selectedProduct: Product) {

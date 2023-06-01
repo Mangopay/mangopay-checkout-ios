@@ -56,7 +56,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -74,7 +74,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -96,7 +96,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -117,7 +117,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -139,7 +139,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -160,7 +160,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -182,7 +182,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -204,7 +204,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -226,7 +226,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -248,7 +248,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -269,7 +269,7 @@ final class MangoPayVaultTests: XCTestCase {
         )
         
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -319,7 +319,7 @@ final class MangoPayVaultTests: XCTestCase {
 
     func testTokeniseMGPVault() {
         let mgpVault = MangoPayVault(
-            clientToken: "checkoutsquatest",
+            clientId: "checkoutsquatest",
             provider: .MANGOPAY,
             environment: .sandbox
         )
@@ -396,6 +396,8 @@ class MockPaylineController: UIViewController, MangoPayVaultDelegate {
 }
 
 class MockWhenThenClient: MangoPayClientSessionProtocol {
+    var apiKey: String!
+    
     var clientKey: String!
     
     init(clientKey: String) {
@@ -412,8 +414,50 @@ class MockWhenThenClient: MangoPayClientSessionProtocol {
     }
     
 }
+func authorizePayIn(_ authorizeData: MangoPaySdkAPI.AuthorizePayIn, clientId: String, apiKey: String) async throws -> MangoPaySdkAPI.AuthorizePayIn {
+    return AuthorizePayIn(
+        authorID: "sadqw",
+        debitedFunds: DebitedFunds(currency: "USD", amount: 20),
+        fees: DebitedFunds(currency: "USD", amount: 20),
+        creditedWalletID: "sfq31f",
+        cardID: "cardId313",
+        secureModeReturnURL: "www.google.com",
+        statementDescriptor: "sdqw",
+        ipAddress: ""
+    )
+}
+
+func getPayIn(clientId: String, apiKey: String, payInId: String) async throws -> MangoPaySdkAPI.PayIn {
+    return PayIn()
+}
+
+func fetchPayInCards(clientId: String, apiKey: String, userId: String, active: Bool) async throws -> [MangoPaySdkAPI.PayInCard] {
+    return [PayInCard()]
+}
+
 
 class MockVaultClient: CardRegistrationClientProtocol {
+    func authorizePayIn(_ authorizeData: MangoPaySdkAPI.AuthorizePayIn, clientId: String, apiKey: String) async throws -> MangoPaySdkAPI.AuthorizePayIn {
+        return AuthorizePayIn(
+            authorID: "sadqw",
+            debitedFunds: DebitedFunds(currency: "USD", amount: 20),
+            fees: DebitedFunds(currency: "USD", amount: 20),
+            creditedWalletID: "sfq31f",
+            cardID: "cardId313",
+            secureModeReturnURL: "www.google.com",
+            statementDescriptor: "sdqw",
+            ipAddress: ""
+        )
+    }
+    
+    func getPayIn(clientId: String, apiKey: String, payInId: String) async throws -> MangoPaySdkAPI.PayIn {
+        return PayIn()
+    }
+    
+    func fetchPayInCards(clientId: String, apiKey: String, userId: String, active: Bool) async throws -> [MangoPaySdkAPI.PayInCard] {
+        return [PayInCard()]
+    }
+
     func authorizePayIn(_ authorizeData: MangoPaySdkAPI.AuthorizePayIn, clientId: String) async throws -> AuthorizePayIn {
         return AuthorizePayIn(
             authorID: "sadqw",
@@ -421,7 +465,9 @@ class MockVaultClient: CardRegistrationClientProtocol {
             fees: DebitedFunds(currency: "USD", amount: 20),
             creditedWalletID: "sfq31f",
             cardID: "cardId313",
-            statementDescriptor: "sdqw"
+            secureModeReturnURL: "www.google.com",
+            statementDescriptor: "sdqw",
+            ipAddress: ""
         )
     }
     

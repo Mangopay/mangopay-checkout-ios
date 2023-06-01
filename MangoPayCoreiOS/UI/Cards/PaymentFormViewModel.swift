@@ -10,6 +10,7 @@ import Combine
 import ApolloAPI
 import Apollo
 import MangoPaySdkAPI
+import MangoPayVault
 
 public protocol DropInFormDelegate: AnyObject {
     func onPaymentStarted(sender: PaymentFormViewModel)
@@ -22,8 +23,8 @@ public protocol DropInFormDelegate: AnyObject {
 public protocol ElementsFormDelegate: AnyObject {
     func onPaymentStarted(sender: PaymentFormViewModel)
     func onTokenGenerated(tokenizedCard: TokenizeCard)
+    func onTokenGenerated(vaultCard: CardRegistration)
     func onTokenGenerationFailed(error: Error)
-    func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus)
     func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment)
 }
 
@@ -68,6 +69,22 @@ public class PaymentFormViewModel {
                 self.elementDelegate?.onTokenGenerationFailed(error: error)
             }
         }
+    }
+
+    func tokenizeCardElement(with cardReg: CardRegistration) {
+        guard let inputData = formData?.toPaymentCardInfo() else { return }
+        
+        let mgpVault = MangoPayVault(
+            clientId: client.clientKey,
+            provider: .MANGOPAY,
+            environment: client.environment
+        )
+        
+        mgpVault.tokenizeCard(
+            card: inputData,
+            cardRegistration: cardReg,
+            delegate: self
+        )
     }
 
     func performDropin(with inputData: PaymentCardInput?, cardToken: String?) async {
@@ -212,4 +229,15 @@ public class PaymentFormViewModel {
     }
 
 }
-//4000002760003184
+
+extension PaymentFormViewModel: MangoPayVaultDelegate {
+    public func onSuccess(card: CardRegistration) {
+        self.elementDelegate?.onTokenGenerated(vaultCard: card)
+    }
+
+    public func onFailure(error: Error) {
+        self.elementDelegate?.onTokenGenerationFailed(error: error)
+    }
+    
+    
+}

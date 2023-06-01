@@ -23,3 +23,4 @@
 "ERROR_CVC_REQUIRED" = "CVC Required";
 "ERROR_EXPIRED_DATE_REQUIRED" = "Expiry Date Required";
 "ERROR_TEXT_TOO_SHORT" = "Text is too short.";
+"ERROR_EXPIRED_DATE" = "Expired Card Date";
