@@ -61,12 +61,13 @@ public struct CardData: Cardable {
 
     public func toPaymentCardInfo() -> CardInfo {
         
-        let expStr = (expMonth ?? 0) + (expYear ?? 0)
+        let expStr = String(expMonth ?? 0) + String(expYear ?? 0).suffix(2)
         
         return CardInfo(
             cardNumber: number,
-            cardExpirationDate: String(expStr),
-            cardCvx: cvc
+            cardExpirationDate: expStr,
+            cardCvx: cvc,
+            cardType: "CB_VISA_MASTERCARD"
         )
         
     }

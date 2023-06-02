@@ -42,6 +42,10 @@ class ElementCardController: UIViewController {
 }
 
 extension ElementCardController: ElementsFormDelegate {
+    func onTokenGenerated(vaultCard: MangoPaySdkAPI.CardRegistration) {
+        
+    }
+    
     func onPaymentStarted(sender: PaymentFormViewModel) {
         
     }

@@ -12,6 +12,7 @@ protocol URLHelping {
 
     func urlsMatch(redirectUrl: URL, matchingUrl: URL) -> Bool
     func extractToken(from url: URL) -> (String?, String?)
+    func extractPreAuth(from url: URL) -> String?
 }
 
 final class URLHelper: URLHelping {
@@ -24,6 +25,13 @@ final class URLHelper: URLHelping {
             components.queryItems?.first { $0.name == "id" }?.value,
             components.queryItems?.first { $0.name == "3ds_status" }?.value
         )
+    }
+
+    func extractPreAuth(from url: URL) -> String? {
+
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+
+        return components.queryItems?.first { $0.name == "preAuthorizationId" }?.value
     }
 
     func urlsMatch(redirectUrl: URL, matchingUrl: URL) -> Bool {

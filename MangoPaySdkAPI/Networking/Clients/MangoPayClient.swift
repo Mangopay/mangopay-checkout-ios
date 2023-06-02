@@ -304,5 +304,27 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
             throw error
         }
     }
+
+    public func createPreAuth(preAuth: PreAuthCard, clientId: String, apiKey: String) async throws -> PreAuthCard {
+
+        do {
+            let createdPreAuth = try await payClient.createPreAuth(clientId: clientId, apiKey: apiKey, preAuth: preAuth)
+            return createdPreAuth
+        } catch {
+            print("❌ Failed to createPreAuth -> PayIn..")
+            throw error
+        }
+    }
+
+    public func viewPreAuth(preAuthId: String, clientId: String, apiKey: String) async throws -> PreAuthCard {
+
+        do {
+            let createdPreAuth = try await payClient.viewPreAuth(clientId: clientId, apiKey: apiKey, preAuthId: preAuthId)
+            return createdPreAuth
+        } catch {
+            print("❌ Failed to createPreAuth -> PayIn..")
+            throw error
+        }
+    }
 }
 

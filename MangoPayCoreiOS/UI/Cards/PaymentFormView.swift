@@ -338,8 +338,8 @@ class PaymentFormView: UIView {
         keyboardUtil?.register()
         activitySpiner.isHidden = true
         
-        cardNumberField.text = "4000002760003184"
-//        cardNameField.text = "Elikem"
+        cardNumberField.text = "4970105181818183"
+        cardNameField.text = "Eamon"
 //        cvvField.text = "120"
 //        expiryDateField.text = "12/26"
         
@@ -468,7 +468,7 @@ class PaymentFormView: UIView {
 //                    return
 //                }
 //                // All data has been delivered to Nethone. Do the actual payment processing
-//                self.grabData()
+                self.grabData()
 //            })
 //        } catch { error
 //            print("❌❌❌❌ finalizeAttempt", error)
@@ -543,7 +543,8 @@ class PaymentFormView: UIView {
             activitySpiner.startAnimating()
             switch formType {
             case .dropIn:
-                await viewModel.performDropin(with: formData.toPaymentCardInput(), cardToken: nil)
+//                await viewModel.performDropin(with: formData.toPaymentCardInput(), cardToken: nil)
+                await viewModel.performDropinPayIn(with: formData.toPaymentCardInput())
             case .element:
                 await viewModel.tokenizeCard()
             }

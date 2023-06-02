@@ -189,18 +189,29 @@ extension PaymentFormController: ThreeDSControllerDelegate {
 
     public func onSuccess3D(paymentId: String) {
         let text = self.formView.statusLabel.text ?? ""
-        self.formView.statusLabel.text = text.appending("\n \n 3DS SUCESSFULL \n ==========")
-        
+        self.formView.statusLabel.text = text.appending("\n \n 3DS COMPLETE \n ==========")
+//        self.formView.statusLabel.text = text.appending("\n \n 3DS SUCESSFULL \n ==========")
+
         Task {
-            guard let payment = await self.formView.viewModel.getPayment(with: paymentId) else { return }
+//            guard let payment = await self.formView.viewModel.getPayment(with: paymentId) else { return }
 
+            guard let payment = await self.formView.viewModel.getPayInAuth3DSStatus(preAuthId: paymentId) else { return }
+    
+            if payment._paymentStatus == .VALIDATED {
+                self.formView.statusLabel.text = text.appending("\n \n 3DS SUCESSFULL \n ==========")
+                self.showAlert(with: paymentId, title: "3DS SUCESSFULL")
+            } else {
+                self.showAlert(with: paymentId, title: "3DS FAILED")
+                self.formView.statusLabel.text = text.appending("\n \n 3DS FAILED \n ==========")
+            }
+    
             let text = self.formView.statusLabel.text ?? ""
-            self.formView.statusLabel.text = text.appending("\n \n paymentId \(payment.id) \n ==========")
+            self.formView.statusLabel.text = text.appending("\n \n paymentId \(paymentId) \n ==========")
 
-            self.formView.viewModel.dropInDelegate?.onPaymentCompleted(
-                sender: self.formView.viewModel,
-                payment: payment
-            )
+//            self.formView.viewModel.dropInDelegate?.onPaymentCompleted(
+//                sender: self.formView.viewModel,
+//                payment: payment
+//            )
         }
     }
     

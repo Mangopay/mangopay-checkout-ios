@@ -56,7 +56,7 @@ public struct ElementsOptions {
         self.countryCode = countryCode
         self.currencyCode = currencyCode
         self.applePayMerchantId = applePayMerchantId
-        self.environment = apiKey.contains("test") ? .sandbox : .prod
+        self.environment = .sandbox
 
     }
 }
@@ -108,7 +108,7 @@ public class DropInOptions {
         self.countryCode = countryCode
         self.delegate = delegate
         self.intentId = intentId
-        self.environment = apiKey.contains("test") ? .sandbox : .prod
+        self.environment = .sandbox
         self.applePayMerchantId = applePayMerchantId
         self.threeDSRedirectURL = threeDSRedirectURL
     }
@@ -143,6 +143,7 @@ public struct MangoPaySDK {
         dropInDelegate: DropInFormDelegate
     ) {
         MangoPaySDK.apiKey = options.apiKey
+        MangoPaySDK.clientId = options.clientId
         paymentFormVC = PaymentFormController(
             cardConfig: cardConfig,
             dropInOptions: options

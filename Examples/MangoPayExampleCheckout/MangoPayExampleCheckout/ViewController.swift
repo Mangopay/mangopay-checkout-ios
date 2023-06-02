@@ -191,6 +191,10 @@ extension ViewController: DropInFormDelegate {
 }
 
 extension ViewController: ElementsFormDelegate {
+    func onTokenGenerated(vaultCard: MangoPaySdkAPI.CardRegistration) {
+        
+    }
+    
 
     func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment) {
         

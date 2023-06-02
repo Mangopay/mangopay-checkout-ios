@@ -89,9 +89,13 @@ extension ThreeDSController: WKNavigationDelegate {
     }
     
     public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        let status = urlHelper.extractToken(from: webView.url!)
-        guard let paymentId = status.0, let paymentStatus = status.1 else { return }
-        handleDismiss(status: paymentStatus, paymentId: paymentId)
+//        let status = urlHelper.extractToken(from: webView.url!)
+//        guard let paymentId = status.0, let paymentStatus = status.1 else { return }
+        let status = urlHelper.extractPreAuth(from: webView.url!)
+//        handleDismiss(status: paymentStatus, paymentId: paymentId)
+//        handleDismiss(preAuthID: status)
+        print("✅ didReceiveServerRedirectForProvisionalNavigation Logs", webView.url!)
+
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -100,6 +104,7 @@ extension ThreeDSController: WKNavigationDelegate {
 //        }
 
 //        logger?.log(.threeDSChallengeLoaded(success: true))
+        print("✅ navigation Logs", webView.url!)
     }
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -108,9 +113,10 @@ extension ThreeDSController: WKNavigationDelegate {
 //        }
 //
 //        logger?.log(.threeDSChallengeLoaded(success: false))
+        print("✅ didFail", error, webView.url!)
     }
 
-    private func handleDismiss(status: String, paymentId: String) {
+    private func handleDismiss(status: String, paymentId: String, preAuthID: String) {
         switch status {
         case "COMPLETED":
 //            self.dismiss(animated: true) { [delegate] in
@@ -125,6 +131,16 @@ extension ThreeDSController: WKNavigationDelegate {
             }
         default: return
         }
+    }
+
+    private func handleDismiss(preAuthID: String?) {
+        guard let _preauth = preAuthID else {
+            delegate?.onFailure3D()
+            return
+        }
+            self.navigationController?.popViewController(animated: true)
+            delegate?.onSuccess3D(paymentId: _preauth)
+
     }
 
 

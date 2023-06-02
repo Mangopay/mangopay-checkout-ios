@@ -169,5 +169,46 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
         )
     }
 
-    
+    public func createPreAuth(clientId: String, apiKey: String, preAuth: PreAuthCard) async throws -> PreAuthCard {
+        let url = baseUrl.appendingPathComponent(
+            "/\(apiVersion)/\(clientId)/preauthorizations/card/direct",
+            isDirectory: false
+        )
+
+        return try await request(
+            url: url,
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: preAuth.toDict(),
+            expecting: PreAuthCard.self,
+            basicAuthDict: [
+                "Username" : clientId,
+                "Password": apiKey
+            ],
+            verbose: true
+        )
+    }
+
+    public func viewPreAuth(clientId: String, apiKey: String, preAuthId: String) async throws -> PreAuthCard {
+        let url = baseUrl.appendingPathComponent(
+            "/\(apiVersion)/\(clientId)/preauthorizations/\(preAuthId)",
+            isDirectory: false
+        )
+
+        return try await request(
+            url: url,
+            method: .get,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            expecting: PreAuthCard.self,
+            basicAuthDict: [
+                "Username" : clientId,
+                "Password": apiKey
+            ],
+            verbose: true
+        )
+    }
 }

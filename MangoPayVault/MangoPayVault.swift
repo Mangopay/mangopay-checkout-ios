@@ -159,13 +159,14 @@ extension MangoPayVault {
 
         let currentYear = Calendar.current.component(.year, from: Date())
         let currentMonth = Calendar.current.component(.month, from: Date())
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.calendar = Calendar(identifier: .gregorian)
         dateFormatter.dateFormat = "MMYY"
         dateFormatter.amSymbol = "am"
         dateFormatter.pmSymbol = "pm"
+
         guard let actualDate = dateFormatter.date(from: dateStr) else { return false }
 
 //        guard let actualDate = Date(dateStr, format: "MMYY") else { return false }

@@ -24,7 +24,7 @@ struct Product {
 class ProductListController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    let apikey = "sk_test_Hmw4IIbchxdIPCmnw9BL7hBM4JLaUAn3"
+    let apikey = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
 //    let clientKey = "ct_test_LVB7OyjnVO8ZJ236"
     let flowID = "c1241bd1-9c7f-4371-a087-c03434434610"
     var intentId = ""
@@ -112,7 +112,7 @@ class ProductListController: UIViewController {
         
         let dropInOptions = DropInOptions(
             apiKey: apikey,
-            clientId: "",
+            clientId: "checkoutsquatest",
             orderId: nil,
             style: style,
             customerId: nil,
@@ -200,6 +200,10 @@ extension ProductListController: DropInFormDelegate {
 }
 
 extension ProductListController: ElementsFormDelegate {
+    func onTokenGenerated(vaultCard: MangoPaySdkAPI.CardRegistration) {
+        
+    }
+    
     func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment) {
         
     }

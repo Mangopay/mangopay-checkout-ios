@@ -181,6 +181,49 @@ public class PaymentFormViewModel {
         }
     }
 
+    func performDropinPayIn(with inputData: PaymentCardInput?) async {
+        guard let inputData = formData?.toPaymentCardInfo() else { return }
+
+        Task {
+            let regResponse = try await client.createCardRegistration(
+                card: CardRegistration.Initiate(
+                    UserId: "158091557",
+                    Currency: "EUR",
+                    CardType: "CB_VISA_MASTERCARD"
+                ),
+                clientId: client.clientKey,
+                apiKey: client.apiKey
+            )
+
+            let mgpVault = MangoPayVault(
+                clientId: client.clientKey,
+                provider: .MANGOPAY,
+                environment: client.environment
+            )
+    
+            mgpVault.tokenizeCard(
+                card: inputData,
+                cardRegistration: regResponse,
+                delegate: self
+            )
+        }
+    }
+
+    func getPayInAuth3DSStatus(preAuthId: String) async -> PreAuthCard? {
+        do {
+            
+            let preAuthStatus = try await client.viewPreAuth(
+                preAuthId: preAuthId,
+                clientId: client.clientKey,
+                apiKey: client.clientKey
+            )
+            return preAuthStatus
+        } catch {
+            print("❌❌ Error getting getPayInAuth3DSStatus  \(error.localizedDescription)")
+            return nil
+        }
+    }
+
     func authorizePayment(authPayment: AuthorisedPayment) async {
         
         do {
@@ -233,6 +276,33 @@ public class PaymentFormViewModel {
 extension PaymentFormViewModel: MangoPayVaultDelegate {
     public func onSuccess(card: CardRegistration) {
         self.elementDelegate?.onTokenGenerated(vaultCard: card)
+        
+        let preAuth = PreAuthCard(
+            authorID: "158091557",
+            debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
+            secureMode: "FORCE",
+            cardID: card.cardID!,
+            secureModeNeeded: true,
+            secureModeRedirectURL: "https://docs.mangopay.com",
+            secureModeReturnURL: "https://docs.mangopay.com"
+        )
+        Task {
+            do {
+                let pre = try await client.createPreAuth(
+                    preAuth: preAuth,
+                    clientId: client.clientKey,
+                    apiKey: client.apiKey
+                )
+                
+                if let url = URL(string: pre.secureModeRedirectURL!) {
+                    trigger3DSObserver.send(url)
+                }
+
+            } catch { error
+                print("❌ createPreAuth", error)
+            }
+
+        }
     }
 
     public func onFailure(error: Error) {
