@@ -141,9 +141,9 @@ public class MangoPayVault {
             throw CardValidationError.cardNumberInvalid
         }
         
-//        if !expDateValidation(dateStr: expirationDate) {
-//            throw CardValidationError.expDateInvalid
-//        }
+        if !expDateValidation(dateStr: expirationDate) {
+            throw CardValidationError.expDateInvalid
+        }
         
         if !(cvv.count >= 3 && cvv.count <= 4) {
             throw CardValidationError.cvvInvalid

@@ -482,7 +482,7 @@ class PaymentFormView: UIView {
 
     func grabData() {
         let formData = CardData(
-            number: cardNumberField.text,
+            number: cardNumberField.text?.replacingOccurrences(of: " ", with: ""),
             name: cardNameField.text,
             expMonth: expiryMonth,
             expYear: expiryYear,
