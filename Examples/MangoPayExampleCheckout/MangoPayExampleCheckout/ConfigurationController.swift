@@ -11,7 +11,7 @@ import MangoPayVault
 import MangoPaySdkAPI
 
 public enum SDKProvier: String, CaseIterable {
-    case WhenThen
+    case MangoPay
     case Payline
 }
 
@@ -254,7 +254,7 @@ class ConfigurationController: UIViewController {
             showLoader(true)
 
             let regResponse = try await CardRegistrationClient(
-                env: .sandbox
+                env: .prod
             ).createCardRegistration(
                 cardReg,
                 clientId: clientId,
@@ -285,7 +285,7 @@ class ConfigurationController: UIViewController {
                 switch configuration.sdkMode {
                 case .Payline:
                     routeToDemoForm(cardRegistration: createdObj, config: configuration)
-                case .WhenThen:
+                case .MangoPay:
                     routeToWhenThenDemo()
                 }
             }
@@ -299,11 +299,11 @@ class ConfigurationController: UIViewController {
 //        creditedWalletField.text = "6658354"
 //        authorField.text = "6658353"
         
-        apiKeyField.text = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
-        clientField.text = "checkoutsquatest"
-        creditedUserField.text = "158091557"
-        creditedWalletField.text = "159834019"
-        authorField.text = "158091557"
+//        apiKeyField.text = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+//        clientField.text = "checkoutsquatest"
+//        creditedUserField.text = "158091557"
+//        creditedWalletField.text = "159834019"
+//        authorField.text = "158091557"
     }
 
 }

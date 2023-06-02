@@ -35,6 +35,7 @@ public class PaymentFormViewModel {
     var tokenObserver = PassthroughSubject<TokenizeCard, Never>()
     var statusObserver = PassthroughSubject<String, Never>()
     var trigger3DSObserver = PassthroughSubject<URL, Never>()
+    var onConplete: (() -> Void)?
 
     weak var dropInDelegate: DropInFormDelegate?
     weak var elementDelegate: ElementsFormDelegate?
@@ -46,7 +47,7 @@ public class PaymentFormViewModel {
     }
 
     init(clientId: String, apiKey: String, environment: Environment) {
-        self.client = MangoPayClient(clientKey: clientId, apiKey: apiKey, environment: environment)
+        self.client = MangoPayClient(clientKey: clientId, apiKey: apiKey, environment: .prod)
     }
 
     func fetchCards() {
@@ -187,7 +188,7 @@ public class PaymentFormViewModel {
         Task {
             let regResponse = try await client.createCardRegistration(
                 card: CardRegistration.Initiate(
-                    UserId: "158091557",
+                    UserId: "3401451442",
                     Currency: "EUR",
                     CardType: "CB_VISA_MASTERCARD"
                 ),
@@ -278,7 +279,7 @@ extension PaymentFormViewModel: MangoPayVaultDelegate {
         self.elementDelegate?.onTokenGenerated(vaultCard: card)
         
         let preAuth = PreAuthCard(
-            authorID: "158091557",
+            authorID: "3401451442",
             debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
             secureMode: "FORCE",
             cardID: card.cardID!,
@@ -295,11 +296,13 @@ extension PaymentFormViewModel: MangoPayVaultDelegate {
                 )
                 
                 if let url = URL(string: pre.secureModeRedirectURL!) {
+                    onConplete?()
                     trigger3DSObserver.send(url)
                 }
 
             } catch { error
                 print("❌ createPreAuth", error)
+                onConplete?()
             }
 
         }

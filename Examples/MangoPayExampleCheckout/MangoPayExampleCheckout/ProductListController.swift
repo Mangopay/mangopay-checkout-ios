@@ -24,7 +24,7 @@ struct Product {
 class ProductListController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    let apikey = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+    let apikey = "zFSxUNrqFc2TYTPaCb2Ki0dXy3qMWGu7mqnbC4W6V2UTSnXaSb"
 //    let clientKey = "ct_test_LVB7OyjnVO8ZJ236"
     let flowID = "c1241bd1-9c7f-4371-a087-c03434434610"
     var intentId = ""
@@ -112,14 +112,14 @@ class ProductListController: UIViewController {
         
         let dropInOptions = DropInOptions(
             apiKey: apikey,
-            clientId: "checkoutsquatest",
+            clientId: "apiprod",
             orderId: nil,
             style: style,
             customerId: nil,
             flowId: flowID,
             amount: selectedProduct.price,
-            currencyCode: "USD",
-            countryCode: "US",
+            currencyCode: "EUR",
+            countryCode: "FR",
             threeDSRedirectURL: "https://documentation.whenthen.com",
             delegate: self
         )

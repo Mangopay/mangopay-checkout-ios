@@ -338,7 +338,7 @@ class PaymentFormView: UIView {
         keyboardUtil?.register()
         activitySpiner.isHidden = true
         
-        cardNumberField.text = "4970105181818183"
+        cardNumberField.text = "5356174671045674"
         cardNameField.text = "Eamon"
 //        cvvField.text = "120"
 //        expiryDateField.text = "12/26"
@@ -422,6 +422,7 @@ class PaymentFormView: UIView {
         activitySpiner.heightAnchor.constraint(equalToConstant: 30).isActive = true
         activitySpiner.widthAnchor.constraint(equalToConstant: 30).isActive = true
         self.backgroundColor = .white
+        self.bringSubviewToFront(activitySpiner)
     }
 
     func loadCountries() {
@@ -541,6 +542,9 @@ class PaymentFormView: UIView {
         Task {
             activitySpiner.isHidden = false
             activitySpiner.startAnimating()
+            viewModel.onConplete = {
+                self.activitySpiner.stopAnimating()
+            }
             switch formType {
             case .dropIn:
 //                await viewModel.performDropin(with: formData.toPaymentCardInput(), cardToken: nil)
@@ -548,7 +552,7 @@ class PaymentFormView: UIView {
             case .element:
                 await viewModel.tokenizeCard()
             }
-            activitySpiner.stopAnimating()
+//            activitySpiner.stopAnimating()
         }
         
     }
