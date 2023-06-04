@@ -338,8 +338,8 @@ class PaymentFormView: UIView {
         keyboardUtil?.register()
         activitySpiner.isHidden = true
         
-        cardNumberField.text = "5356174671045674"
-        cardNameField.text = "Eamon"
+        cardNumberField.text = "4970105181818183"
+        cardNameField.text = "Elikem"
 //        cvvField.text = "120"
 //        expiryDateField.text = "12/26"
         
