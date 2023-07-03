@@ -6,10 +6,9 @@
 //
 
 import UIKit
-import MangoPayVault
+import MangopayVault
 import MangoPaySdkAPI
 //import MangoPayIntent
-import MangoPayVault
 
 class DemoPaymentForm: UIViewController {
     
@@ -69,10 +68,10 @@ class DemoPaymentForm: UIViewController {
     }
     
     func createCardReg(
-        cardReg: CardRegistration.Initiate,
+        cardReg: MGPCardRegistration.Initiate,
         clientId: String,
         apiKey: String
-    ) async -> CardRegistration? {
+    ) async -> MGPCardRegistration? {
         do {
             showLoader(true)
             
@@ -207,39 +206,31 @@ class DemoPaymentForm: UIViewController {
     }
 
     func payline(card: CardInfo) {
-        
-        let mgpVault = MangoPayVault(
-            clientId: configuration.clientId,
-            provider: .MANGOPAY,
-            environment: .sandbox
-        )
-        
+        MangoPayVault.initialize(clientId: configuration.clientId, environment: .sandbox)
+
         showLoader(true)
         
-        mgpVault.tokenizeCard(
-            card: card,
-            cardRegistration: cardRegistration,
-            delegate: self
-        )
+        MangoPayVault.tokenizeCard(
+            card: CardInfo(
+                cardNumber: card.cardNumber,
+                cardExpirationDate: card.cardExpirationDate,
+                cardCvx: card.cardCvx,
+                cardType: card.cardType,
+                accessKeyRef: card.accessKeyRef,
+                data: card.data
+            ),
+            cardRegistration: cardRegistration) { tokenisedCard, error in
+                guard let _ = tokenisedCard else {
+                    print("✅ failed", error)
+                    self.showLoader(false)
+                    self.showAlert(with: error?.localizedDescription ?? "", title: "Failed ❌")
+                    return
+                }
+                self.showLoader(false)
+                self.showAlert(with: "", title: "Successful 🎉")
+                self.cardRegistration = tokenisedCard
+            }
     }
-    
-}
-
-extension DemoPaymentForm: MangoPayVaultDelegate {
-    
-    func onSuccess(card: CardRegistration) {
-        showLoader(false)
-        showAlert(with: card.cardID ?? "Null", title: "Successful 🎉")
-        self.cardRegistration = card
-    }
-    
-    func onFailure(error: Error) {
-        print("✅ failed", error)
-        showLoader(false)
-        showAlert(with: error.localizedDescription, title: "Failed ❌")
-
-    }
-    
     
 }
 

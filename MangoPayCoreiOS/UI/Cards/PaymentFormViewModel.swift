@@ -10,7 +10,7 @@ import Combine
 import ApolloAPI
 import Apollo
 import MangoPaySdkAPI
-import MangoPayVault
+import MangopayVault
 
 public protocol DropInFormDelegate: AnyObject {
     func onPaymentStarted(sender: PaymentFormViewModel)
@@ -23,7 +23,7 @@ public protocol DropInFormDelegate: AnyObject {
 public protocol ElementsFormDelegate: AnyObject {
     func onPaymentStarted(sender: PaymentFormViewModel)
     func onTokenGenerated(tokenizedCard: TokenizeCard)
-    func onTokenGenerated(vaultCard: CardRegistration)
+    func onTokenGenerated(vaultCard: MGPCardRegistration)
     func onTokenGenerationFailed(error: Error)
     func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment)
 }
@@ -35,7 +35,7 @@ public class PaymentFormViewModel {
     var tokenObserver = PassthroughSubject<TokenizeCard, Never>()
     var statusObserver = PassthroughSubject<String, Never>()
     var trigger3DSObserver = PassthroughSubject<URL, Never>()
-    var onConplete: (() -> Void)?
+    var onComplete: (() -> Void)?
 
     weak var dropInDelegate: DropInFormDelegate?
     weak var elementDelegate: ElementsFormDelegate?
@@ -46,8 +46,8 @@ public class PaymentFormViewModel {
         self.client = MangoPayClient(clientKey: clientId)
     }
 
-    init(clientId: String, apiKey: String, environment: Environment) {
-        self.client = MangoPayClient(clientKey: clientId, apiKey: apiKey, environment: .prod)
+    init(clientId: String, apiKey: String, environment: MGPEnvironment) {
+        self.client = MangoPayClient(clientKey: clientId, apiKey: apiKey, environment: .sandbox)
     }
 
     func fetchCards() {
@@ -75,17 +75,69 @@ public class PaymentFormViewModel {
     func tokenizeCardElement(with cardReg: CardRegistration) {
         guard let inputData = formData?.toPaymentCardInfo() else { return }
         
-        let mgpVault = MangoPayVault(
-            clientId: client.clientKey,
-            provider: .MANGOPAY,
-            environment: client.environment
-        )
+        MangoPayVault.initialize(clientId: client.clientKey, environment: .sandbox)
+
+        MangoPayVault.tokenizeCard(
+            card: CardInfo(
+                cardNumber: inputData.cardNumber,
+                cardExpirationDate: inputData.cardExpirationDate,
+                cardCvx: inputData.cardCvx,
+                cardType: inputData.cardType,
+                accessKeyRef: inputData.accessKeyRef,
+                data: inputData.data
+            ),
+            cardRegistration: cardReg) { tokenisedCard, error in
+                guard let card = tokenisedCard else {
+                    self.elementDelegate?.onTokenGenerationFailed(error: error!)
+                    return
+                }
+
+                self.elementDelegate?.onTokenGenerated(
+                    vaultCard: MGPCardRegistration(
+                        id: card.id,
+                        tag: card.tag,
+                        creationDate: card.creationDate,
+                        userID: card.userID,
+                        accessKey: card.accessKey,
+                        preregistrationData: card.preregistrationData,
+                        cardID: card.cardID,
+                        cardType: card.cardType,
+                        cardRegistrationURLStr: card.cardRegistrationURLStr,
+                        currency: card.currency,
+                        status: card.status
+                    )
+                )
+                
+                let preAuth = PreAuthCard(
+                    authorID: "3401451442",
+                    debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
+                    secureMode: "FORCE",
+                    cardID: card.cardID!,
+                    secureModeNeeded: true,
+                    secureModeRedirectURL: "https://docs.mangopay.com",
+                    secureModeReturnURL: "https://docs.mangopay.com"
+                )
+                Task {
+                    do {
+                        let pre = try await self.client.createPreAuth(
+                            preAuth: preAuth,
+                            clientId: self.client.clientKey,
+                            apiKey: self.client.apiKey
+                        )
+                        
+                        if let url = URL(string: pre.secureModeRedirectURL!) {
+                            self.onComplete?()
+                            self.trigger3DSObserver.send(url)
+                        }
+
+                    } catch { error
+                        print("❌ createPreAuth", error)
+                        self.onComplete?()
+                    }
+
+                }
+            }
         
-        mgpVault.tokenizeCard(
-            card: inputData,
-            cardRegistration: cardReg,
-            delegate: self
-        )
     }
 
     func performDropin(with inputData: PaymentCardInput?, cardToken: String?) async {
@@ -185,9 +237,11 @@ public class PaymentFormViewModel {
     func performDropinPayIn(with inputData: PaymentCardInput?) async {
         guard let inputData = formData?.toPaymentCardInfo() else { return }
 
+        MangoPayVault.initialize(clientId: client.clientKey, environment: .sandbox)
+
         Task {
-            let regResponse = try await client.createCardRegistration(
-                card: CardRegistration.Initiate(
+            let regResponse = try await self.client.createCardRegistration(
+                card: MGPCardRegistration.Initiate(
                     UserId: "3401451442",
                     Currency: "EUR",
                     CardType: "CB_VISA_MASTERCARD"
@@ -196,17 +250,17 @@ public class PaymentFormViewModel {
                 apiKey: client.apiKey
             )
 
-            let mgpVault = MangoPayVault(
-                clientId: client.clientKey,
-                provider: .MANGOPAY,
-                environment: client.environment
-            )
-    
-            mgpVault.tokenizeCard(
-                card: inputData,
-                cardRegistration: regResponse,
-                delegate: self
-            )
+            MangoPayVault.tokenizeCard(
+                card: CardInfo(
+                        cardNumber: inputData.cardNumber,
+                        cardExpirationDate: inputData.cardExpirationDate,
+                        cardCvx: inputData.cardCvx,
+                        cardType: inputData.cardType,
+                        accessKeyRef: inputData.accessKeyRef,
+                        data: inputData.data
+                    ),
+                cardRegistration: regResponse.toVaultCardReg) { tokenisedCard, error in
+                }
         }
     }
 
@@ -272,45 +326,4 @@ public class PaymentFormViewModel {
         }
     }
 
-}
-
-extension PaymentFormViewModel: MangoPayVaultDelegate {
-    public func onSuccess(card: CardRegistration) {
-        self.elementDelegate?.onTokenGenerated(vaultCard: card)
-        
-        let preAuth = PreAuthCard(
-            authorID: "3401451442",
-            debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
-            secureMode: "FORCE",
-            cardID: card.cardID!,
-            secureModeNeeded: true,
-            secureModeRedirectURL: "https://docs.mangopay.com",
-            secureModeReturnURL: "https://docs.mangopay.com"
-        )
-        Task {
-            do {
-                let pre = try await client.createPreAuth(
-                    preAuth: preAuth,
-                    clientId: client.clientKey,
-                    apiKey: client.apiKey
-                )
-                
-                if let url = URL(string: pre.secureModeRedirectURL!) {
-                    onConplete?()
-                    trigger3DSObserver.send(url)
-                }
-
-            } catch { error
-                print("❌ createPreAuth", error)
-                onConplete?()
-            }
-
-        }
-    }
-
-    public func onFailure(error: Error) {
-        self.elementDelegate?.onTokenGenerationFailed(error: error)
-    }
-    
-    
 }

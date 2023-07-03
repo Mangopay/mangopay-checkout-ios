@@ -9,21 +9,18 @@ import Foundation
 import Apollo
 import ApolloAPI
 import MangoPaySdkAPI
+import MangopayVault
 
 #if os(iOS)
 import UIKit
 #endif
 
-//public enum Ennvironment {
-//    case sandbox
-//    case production
-//}
 
 public struct ElementsOptions {
     var apiKey: String
     var clientId: String
     var style: PaymentFormStyle?
-    var environment: Environment
+    var environment: MGPEnvironment
     var customerId: String?
     var amount: Float
     var countryCode: String
@@ -66,7 +63,7 @@ public class DropInOptions {
     var clientId: String
     var orderId: String?
     var style: PaymentFormStyle?
-    var environment: Environment
+    var environment: MGPEnvironment
     var customerId: String?
     var flowId: String
     var amount: Float
@@ -114,10 +111,12 @@ public class DropInOptions {
     }
 }
 
-public struct MangoPaySDK {
+public class MangoPaySDK {
     
     static var apiKey: String!
     static var clientId: String!
+    static var environment: Environment!
+
     private static var paymentFormVC: PaymentFormController!
     
     public static func buildElementForm(
@@ -189,6 +188,53 @@ public struct MangoPaySDK {
 
 
 }
+
+extension MangoPaySDK {
+    public static func initialize(clientId: String, environment: Environment) {
+        self.clientId = clientId
+        self.environment = environment
+    }
+
+    public static func tokenizeCard(
+        form: MangoPayCheckoutForm,
+        with cardReg: CardRegistration,
+        callBack: @escaping MangoPayTokenizedCallBack
+    ) {
+        
+        guard form.isFormValid else { return }
+        guard let attemptRef = form.currentAttempt else { return }
+        
+        MangoPayVault.initialize(clientId: clientId, environment: .sandbox)
+
+        Task {
+            await MangoPayVault.tokenizeCard(
+                card: CardInfo(
+                    cardNumber: form.cardData.cardNumber,
+                    cardExpirationDate: form.cardData.cardExpirationDate,
+                    cardCvx: form.cardData.cardCvx,
+                    cardType: form.cardData.cardType,
+                    accessKeyRef: form.cardData.accessKeyRef,
+                    data: form.cardData.data
+                ),
+                cardRegistration: cardReg) { tokenisedCard, error in
+                    guard let _card = tokenisedCard else {
+                        callBack(.none, error)
+                        return
+                        
+                    }
+                    let res = TokenizedCardData(
+                        card: _card,
+                        fraud: FraudData(attemptReference: attemptRef)
+                    )
+                    callBack(res, .none)
+                }
+
+        }
+    }
+}
+
+
+
 
 extension MangoPaySDK {
 

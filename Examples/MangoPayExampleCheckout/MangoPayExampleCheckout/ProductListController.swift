@@ -42,7 +42,8 @@ class ProductListController: UIViewController {
         Product(name: "GTA 5", price: 59, imageName: "gta5"),
     ]
 
-    var selectedProduct: Product? 
+    var selectedProduct: Product?
+    var config: DataCapsule!
 
     @IBOutlet weak var priceAmountLabel: UILabel!
     
@@ -94,7 +95,10 @@ class ProductListController: UIViewController {
 //            present: self
 //        )
 
-        let viewController = ElementCardController()
+        let viewController = ElementCardController(
+            cardRegistration: config.cardReg,
+            clientId: config.config.clientId
+        )
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .coverVertical
         present(viewController, animated: true)
@@ -200,7 +204,7 @@ extension ProductListController: DropInFormDelegate {
 }
 
 extension ProductListController: ElementsFormDelegate {
-    func onTokenGenerated(vaultCard: MangoPaySdkAPI.CardRegistration) {
+    func onTokenGenerated(vaultCard: MangoPaySdkAPI.MGPCardRegistration) {
         
     }
     

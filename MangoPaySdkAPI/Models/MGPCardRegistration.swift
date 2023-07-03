@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MangopayVault
 
 //public enum Environment: String {
 //    case sandbox
@@ -45,6 +46,23 @@ public struct MGPCardRegistration: Codable {
     public var registrationURL: URL? {
         guard let urlStr = cardRegistrationURLStr else { return nil }
         return URL(string: urlStr)
+    }
+
+    public var toVaultCardReg: CardRegistration {
+        return CardRegistration(
+            id: self.id,
+            tag: self.tag,
+            creationDate: self.creationDate,
+            userID: self.userID,
+            accessKey: self.accessKey,
+            preregistrationData: self.preregistrationData,
+            registrationData: self.registrationData,
+            cardID: self.cardID,
+            cardType: self.cardType,
+            cardRegistrationURLStr: self.cardRegistrationURLStr,
+            currency: self.currency,
+            status: self.status
+        )
     }
 
     public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, userID: String? = nil, accessKey: String? = nil, preregistrationData: String? = nil, registrationData: String? = nil, cardID: String? = nil, cardType: String? = nil, cardRegistrationURLStr: String? = nil, currency: String? = nil, status: String? = nil) {

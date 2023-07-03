@@ -542,7 +542,7 @@ class PaymentFormView: UIView {
         Task {
             activitySpiner.isHidden = false
             activitySpiner.startAnimating()
-            viewModel.onConplete = {
+            viewModel.onComplete = {
                 self.activitySpiner.stopAnimating()
             }
             switch formType {

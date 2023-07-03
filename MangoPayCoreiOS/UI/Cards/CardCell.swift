@@ -16,7 +16,7 @@ class CardCell: UICollectionViewCell {
         iconName: .dropDownIcon,
         iconHeight: 20,
         iconWidth: 40,
-        contentMode: .scaleAspectFit
+        contentMode: .center
     )
 
     override init(frame: CGRect) {

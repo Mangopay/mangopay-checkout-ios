@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "mangopay-ios-vault-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
+      "state" : {
+        "branch" : "main",
+        "revision" : "57ce0d815b82606fd51698e5150c0d4fa5205b2c"
+      }
+    },
+    {
       "identity" : "sqlite.swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stephencelis/SQLite.swift.git",

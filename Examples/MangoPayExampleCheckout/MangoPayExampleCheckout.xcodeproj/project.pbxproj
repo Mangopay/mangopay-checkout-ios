@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98383E402A4AC5AE00A64733 /* MangopayVault in Frameworks */ = {isa = PBXBuildFile; productRef = 98383E3F2A4AC5AE00A64733 /* MangopayVault */; };
 		9842CE1329F1AC2B00AA36C0 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9842CE1229F1AC2B00AA36C0 /* IQKeyboardManagerSwift */; };
 		9859559329EFC4A3001154E3 /* ConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9859559229EFC4A3001154E3 /* ConfigurationController.swift */; };
 		9859559529F143C2001154E3 /* Segue+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9859559429F143C2001154E3 /* Segue+Additions.swift */; };
@@ -32,7 +33,6 @@
 		98F6CAEB2A156BB2007677F0 /* MangoPayCoreiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 98F6CAEA2A156BB2007677F0 /* MangoPayCoreiOS */; };
 		98F6CAED2A156BB2007677F0 /* MangoPayIntent in Frameworks */ = {isa = PBXBuildFile; productRef = 98F6CAEC2A156BB2007677F0 /* MangoPayIntent */; };
 		98F6CAEF2A156BB2007677F0 /* MangoPaySdkAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 98F6CAEE2A156BB2007677F0 /* MangoPaySdkAPI */; };
-		98F6CAF12A156BB2007677F0 /* MangoPayVault in Frameworks */ = {isa = PBXBuildFile; productRef = 98F6CAF02A156BB2007677F0 /* MangoPayVault */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,9 +70,9 @@
 				98F6CAEF2A156BB2007677F0 /* MangoPaySdkAPI in Frameworks */,
 				98F6CAED2A156BB2007677F0 /* MangoPayIntent in Frameworks */,
 				9842CE1329F1AC2B00AA36C0 /* IQKeyboardManagerSwift in Frameworks */,
-				98F6CAF12A156BB2007677F0 /* MangoPayVault in Frameworks */,
 				98B6BE2029E6FFF100E9C30A /* netfox in Frameworks */,
 				98F6CAEB2A156BB2007677F0 /* MangoPayCoreiOS in Frameworks */,
+				98383E402A4AC5AE00A64733 /* MangopayVault in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +163,7 @@
 				98F6CAEA2A156BB2007677F0 /* MangoPayCoreiOS */,
 				98F6CAEC2A156BB2007677F0 /* MangoPayIntent */,
 				98F6CAEE2A156BB2007677F0 /* MangoPaySdkAPI */,
-				98F6CAF02A156BB2007677F0 /* MangoPayVault */,
+				98383E3F2A4AC5AE00A64733 /* MangopayVault */,
 			);
 			productName = WhenThenExampleCheckout;
 			productReference = 98C3894528F7DBCA0000BD84 /* MangoPayExampleCheckout.app */;
@@ -197,6 +197,7 @@
 			packageReferences = (
 				98B6BE1E29E6FE8600E9C30A /* XCRemoteSwiftPackageReference "netfox" */,
 				9842CE1129F1AC2B00AA36C0 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				98383E3E2A4AC5AE00A64733 /* XCRemoteSwiftPackageReference "mangopay-ios-vault-sdk" */,
 			);
 			productRefGroup = 98C3894628F7DBCA0000BD84 /* Products */;
 			projectDirPath = "";
@@ -405,11 +406,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MangoPayExampleCheckout/MangoPayExampleCheckout.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = ZPQX25J7UP;
+				DEVELOPMENT_TEAM = ZPQX25J7UP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MangoPayExampleCheckout/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -422,10 +422,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.whenthen.checkout.WhenThenExampleCheckout;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whenthen.checkout.WhenThenExampleCheckout.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Elikem's Profile";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -485,6 +484,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		98383E3E2A4AC5AE00A64733 /* XCRemoteSwiftPackageReference "mangopay-ios-vault-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Mangopay/mangopay-ios-vault-sdk";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		9842CE1129F1AC2B00AA36C0 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -504,6 +511,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		98383E3F2A4AC5AE00A64733 /* MangopayVault */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98383E3E2A4AC5AE00A64733 /* XCRemoteSwiftPackageReference "mangopay-ios-vault-sdk" */;
+			productName = MangopayVault;
+		};
 		9842CE1229F1AC2B00AA36C0 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9842CE1129F1AC2B00AA36C0 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
@@ -525,10 +537,6 @@
 		98F6CAEE2A156BB2007677F0 /* MangoPaySdkAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MangoPaySdkAPI;
-		};
-		98F6CAF02A156BB2007677F0 /* MangoPayVault */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MangoPayVault;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

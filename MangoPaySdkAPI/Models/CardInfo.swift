@@ -6,7 +6,7 @@ public protocol Cardable {
     var cvc: String? { get }
 }
 
-public struct CardInfo: Codable, Cardable {
+public struct MGPCardInfo: Codable, Cardable {
     
     public var cardNumber: String?
     public var cardExpirationDate: String?

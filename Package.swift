@@ -19,15 +19,16 @@ let package = Package(
             targets: ["MangoPaySdkAPI"]),
         .library(
             name: "MangoPayIntent",
-            targets: ["MangoPayIntent"]),
-        .library(
-            name: "MangoPayVault",
-            targets: ["MangoPayVault"]),
+            targets: ["MangoPayIntent"])
     ],
     dependencies: [
         .package(
             url: "https://github.com/apollographql/apollo-ios.git",
             .upToNextMinor(from: "1.0.5")
+        ),
+        .package(
+            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk",
+            .branch("main")
         ),
     ],
     targets: [
@@ -35,7 +36,7 @@ let package = Package(
             name: "MangoPayCoreiOS",
             dependencies: [
                 "MangoPaySdkAPI",
-                "MangoPayVault"
+                .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk"),
             ],
             path: "MangoPayCoreiOS",
             resources: [
@@ -57,13 +58,6 @@ let package = Package(
             ],
             path: "MangoPayIntent"
         ),
-        .target(
-            name: "MangoPayVault",
-            dependencies: [
-                "MangoPaySdkAPI"
-            ],
-            path: "MangoPayVault"
-        ),
         .binaryTarget(
             name: "NethoneSDK",
             path: "Integrations/NethoneSDK.xcframework"
@@ -71,7 +65,6 @@ let package = Package(
         .testTarget(
             name: "Tests",
             dependencies: [
-                "MangoPayVault",
                 "MangoPaySdkAPI",
                 "MangoPayCoreiOS"
             ],

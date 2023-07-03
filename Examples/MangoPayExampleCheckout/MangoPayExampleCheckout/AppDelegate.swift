@@ -8,6 +8,7 @@
 import UIKit
 //import netfox
 import IQKeyboardManagerSwift
+import MangoPayCoreiOS
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 //        NFX.sharedInstance().start()
         IQKeyboardManager.shared.enable = true
+        MangoPaySDK.initialize(clientId: "12345s", environment: .sandbox)
         return true
     }
 

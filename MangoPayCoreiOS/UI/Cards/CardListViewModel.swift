@@ -9,7 +9,7 @@ import Foundation
 
 struct CardListViewModel {
 
-    var cards = CardType.allCases.filter({$0 != .none})
+    var cards = CardType.allCases.filter({$0 == .visa || $0 == .mastercard})
 
     var count: Int {
         return cards.count

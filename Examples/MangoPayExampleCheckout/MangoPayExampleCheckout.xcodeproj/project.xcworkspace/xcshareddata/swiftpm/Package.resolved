@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "mangopay-ios-vault-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0a8a2339cac86d18065fd7c81a1b3ae728982350"
+      }
+    },
+    {
       "identity" : "netfox",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kasketis/netfox",

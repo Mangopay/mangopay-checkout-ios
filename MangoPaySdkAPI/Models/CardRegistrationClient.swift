@@ -9,12 +9,12 @@ import Foundation
 
 public protocol CardRegistrationClientProtocol {
     func createCardRegistration(
-        _ card: CardRegistration.Initiate,
+        _ card: MGPCardRegistration.Initiate,
         clientId: String,
         apiKey: String
-    ) async throws -> CardRegistration
-    func postCardInfo(_ cardInfo: CardInfo, url: URL) async throws -> CardInfo.RegistrationData
-    func updateCardInfo(_ regData: CardInfo.RegistrationData, clientId: String, cardRegistrationId: String) async throws -> CardRegistration
+    ) async throws -> MGPCardRegistration
+    func postCardInfo(_ cardInfo: MGPCardInfo, url: URL) async throws -> MGPCardInfo.RegistrationData
+    func updateCardInfo(_ regData: MGPCardInfo.RegistrationData, clientId: String, cardRegistrationId: String) async throws -> MGPCardRegistration
     func authorizePayIn(_ authorizeData: AuthorizePayIn, clientId: String, apiKey: String) async throws -> AuthorizePayIn
     func getPayIn(clientId: String, apiKey: String, payInId: String) async throws -> PayIn
     func fetchPayInCards(clientId: String, apiKey: String, userId: String, active: Bool) async throws -> [PayInCard]
@@ -28,15 +28,15 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
         self.baseUrl = url
     }
 
-    public init(env: Environment) {
+    public init(env: MGPEnvironment) {
         self.baseUrl = env.url
     }
 
     public func createCardRegistration(
-        _ card: CardRegistration.Initiate,
+        _ card: MGPCardRegistration.Initiate,
         clientId: String,
         apiKey: String
-    ) async throws -> CardRegistration {
+    ) async throws -> MGPCardRegistration {
 
         let url = baseUrl.appendingPathComponent(
             "/\(apiVersion)/\(clientId)/cardregistrations",
@@ -50,7 +50,7 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
                 "Content-Type" : "application/json",
             ],
             bodyParam: card.toDict(),
-            expecting: CardRegistration.self,
+            expecting: MGPCardRegistration.self,
             basicAuthDict: [
                 "Username" : clientId,
                 "Password": apiKey
@@ -59,7 +59,7 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
         )
     }
     
-    public func postCardInfo(_ cardInfo: CardInfo, url: URL) async throws -> CardInfo.RegistrationData {
+    public func postCardInfo(_ cardInfo: MGPCardInfo, url: URL) async throws -> MGPCardInfo.RegistrationData {
 
         return try await request(
             url: url,
@@ -68,7 +68,7 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
                 "Content-Type" : "application/x-www-form-urlencoded",
             ],
             bodyParam: cardInfo.toDict(),
-            expecting: CardInfo.RegistrationData.self,
+            expecting: MGPCardInfo.RegistrationData.self,
             verbose: true,
             useXXForm: true,
             decodeAsString: true
@@ -76,9 +76,9 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
     }
 
     public func updateCardInfo(
-        _ regData: CardInfo.RegistrationData,
+        _ regData: MGPCardInfo.RegistrationData,
         clientId: String,
-        cardRegistrationId: String) async throws -> CardRegistration {
+        cardRegistrationId: String) async throws -> MGPCardRegistration {
         
         let url = baseUrl.appendingPathComponent(
             "/\(apiVersion)/\(clientId)/CardRegistrations/\(cardRegistrationId)",
@@ -92,7 +92,7 @@ public final class CardRegistrationClient: NetworkUtil, CardRegistrationClientPr
                 "Content-Type" : "application/json",
             ],
             bodyParam: regData.toDict(),
-            expecting: CardRegistration.self,
+            expecting: MGPCardRegistration.self,
             verbose: true
         )
     }

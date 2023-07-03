@@ -68,7 +68,7 @@ class HeaderView: UIView {
         vStack.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         vStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
 
-        self.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
 
     func set(_ cards: CardConfig?) {
@@ -104,7 +104,7 @@ extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return CGSize(width: 48, height: 20)
+        return CGSize(width: 48, height: 28)
     }
 
 

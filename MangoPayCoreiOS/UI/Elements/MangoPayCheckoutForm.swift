@@ -28,11 +28,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         style: self.paymentFormStyle,
         textfieldDelegate: self
     ) { textfield in
-        textfield.setRightImage(nil, text: "Choose Card")
         textfield.accessibilityLabel = "cardNumberField"
-        textfield.onRightButtonTappedAction = {
-            self.onRightButtonTappedAction?()
-        }
     }
 
     lazy var cardNameField = MangoPayTextfield(
@@ -119,11 +115,11 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         return areFormsValidShowingError()
     }
 
-    var cardData: CardInfo {
+    var cardData: MGPCardInfo {
         let monStr = (expiryMonth ?? 0) < 10 ? ("0" + String(expiryMonth ?? 0)) : String(expiryMonth ?? 0)
         let expStr = monStr + String(expiryYear ?? 0).suffix(2)
 
-        return CardInfo(
+        return MGPCardInfo(
             cardNumber: cardNumberField.text?.replacingOccurrences(of: " ", with: ""),
             cardExpirationDate: expStr,
             cardCvx: cvvField.text,
@@ -235,11 +231,6 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
 }
 
 extension MangoPayCheckoutForm: UITextFieldDelegate {
-
-    public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        print("❤️ isFormValid", isFormValid)
-    }
-
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case cardNumberField.textfield:

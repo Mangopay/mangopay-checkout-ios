@@ -23,7 +23,12 @@ public enum Provider: String {
     case MANGOPAY
 }
 
+//public typealias MangoPayCallBack = ((CardRegistration?, Error?) -> ())
+//public typealias MangoPayTokenizedCallBack = ((TokenizedCardData?, Error?) -> ())
+
+
 public class MangoPayVault {
+    
     
     private var paylineClient: CardRegistrationClientProtocol?
 
@@ -46,7 +51,7 @@ public class MangoPayVault {
     public func tokenizeCard(
         card: Cardable,
         cardRegistration: CardRegistration? = nil,
-        delegate: MangoPayVaultDelegate? = nil
+        mangoPayVaultCallback: @escaping MangoPayCallBack
     ) {
         do {
             let isValidCard = try validateCard(with: card)
@@ -56,12 +61,10 @@ public class MangoPayVault {
             tokenizeMGP(
                 with: card,
                 cardRegistration: _cardRegistration,
-                delegate: delegate
+                mangoPayVaultCallback: mangoPayVaultCallback
             )
         } catch {
-            DispatchQueue.main.async {
-                delegate?.onFailure(error: error)
-            }
+            mangoPayVaultCallback(.none, error)
         }
         
     }
@@ -69,7 +72,8 @@ public class MangoPayVault {
     private func tokenizeMGP(
         with card: Cardable,
         cardRegistration: CardRegistration?,
-        delegate: MangoPayVaultDelegate? = nil
+        delegate: MangoPayVaultDelegate? = nil,
+        mangoPayVaultCallback: @escaping MangoPayCallBack
     ) {
 
         guard let _cardRegistration = cardRegistration else { return }
@@ -112,11 +116,11 @@ public class MangoPayVault {
                     cardRegistrationId: cardId
                 )
                 DispatchQueue.main.async {
-                    delegate?.onSuccess(card: updateRes)
+                    mangoPayVaultCallback(updateRes, .none)
                 }
             } catch {
                 DispatchQueue.main.async {
-                    delegate?.onFailure(error: error)
+                    mangoPayVaultCallback(.none, error)
                 }
             }
         }

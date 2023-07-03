@@ -9,7 +9,7 @@ import UIKit
 import MangoPayCoreiOS
 import MangoPaySdkAPI
 //import MangoPayIntent
-import MangoPayVault
+import MangopayVault
 
 class ViewController: UIViewController {
 
@@ -94,22 +94,7 @@ class ViewController: UIViewController {
             dropInDelegate: self
         )
     }
-/*
- clientToken => WT
- clientId => MGP
  
- init
- cardRegData(optional)
- 
- remove CardData from init
- send it to tokenize
- 
- func tokenizeCard(
- card: Cardable,
- 
- 
- */
-    
     @IBAction func didTapPayline(_ sender: UIButton) {
 
         let resObj = CardRegistration(
@@ -124,43 +109,39 @@ class ViewController: UIViewController {
             status: "CREATED"
         )
 
-        let cardInfo = CardInfo(
+        let cardInfo = MGPCardInfo(
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "123"
         )
         
         showLoader(true)
-        let mgpVault = MangoPayVault(
-            clientId: "checkoutsquatest",
-            provider: .MANGOPAY, environment: .sandbox
-        )
+        
+        MangoPayVault.initialize(clientId: "checkoutsquatest", environment: .sandbox)
 
-        mgpVault.tokenizeCard(
-            card: cardInfo,
-            cardRegistration: resObj,
-            delegate: self
-        )
+        MangoPayVault.tokenizeCard(
+            card: CardInfo(
+                cardNumber: cardInfo.cardNumber,
+                cardExpirationDate: cardInfo.cardExpirationDate,
+                cardCvx: cardInfo.cardCvx,
+                cardType: cardInfo.cardType,
+                accessKeyRef: cardInfo.accessKeyRef,
+                data: cardInfo.data
+            ),
+            cardRegistration: resObj) { tokenisedCard, error in
+                guard let _ = tokenisedCard else {
+                    print("✅ failed", error)
+                    self.showLoader(false)
+                    return
+                }
+                self.showLoader(false)
+                self.showAlert(with: "", title: "Successful 🎉")
+            }
     }
 
     @IBAction func didTapVaultWT(_ sender: UIButton) {
 
     }
-    
-}
-
-extension ViewController: MangoPayVaultDelegate {
-    
-    func onSuccess(card: CardRegistration) {
-        showLoader(false)
-        showAlert(with: "", title: "Successful 🎉")
-    }
-    
-    func onFailure(error: Error) {
-        print("✅ failed", error)
-        showLoader(false)
-    }
-    
     
 }
 
@@ -191,7 +172,7 @@ extension ViewController: DropInFormDelegate {
 }
 
 extension ViewController: ElementsFormDelegate {
-    func onTokenGenerated(vaultCard: MangoPaySdkAPI.CardRegistration) {
+    func onTokenGenerated(vaultCard: MGPCardRegistration) {
         
     }
     
