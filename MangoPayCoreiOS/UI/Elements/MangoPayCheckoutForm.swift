@@ -9,8 +9,9 @@
 import UIKit
 #endif
 import MangoPaySdkAPI
+import NethoneSDK
 
-public class MangoPayElementsFormUI: UIView, FormValidatable {
+public class MangoPayCheckoutForm: UIView, FormValidatable {
 
     lazy var headerView = HeaderView()
 
@@ -87,7 +88,7 @@ public class MangoPayElementsFormUI: UIView, FormValidatable {
         spacing: 8,
         alignment: .fill,
         distribution: .fill,
-        padding: UIEdgeInsets(top: 8, left: 0, bottom: 32, right: 0),
+        padding: UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0),
         views: [
             headerView,
             cardNumberField,
@@ -107,29 +108,33 @@ public class MangoPayElementsFormUI: UIView, FormValidatable {
     var tapGesture: UIGestureRecognizer?
     var paymentFormStyle: PaymentFormStyle
     var keyboardUtil: KeyboardUtil?
-    var viewModel: PaymentFormViewModel!
 
     var expiryMonth: Int?
     var expiryYear: Int?
 
     var onRightButtonTappedAction: (() -> Void)?
+    var currentAttempt: String?
     
     var isFormValid: Bool {
         return areFormsValidShowingError()
     }
 
-    public init(
-        paymentFormStyle: PaymentFormStyle?,
-        elementOptions: ElementsOptions
-    ) {
+    var cardData: CardInfo {
+        let monStr = (expiryMonth ?? 0) < 10 ? ("0" + String(expiryMonth ?? 0)) : String(expiryMonth ?? 0)
+        let expStr = monStr + String(expiryYear ?? 0).suffix(2)
 
-        self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
-        self.viewModel = PaymentFormViewModel(
-            clientId: elementOptions.clientId,
-            apiKey: elementOptions.apiKey,
-            environment: elementOptions.environment
+        return CardInfo(
+            cardNumber: cardNumberField.text?.replacingOccurrences(of: " ", with: ""),
+            cardExpirationDate: expStr,
+            cardCvx: cvvField.text,
+            cardType: "CB_VISA_MASTERCARD"
         )
+    }
 
+    public init(
+        paymentFormStyle: PaymentFormStyle?
+    ) {
+        self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
             target: self,
@@ -137,8 +142,9 @@ public class MangoPayElementsFormUI: UIView, FormValidatable {
         )
         
         setupView()
-        
-        cardNumberField.text = "4000002760003184"
+        setCards(cards: nil)
+        initiateNethone()
+        cardNumberField.text = "4000 0027 6000 3184"
         
         cardNumberField.onEditingChanged = { text in
             let cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
@@ -153,10 +159,12 @@ public class MangoPayElementsFormUI: UIView, FormValidatable {
     private func setupView() {
         addSubview(vStack)
 
+        self.layer.cornerRadius = 8
         vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
         vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        vStack.heightAnchor.constraint(equalToConstant: 320).isActive = true
 
         self.backgroundColor = .white
     }
@@ -165,14 +173,68 @@ public class MangoPayElementsFormUI: UIView, FormValidatable {
         self.endEditing(true)
     }
 
-    public func tokenize(cardReg: CardRegistration) {
-        self.viewModel.tokenizeCardElement(with: cardReg)
+    func clearForm() {
+        [
+           cardNumberField,
+           cardNameField,
+           expiryDateField,
+           cvvField
+        ].forEach({$0.textfield.text = ""})
     }
 
-    
+    private func setCards(cards: CardConfig?) {
+        headerView.set(cards)
+    }
+
+    func initiateNethone() {
+        NTHNethone.setMerchantNumber("428242");
+        let nethoneConfig = NTHAttemptConfiguration()
+        nethoneConfig.sensitiveFields = [
+            "cardNumberField",
+            "cardNameField",
+            "expiryDateField",
+            "cvvField"
+        ]
+
+        registerTextfieldsToNethone()
+
+        do {
+            try NTHNethone.beginAttempt(with: nethoneConfig)
+            currentAttempt = NTHNethone.attemptReference()
+            print("✅ currentAttempt", currentAttempt)
+        } catch {
+            print("Nethone intiation Error")
+        }
+    }
+
+    func registerTextfieldsToNethone() {
+        NTHNethone.register(
+            cardNumberField.textfield,
+            mode: .AllData,
+            name: "cardNumberField"
+        )
+
+        NTHNethone.register(
+            cardNameField.textfield,
+            mode: .AllData,
+            name: "cardNameField"
+        )
+
+        NTHNethone.register(
+            expiryDateField.textfield,
+            mode: .AllData,
+            name: "expiryDateField"
+        )
+
+        NTHNethone.register(
+            cvvField.textfield,
+            mode: .AllData,
+            name: "cvvField"
+        )
+    }
 }
 
-extension MangoPayElementsFormUI: UITextFieldDelegate {
+extension MangoPayCheckoutForm: UITextFieldDelegate {
 
     public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         print("❤️ isFormValid", isFormValid)
@@ -315,7 +377,7 @@ extension MangoPayElementsFormUI: UITextFieldDelegate {
     }
 }
 
-extension MangoPayElementsFormUI: KeyboardUtilDelegate {
+extension MangoPayCheckoutForm: KeyboardUtilDelegate {
     
     func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
         let padding: CGFloat = 180

@@ -7,21 +7,21 @@
 
 import Foundation
 
-public enum Environment: String {
-    case sandbox
-    case prod
+//public enum Environment: String {
+//    case sandbox
+//    case prod
+//
+//    public var url: URL {
+//        switch self {
+//        case .sandbox:
+//            return URL(string: "https://api.sandbox.mangopay.com")!
+//        case .prod:
+//            return URL(string: "https://api.mangopay.com")!
+//        }
+//    }
+//}
 
-    public var url: URL {
-        switch self {
-        case .sandbox:
-            return URL(string: "https://api.sandbox.mangopay.com")!
-        case .prod:
-            return URL(string: "https://api.mangopay.com")!
-        }
-    }
-}
-
-public struct CardRegistration: Codable {
+public struct MGPCardRegistration: Codable {
     
     public struct Initiate: Codable {
         var UserId: String

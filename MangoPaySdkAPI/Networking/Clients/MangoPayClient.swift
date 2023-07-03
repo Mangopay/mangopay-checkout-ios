@@ -25,6 +25,23 @@ public typealias IntentLocationInput = CheckoutSchema.IntentLocationInput
 public typealias IntentShippingInput = CheckoutSchema.IntentShippingInput
 public typealias IntentDeliveryInput = CheckoutSchema.IntentDeliveryInput
 
+public typealias MangoPayCallBack = ((MGPCardRegistration?, Error?) -> ())
+public typealias MangoPayTokenizedCallBack = ((TokenizedCardData?, Error?) -> ())
+
+public enum MGPEnvironment: String {
+    case sandbox
+    case prod
+
+    public var url: URL {
+        switch self {
+        case .sandbox:
+            return URL(string: "https://api.sandbox.mangopay.com")!
+        case .prod:
+            return URL(string: "https://api.mangopay.com")!
+        }
+    }
+}
+
 public protocol MangoPayClientSessionProtocol {
     var clientKey: String! { get set }
     var apiKey: String! { get set }
@@ -36,13 +53,13 @@ public protocol MangoPayClientSessionProtocol {
 
 public protocol MangoPayinProtocol {
     var apiKey: String! { get set }
-    var environment: Environment { get set }
+    var environment: MGPEnvironment { get set }
 
-    func createCardRegistration(_ card: MangoPaySdkAPI.CardRegistration.Initiate, clientId: String, apiKey: String) async throws -> CardRegistration
+    func createCardRegistration(_ card: MangoPaySdkAPI.MGPCardRegistration.Initiate, clientId: String, apiKey: String) async throws -> MGPCardRegistration
 
-    func postCardInfo(_ cardInfo: MangoPaySdkAPI.CardInfo, url: URL) async throws -> CardInfo.RegistrationData
+    func postCardInfo(_ cardInfo: MangoPaySdkAPI.MGPCardInfo, url: URL) async throws -> MGPCardInfo.RegistrationData
 
-    func updateCardInfo(_ regData: MangoPaySdkAPI.CardInfo.RegistrationData, clientId: String, cardRegistrationId: String) async throws -> CardRegistration 
+    func updateCardInfo(_ regData: MangoPaySdkAPI.MGPCardInfo.RegistrationData, clientId: String, cardRegistrationId: String) async throws -> MGPCardRegistration
 }
 
 public class MangoPayClient: MangoPayClientSessionProtocol {
@@ -51,7 +68,7 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
     let indempodentKey = UUID().uuidString
     let version1UUID = UUID().version1UUID
     public var clientKey: String!
-    public var environment: Environment = .sandbox
+    public var environment: MGPEnvironment = .sandbox
     var payClient: CardRegistrationClient!
         
     fileprivate(set) lazy var apollo: ApolloClient = {
@@ -108,7 +125,7 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
         self.clientKey = clientKey
     }
 
-    public init(clientKey: String, apiKey: String = "", environment: Environment) {
+    public init(clientKey: String, apiKey: String = "", environment: MGPEnvironment) {
         self.clientKey = clientKey
         self.apiKey = apiKey
         self.environment = environment
@@ -294,7 +311,7 @@ public class MangoPayClient: MangoPayClientSessionProtocol {
         }
     }
 
-    public func createCardRegistration(card: CardRegistration.Initiate, clientId: String, apiKey: String) async throws -> CardRegistration {
+    public func createCardRegistration(card: MGPCardRegistration.Initiate, clientId: String, apiKey: String) async throws -> MGPCardRegistration {
 
         do {
             let createdCard = try await payClient.createCardRegistration(card, clientId: clientId, apiKey: apiKey)
