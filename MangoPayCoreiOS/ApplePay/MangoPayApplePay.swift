@@ -52,6 +52,7 @@ public class MangoPayApplePay: NSObject {
     var paymentState: PaymentState = .notStarted
     var orderId: String?
     var flowId: String?
+    var applePayMerchantId: String?
     var amount: Double
     var currencyCode: String
     
@@ -79,6 +80,7 @@ public class MangoPayApplePay: NSObject {
         self.flowId = flowId
         self.amount = amount
         self.currencyCode = currencyCode
+        self.applePayMerchantId = merchantIdentifier
         super.init()
         let paymentRequest = makePaymentRequest(
             withMerchantIdentifier: merchantIdentifier,

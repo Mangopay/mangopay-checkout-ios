@@ -118,21 +118,22 @@ public class MangoPaySDK {
     static var environment: Environment!
 
     private static var paymentFormVC: PaymentFormController!
+    private var presentingVC: UIViewController!
     
     public static func buildElementForm(
         with options: ElementsOptions,
         cardConfig: CardConfig?,
         present viewController: UIViewController
     ) {
-        MangoPaySDK.apiKey = options.apiKey
-        MangoPaySDK.clientId = options.clientId
-        paymentFormVC = PaymentFormController(
-            cardConfig: cardConfig,
-            elementOptions: options
-        )
-        let nav = UINavigationController(rootViewController: paymentFormVC)
-        nav.modalPresentationStyle = .fullScreen
-        viewController.present(nav, animated: true)
+//        MangoPaySDK.apiKey = options.apiKey
+//        MangoPaySDK.clientId = options.clientId
+//        paymentFormVC = PaymentFormController(
+//            cardConfig: cardConfig,
+//            elementOptions: options
+//        )
+//        let nav = UINavigationController(rootViewController: paymentFormVC)
+//        nav.modalPresentationStyle = .fullScreen
+//        viewController.present(nav, animated: true)
     }
 
     public static func buildDropInForm(
@@ -141,15 +142,15 @@ public class MangoPaySDK {
         present viewController: UIViewController,
         dropInDelegate: DropInFormDelegate
     ) {
-        MangoPaySDK.apiKey = options.apiKey
-        MangoPaySDK.clientId = options.clientId
-        paymentFormVC = PaymentFormController(
-            cardConfig: cardConfig,
-            dropInOptions: options
-        )
-        let nav = UINavigationController(rootViewController: paymentFormVC)
-        nav.modalPresentationStyle = .fullScreen
-        viewController.present(nav, animated: true)
+//        MangoPaySDK.apiKey = options.apiKey
+//        MangoPaySDK.clientId = options.clientId
+//        paymentFormVC = PaymentFormController(
+//            cardConfig: cardConfig,
+//            dropInOptions: options
+//        )
+//        let nav = UINavigationController(rootViewController: paymentFormVC)
+//        nav.modalPresentationStyle = .fullScreen
+//        viewController.present(nav, animated: true)
     }
 
     public static func tokeniseCard(apikey: String, card: PaymentCardInput) async throws -> TokenizeCard {
@@ -186,7 +187,33 @@ public class MangoPaySDK {
         }
     }
 
+}
 
+extension MangoPaySDK {
+
+    public func isPaymentFormValid() -> Bool {
+        return MangoPaySDK.paymentFormVC.isFormValid()
+    }
+
+    public func clearForm() {
+        MangoPaySDK.paymentFormVC.clearForm()
+    }
+
+    public func validate() {
+        MangoPaySDK.paymentFormVC.manuallyValidateForms()
+    }
+
+    public func tearDown() {
+        guard presentingVC != nil else { return }
+        presentingVC.dismiss(animated: true)
+    }
+
+    public func present(in viewController: UIViewController) {
+        guard MangoPaySDK.paymentFormVC != nil else { return }
+        let nav = UINavigationController(rootViewController: MangoPaySDK.paymentFormVC)
+        nav.modalPresentationStyle = .fullScreen
+        viewController.present(nav, animated: true)
+    }
 }
 
 extension MangoPaySDK {
@@ -233,7 +260,25 @@ extension MangoPaySDK {
     }
 }
 
-
+extension MangoPaySDK {
+    public static func create(
+        client: MangopayClient,
+        paymentMethodConfig: PaymentMethodConfig,
+        handlePaymentFlow: Bool,
+        branding: PaymentFormStyle,
+        callback: CallBack
+    ) -> MangoPaySDK {
+        paymentFormVC = PaymentFormController(
+            client: client,
+            paymentMethodConfig: paymentMethodConfig,
+            handlePaymentFlow: handlePaymentFlow,
+            branding: branding,
+            callback: callback
+        )
+        let mgp = MangoPaySDK()
+        return mgp
+    }
+}
 
 
 extension MangoPaySDK {

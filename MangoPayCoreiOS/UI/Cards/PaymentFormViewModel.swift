@@ -37,17 +37,30 @@ public class PaymentFormViewModel {
     var trigger3DSObserver = PassthroughSubject<URL, Never>()
     var onComplete: (() -> Void)?
 
-    weak var dropInDelegate: DropInFormDelegate?
-    weak var elementDelegate: ElementsFormDelegate?
-
     var dropInData: DropInOptions?
 
-    init(clientId: String) {
+    var mgpClient: MangopayClient
+    var callback: CallBack
+    
+
+    init(clientId: String, client: MangopayClient, callback: CallBack) {
         self.client = MangoPayClient(clientKey: clientId)
+        self.mgpClient = client
+        self.callback = callback
     }
 
-    init(clientId: String, apiKey: String, environment: MGPEnvironment) {
-        self.client = MangoPayClient(clientKey: clientId, apiKey: apiKey, environment: .sandbox)
+    init(
+        client: MangopayClient,
+        paymentMethodConfig: PaymentMethodConfig,
+        callback: CallBack
+    ) {
+        self.mgpClient = client
+        self.callback = callback
+        self.client = MangoPayClient(
+            clientKey: client.clientId ?? "",
+            apiKey: client.apiKey ?? "",
+            environment: client.environment
+        )
     }
 
     func fetchCards() {
@@ -62,17 +75,19 @@ public class PaymentFormViewModel {
     
             DispatchQueue.main.async {
                 self.tokenObserver.send(tokenizedCard)
-                self.elementDelegate?.onTokenGenerated(tokenizedCard: tokenizedCard)
+//                self.callback.onTokenizationCompleted?(<#MGPCardRegistration#>)
+//                self.elementDelegate?.onTokenGenerated(tokenizedCard: tokenizedCard)
             }
         } catch {
             DispatchQueue.main.async {
                 print("❌❌ Error tokeninsing Card \(error.localizedDescription)")
-                self.elementDelegate?.onTokenGenerationFailed(error: error)
+                self.callback.onError?(error)
+//                self.elementDelegate?.onTokenGenerationFailed(error: error)
             }
         }
     }
 
-    func tokenizeCardElement(with cardReg: CardRegistration) {
+    func tokenizeCardElement(with cardReg: MGPCardRegistration) {
         guard let inputData = formData?.toPaymentCardInfo() else { return }
         
         MangoPayVault.initialize(clientId: client.clientKey, environment: .sandbox)
@@ -86,14 +101,29 @@ public class PaymentFormViewModel {
                 accessKeyRef: inputData.accessKeyRef,
                 data: inputData.data
             ),
-            cardRegistration: cardReg) { tokenisedCard, error in
+            cardRegistration:
+                CardRegistration(
+                    id: cardReg.id,
+                    tag: cardReg.tag,
+                    creationDate: cardReg.creationDate,
+                    userID: cardReg.userID,
+                    accessKey: cardReg.accessKey,
+                    preregistrationData: cardReg.preregistrationData,
+                    cardID: cardReg.cardID,
+                    cardType: cardReg.cardType,
+                    cardRegistrationURLStr: cardReg.cardRegistrationURLStr,
+                    currency: cardReg.currency,
+                    status: cardReg.status
+                )
+
+        ) { tokenisedCard, error in
                 guard let card = tokenisedCard else {
-                    self.elementDelegate?.onTokenGenerationFailed(error: error!)
+                    self.callback.onError?(error!)
                     return
                 }
 
-                self.elementDelegate?.onTokenGenerated(
-                    vaultCard: MGPCardRegistration(
+                self.callback.onTokenizationCompleted?(
+                    MGPCardRegistration(
                         id: card.id,
                         tag: card.tag,
                         creationDate: card.creationDate,
@@ -152,7 +182,9 @@ public class PaymentFormViewModel {
             } catch {
                 DispatchQueue.main.async {
                     print("❌❌ Error tokeninsing Card \(error.localizedDescription)")
-                    self.dropInDelegate?.onPaymentFailed(sender: self, error: .onTokenGenerationFailed(reason: error.localizedDescription))
+//                    self.dropInDelegate?.onPaymentFailed(sender: self, error: .onTokenGenerationFailed(reason: error.localizedDescription))
+                    self.callback.onError?(error)
+
                     return
                 }
             }
@@ -180,14 +212,6 @@ public class PaymentFormViewModel {
             perform3DSecure: AuthorisedPayment._3DSecure(redirectUrl: data.threeDSRedirectURL)
         )
 
-//        let payIndata = AuthorizePayIn(
-//            authorID: "AUTHOR_ID",
-//            debitedFunds: DebitedFunds(
-//                currency: data.currencyCode,
-//                amount: Int(data.amount)
-//            )
-//        )
-
         do {
             print("🤣 data.intentId", data.intentId)
             authpayment = try await client.authorizePayment(payment: authData)
@@ -195,7 +219,7 @@ public class PaymentFormViewModel {
         } catch {
             guard let graphError = error as? GraphQLError else {
                 let error = MangoPayError.onAuthorizePaymentFailed(reason: nil)
-                dropInDelegate?.onPaymentFailed(sender: self, error: error)
+                self.callback.onError?(error)
                 return
             }
 
@@ -203,10 +227,7 @@ public class PaymentFormViewModel {
                   code == "error.authorize.requires3DSecure",
                   let urlStr = graphError.extensions?["url"] as? String
             else {
-                self.dropInDelegate?.onPaymentFailed(
-                    sender: self,
-                    error: .onAuthorizePaymentFailed(reason: nil)
-                )
+                self.callback.onError?(MangoPayError.onAuthorizePaymentFailed(reason: nil))
                 return
             }
             
@@ -221,16 +242,30 @@ public class PaymentFormViewModel {
             let getPayment = try await client.getPayment(with: authpayment.id)
             self.statusObserver.send("Succesfully Retrieved payment: \(getPayment.id )")
             DispatchQueue.main.async {
-                self.dropInDelegate?.onPaymentCompleted(sender: self, payment: getPayment)
+//                self.callback.onPaymentCompleted?(<#MGPCardInfo#>)
             }
         } catch {
             DispatchQueue.main.async {
-                self.dropInDelegate?.onPaymentFailed(
-                    sender: self,
-                    error: .onAuthorizePaymentFailed(reason: error.localizedDescription)
-                )
+                self.callback.onError?(MangoPayError.onAuthorizePaymentFailed(reason: nil))
                 return
             }
+        }
+    }
+
+    func createCardRegistration() async -> MGPCardRegistration? {
+        do {
+            let regResponse = try await self.client.createCardRegistration(
+                card: MGPCardRegistration.Initiate(
+                    UserId: "3401451442",
+                    Currency: "EUR",
+                    CardType: "CB_VISA_MASTERCARD"
+                ),
+                clientId: "checkoutsquatest",
+                apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+            )
+            return regResponse
+        } catch {
+            return nil
         }
     }
 
@@ -260,6 +295,9 @@ public class PaymentFormViewModel {
                         data: inputData.data
                     ),
                 cardRegistration: regResponse.toVaultCardReg) { tokenisedCard, error in
+                    if let cardValError = error as? CardValidationError {
+                        
+                    }
                 }
         }
     }

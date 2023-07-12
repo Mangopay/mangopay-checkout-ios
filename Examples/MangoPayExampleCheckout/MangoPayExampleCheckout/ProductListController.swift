@@ -102,40 +102,70 @@ class ProductListController: UIViewController {
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .coverVertical
         present(viewController, animated: true)
+
     }
     
      func didTapDropInCheckout(selectedProduct: Product) {
-        let cardConfig = CardConfig(supportedCardBrands: [.visa, .amex])
+//        let cardConfig = CardConfig(supportedCardBrands: [.visa, .amex])
+//
+//        let style = PaymentFormStyle(
+//            font: .systemFont(ofSize: 18),
+//            textColor: .black,
+//            placeHolderColor: .gray,
+//            errorColor: .red
+//        )
+//
+//        let dropInOptions = DropInOptions(
+//            apiKey: apikey,
+//            clientId: "apiprod",
+//            orderId: nil,
+//            style: style,
+//            customerId: nil,
+//            flowId: flowID,
+//            amount: selectedProduct.price,
+//            currencyCode: "EUR",
+//            countryCode: "FR",
+//            threeDSRedirectURL: "https://documentation.whenthen.com",
+//            delegate: self
+//        )
+//
+//         MangoPaySDK.buildDropInForm(
+//            with: dropInOptions,
+//            cardConfig: cardConfig,
+//            present: self,
+//            dropInDelegate: self
+//        )
+//
+//         startIntent(amount: Int(selectedProduct.price))
+         
+         let mgpClient = MangopayClient(
+             clientId: "checkoutsquatest",
+             apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
+             environment: .sandbox
+         )
 
-        let style = PaymentFormStyle(
-            font: .systemFont(ofSize: 18),
-            textColor: .black,
-            placeHolderColor: .gray,
-            errorColor: .red
-        )
-        
-        let dropInOptions = DropInOptions(
-            apiKey: apikey,
-            clientId: "apiprod",
-            orderId: nil,
-            style: style,
-            customerId: nil,
-            flowId: flowID,
-            amount: selectedProduct.price,
-            currencyCode: "EUR",
-            countryCode: "FR",
-            threeDSRedirectURL: "https://documentation.whenthen.com",
-            delegate: self
-        )
+         let checkout = MangoPaySDK.create(
+             client: mgpClient,
+             paymentMethodConfig: PaymentMethodConfig(
+                 cardReg: config.cardReg
+             ),
+             handlePaymentFlow: false,
+             branding: PaymentFormStyle(),
+             callback: CallBack(
+                 onPayButtonClicked: { cardinfo in
+                     print("✅ cardinfo", cardinfo)
+                 },
+                 onTokenizationCompleted: { cardRegistration in
+                     print("✅ cardRegistration", cardRegistration)
+                 }, onPaymentCompleted: {
+                     print("✅ onPaymentCompleted")
+                 }, onError: { error in
+                     print("❌ error", error.localizedDescription)
 
-         MangoPaySDK.buildDropInForm(
-            with: dropInOptions,
-            cardConfig: cardConfig,
-            present: self,
-            dropInDelegate: self
-        )
-        
-         startIntent(amount: Int(selectedProduct.price))
+                 })
+         )
+
+         checkout.present(in: self)
     }
 
     func startIntent(amount: Int) {

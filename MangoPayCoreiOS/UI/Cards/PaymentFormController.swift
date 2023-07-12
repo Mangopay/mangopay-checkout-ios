@@ -28,23 +28,47 @@ public class PaymentFormController: UIViewController {
         
     var applePay: MangoPayApplePay?
 
+    var client: MangopayClient
+    var paymentFormStyle: PaymentFormStyle
+    var callback: CallBack
+    var paymentMethodConfig: PaymentMethodConfig
+    var handlePaymentFlow: Bool
+
     public init(
         cardConfig: CardConfig? = nil,
-        dropInOptions: DropInOptions? = nil,
-        elementOptions: ElementsOptions? = nil
+        client: MangopayClient,
+        paymentMethodConfig: PaymentMethodConfig,
+        handlePaymentFlow: Bool,
+        branding: PaymentFormStyle?,
+        callback: CallBack
     ) {
-        if let dropInOptions = dropInOptions {
-            formView = PaymentFormView(paymentFormStyle: dropInOptions.style, formType: .dropIn, dropInOptions: dropInOptions)
-        } else if let elementOptions = elementOptions {
-            formView = PaymentFormView(paymentFormStyle: elementOptions.style, formType: .element, elementOptions: elementOptions)
-        } else {
-            formView = PaymentFormView(paymentFormStyle: dropInOptions?.style, formType: .dropIn, dropInOptions: dropInOptions)
-        }
+//        if let dropInOptions = dropInOptions {
+//            formView = PaymentFormView(paymentFormStyle: dropInOptions.style, formType: .dropIn, dropInOptions: dropInOptions)
+//        } else if let elementOptions = elementOptions {
+//            formView = PaymentFormView(paymentFormStyle: elementOptions.style, formType: .element, elementOptions: elementOptions)
+//        } else {
+//            formView = PaymentFormView(paymentFormStyle: dropInOptions?.style, formType: .dropIn, dropInOptions: dropInOptions)
+//        }
+//
+        
+        self.paymentFormStyle = branding ?? PaymentFormStyle()
+        self.callback = callback
+        self.client = client
+        self.paymentMethodConfig = paymentMethodConfig
+        self.handlePaymentFlow = handlePaymentFlow
+
+        formView = PaymentFormView(
+            client: client,
+            paymentMethodConfig: paymentMethodConfig,
+            handlePaymentFlow: handlePaymentFlow,
+            branding: branding,
+            callback: callback
+        )
 
         super.init(nibName: nil, bundle: nil)
-        formView.viewModel.dropInDelegate = dropInOptions?.delegate
-        formView.viewModel.dropInData = dropInOptions
-        formView.viewModel.elementDelegate = elementOptions?.delegate
+//        formView.viewModel.dropInDelegate = dropInOptions?.delegate
+//        formView.viewModel.dropInData = dropInOptions
+//        formView.viewModel.elementDelegate = elementOptions?.delegate
         self.cardConfig = cardConfig
     }
 
@@ -132,11 +156,12 @@ public class PaymentFormController: UIViewController {
 
     func setNavigation() {
 
-        if let _delegate = formView.viewModel.dropInDelegate  {
-            title = "Checkout with DropIn"
-        } else if let _delegate = formView.viewModel.elementDelegate {
-            title = "Checkout with Elements"
-        }
+//        if let _delegate = formView.viewModel.dropInDelegate  {
+//            title = "Checkout with DropIn"
+//        } else if let _delegate = formView.viewModel.elementDelegate {
+//            title = "Checkout with Elements"
+//        }
+        title = "Checkout"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeTapped))
     }
 
@@ -182,6 +207,18 @@ public class PaymentFormController: UIViewController {
 //            print("❌ Error cancelling Attempt")
 //        }
         dismiss(animated: true)
+    }
+
+    func clearForm() {
+        formView.clearForm()
+    }
+
+    func isFormValid() -> Bool {
+        return formView.isFormValid
+    }
+
+    func manuallyValidateForms() {
+        formView.manuallyValidateForms()
     }
 }
 
@@ -241,11 +278,11 @@ extension PaymentFormController: MangoPayApplePayDelegate {
     ) {
         print("😅 Did complete ", status)
 
-        if let _delegate = formView.viewModel.dropInDelegate  {
-            _delegate.onApplePayCompleteDropIn(status: status)
-        } else if let _delegate = formView.viewModel.elementDelegate {
-//            _delegate.onApplePayCompleteElement(status: status)
-        }
+//        if let _delegate = formView.viewModel.dropInDelegate  {
+//            _delegate.onApplePayCompleteDropIn(status: status)
+//        } else if let _delegate = formView.viewModel.elementDelegate {
+////            _delegate.onApplePayCompleteElement(status: status)
+//        }
         
         if status == .success {
             let text = self.formView.statusLabel.text ?? ""

@@ -220,12 +220,12 @@ class PaymentFormView: UIView {
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)
         button.setTitleColor(paymentFormStyle.checkoutButtonTextColor, for: .normal)
-        switch formType {
-        case .dropIn:
-            button.setTitle("Checkout \(dropInOptions?.amountString ?? "")", for: .normal)
-        case .element:
-            button.setTitle("Checkout \(elementOptions?.amountString ?? "")", for: .normal)
-        }
+//        switch formType {
+//        case .dropIn:
+//            button.setTitle("Checkout \(dropInOptions?.amountString ?? "")", for: .normal)
+//        case .element:
+//            button.setTitle("Checkout \(elementOptions?.amountString ?? "")", for: .normal)
+//        }
         return button
     }()
 
@@ -295,6 +295,11 @@ class PaymentFormView: UIView {
     
     var paymentFormStyle: PaymentFormStyle
     var currentAttempt: String?
+
+    var client: MangopayClient
+    var callback: CallBack
+    var paymentMethodConfig: PaymentMethodConfig
+    var handlePaymentFlow: Bool
     
     lazy var forms: [Validatable] = [
         cardNumberField,
@@ -303,23 +308,30 @@ class PaymentFormView: UIView {
         cvvField
     ]
 
-    init(
-        paymentFormStyle: PaymentFormStyle?,
-        formType: FormType,
-        dropInOptions: DropInOptions? = nil,
-        elementOptions: ElementsOptions? = nil
-    ) {
-        self.formType = formType
-        self.dropInOptions = dropInOptions
-        self.elementOptions = elementOptions
+    var isFormValid: Bool {
+        guard let cardNumber = cardNumberField.text?.replacingOccurrences(of: " ", with: "") else { return false }
+        return areFormsValidShowingError() && LuhnChecker.luhnCheck(cardNumber)
+    }
 
-        self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
+    init(
+        client: MangopayClient,
+        paymentMethodConfig: PaymentMethodConfig,
+        handlePaymentFlow: Bool,
+        branding: PaymentFormStyle?,
+        callback: CallBack
+    ) {
+        self.paymentFormStyle = branding ?? PaymentFormStyle()
+        self.callback = callback
+        self.client = client
+        self.paymentMethodConfig = paymentMethodConfig
+        self.handlePaymentFlow = handlePaymentFlow
+        
         self.viewModel = PaymentFormViewModel(
-            clientId: MangoPaySDK.clientId,
-            apiKey: MangoPaySDK.apiKey,
-            environment: (elementOptions?.environment ?? dropInOptions?.environment) ?? .sandbox
+            client: client,
+            paymentMethodConfig: paymentMethodConfig,
+            callback: callback
         )
-    
+
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
             target: self,
@@ -334,26 +346,22 @@ class PaymentFormView: UIView {
             original: self.topConstriant.constant,
             padding: 0
         )
+
         keyboardUtil?.delegate = self
         keyboardUtil?.register()
         activitySpiner.isHidden = true
-        
-        cardNumberField.text = "4970105181818183"
-        cardNameField.text = "Elikem"
-//        cvvField.text = "120"
-//        expiryDateField.text = "12/26"
-        
+
         cardNumberField.onEditingChanged = { text in
             let cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
             self.cardNumberField.setRightImage(cardType.icon)
         }
 
         countryField.didPickHandler = { title, index in
-            self.viewModel.dropInDelegate?.didUpdateBillingInfo(sender: self.viewModel)
+//            self.viewModel.dropInDelegate?.didUpdateBillingInfo(sender: self.viewModel)
         }
         initiateNethone()
     }
-    
+
     func initiateNethone() {
 //        NTHNethone.setMerchantNumber("428242");
 //        let nethoneConfig = NTHAttemptConfiguration()
@@ -455,11 +463,46 @@ class PaymentFormView: UIView {
         self.endEditing(true)
     }
 
+    func clearForm() {
+        [
+           cardNumberField,
+           cardNameField,
+           expiryDateField,
+           cvvField
+        ].forEach({$0.textfield.text = ""})
+    }
+
+    func manuallyValidateForms() {
+        [
+           cardNumberField,
+           cardNameField,
+           expiryDateField,
+           cvvField
+        ].forEach({isFormValid($0)})
+    }
+    
     @objc func onTappedButton() {
         finalizeButtonTapped()
     }
 
     func finalizeButtonTapped() {
+        self.grabData()
+        if let _cardInfo = viewModel.formData?.toPaymentCardInfo() {
+            callback.onPayButtonClicked?(_cardInfo)
+        }
+
+        guard handlePaymentFlow else { return }
+        Task {
+            if let cardReg = await viewModel.createCardRegistration() {
+                activitySpiner.isHidden = false
+                activitySpiner.startAnimating()
+                viewModel.onComplete = {
+                    self.activitySpiner.stopAnimating()
+                }
+
+                viewModel.tokenizeCardElement(with: cardReg)
+            }
+        }
 //        do {
 //            try NTHNethone.finalizeAttempt(completion: { error in
 //                guard error == nil else {
@@ -469,7 +512,8 @@ class PaymentFormView: UIView {
 //                    return
 //                }
 //                // All data has been delivered to Nethone. Do the actual payment processing
-                self.grabData()
+
+
 //            })
 //        } catch { error
 //            print("❌❌❌❌ finalizeAttempt", error)
@@ -499,62 +543,6 @@ class PaymentFormView: UIView {
         )
 
         viewModel.formData = formData
-        
-        let billingInfo = BillingInfo(
-            line1: "j153",
-            line2: "Prickasd",
-            city: "accra",
-            postalCode: "GH 21331",
-            state: "Accra",
-            country: "Ghana"
-        )
-
-        var customer = Customer(
-            billingAddress: billingInfo,
-            description: "Happy Customer",
-            email: "elviva96@gmail.com",
-            name: "Elikem Savie",
-            phone: "0545543521",
-            shippingAddress: ShippingAddress(
-                address: billingInfo,
-                name: "Elikem",
-                phone: "Accra"
-            ),
-            company: Company(name: "File", number: "+233542442442")
-        )
-
-//        customer.billingAddress = billingInfo
-//        customer.description = "Happy Customer"
-//        customer.email = "elviva96@gmail.com"
-//        customer.name = "Elikem Savie"
-//        customer.phone = "0545543521"
-//        let shippingAddress = ShippingAddress(
-//            address: billingInfo,
-//            name: "Elikem",
-//            phone: "Accra"
-//        )
-//        customer.shippingAddress = shippingAddress
-//        customer.company = Company(name: "File", number: "+233542442442")
-        
-        let cusInput = CustomerInputData(card: formData, customer: customer)
-    
-
-        Task {
-            activitySpiner.isHidden = false
-            activitySpiner.startAnimating()
-            viewModel.onComplete = {
-                self.activitySpiner.stopAnimating()
-            }
-            switch formType {
-            case .dropIn:
-//                await viewModel.performDropin(with: formData.toPaymentCardInput(), cardToken: nil)
-                await viewModel.performDropinPayIn(with: formData.toPaymentCardInput())
-            case .element:
-                await viewModel.tokenizeCard()
-            }
-//            activitySpiner.stopAnimating()
-        }
-        
     }
 
     func setCards(cards: CardConfig?) {
@@ -724,7 +712,6 @@ extension PaymentFormView: KeyboardUtilDelegate {
     func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
         let padding: CGFloat = 180
         let moveBy = rect.height - safeAreaInsets.bottom - padding - 120
-        print("🤣 moveBy", moveBy)
         topConstriant.constant = -moveBy
 
         UIView.animate(withDuration: animationDuration) {
@@ -741,8 +728,6 @@ extension PaymentFormView: KeyboardUtilDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-//        guard areFormsValidShowingError() else { return }
-        
         switch textField {
         case cardNumberField.textfield:
             isFormValid(cardNumberField)
@@ -753,7 +738,6 @@ extension PaymentFormView: KeyboardUtilDelegate {
         case cvvField.textfield:
             isFormValid(cvvField)
         case zipCodeField.textfield:
-            self.viewModel.dropInDelegate?.didUpdateBillingInfo(sender: self.viewModel)
             isFormValid(zipCodeField)
         default: break
         }
