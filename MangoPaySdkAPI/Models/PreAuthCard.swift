@@ -7,8 +7,18 @@
 
 import Foundation
 
+public protocol PayInPreAuthProtocol {
+    var authorID: String? { set get }
+    var debitedFunds: DebitedFunds? { set get }
+    var secureMode: String? { set get }
+    var cardID: String? { set get }
+    var secureModeNeeded: Bool? { set get }
+    var secureModeRedirectURL: String? { set get }
+    var secureModeReturnURL: String? { set get }
+}
+
 // MARK: - PayInCard
-public struct PreAuthCard: Codable {
+public struct PreAuthCard: Codable, PayInPreAuthProtocol {
 
     public enum PaymentStatusEnum: String {
         case VALIDATED
@@ -22,11 +32,11 @@ public struct PreAuthCard: Codable {
         case FAILED
     }
 
-    var authorID: String?
-    var debitedFunds, remainingFunds: DebitedFunds?
+    public var authorID: String?
+    public var debitedFunds, remainingFunds: DebitedFunds?
     var status, paymentStatus, resultCode, resultMessage: String?
-    var executionType, secureMode, cardID: String?
-    var secureModeNeeded: Bool?
+    public var executionType, secureMode, cardID: String?
+    public var secureModeNeeded: Bool?
     public var secureModeRedirectURL, secureModeReturnURL: String?
     var expirationDate: Int?
     var payInID: String?

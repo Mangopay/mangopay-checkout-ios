@@ -24,7 +24,9 @@ public class ThreeDSController: UIViewController {
     var authUrlNavigation: WKNavigation?
     private let urlHelper: URLHelping
 
-    public weak var delegate: ThreeDSControllerDelegate?
+//    public weak var delegate: ThreeDSControllerDelegate?
+    var onSuccess: ((String) -> ())?
+    var onFailure: (() -> ())?
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,6 @@ public class ThreeDSController: UIViewController {
         guard let authUrl = authUrl else {
             return
         }
-
 
         let authRequest = URLRequest(url: authUrl)
         webView.navigationDelegate = self
@@ -123,11 +124,13 @@ extension ThreeDSController: WKNavigationDelegate {
 //                delegate?.onSuccess3D(paymentId: paymentId)
 //            }
             self.navigationController?.popViewController(animated: true)
-            delegate?.onSuccess3D(paymentId: paymentId)
+//            delegate?.onSuccess3D(paymentId: paymentId)
+            self.onSuccess?(paymentId)
 
         case "FAILED":
-            self.dismiss(animated: true) { [delegate] in
-                delegate?.onFailure3D()
+            self.dismiss(animated: true) {
+//                delegate?.onFailure3D()
+                self.onFailure?()
             }
         default: return
         }
@@ -135,13 +138,13 @@ extension ThreeDSController: WKNavigationDelegate {
 
     private func handleDismiss(preAuthID: String?) {
         guard let _preauth = preAuthID else {
-            delegate?.onFailure3D()
+//            delegate?.onFailure3D()
+            self.onFailure?()
             return
         }
-            self.navigationController?.popViewController(animated: true)
-            delegate?.onSuccess3D(paymentId: _preauth)
-
+        self.navigationController?.popViewController(animated: true)
+//        delegate?.onSuccess3D(paymentId: _preauth)
+        self.onSuccess?(_preauth)
     }
-
 
 }

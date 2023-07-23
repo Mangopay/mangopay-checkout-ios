@@ -168,7 +168,13 @@ public class PaymentFormController: UIViewController {
     func routeTo3DS(with url: URL) {
         let vc = ThreeDSController(successUrl: url, failUrl: nil)
         vc.authUrl = url
-        vc.delegate = self
+        vc.onSuccess = { paymentId in
+            self.onSuccess3D(paymentId: paymentId)
+        }
+
+        vc.onFailure = {
+            self.onFailure3D()
+        }
 //        present(vc, animated: true)
         self.navigationController?.pushViewController(vc, animated: true)
     }

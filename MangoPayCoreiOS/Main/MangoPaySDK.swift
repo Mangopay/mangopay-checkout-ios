@@ -225,6 +225,8 @@ extension MangoPaySDK {
     public static func tokenizeCard(
         form: MangoPayCheckoutForm,
         with cardReg: CardRegistration,
+        payData: PayInPreAuthProtocol? = nil,
+        present3DS viewController: UIViewController? = nil,
         callBack: @escaping MangoPayTokenizedCallBack
     ) {
         
@@ -255,9 +257,12 @@ extension MangoPaySDK {
                     )
                     callBack(res, .none)
                 }
-
+        
+            guard let payData = payData, payData.secureModeNeeded == true else { return }
+            
         }
     }
+
 }
 
 extension MangoPaySDK {
