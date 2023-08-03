@@ -142,11 +142,11 @@ public class PaymentFormController: UIViewController {
             let items = try await formView.viewModel.fetchCards(customerId: "a4a7cb68-9ce6-4874-84df-276d7e9b235b")
             
             let cards = items.compactMap({$0.brandType})
-            self.formView.setUsersCards(cards)
+//            self.formView.setUsersCards(cards)
             
             formView.onRightButtonTappedAction = {
                 CustomerCardListController.showDatePicker(with: self, cardLists: items) { cardType in
-                    self.formView.cardNumberField.text = cardType.number
+                    self.formView.setCardNumber(cardType.number)
                 }
             }
 

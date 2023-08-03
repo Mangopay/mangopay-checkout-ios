@@ -20,76 +20,76 @@ enum FormType {
 
 class PaymentFormView: UIView {
     
-    lazy var headerView = HeaderView()
-
-    lazy var cardNumberField = MangoPayTextfield(
-        placeholderText: "1234 1234 1234 1234",
-        leftImage: UIImage(assetIdentifier: .card_visa),
-        keyboardType: .numberPad,
-        returnKeyType: .next,
-        validationRule: [
-            .cardMinimmun,
-            .cardNumberRequired,
-            .invalidCardNumber
-        ],
-        style: self.paymentFormStyle,
-        textfieldDelegate: self
-    ) { textfield in
-        textfield.setRightImage(nil, text: "Choose Card")
-        textfield.accessibilityLabel = "cardNumberField"
-        textfield.onRightButtonTappedAction = {
-            self.onRightButtonTappedAction?()
-        }
-    }
-
-    lazy var cardNameField = MangoPayTextfield(
-        placeholderText: LocalizableString.CARD_NAME_PLACEHOLDER,
-        returnKeyType: .next,
-        validationRule: [
-            .fullNameRequired,
-            .textTooShort
-        ],
-        style: self.paymentFormStyle,
-        textfieldDelegate: self
-    ) { textfield in
-        textfield.accessibilityLabel = "cardNameField"
-    }
-
-    lazy var expiryDateField = MangoPayTextfield(
-        placeholderText: LocalizableString.CARD_EXPIRIY_PLACEHOLDER,
-        keyboardType: .numberPad,
-        returnKeyType: .next,
-        validationRule: [
-            .cardExpired,
-            .dateRequired
-        ],
-        style: self.paymentFormStyle,
-        textfieldDelegate: self
-    ){ textfield in
-        textfield.accessibilityLabel = "expiryDateField"
-    }
-
-    lazy var cvvField = MangoPayTextfield(
-        placeholderText: LocalizableString.CARD_CVV,
-        keyboardType: .numberPad,
-        returnKeyType: .next,
-        validationRule: [
-            .cvvRequired,
-            .textTooShort
-        ],
-        style: self.paymentFormStyle,
-        textfieldDelegate: self
-    ) { textfield in
-        textfield.accessibilityLabel = "cvvField"
-    }
+//    lazy var headerView = HeaderView()
+//
+//    lazy var cardNumberField = MangoPayTextfield(
+//        placeholderText: "1234 1234 1234 1234",
+//        leftImage: UIImage(assetIdentifier: .card_visa),
+//        keyboardType: .numberPad,
+//        returnKeyType: .next,
+//        validationRule: [
+//            .cardMinimmun,
+//            .cardNumberRequired,
+//            .invalidCardNumber
+//        ],
+//        style: self.paymentFormStyle,
+//        textfieldDelegate: self
+//    ) { textfield in
+//        textfield.setRightImage(nil, text: "Choose Card")
+//        textfield.accessibilityLabel = "cardNumberField"
+//        textfield.onRightButtonTappedAction = {
+//            self.onRightButtonTappedAction?()
+//        }
+//    }
+//
+//    lazy var cardNameField = MangoPayTextfield(
+//        placeholderText: LocalizableString.CARD_NAME_PLACEHOLDER,
+//        returnKeyType: .next,
+//        validationRule: [
+//            .fullNameRequired,
+//            .textTooShort
+//        ],
+//        style: self.paymentFormStyle,
+//        textfieldDelegate: self
+//    ) { textfield in
+//        textfield.accessibilityLabel = "cardNameField"
+//    }
+//
+//    lazy var expiryDateField = MangoPayTextfield(
+//        placeholderText: LocalizableString.CARD_EXPIRIY_PLACEHOLDER,
+//        keyboardType: .numberPad,
+//        returnKeyType: .next,
+//        validationRule: [
+//            .cardExpired,
+//            .dateRequired
+//        ],
+//        style: self.paymentFormStyle,
+//        textfieldDelegate: self
+//    ){ textfield in
+//        textfield.accessibilityLabel = "expiryDateField"
+//    }
+//
+//    lazy var cvvField = MangoPayTextfield(
+//        placeholderText: LocalizableString.CARD_CVV,
+//        keyboardType: .numberPad,
+//        returnKeyType: .next,
+//        validationRule: [
+//            .cvvRequired,
+//            .textTooShort
+//        ],
+//        style: self.paymentFormStyle,
+//        textfieldDelegate: self
+//    ) { textfield in
+//        textfield.accessibilityLabel = "cvvField"
+//    }
     
-    private lazy var hStack = UIStackView.create(
-        spacing: 8,
-        axis: .horizontal,
-        alignment: .fill,
-        distribution: .fillEqually,
-        views: [expiryDateField, cvvField]
-    )
+//    private lazy var hStack = UIStackView.create(
+//        spacing: 8,
+//        axis: .horizontal,
+//        alignment: .fill,
+//        distribution: .fillEqually,
+//        views: [expiryDateField, cvvField]
+//    )
 
     lazy var saveDetailsCheckMark = CheckmarkView(
         title: LocalizableString.SAVE_PAYMENT_CHECKMARK
@@ -145,24 +145,24 @@ class PaymentFormView: UIView {
         textAlignment: .center
     )
 
-    lazy var firstNameTextfield = MangoPayDropDownTextfield(
-        placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
-        showDropDownIcon: true,
-        style: self.paymentFormStyle,
-        textfieldDelegate: self
-    )
-
-    lazy var lastNameTextfield = MangoPayTextfield(
-        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
-        returnKeyType: .done,
-        validationRule: [
-            .textTooShort
-        ],
-        style: self.paymentFormStyle,
-        textfieldDelegate: self
-    ) { textF in
-        textF.textfield.autocorrectionType = .no
-    }
+//    lazy var firstNameTextfield = MangoPayDropDownTextfield(
+//        placeholderText: LocalizableString.CARD_COUNTRY_PLACEHOLDER,
+//        showDropDownIcon: true,
+//        style: self.paymentFormStyle,
+//        textfieldDelegate: self
+//    )
+//
+//    lazy var lastNameTextfield = MangoPayTextfield(
+//        placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
+//        returnKeyType: .done,
+//        validationRule: [
+//            .textTooShort
+//        ],
+//        style: self.paymentFormStyle,
+//        textfieldDelegate: self
+//    ) { textF in
+//        textF.textfield.autocorrectionType = .no
+//    }
 
     lazy var addressLine1Field = MangoPayTextfield(
         placeholderText: LocalizableString.CARD_ZIP_PLACEHOLDER,
@@ -246,6 +246,17 @@ class PaymentFormView: UIView {
         return appleButton
     }()
 
+    private lazy var paymentForm: MangoPayCheckoutForm = {
+        let view = MangoPayCheckoutForm(paymentFormStyle: PaymentFormStyle())
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.black.cgColor
+       return view
+    }()
+    
+    public var isFormValid: Bool {
+        return paymentForm.isFormValid
+    }
+
     lazy var activitySpiner = UIActivityIndicatorView()
     
     var expiryMonth: Int?
@@ -261,23 +272,13 @@ class PaymentFormView: UIView {
         distribution: .fill,
         padding: UIEdgeInsets(top: 8, left: 0, bottom: 32, right: 0),
         views: [
-            headerView,
-            cardNumberField,
-            cardNameField,
-            hStack,
-            checkMarkStack,
-            billingInfoTitle,
-            countryField,
-            zipCodeField,
+            paymentForm,
             paymentButton,
             orPayWith,
             applePayButton,
             statusLabel
         ]
     ) { stackView in
-        stackView.setCustomSpacing(16, after: self.headerView)
-        stackView.setCustomSpacing(24, after: self.checkMarkStack)
-        stackView.setCustomSpacing(8, after: self.billingInfoTitle)
         stackView.setCustomSpacing(16, after: self.zipCodeField)
         stackView.setCustomSpacing(8, after: self.paymentButton)
         stackView.setCustomSpacing(8, after: self.orPayWith)
@@ -301,17 +302,17 @@ class PaymentFormView: UIView {
     var paymentMethodConfig: PaymentMethodConfig
     var handlePaymentFlow: Bool
     
-    lazy var forms: [Validatable] = [
-        cardNumberField,
-        cardNameField,
-        expiryDateField,
-        cvvField
-    ]
+//    lazy var forms: [Validatable] = [
+//        cardNumberField,
+//        cardNameField,
+//        expiryDateField,
+//        cvvField
+//    ]
 
-    var isFormValid: Bool {
-        guard let cardNumber = cardNumberField.text?.replacingOccurrences(of: " ", with: "") else { return false }
-        return areFormsValidShowingError() && LuhnChecker.luhnCheck(cardNumber)
-    }
+//    var isFormValid: Bool {
+//        guard let cardNumber = cardNumberField.text?.replacingOccurrences(of: " ", with: "") else { return false }
+//        return areFormsValidShowingError() && LuhnChecker.luhnCheck(cardNumber)
+//    }
 
     init(
         client: MangopayClient,
@@ -351,10 +352,10 @@ class PaymentFormView: UIView {
         keyboardUtil?.register()
         activitySpiner.isHidden = true
 
-        cardNumberField.onEditingChanged = { text in
-            let cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
-            self.cardNumberField.setRightImage(cardType.icon)
-        }
+//        cardNumberField.onEditingChanged = { text in
+//            let cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
+//            self.cardNumberField.setRightImage(cardType.icon)
+//        }
 
         countryField.didPickHandler = { title, index in
 //            self.viewModel.dropInDelegate?.didUpdateBillingInfo(sender: self.viewModel)
@@ -464,23 +465,17 @@ class PaymentFormView: UIView {
     }
 
     func clearForm() {
-        [
-           cardNumberField,
-           cardNameField,
-           expiryDateField,
-           cvvField
-        ].forEach({$0.textfield.text = ""})
+        paymentForm.clearForm()
+    }
+
+    public func setCardNumber(_ cardNumber: String?) {
+        self.paymentForm.setCardNumber(cardNumber)
     }
 
     func manuallyValidateForms() {
-        [
-           cardNumberField,
-           cardNameField,
-           expiryDateField,
-           cvvField
-        ].forEach({isFormValid($0)})
+        return paymentForm.manuallyValidateForms()
     }
-    
+
     @objc func onTappedButton() {
         finalizeButtonTapped()
     }
@@ -525,186 +520,186 @@ class PaymentFormView: UIView {
     }
 
     func grabData() {
-        let formData = CardData(
-            number: cardNumberField.text?.replacingOccurrences(of: " ", with: ""),
-            name: cardNameField.text,
-            expMonth: expiryMonth,
-            expYear: expiryYear,
-            cvc: cvvField.text,
-            savePayment: saveDetailsCheckMark.isSelected,
-            bilingInfo: BillingInfo(
-                line1: nil,
-                line2: zipCodeField.text ?? "",
-                city: nil,
-                postalCode: nil,
-                state: nil,
-                country: countryField.text
-            )
-        )
-
-        viewModel.formData = formData
+//        let formData = CardData(
+//            number: cardNumberField.text?.replacingOccurrences(of: " ", with: ""),
+//            name: cardNameField.text,
+//            expMonth: expiryMonth,
+//            expYear: expiryYear,
+//            cvc: cvvField.text,
+//            savePayment: saveDetailsCheckMark.isSelected,
+//            bilingInfo: BillingInfo(
+//                line1: nil,
+//                line2: zipCodeField.text ?? "",
+//                city: nil,
+//                postalCode: nil,
+//                state: nil,
+//                country: countryField.text
+//            )
+//        )
+//
+//        viewModel.formData = formData
     }
 
     func setCards(cards: CardConfig?) {
-        headerView.set(cards)
+//        headerView.set(cards)
     }
 
-    func setUsersCards(_ cards: [CardType]) {
-        cardNumberField.setRightImage(UIImage(systemName: "plus"), text: "Choose Card")
+//    func setUsersCards(_ cards: [CardType]) {
+//        cardNumberField.setRightImage(UIImage(systemName: "plus"), text: "Choose Card")
 //        cardNumberField.setData(cards: cards)
-    }
+//    }
 }
 
 
 extension PaymentFormView: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch textField {
-        case cardNumberField.textfield:
-            cardNameField.setResponsder()
-        case cardNameField.textfield:
-            expiryDateField.setResponsder()
-        case expiryDateField.textfield:
-            cvvField.setResponsder()
-        case cvvField.textfield:
-            countryField.setResponsder()
-        case zipCodeField.textfield:
-            self.endEditing(true)
-        default: break
-        }
-        return true
-    }
-
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        
-        switch textField {
-        case cardNumberField.textfield:
-            if [6, 11, 16].contains(textField.text?.count ?? 0) && string.isEmpty {
-                textField.text = String(textField.text!.dropLast())
-                return true
-            }
-            
-            let text = NSString(string: textField.text ?? "").replacingCharacters(
-                in: range,
-                with: string
-            ).replacingOccurrences(of: " ", with: "")
-            
-            if text.count >= 4 && text.count <= 16 {
-                var newString = ""
-                for i in stride(from: 0, to: text.count, by: 4) {
-                    let upperBoundIndex = i + 4
-                    
-                    let lowerBound = String.Index.init(encodedOffset: i)
-                    let upperBound = String.Index.init(encodedOffset: upperBoundIndex)
-                    
-                    if upperBoundIndex <= text.count  {
-                        newString += String(text[lowerBound..<upperBound]) + " "
-                        if newString.count > 19 {
-                            newString = String(newString.dropLast())
-                        }
-                    }
-                    
-                    else if i <= text.count {
-                        newString += String(text[lowerBound...])
-                    }
-                }
-                
-                textField.text = newString
-                return false
-            }
-            
-            if text.count > 16 {
-                return false
-            }
-            
-            let cardType = CardTypeChecker.getCreditCardType(
-                cardNumber: text.trimmingCharacters(in: .whitespaces)
-            )
-            cardNumberField.setLeftImage(cardType.icon)
-            return true
-            
-        case expiryDateField.textfield:
-            guard let oldText = textField.text, let r = Range(range, in: oldText) else {
-                return true
-            }
-            let updatedText = oldText.replacingCharacters(in: r, with: string)
-            
-            if string == "" {
-                if updatedText.count == 2 {
-                    textField.text = "\(updatedText.prefix(1))"
-                    return false
-                }
-            } else if updatedText.count == 1 {
-                if updatedText > "1" {
-                    return false
-                }
-            } else if updatedText.count == 2 {
-                if updatedText <= "12" { //Prevent user to not enter month more than 12
-                    textField.text = "\(updatedText)/" //This will add "/" when user enters 2nd digit of month
-                }
-                return false
-            } else if updatedText.count == 5 {
-                self.expDateValidation(dateStr: updatedText)
-            } else if updatedText.count > 5 {
-                return false
-            }
-            
-            return true
-        case cvvField.textfield:
-            guard let preText = textField.text as NSString?,
-                preText.replacingCharacters(in: range, with: string).count <= 4 else {
-                return false
-            }
-
-            return true
-    
-        default: return true
-        }
-    }
-    
-    
-    func expDateValidation(dateStr: String) {
-
-        let currentYear = Calendar.current.component(.year, from: Date()) // This will give you current year (i.e. if 2019 then it will be 19)
-        let currentMonth = Calendar.current.component(.month, from: Date()) // This will give you current month (i.e if June then it will be 6)
-
-//        let enteredYear = Int(dateStr.suffix(2)) ?? 0 // get last two digit from entered string as year
-//        let enteredMonth = Int(dateStr.prefix(2)) ?? 0 // get first two digit from entered string as month
-        print(dateStr) // This is MM/YY Entered by user
-        
-        guard let actualDate = Date(dateStr, format: "MM/yy") else { return }
-        let enteredYear = Calendar.current.dateComponents([.year], from: actualDate).year ?? 0
-        let enteredMonth = Calendar.current.dateComponents([.month], from: actualDate).month ?? 0
-
-        if enteredYear > currentYear {
-            if (1 ... 12).contains(enteredMonth) {
-                print("Entered Date Is Right")
-                self.expiryMonth = enteredMonth
-                self.expiryYear = enteredYear
-            } else {
-                print("Entered Date Is Wrong")
-            }
-        } else if currentYear == enteredYear {
-            if enteredMonth >= currentMonth {
-                if (1 ... 12).contains(enteredMonth) {
-                   print("Entered Date Is Right")
-                    self.expiryMonth = enteredMonth
-                } else {
-                   print("Entered Date Is Wrong")
-                }
-            } else {
-                print("Entered Date Is Wrong")
-            }
-        } else {
-           print("Entered Date Is Wrong")
-        }
-
-    }
-
+//
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        switch textField {
+//        case cardNumberField.textfield:
+//            cardNameField.setResponsder()
+//        case cardNameField.textfield:
+//            expiryDateField.setResponsder()
+//        case expiryDateField.textfield:
+//            cvvField.setResponsder()
+//        case cvvField.textfield:
+//            countryField.setResponsder()
+//        case zipCodeField.textfield:
+//            self.endEditing(true)
+//        default: break
+//        }
+//        return true
+//    }
+//
+//    func textField(
+//        _ textField: UITextField,
+//        shouldChangeCharactersIn range: NSRange,
+//        replacementString string: String
+//    ) -> Bool {
+//
+//        switch textField {
+//        case cardNumberField.textfield:
+//            if [6, 11, 16].contains(textField.text?.count ?? 0) && string.isEmpty {
+//                textField.text = String(textField.text!.dropLast())
+//                return true
+//            }
+//
+//            let text = NSString(string: textField.text ?? "").replacingCharacters(
+//                in: range,
+//                with: string
+//            ).replacingOccurrences(of: " ", with: "")
+//
+//            if text.count >= 4 && text.count <= 16 {
+//                var newString = ""
+//                for i in stride(from: 0, to: text.count, by: 4) {
+//                    let upperBoundIndex = i + 4
+//
+//                    let lowerBound = String.Index.init(encodedOffset: i)
+//                    let upperBound = String.Index.init(encodedOffset: upperBoundIndex)
+//
+//                    if upperBoundIndex <= text.count  {
+//                        newString += String(text[lowerBound..<upperBound]) + " "
+//                        if newString.count > 19 {
+//                            newString = String(newString.dropLast())
+//                        }
+//                    }
+//
+//                    else if i <= text.count {
+//                        newString += String(text[lowerBound...])
+//                    }
+//                }
+//
+//                textField.text = newString
+//                return false
+//            }
+//
+//            if text.count > 16 {
+//                return false
+//            }
+//
+//            let cardType = CardTypeChecker.getCreditCardType(
+//                cardNumber: text.trimmingCharacters(in: .whitespaces)
+//            )
+//            cardNumberField.setLeftImage(cardType.icon)
+//            return true
+//
+//        case expiryDateField.textfield:
+//            guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+//                return true
+//            }
+//            let updatedText = oldText.replacingCharacters(in: r, with: string)
+//
+//            if string == "" {
+//                if updatedText.count == 2 {
+//                    textField.text = "\(updatedText.prefix(1))"
+//                    return false
+//                }
+//            } else if updatedText.count == 1 {
+//                if updatedText > "1" {
+//                    return false
+//                }
+//            } else if updatedText.count == 2 {
+//                if updatedText <= "12" { //Prevent user to not enter month more than 12
+//                    textField.text = "\(updatedText)/" //This will add "/" when user enters 2nd digit of month
+//                }
+//                return false
+//            } else if updatedText.count == 5 {
+//                self.expDateValidation(dateStr: updatedText)
+//            } else if updatedText.count > 5 {
+//                return false
+//            }
+//
+//            return true
+//        case cvvField.textfield:
+//            guard let preText = textField.text as NSString?,
+//                preText.replacingCharacters(in: range, with: string).count <= 4 else {
+//                return false
+//            }
+//
+//            return true
+//
+//        default: return true
+//        }
+//    }
+//
+//
+//    func expDateValidation(dateStr: String) {
+//
+//        let currentYear = Calendar.current.component(.year, from: Date()) // This will give you current year (i.e. if 2019 then it will be 19)
+//        let currentMonth = Calendar.current.component(.month, from: Date()) // This will give you current month (i.e if June then it will be 6)
+//
+////        let enteredYear = Int(dateStr.suffix(2)) ?? 0 // get last two digit from entered string as year
+////        let enteredMonth = Int(dateStr.prefix(2)) ?? 0 // get first two digit from entered string as month
+//        print(dateStr) // This is MM/YY Entered by user
+//
+//        guard let actualDate = Date(dateStr, format: "MM/yy") else { return }
+//        let enteredYear = Calendar.current.dateComponents([.year], from: actualDate).year ?? 0
+//        let enteredMonth = Calendar.current.dateComponents([.month], from: actualDate).month ?? 0
+//
+//        if enteredYear > currentYear {
+//            if (1 ... 12).contains(enteredMonth) {
+//                print("Entered Date Is Right")
+//                self.expiryMonth = enteredMonth
+//                self.expiryYear = enteredYear
+//            } else {
+//                print("Entered Date Is Wrong")
+//            }
+//        } else if currentYear == enteredYear {
+//            if enteredMonth >= currentMonth {
+//                if (1 ... 12).contains(enteredMonth) {
+//                   print("Entered Date Is Right")
+//                    self.expiryMonth = enteredMonth
+//                } else {
+//                   print("Entered Date Is Wrong")
+//                }
+//            } else {
+//                print("Entered Date Is Wrong")
+//            }
+//        } else {
+//           print("Entered Date Is Wrong")
+//        }
+//
+//    }
+//
 }
 
 extension PaymentFormView: KeyboardUtilDelegate {
@@ -728,24 +723,24 @@ extension PaymentFormView: KeyboardUtilDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        switch textField {
-        case cardNumberField.textfield:
-            isFormValid(cardNumberField)
-        case cardNameField.textfield:
-            isFormValid(cardNameField)
-        case expiryDateField.textfield:
-            isFormValid(expiryDateField)
-        case cvvField.textfield:
-            isFormValid(cvvField)
-        case zipCodeField.textfield:
-            isFormValid(zipCodeField)
-        default: break
-        }
+//        switch textField {
+//        case cardNumberField.textfield:
+//            isFormValid(cardNumberField)
+//        case cardNameField.textfield:
+//            isFormValid(cardNameField)
+//        case expiryDateField.textfield:
+//            isFormValid(expiryDateField)
+//        case cvvField.textfield:
+//            isFormValid(cvvField)
+//        case zipCodeField.textfield:
+//            isFormValid(zipCodeField)
+//        default: break
+//        }
     }
-    
+
 
 }
 
-extension PaymentFormView: FormValidatable {
-    
-}
+//extension PaymentFormView: FormValidatable {
+//
+//}

@@ -10,6 +10,7 @@ import UIKit
 #endif
 import MangoPaySdkAPI
 import NethoneSDK
+import MangopayVault
 
 public class MangoPayCheckoutForm: UIView, FormValidatable {
 
@@ -111,11 +112,15 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     var onRightButtonTappedAction: (() -> Void)?
     var currentAttempt: String?
     
+    var cardRegistration: CardRegistration?
+    var callBack: MangoPayTokenizedCallBack?
+
     var isFormValid: Bool {
-        return areFormsValidShowingError()
+        guard let cardNumber = cardNumberField.text?.replacingOccurrences(of: " ", with: "") else { return false }
+        return areFormsValidShowingError() && LuhnChecker.luhnCheck(cardNumber)
     }
 
-    var cardData: MGPCardInfo {
+    public var cardData: MGPCardInfo {
         let monStr = (expiryMonth ?? 0) < 10 ? ("0" + String(expiryMonth ?? 0)) : String(expiryMonth ?? 0)
         let expStr = monStr + String(expiryYear ?? 0).suffix(2)
 
@@ -128,9 +133,13 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     }
 
     public init(
-        paymentFormStyle: PaymentFormStyle?
+        paymentFormStyle: PaymentFormStyle?,
+        callBack: MangoPayTokenizedCallBack? = nil
     ) {
+
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
+        self.callBack = callBack
+
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
             target: self,
@@ -178,8 +187,25 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         ].forEach({$0.textfield.text = ""})
     }
 
+    func manuallyValidateForms() {
+        [
+           cardNumberField,
+           cardNameField,
+           expiryDateField,
+           cvvField
+        ].forEach({isFormValid($0)})
+    }
+
     private func setCards(cards: CardConfig?) {
         headerView.set(cards)
+    }
+
+    public func setCardNumber(_ cardNumber: String?) {
+        cardNumberField.textfield.text = cardNumber
+    }
+
+    func setCardRegistration(_ cardRegistration: CardRegistration) {
+        self.cardRegistration = cardRegistration
     }
 
     func initiateNethone() {
@@ -227,6 +253,38 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
             mode: .AllData,
             name: "cvvField"
         )
+    }
+
+    func tokenizeCard() {
+        guard self.isFormValid else { return }
+        guard let attemptRef = self.currentAttempt, let cardReg = cardRegistration else { return }
+
+//        MangoPayVault.initialize(clientId: clientId, environment: .sandbox)
+
+        Task {
+            await MangoPayVault.tokenizeCard(
+                card: CardInfo(
+                    cardNumber: self.cardData.cardNumber,
+                    cardExpirationDate: self.cardData.cardExpirationDate,
+                    cardCvx: self.cardData.cardCvx,
+                    cardType: self.cardData.cardType,
+                    accessKeyRef: self.cardData.accessKeyRef,
+                    data: self.cardData.data
+                ),
+                cardRegistration: cardReg) { tokenisedCard, error in
+                    guard let _card = tokenisedCard else {
+                        self.callBack?(.none, error)
+                        return
+                        
+                    }
+                    let res = TokenizedCardData(
+                        card: _card,
+                        fraud: FraudData(attemptReference: attemptRef)
+                    )
+                    self.callBack?(res, .none)
+                }
+    
+        }
     }
 }
 
