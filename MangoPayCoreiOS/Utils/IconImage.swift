@@ -12,7 +12,7 @@ import UIKit
 class IconImage: UIImageView {
 
     static func create(
-        iconName: UIImage.AssetIdentifier,
+        iconName: String? = nil,
         iconHeight: CGFloat = 30,
         iconWidth: CGFloat = 30,
         contentMode: UIView.ContentMode = .scaleAspectFill
@@ -21,7 +21,7 @@ class IconImage: UIImageView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: iconHeight).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: iconWidth).isActive = true
-        imageView.image = UIImage(assetIdentifier: iconName)
+        imageView.image = UIImage(named: iconName ?? "")
         imageView.contentMode = contentMode
         return imageView
     }
@@ -32,7 +32,7 @@ class IconButton: UIButton {
 
     static func create(
         title: String,
-        iconName: UIImage.AssetIdentifier = .none,
+        iconName: String? = nil,
         iconSystemName: String? = nil,
         iconSystemColor: UIColor? = .black,
         iconHeight: CGFloat = 30,
@@ -53,7 +53,7 @@ class IconButton: UIButton {
             button.setImage(image, for: .normal)
             button.tintColor = iconSystemColor
         } else {
-            button.setImage(UIImage(assetIdentifier: iconName), for: .normal)
+            button.setImage(UIImage(named: iconName ?? ""), for: .normal)
         }
 
         button.contentMode = contentMode

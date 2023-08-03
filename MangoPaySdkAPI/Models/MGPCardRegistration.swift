@@ -8,19 +8,19 @@
 import Foundation
 import MangopayVault
 
-//public enum Environment: String {
-//    case sandbox
-//    case prod
-//
-//    public var url: URL {
-//        switch self {
-//        case .sandbox:
-//            return URL(string: "https://api.sandbox.mangopay.com")!
-//        case .prod:
-//            return URL(string: "https://api.mangopay.com")!
-//        }
-//    }
-//}
+public enum MGPEnvironment: String {
+    case sandbox
+    case prod
+
+    public var url: URL {
+        switch self {
+        case .sandbox:
+            return URL(string: "https://api.sandbox.mangopay.com")!
+        case .prod:
+            return URL(string: "https://api.mangopay.com")!
+        }
+    }
+}
 
 public struct MGPCardRegistration: Codable {
     
@@ -96,3 +96,22 @@ public struct MGPCardRegistration: Codable {
     }
 }
 
+extension CardRegistration {
+
+    public var toMGPCardReg: MGPCardRegistration {
+        return MGPCardRegistration(
+            id: self.id,
+            tag: self.tag,
+            creationDate: self.creationDate,
+            userID: self.userID,
+            accessKey: self.accessKey,
+            preregistrationData: self.preregistrationData,
+            registrationData: self.registrationData,
+            cardID: self.cardID,
+            cardType: self.cardType,
+            cardRegistrationURLStr: self.cardRegistrationURLStr,
+            currency: self.currency,
+            status: self.status
+        )
+    }
+}
