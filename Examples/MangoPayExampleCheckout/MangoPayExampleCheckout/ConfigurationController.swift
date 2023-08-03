@@ -263,7 +263,7 @@ class ConfigurationController: UIViewController {
         do {
             showLoader(true)
 
-            let regResponse = try await CardRegistrationClient(
+            let regResponse = try await PaymentCoreClient(
                 env: .sandbox
             ).createCardRegistration(
                 cardReg,

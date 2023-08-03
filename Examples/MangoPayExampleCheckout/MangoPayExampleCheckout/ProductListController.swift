@@ -106,45 +106,16 @@ class ProductListController: UIViewController {
     }
     
      func didTapDropInCheckout(selectedProduct: Product) {
-//        let cardConfig = CardConfig(supportedCardBrands: [.visa, .amex])
-//
-//        let style = PaymentFormStyle(
-//            font: .systemFont(ofSize: 18),
-//            textColor: .black,
-//            placeHolderColor: .gray,
-//            errorColor: .red
-//        )
-//
-//        let dropInOptions = DropInOptions(
-//            apiKey: apikey,
-//            clientId: "apiprod",
-//            orderId: nil,
-//            style: style,
-//            customerId: nil,
-//            flowId: flowID,
-//            amount: selectedProduct.price,
-//            currencyCode: "EUR",
-//            countryCode: "FR",
-//            threeDSRedirectURL: "https://documentation.whenthen.com",
-//            delegate: self
-//        )
-//
-//         MangoPaySDK.buildDropInForm(
-//            with: dropInOptions,
-//            cardConfig: cardConfig,
-//            present: self,
-//            dropInDelegate: self
-//        )
-//
+
 //         startIntent(amount: Int(selectedProduct.price))
          
          let mgpClient = MangopayClient(
-             clientId: "checkoutsquatest",
-             apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
+            clientId: config.config.clientId,
+             apiKey: config.config.apiKey,
              environment: .sandbox
          )
 
-         let checkout = MangoPaySDK.create(
+         let checkout = MGPPaymentSheet.create(
              client: mgpClient,
              paymentMethodConfig: PaymentMethodConfig(
                  cardReg: config.cardReg
@@ -152,17 +123,25 @@ class ProductListController: UIViewController {
              handlePaymentFlow: false,
              branding: PaymentFormStyle(),
              callback: CallBack(
-                 onPayButtonClicked: { cardinfo in
-                     print("✅ cardinfo", cardinfo)
+                 onPaymentMethodSelected: { paymentMethod in
+                     print("✅ cardinfo", paymentMethod)
                  },
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
+                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
                  }, onPaymentCompleted: {
                      print("✅ onPaymentCompleted")
-                 }, onError: { error in
-                     print("❌ error", error.localizedDescription)
-
-                 })
+                 }, onCancelled: {
+                     
+                 },
+                 onError: { error in
+                     print("❌ error", error.reason)
+                     self.showAlert(with: error.reason, title: "Error")
+                 },
+                 onSheetDismissed: {
+                     print("✅ sheet dismisses")
+                 }
+             )
          )
 
          checkout.present(in: self)
@@ -191,72 +170,6 @@ class ProductListController: UIViewController {
     }
 }
 
-extension ProductListController: DropInFormDelegate {
-
-    func didUpdateBillingInfo(sender: PaymentFormViewModel) {
-//        let intentClient = MangoPayIntent(clientKey: apikey)
-//        
-//        Task {
-//            do {
-//                let indtentData = try await intentClient.updateIntent(
-//                    intentId: intentId,
-//                    trackingId: nil,
-//                    shipping: MGPShippingDeliveryInput(status: .inProgress))
-//                self.intentId = indtentData.id
-//                MangoPaySDK.setIntentId(indtentData.id)
-////                print("🤣 updateIntent", indtentData)
-//            } catch {
-//                print("❌❌ Intent Error", error)
-//            }
-//        }
-    }
-    
-    func onPaymentStarted(sender: PaymentFormViewModel) {
-        
-    }
-    
-    func onApplePayCompleteDropIn(status: MangoPayApplePay.PaymentStatus) {
-        
-    }
-    
-
-    func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment) {
-        print(" onPaymentCompleted \(payment)")
-        self.dismiss(animated: true) {
-            self.showAlert(with: payment.id, title: "Payment Successful 🎉🎉🎉")
-        }
-    }
-
-    func onPaymentFailed(sender: PaymentFormViewModel, error: MangoPayError) {
-        print(" onPaymentFailed \(error)")
-    }
-    
-}
-
-extension ProductListController: ElementsFormDelegate {
-    func onTokenGenerated(vaultCard: MangoPaySdkAPI.MGPCardRegistration) {
-        
-    }
-    
-    func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment) {
-        
-    }
-    
-    func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus) {
-        
-    }
-    
-
-    func onTokenGenerated(tokenizedCard: TokenizeCard) {
-        print("Element Token Succesfully Generated \(tokenizedCard.token)")
-        self.showAlert(with: tokenizedCard.token, title: "Payment Sucessful 🎉🎉🎉")
-    }
-    
-    func onTokenGenerationFailed(error: Error) {
-        print("Element Token Failed")
-    }
-   
-}
 
 extension ProductListController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -287,10 +200,10 @@ extension ProductListController: ItemCellDelegate {
         guard let index = collectionView.indexPath(for: sender) else { return }
         let prod = productData[index.row]
         let ac = UIAlertController(title: "Checkout Options", message: nil, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Elements", style: .default, handler: {_ in
+        ac.addAction(UIAlertAction(title: "Payment Form", style: .default, handler: {_ in
             self.didTapElementCheckout(selectedProduct: prod)
            }))
-        ac.addAction(UIAlertAction(title: "Drop In", style: .default, handler: { _ in
+        ac.addAction(UIAlertAction(title: "Payment Sheet", style: .default, handler: { _ in
             self.didTapDropInCheckout(selectedProduct: prod)
         }))
            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -300,20 +213,3 @@ extension ProductListController: ItemCellDelegate {
     
 }
 
-extension ProductListController {
-    private func showAlert(with cardToken: String, title: String) {
-        let alert = UIAlertController(
-            title: title,
-            message: cardToken,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(
-            title: "OK",
-            style: .default
-        ) { _ in
-            alert.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
-    }
-}

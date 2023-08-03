@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MGPPegasusAPI
+import MangoPaySdkAPI
 import MangopayVault
 
 struct Tokenizer {

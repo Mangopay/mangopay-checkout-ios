@@ -23,10 +23,6 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/apollographql/apollo-ios.git",
-            .upToNextMinor(from: "1.0.5")
-        ),
-        .package(
             url: "https://github.com/Mangopay/mangopay-ios-vault-sdk",
             .branch("main")
         ),
@@ -47,7 +43,7 @@ let package = Package(
         .target(
             name: "MangoPaySdkAPI",
             dependencies: [
-                .product(name: "Apollo", package: "apollo-ios"),
+                .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk")
             ],
             path: "MangoPaySdkAPI"
         ),

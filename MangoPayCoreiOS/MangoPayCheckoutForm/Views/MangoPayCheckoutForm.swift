@@ -8,7 +8,7 @@
 #if os(iOS)
 import UIKit
 #endif
-import MGPPegasusAPI
+import MangoPaySdkAPI
 import NethoneSDK
 import MangopayVault
 
@@ -18,7 +18,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
 
     lazy var cardNumberField = MangoPayTextfield(
         placeholderText: "1234 1234 1234 1234",
-        leftImage: UIImage(named: ".card_visa"),
+        leftImage: UIImage(assetIdentifier: .card_visa),
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [
@@ -33,7 +33,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     }
 
     lazy var cardNameField = MangoPayTextfield(
-        placeholderText: "LocalizableString.CARD_NAME_PLACEHOLDER",
+        placeholderText: LocalizableString.CARD_NAME_PLACEHOLDER,
         returnKeyType: .next,
         validationRule: [
             .fullNameRequired,
@@ -46,7 +46,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     }
 
     lazy var expiryDateField = MangoPayTextfield(
-        placeholderText: "LocalizableString.CARD_EXPIRIY_PLACEHOLDER",
+        placeholderText: LocalizableString.CARD_EXPIRIY_PLACEHOLDER,
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [
@@ -60,7 +60,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     }
 
     lazy var cvvField = MangoPayTextfield(
-        placeholderText: "LocalizableString.CARD_CVV",
+        placeholderText: LocalizableString.CARD_CVV,
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [

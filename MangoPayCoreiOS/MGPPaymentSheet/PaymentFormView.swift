@@ -7,7 +7,7 @@
 
 import UIKit
 import PassKit
-import MGPPegasusAPI
+import MangoPaySdkAPI
 
 class PaymentFormView: UIView {
 
@@ -52,7 +52,7 @@ class PaymentFormView: UIView {
     lazy var paymentButton: UIButton = {
        let button = UIButton()
         button.backgroundColor = paymentFormStyle.checkoutButtonBackgroundColor
-        button.setTitle("Checkout", for: .normal)
+        button.setTitle("Pay", for: .normal)
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)

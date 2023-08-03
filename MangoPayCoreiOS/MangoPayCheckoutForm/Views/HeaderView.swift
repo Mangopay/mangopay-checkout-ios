@@ -13,7 +13,7 @@ import UIKit
 class HeaderView: UIView {
 
     lazy var titleLabel = UILabel.create(
-        text: "LocalizableString.CARD_INFO_TITLE",
+        text: LocalizableString.CARD_INFO_TITLE,
         font: UIFont.boldSystemFont(ofSize: 18),
         numberOfLines: 1
     )

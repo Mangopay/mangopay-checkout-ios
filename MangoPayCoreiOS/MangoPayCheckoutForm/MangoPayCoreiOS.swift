@@ -1,8 +1,8 @@
-import MGPPegasusAPI
+import MangoPaySdkAPI
 import Foundation
 import UIKit
 
-public struct MGPPegasus {
+public struct MangoPayCoreiOS {
 
     static var clientId: String!
     static var environment: MGPEnvironment!

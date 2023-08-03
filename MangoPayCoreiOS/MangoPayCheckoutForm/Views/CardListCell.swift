@@ -5,7 +5,7 @@
 //  Created by Elikem Savie on 28/10/2022.
 //
 
-import MGPPegasusAPI
+import MangoPaySdkAPI
 #if os(iOS)
 import UIKit
 #endif

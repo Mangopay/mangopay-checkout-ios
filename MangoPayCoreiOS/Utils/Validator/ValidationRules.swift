@@ -24,23 +24,23 @@ public enum ValidationRules: String {
     var reason: String {
         switch self {
         case .invalidCardNumber:
-            return "LocalizableString.ERROR_CARD_NUMBER_INVALID"
+            return LocalizableString.ERROR_CARD_NUMBER_INVALID
         case .cardNumberRequired:
-            return "LocalizableString.ERROR_CARD_NUMBER_INVALID"
+            return LocalizableString.ERROR_CARD_NUMBER_INVALID
         case .cardMinimmun:
-            return "LocalizableString.ERROR_CARD_MIN_NUMBER"
+            return LocalizableString.ERROR_CARD_MIN_NUMBER
         case .fullNameRequired:
-            return "LocalizableString.ERROR_FULLNAME_REQUIRED"
+            return LocalizableString.ERROR_FULLNAME_REQUIRED
         case .cardExpired:
-            return "LocalizableString.ERROR_CARD_EXPIRED"
+            return LocalizableString.ERROR_CARD_EXPIRED
         case .cvvRequired:
-            return "LocalizableString.ERROR_CVC_REQUIRED"
+            return LocalizableString.ERROR_CVC_REQUIRED
         case .dateRequired:
-            return "LocalizableString.ERROR_EXPIRED_DATE_REQUIRED"
+            return LocalizableString.ERROR_EXPIRED_DATE_REQUIRED
         case .dateExpired:
-            return "LocalizableString.ERROR_EXPIRED_DATE"
+            return LocalizableString.ERROR_EXPIRED_DATE
         case .textTooShort:
-            return "LocalizableString.ERROR_TEXT_TOO_SHORT"
+            return LocalizableString.ERROR_TEXT_TOO_SHORT
         case .fieldRequired:
             return "Field required"
         }

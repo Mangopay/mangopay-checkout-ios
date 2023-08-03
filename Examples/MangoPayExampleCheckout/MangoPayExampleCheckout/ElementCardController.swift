@@ -73,7 +73,7 @@ class ElementCardController: UIViewController {
         activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
     }
 
-    init(cardRegistration: MGPCardRegistration, clientId: String) {
+    init(cardRegistration: MGPCardRegistration? = nil, clientId: String) {
         super.init(nibName: nil, bundle: nil)
         self.cardRegistration = cardRegistration
         self.clientId = clientId
@@ -84,44 +84,72 @@ class ElementCardController: UIViewController {
     }
 
     @objc func didTapPay() {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
+        showLoader(true)
 
-        MangoPaySDK.tokenizeCard(
-            form: elementForm,
-            with: cardRegistration.toVaultCardReg
-        ) { respoonse, error in
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
-
-                if let res = respoonse {
-                    self.showAlert(with: res.card.cardID ?? "", title: "🎉 Successful")
-                    self.resultLabel.text = res.str
-                }
-
-                if let err = error {
-                    self.showAlert(with: err.localizedDescription, title: "❌ Error")
-
-                }
+        Task {
+            guard let cardRegistration = await performCreateCardReg(
+                cardReg: MGPCardRegistration.Initiate(
+                    UserId: "158091557",
+                    Currency: "EUR",
+                    CardType: "CB_VISA_MASTERCARD"
+                ),
+                clientId: "checkoutsquatest",
+                apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+            ) else {
+                showLoader(false)
+                return
             }
-    }
-
-}
-
-extension ElementCardController {
-    private func showAlert(with cardToken: String, title: String) {
-        let alert = UIAlertController(
-            title: title,
-            message: cardToken,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(
-            title: "OK",
-            style: .default
-        ) { _ in
-            alert.dismiss(animated: true, completion: nil)
+            
+            MangoPayCoreiOS.tokenizeCard(
+                form: elementForm,
+                with: cardRegistration) { respoonse, error in
+                    self.showLoader(false)
+                    
+                    if let res = respoonse {
+                        self.showAlert(with: res.card.cardID ?? "", title: "🎉 Successful")
+                        self.resultLabel.text = res.str
+                    }
+                    
+                    if let err = error {
+                        self.showAlert(with: err.reason, title: "❌ Error")
+                    }
+                }
         }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+    }
+
+    func performCreateCardReg(
+        cardReg: MGPCardRegistration.Initiate,
+        clientId: String,
+        apiKey: String
+    ) async -> MGPCardRegistration? {
+        do {
+//            showLoader(true)
+
+            let regResponse = try await PaymentCoreClient(
+                env: .sandbox
+            ).createCardRegistration(
+                cardReg,
+                clientId: clientId,
+                apiKey: apiKey
+            )
+//            showLoader(false)
+            print("✅ res", regResponse)
+            return regResponse
+        } catch {
+            print("❌ Error Creating Card Registration")
+//            showLoader(false)
+            return nil
+        }
+
+    }
+
+    func showLoader(_ status: Bool) {
+        activityIndicator.isHidden = !status
+        if status {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
     }
 }
+
