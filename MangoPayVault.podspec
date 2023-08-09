@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 
     s.source_files = 'MangoPayVault/*.swift'
     s.dependency    'MangoPaySdkAPI', s.version.to_s
-    s.dependency    'MangoPayCoreiOS', s.version.to_s
+    #s.dependency    'MangoPayCoreiOS', s.version.to_s
 
   end
   

@@ -31,9 +31,7 @@ struct NetworkTestData {
 }
 
 protocol NetworkUtil {
-//    var baseUrl: URL { get }
     var apiVersion: String { get }
-//    var headers: [String: String] { get }
 }
 
 struct Response<T: Codable, H: Codable> {
@@ -42,10 +40,6 @@ struct Response<T: Codable, H: Codable> {
 }
 
 extension NetworkUtil {
-
-//    var baseUrl: URL {
-//        return URL(string: "https://api.sandbox.mangopay.com")!
-//    }
 
     var headers: [String: String] {
         var _headers = [String: String]()
@@ -137,7 +131,6 @@ extension NetworkUtil {
                  let authData = authDataStr.data(using: String.Encoding.utf8)!
                  let base64LoginString = authData.base64EncodedString()
                  
-                 let str = "Y2hlY2tvdXRzcXVhdGVzdDo3Zk9mdnQzb3p2NnZrQXAxUGFocTU2aFJSWFlxSnFOWFE0RDU4djVRQ3dUb2NDVldXQw=="
                  request.addValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
              }
 

@@ -7,18 +7,19 @@
 
 import Foundation
 
-public struct PayIn: Codable {
+public struct PayIn: Codable, PayInPreAuthProtocol {
+    
     var id, tag: String?
     var creationDate: Int?
-    var authorID, creditedUserID: String?
-    var debitedFunds, creditedFunds, fees: CreditedFunds?
+    public var authorID, creditedUserID: String?
+    public var debitedFunds, creditedFunds, fees: DebitedFunds?
     var status, resultCode, resultMessage: String?
     var executionDate: Int?
     var type, nature, creditedWalletID: String?
     var debitedWalletID: String?
     public var paymentType, executionType, secureMode, cardID: String?
-    var secureModeReturnURL, secureModeRedirectURL: String?
-    var secureModeNeeded: Bool?
+    public var secureModeReturnURL, secureModeRedirectURL: String?
+    public var secureModeNeeded: Bool?
     var culture: String?
     var securityInfo: SecurityInfo?
     var statementDescriptor: String?
@@ -63,7 +64,7 @@ public struct PayIn: Codable {
         case recurringPayinRegistrationID = "RecurringPayinRegistrationId"
     }
 
-    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, authorID: String? = nil, creditedUserID: String? = nil, debitedFunds: CreditedFunds? = nil, creditedFunds: CreditedFunds? = nil, fees: CreditedFunds? = nil, status: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionDate: Int? = nil, type: String? = nil, nature: String? = nil, creditedWalletID: String? = nil, debitedWalletID: String? = nil, paymentType: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String? = nil, secureModeReturnURL: String? = nil, secureModeRedirectURL: String? = nil, secureModeNeeded: Bool? = nil, culture: String? = nil, securityInfo: SecurityInfo? = nil, statementDescriptor: String? = nil, browserInfo: BrowserInfo? = nil, ipAddress: String? = nil, billing: Ing? = nil, shipping: Ing? = nil, requested3DSVersion: String? = nil, applied3DSVersion: String? = nil, recurringPayinRegistrationID: String? = nil) {
+    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, authorID: String? = nil, creditedUserID: String? = nil, debitedFunds: DebitedFunds? = nil, creditedFunds: DebitedFunds? = nil, fees: DebitedFunds? = nil, status: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionDate: Int? = nil, type: String? = nil, nature: String? = nil, creditedWalletID: String? = nil, debitedWalletID: String? = nil, paymentType: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String? = nil, secureModeReturnURL: String? = nil, secureModeRedirectURL: String? = nil, secureModeNeeded: Bool? = nil, culture: String? = nil, securityInfo: SecurityInfo? = nil, statementDescriptor: String? = nil, browserInfo: BrowserInfo? = nil, ipAddress: String? = nil, billing: Ing? = nil, shipping: Ing? = nil, requested3DSVersion: String? = nil, applied3DSVersion: String? = nil, recurringPayinRegistrationID: String? = nil) {
         self.id = id
         self.tag = tag
         self.creationDate = creationDate

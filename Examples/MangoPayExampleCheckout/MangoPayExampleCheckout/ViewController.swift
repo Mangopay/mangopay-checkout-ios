@@ -9,7 +9,7 @@ import UIKit
 import MangoPayCoreiOS
 import MangoPaySdkAPI
 //import MangoPayIntent
-import MangoPayVault
+import MangopayVault
 
 class ViewController: UIViewController {
 
@@ -44,21 +44,8 @@ class ViewController: UIViewController {
             checkoutButtonBackgroundColor: .black
         )
         
-        let elementOptions = ElementsOptions(
-            apiKey: "ct_test_kpOoHuu5pSzJGABP",
-            style: style,
-            customerId: nil,
-            amount: 200,
-            countryCode: "US",
-            currencyCode: "USD",
-            delegate: self
-        )
-
-        MangoPaySDK.buildElementForm(
-            with: elementOptions,
-            cardConfig: cardConfig,
-            present: self
-        )
+        let formVC = ElementCardController(clientId: "checkoutsquatest")
+        self.present(formVC, animated: true)
     }
     
     @IBAction func didTapDropInCheckout(_ sender: Any) {
@@ -72,42 +59,58 @@ class ViewController: UIViewController {
             errorColor: .red
         )
         
-        let dropInOptions = DropInOptions(
-            apiKey: "ct_test_kpOoHuu5pSzJGABP",
-            orderId: nil,
-            style: style,
-            customerId: nil,
-            flowId: "c23700cf-25a9-4b80-8aa6-3e3169f6d896",
-            amount: 2000,
-            currencyCode: "EUR",
-            countryCode: "US",
-            delegate: self
+        let mgpClient = MangopayClient(
+            clientId: "checkoutsquatest",
+            apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
+            environment: .sandbox
         )
-  
-        
-        MangoPaySDK.buildDropInForm(
-            with: dropInOptions,
-            cardConfig: cardConfig,
-            present: self,
-            dropInDelegate: self
-        )
+
+        Task {
+            guard let cardRegistration = await performCreateCardReg(
+                cardReg: MGPCardRegistration.Initiate(
+                    UserId: "158091557",
+                    Currency: "EUR",
+                    CardType: "CB_VISA_MASTERCARD"
+                ),
+                clientId: "checkoutsquatest",
+                apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+            ) else {
+                return
+            }
+            
+            let checkout = MGPPaymentSheet.create(
+                client: mgpClient,
+                paymentMethodConfig: PaymentMethodConfig(
+                    cardReg: cardRegistration
+                ),
+                handlePaymentFlow: false,
+                branding: PaymentFormStyle(),
+                callback: CallBack(
+                    onPaymentMethodSelected: { paymentMethod in
+                        print("✅ cardinfo", paymentMethod)
+                    },
+                    onTokenizationCompleted: { cardRegistration in
+                        print("✅ cardRegistration", cardRegistration)
+                        topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+                    }, onPaymentCompleted: {
+                        print("✅ onPaymentCompleted")
+                    }, onCancelled: {
+                        
+                    },
+                    onError: { error in
+                        print("❌ error", error.reason)
+                        self.showAlert(with: error.reason, title: "Error")
+                    },
+                    onSheetDismissed: {
+                        print("✅ sheet dismisses")
+                    }
+                )
+            )
+            
+            checkout.present(in: self)
+        }
     }
-/*
- clientToken => WT
- clientId => MGP
  
- init
- cardRegData(optional)
- 
- remove CardData from init
- send it to tokenize
- 
- func tokenizeCard(
- card: Cardable,
- 
- 
- */
-    
     @IBAction func didTapPayline(_ sender: UIButton) {
 
         let resObj = CardRegistration(
@@ -122,97 +125,70 @@ class ViewController: UIViewController {
             status: "CREATED"
         )
 
-        let cardInfo = CardInfo(
+        let cardInfo = MGPCardInfo(
             cardNumber: "4970101122334422",
             cardExpirationDate: "1024",
             cardCvx: "123"
         )
         
         showLoader(true)
-        let mgpVault = MangoPayVault(
-            clientId: "checkoutsquatest",
-            provider: .MANGOPAY, environment: .sandbox
-        )
+        
+        MangopayVault.initialize(clientId: "checkoutsquatest", environment: .sandbox)
 
-        mgpVault.tokenizeCard(
-            card: cardInfo,
-            cardRegistration: resObj,
-            delegate: self
-        )
+        MangopayVault.tokenizeCard(
+            card: CardInfo(
+                cardNumber: cardInfo.cardNumber,
+                cardExpirationDate: cardInfo.cardExpirationDate,
+                cardCvx: cardInfo.cardCvx,
+                cardType: cardInfo.cardType,
+                accessKeyRef: cardInfo.accessKeyRef,
+                data: cardInfo.data
+            ),
+            cardRegistration: resObj) { tokenisedCard, error in
+                guard let _ = tokenisedCard else {
+                    print("✅ failed", error)
+                    self.showLoader(false)
+                    return
+                }
+                self.showLoader(false)
+                self.showAlert(with: "", title: "Successful 🎉")
+            }
     }
 
     @IBAction func didTapVaultWT(_ sender: UIButton) {
 
     }
     
+    func performCreateCardReg(
+        cardReg: MGPCardRegistration.Initiate,
+        clientId: String,
+        apiKey: String
+    ) async -> MGPCardRegistration? {
+        do {
+//            showLoader(true)
+
+            let regResponse = try await PaymentCoreClient(
+                env: .sandbox
+            ).createCardRegistration(
+                cardReg,
+                clientId: clientId,
+                apiKey: apiKey
+            )
+//            showLoader(false)
+            print("✅ res", regResponse)
+            return regResponse
+        } catch {
+            print("❌ Error Creating Card Registration")
+//            showLoader(false)
+            return nil
+        }
+
+    }
 }
 
-extension ViewController: MangoPayVaultDelegate {
-    
-    func onSuccess(card: CardRegistration) {
-        showLoader(false)
-        showAlert(with: "", title: "Successful 🎉")
-    }
-    
-    func onFailure(error: Error) {
-        print("✅ failed", error)
-        showLoader(false)
-    }
-    
-    
-}
 
-extension ViewController: DropInFormDelegate {
-
-    func didUpdateBillingInfo(sender: PaymentFormViewModel) {
-        
-    }
-
-    func onPaymentStarted(sender: PaymentFormViewModel) {
-        
-    }
-    
-    func onApplePayCompleteDropIn(status: MangoPayApplePay.PaymentStatus) {
-        
-    }
-    
-
-    func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment) {
-        print("❤️ onPaymentCompleted \(payment)")
-//        self.showAlert(with: payment.id, title: "Payment Succesfully Completed")
-    }
-
-    func onPaymentFailed(sender: PaymentFormViewModel, error: MangoPayError) {
-        print("❌ onPaymentFailed \(error)")
-    }
-    
-}
-
-extension ViewController: ElementsFormDelegate {
-
-    func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment) {
-        
-    }
-    
-    func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus) {
-        
-    }
-    
-
-    func onTokenGenerated(tokenizedCard: TokenizeCard) {
-        print("Element Token Succesfully Generated \(tokenizedCard.token)")
-        self.showAlert(with: tokenizedCard.token, title: "tokenized Card")
-    }
-    
-    func onTokenGenerationFailed(error: Error) {
-        print("❌❌❌")
-        print("Element Token Failed")
-    }
-   
-}
-
-extension ViewController {
-    private func showAlert(with cardToken: String, title: String) {
+extension UIViewController {
+    func showAlert(with cardToken: String, title: String) {
         let alert = UIAlertController(
             title: title,
             message: cardToken,
@@ -227,4 +203,12 @@ extension ViewController {
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
+}
+
+var topmostViewController: UIViewController? {
+    var rootViewController = UIApplication.shared.keyWindow?.rootViewController
+    while let controller = rootViewController?.presentedViewController {
+        rootViewController = controller
+    }
+    return rootViewController
 }
