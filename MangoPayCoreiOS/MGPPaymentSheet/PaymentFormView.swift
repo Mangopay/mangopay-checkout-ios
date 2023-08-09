@@ -68,8 +68,8 @@ class PaymentFormView: UIView {
         views: [
             paymentForm,
             paymentButton,
-            orPayWith,
-            applePayButton,
+//            orPayWith,
+//            applePayButton,
             statusLabel
         ]
     ) { stackView in

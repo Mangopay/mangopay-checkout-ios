@@ -32,18 +32,19 @@ class ProductListController: UIViewController {
     let productData = [
         Product(name: "Horizon West", price: 69.00, imageName: "horizon"),
         Product(name: "FIFA 23", price: 59.00, imageName: "fifa23"),
-        Product(name: "COD MW2", price: 69.00,imageName: "codmw2"),
-        Product(name: "COD MW", price: 69.00,imageName: "codmw"),
-        Product(name: "The Witcher", price: 69.00,imageName: "witcher"),
-        Product(name: "Spiderman", price: 69.00,imageName: "spiderman"),
-        Product(name: "God Of War", price: 69.00,imageName: "god"),
-        Product(name: "God Of War2", price: 69.00,imageName: "god2"),
-        Product(name: "Uncharted", price: 69.00,imageName: "uncharted"),
-        Product(name: "GTA 5", price: 59, imageName: "gta5"),
+        Product(name: "COD MW2", price: 69.00,imageName: "codmw2")
+//        Product(name: "COD MW", price: 69.00,imageName: "codmw"),
+//        Product(name: "The Witcher", price: 69.00,imageName: "witcher"),
+//        Product(name: "Spiderman", price: 69.00,imageName: "spiderman"),
+//        Product(name: "God Of War", price: 69.00,imageName: "god"),
+//        Product(name: "God Of War2", price: 69.00,imageName: "god2"),
+//        Product(name: "Uncharted", price: 69.00,imageName: "uncharted"),
+//        Product(name: "GTA 5", price: 59, imageName: "gta5"),
     ]
 
     var selectedProduct: Product?
     var config: DataCapsule!
+    var checkout: MGPPaymentSheet!
 
     @IBOutlet weak var priceAmountLabel: UILabel!
     
@@ -101,7 +102,8 @@ class ProductListController: UIViewController {
         )
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .coverVertical
-        present(viewController, animated: true)
+//        present(viewController, animated: true)
+        self.navigationController?.pushViewController(viewController, animated: true)
 
     }
     
@@ -115,7 +117,7 @@ class ProductListController: UIViewController {
              environment: .sandbox
          )
 
-         let checkout = MGPPaymentSheet.create(
+        checkout = MGPPaymentSheet.create(
              client: mgpClient,
              paymentMethodConfig: PaymentMethodConfig(
                  cardReg: config.cardReg
@@ -128,7 +130,10 @@ class ProductListController: UIViewController {
                  },
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
-                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+//                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+                     self.handle3DS(with: cardRegistration.cardID ?? "") {
+                         self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
+                     }
                  }, onPaymentCompleted: {
                      print("✅ onPaymentCompleted")
                  }, onCancelled: {
@@ -167,6 +172,69 @@ class ProductListController: UIViewController {
 //            }
 //
 //        }
+    }
+
+    func handle3DS(with cardId: String, onSuccess: (() -> Void)? ) {
+        
+        let payInObj = AuthorizePayIn(
+            tag: "Mangopay Demo Tag",
+            authorID: "158091557",
+            creditedUserID: "158091557",
+            debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
+            fees: DebitedFunds(currency: "EUR", amount: 1),
+            creditedWalletID: "159834019",
+            cardID: cardId,
+            secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore",
+            statementDescriptor: "MANGOPAY",
+            browserInfo: BrowserInfo(
+                acceptHeader: "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+                javaEnabled: false,
+                language: "EN-EN",
+                colorDepth: 4,
+                screenHeight: 750,
+                screenWidth: 400,
+                timeZoneOffset: 60,
+                userAgent: "iOS",
+                javascriptEnabled: false
+            ),
+            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
+            billing: Ing(firstName: "eli", lastName: "Sav", address: Address(addressLine1: "jko", addressLine2: "234", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR")),
+            shipping: Ing(firstName: "DAF", lastName: "FEAM", address: Address(addressLine1: "DASD", addressLine2: "sff", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR"))
+        )
+        
+        Task {
+            
+            do {
+                let regResponse = try await PaymentCoreClient(
+                    env: .sandbox
+                ).authorizePayIn(
+                    payInObj,
+                    clientId: "checkoutsquatest",
+                    apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+                )
+                //            showLoader(false)
+                print("✅ res", regResponse)
+                
+                guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
+
+                MGPPaymentSheet().launch3DSIfPossible(payData: payinData, presentIn: self) { success in
+                    print("✅ launch3DSIfPossible", success)
+                    onSuccess?()
+                } on3DSLauch: { _3dsVC in
+                    self.checkout.tearDown()
+                    self.navigationController?.pushViewController(_3dsVC, animated: true)
+                } on3DSFailure: { error in
+                    print("error", error)
+                    
+                }
+            } catch {
+                print("❌ Error Creating Card Registration")
+                //            showLoader(false)
+            }
+            
+        }
+        
     }
 }
 

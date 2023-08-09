@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  WhenThenExampleCheckout
+//  MangopayDemo
 //
-//  Created by Elikem Savie on 13/10/2022.
+//  Created by Elikem Savie on 08/08/2023.
 //
 
 import UIKit
@@ -51,3 +51,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
+

@@ -54,25 +54,44 @@ public enum CardType: String, Codable, CaseIterable {
     case none
 
     public var icon: UIImage? {
-        return UIImage(systemName: "creditcard")
+        switch self {
+        case .amex:
+            return UIImage.init(assetIdentifier: .card_amex)
+        case .diner:
+            return UIImage.init(assetIdentifier: .card_diners)
+        case .visa:
+            return UIImage.init(assetIdentifier: .card_visa)
+        case .unionPay:
+            return UIImage.init(assetIdentifier: .card_unionpay)
+        case .mastercard:
+            return UIImage.init(assetIdentifier: .card_mastercard)
+        case .discover:
+            return UIImage.init(assetIdentifier: .card_discover)
+        case .jcb:
+            return UIImage.init(assetIdentifier: .card_jcb)
+        case .none:
+            return UIImage(systemName: "creditcard")
+        }
+    }
 
-//        switch self {
-//        case .amex:
-//            return UIImage.init(assetIdentifier: .card_amex)
-//        case .diner:
-//            return UIImage.init(assetIdentifier: .card_diners)
-//        case .visa:
-//            return UIImage.init(assetIdentifier: .card_visa)
-//        case .unionPay:
-//            return UIImage.init(assetIdentifier: .card_unionpay)
-//        case .mastercard:
-//            return UIImage.init(assetIdentifier: .card_mastercard)
-//        case .discover:
-//            return UIImage.init(assetIdentifier: .card_discover)
-//        case .jcb:
-//            return UIImage.init(assetIdentifier: .card_jcb)
-//        case .none:
-//            return UIImage(systemName: "creditcard")
-//        }
+    public var cardCount: Int {
+        switch self {
+        case .amex:
+            return 15
+        case .diner:
+            return 14
+        case .visa:
+            return 16
+        case .unionPay:
+            return 16
+        case .mastercard:
+            return 16
+        case .discover:
+            return 16
+        case .jcb:
+            return 16
+        case .none:
+            return 16
+        }
     }
 }
