@@ -10,7 +10,7 @@ import MangoPayCoreiOS
 import MangoPaySdkAPI
 
 class ElementCardController: UIViewController {
-
+    
     var cardRegistration: MGPCardRegistration!
     var clientId: String!
 
@@ -99,18 +99,34 @@ class ElementCardController: UIViewController {
                 showLoader(false)
                 return
             }
-            
+
+//            let preAuth = PreAuthCard(
+//                authorID: "158091557",
+//                debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
+//                secureMode: "FORCE",
+//                cardID: "nil",
+//                secureModeNeeded: true,
+//                secureModeRedirectURL: "https://docs.mangopay.com",
+//                secureModeReturnURL: "https://docs.mangopay.com"
+//            )
+
             MangoPayCoreiOS.tokenizeCard(
                 form: elementForm,
-                with: cardRegistration) { respoonse, error in
+                with: cardRegistration,
+                presentIn: self
+            ) { respoonse, error in
                     self.showLoader(false)
                     
                     if let res = respoonse {
-                        self.showAlert(with: res.card.cardID ?? "", title: "🎉 Successful")
-                        self.resultLabel.text = res.str
+                        self.resultLabel.text = res.str ?? ""
+                        self.handle3DS(with: res.card.cardID ?? "", onSuccess: {
+                            self.showLoader(false)
+                            self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
+                        })
                     }
                     
                     if let err = error {
+                        self.showLoader(false)
                         self.showAlert(with: err.reason, title: "❌ Error")
                     }
                 }
@@ -143,6 +159,66 @@ class ElementCardController: UIViewController {
 
     }
 
+    func handle3DS(with cardId: String, onSuccess: (() -> Void)? ) {
+        
+        let payInObj = AuthorizePayIn(
+            tag: "Mangopay Demo Tag",
+            authorID: "158091557",
+            creditedUserID: "158091557",
+            debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
+            fees: DebitedFunds(currency: "EUR", amount: 1),
+            creditedWalletID: "159834019",
+            cardID: cardId,
+            secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore",
+            statementDescriptor: "MANGOPAY",
+            browserInfo: BrowserInfo(
+                acceptHeader: "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+                javaEnabled: false,
+                language: "EN-EN",
+                colorDepth: 4,
+                screenHeight: 750,
+                screenWidth: 400,
+                timeZoneOffset: 60,
+                userAgent: "iOS",
+                javascriptEnabled: false
+            ),
+            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
+            billing: Ing(firstName: "eli", lastName: "Sav", address: Address(addressLine1: "jko", addressLine2: "234", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR")),
+            shipping: Ing(firstName: "DAF", lastName: "FEAM", address: Address(addressLine1: "DASD", addressLine2: "sff", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR"))
+        )
+        
+        Task {
+            
+            do {
+                let regResponse = try await PaymentCoreClient(
+                    env: .sandbox
+                ).authorizePayIn(
+                    payInObj,
+                    clientId: clientId,
+                    apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+                )
+                //            showLoader(false)
+                print("✅ res", regResponse)
+                
+                guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
+
+                MangoPayCoreiOS.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
+                    print("✅ launch3DSIfPossible", success)
+                    onSuccess?()
+                } on3DSFailure: { error in
+                    print("error", error)
+                    
+                }
+            } catch {
+                print("❌ Error authorizePayIn", error.localizedDescription)
+                //            showLoader(false)
+            }
+            
+        }
+        
+    }
+
     func showLoader(_ status: Bool) {
         activityIndicator.isHidden = !status
         if status {
@@ -152,4 +228,3 @@ class ElementCardController: UIViewController {
         }
     }
 }
-

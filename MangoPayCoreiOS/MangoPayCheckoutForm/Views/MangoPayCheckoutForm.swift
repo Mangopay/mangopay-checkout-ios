@@ -115,6 +115,8 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     var cardRegistration: MGPCardRegistration?
     var callBack: MangoPayTokenizedCallBack?
 
+    var cardType: CardType?
+
     var isFormValid: Bool {
         guard let cardNumber = cardNumberField.text?.replacingOccurrences(of: " ", with: "") else { return false }
         return areFormsValidShowingError() && LuhnChecker.luhnCheck(cardNumber)
@@ -147,13 +149,13 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         )
         
         setupView()
-        setCards(cards: nil)
+        setCards(cards: CardConfig(supportedCardBrands: [.visa, .mastercard]))
         initiateNethone()
-        cardNumberField.text = "4000 0027 6000 3184"
+//        cardNumberField.text = "4970105181818183"
         
         cardNumberField.onEditingChanged = { text in
-            let cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
-            self.cardNumberField.setRightImage(cardType.icon)
+            self.cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
+            self.cardNumberField.setLeftImage(self.cardType?.icon)
         }
     }
     
@@ -319,7 +321,7 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                 with: string
             ).replacingOccurrences(of: " ", with: "")
             
-            if text.count >= 4 && text.count <= 16 {
+            if text.count >= 4 && text.count <= cardType?.cardCount ?? 16 {
                 var newString = ""
                 for i in stride(from: 0, to: text.count, by: 4) {
                     let upperBoundIndex = i + 4
@@ -343,7 +345,7 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                 return false
             }
             
-            if text.count > 16 {
+            if text.count > cardType?.cardCount ?? 16 {
                 return false
             }
             

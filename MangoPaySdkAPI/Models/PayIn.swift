@@ -7,13 +7,18 @@
 
 import Foundation
 
+public enum PayinStatus: String {
+    case success = "SUCCEEDED"
+    case failed = "FAILED"
+}
+
 public struct PayIn: Codable, PayInPreAuthProtocol {
     
     var id, tag: String?
     var creationDate: Int?
     public var authorID, creditedUserID: String?
     public var debitedFunds, creditedFunds, fees: DebitedFunds?
-    var status, resultCode, resultMessage: String?
+    public var status, resultCode, resultMessage: String?
     var executionDate: Int?
     var type, nature, creditedWalletID: String?
     var debitedWalletID: String?
@@ -27,6 +32,12 @@ public struct PayIn: Codable, PayInPreAuthProtocol {
     var ipAddress: String?
     var billing, shipping: Ing?
     var requested3DSVersion, applied3DSVersion, recurringPayinRegistrationID: String?
+    
+
+    public var statusenum: PayinStatus? {
+        guard let str = status else { return nil }
+        return PayinStatus(rawValue: str)
+    }
 
     enum CodingKeys: String, CodingKey {
         case id = "Id"

@@ -56,9 +56,9 @@ class PaymentFormController: UIViewController {
         super.viewDidLoad()
         setNavigation()
         formView.onClosedTapped = {
-            self.dismiss(animated: true) {
+            self.navigationController?.dismiss(animated: true, completion: {
                 self.callback.onSheetDismissed?()
-            }
+            })
         }
     }
 
@@ -68,9 +68,9 @@ class PaymentFormController: UIViewController {
     }
 
     @objc func closeTapped() {
-        dismiss(animated: true) {
+        self.navigationController?.dismiss(animated: true, completion: {
             self.callback.onSheetDismissed?()
-        }
+        })
     }
 
     func clearForm() {

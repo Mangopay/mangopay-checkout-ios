@@ -31,7 +31,7 @@ final class URLHelper: URLHelping {
 
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
 
-        return components.queryItems?.first { $0.name == "preAuthorizationId" }?.value
+        return components.queryItems?.first { $0.name == "transactionId" }?.value
     }
 
     func urlsMatch(redirectUrl: URL, matchingUrl: URL) -> Bool {

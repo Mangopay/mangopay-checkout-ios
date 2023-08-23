@@ -26,10 +26,6 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
     
     var baseUrl: URL!
 
-    public init(url: URL) {
-        self.baseUrl = url
-    }
-
     public init(env: MGPEnvironment) {
         self.baseUrl = env.url
     }

@@ -7,16 +7,18 @@
 
 import Foundation
 
-public struct AuthorizePayIn: Codable {
+public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
+    
 
     public var id, tag, authorID, creditedUserID: String?
-    var debitedFunds, fees: DebitedFunds?
-    var creditedWalletID, secureMode, cardID: String?
-    var secureModeReturnURL, secureModeRedirectURL: String?
+    public var debitedFunds, fees: DebitedFunds?
+    public var creditedWalletID, secureMode, cardID: String?
+    public var secureModeReturnURL, secureModeRedirectURL: String?
     var statementDescriptor: String?
     var browserInfo: BrowserInfo?
     var ipAddress: String?
     var billing, shipping: Ing?
+    public var secureModeNeeded: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -35,6 +37,7 @@ public struct AuthorizePayIn: Codable {
         case ipAddress = "IpAddress"
         case billing = "Billing"
         case shipping = "Shipping"
+        case secureModeNeeded = "SecureModeNeeded"
     }
 
     public init(
@@ -52,7 +55,8 @@ public struct AuthorizePayIn: Codable {
         browserInfo: BrowserInfo? = nil,
         ipAddress: String,
         billing: Ing? = nil,
-        shipping: Ing? = nil
+        shipping: Ing? = nil,
+        secureModeNeeded: Bool? = false
     ) {
         self.tag = tag
         self.authorID = authorID
@@ -69,6 +73,7 @@ public struct AuthorizePayIn: Codable {
         self.ipAddress = ipAddress
         self.billing = billing
         self.shipping = shipping
+        self.secureModeNeeded = secureModeNeeded
     }
 
 }

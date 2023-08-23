@@ -13,6 +13,11 @@ public enum MGPError: Error {
     case cardRegistrationNotSet
     case initializationRqd
     case tokenizationError(additionalInfo: String?)
+    case _3dsPayInDataRqd
+    case _3dsPresentingVCRqd
+    case _3dsSecureURLRqd
+    case _3dsUserFailedChallenge(reaon: String?)
+    case _3dsError(additionalInfo: String?)
 
     public var reason: String {
         switch self {
@@ -26,6 +31,16 @@ public enum MGPError: Error {
             return "SDK initialisation not set, kindly call MGPPegasus.initialize"
         case .tokenizationError(let errorStr):
             return "Tokenisation Error \(errorStr ?? "")"
+        case ._3dsPayInDataRqd:
+            return "PayIn Object required for 3DS"
+        case ._3dsPresentingVCRqd:
+            return "Presenting ViewcController required for 3DS"
+        case ._3dsSecureURLRqd:
+            return "secureModeRedirectURL cannot be nil"
+        case ._3dsUserFailedChallenge(let errorStr):
+            return "User failed 3DS challenge \(errorStr ?? "")"
+        case ._3dsError(let errorStr):
+            return "3DS Error: \(errorStr ?? "")"
         }
     }
 }

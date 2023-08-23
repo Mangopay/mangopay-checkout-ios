@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  WhenThenExampleCheckout
+//  MangopayDemo
 //
-//  Created by Elikem Savie on 13/10/2022.
+//  Created by Elikem Savie on 08/08/2023.
 //
 
 import UIKit
@@ -45,7 +45,8 @@ class ViewController: UIViewController {
         )
         
         let formVC = ElementCardController(clientId: "checkoutsquatest")
-        self.present(formVC, animated: true)
+        self.navigationController?.pushViewController(formVC, animated: true)
+//        self.present(formVC, animated: true)
     }
     
     @IBAction func didTapDropInCheckout(_ sender: Any) {
@@ -78,7 +79,7 @@ class ViewController: UIViewController {
                 return
             }
             
-            let checkout = MGPPaymentSheet.create(
+            var checkout = MGPPaymentSheet.create(
                 client: mgpClient,
                 paymentMethodConfig: PaymentMethodConfig(
                     cardReg: cardRegistration
@@ -91,7 +92,10 @@ class ViewController: UIViewController {
                     },
                     onTokenizationCompleted: { cardRegistration in
                         print("✅ cardRegistration", cardRegistration)
-                        topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+//                        topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+                        self.handle3DS(with: cardRegistration.cardID ?? "") {
+                            self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
+                        }
                     }, onPaymentCompleted: {
                         print("✅ onPaymentCompleted")
                     }, onCancelled: {
@@ -183,6 +187,66 @@ class ViewController: UIViewController {
             return nil
         }
 
+    }
+
+    func handle3DS(with cardId: String, onSuccess: (() -> Void)? ) {
+        
+        let payInObj = AuthorizePayIn(
+            tag: "Mangopay Demo Tag",
+            authorID: "158091557",
+            creditedUserID: "158091557",
+            debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
+            fees: DebitedFunds(currency: "EUR", amount: 1),
+            creditedWalletID: "159834019",
+            cardID: cardId,
+            secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore",
+            statementDescriptor: "MANGOPAY",
+            browserInfo: BrowserInfo(
+                acceptHeader: "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+                javaEnabled: false,
+                language: "EN-EN",
+                colorDepth: 4,
+                screenHeight: 750,
+                screenWidth: 400,
+                timeZoneOffset: 60,
+                userAgent: "iOS",
+                javascriptEnabled: false
+            ),
+            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
+            billing: Ing(firstName: "eli", lastName: "Sav", address: Address(addressLine1: "jko", addressLine2: "234", city: "accra", region: "GR", postalCode: "23300", country: "France")),
+            shipping: Ing(firstName: "DAF", lastName: "FEAM", address: Address(addressLine1: "DASD", addressLine2: "sff", city: "Paris", region: "Paris", postalCode: "23300", country: "France"))
+        )
+        
+        Task {
+            
+            do {
+                let regResponse = try await PaymentCoreClient(
+                    env: .sandbox
+                ).authorizePayIn(
+                    payInObj,
+                    clientId: "checkoutsquatest",
+                    apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+                )
+                //            showLoader(false)
+                print("✅ res", regResponse)
+                
+                guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
+
+                MangoPayCoreiOS.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
+                    print("✅ launch3DSIfPossible", success)
+                    onSuccess?()
+                } on3DSFailure: { error in
+                    print("error", error)
+                    
+                }
+            } catch {
+                print("❌ Error Creating Card Registration")
+                //            showLoader(false)
+            }
+            
+        }
+        
     }
 }
 
