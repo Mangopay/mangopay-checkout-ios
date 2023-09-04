@@ -7,6 +7,7 @@
 
 import UIKit
 import MangoPaySdkAPI
+import PassKit
 
 class PaymentFormController: UIViewController {
 
@@ -55,16 +56,26 @@ class PaymentFormController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigation()
-        formView.onClosedTapped = {
-            self.navigationController?.dismiss(animated: true, completion: {
-                self.callback.onSheetDismissed?()
-            })
-        }
+        setupObservers()
     }
 
     func setNavigation() {
         title = "Checkout"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeTapped))
+    }
+
+    func setupObservers() {
+        formView.onApplePayTapped = {
+            guard let applePayConfig = self.paymentMethodConfig.applePayConfig else { return }
+            let mgpApplePay = MangoPayApplePay(config: applePayConfig)
+            mgpApplePay.presentApplePay(in: self)
+        }
+
+        formView.onClosedTapped = {
+            self.navigationController?.dismiss(animated: true, completion: {
+                self.callback.onSheetDismissed?()
+            })
+        }
     }
 
     @objc func closeTapped() {

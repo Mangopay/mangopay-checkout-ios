@@ -68,8 +68,8 @@ class PaymentFormView: UIView {
         views: [
             paymentForm,
             paymentButton,
-//            orPayWith,
-//            applePayButton,
+            orPayWith,
+            applePayButton,
             statusLabel
         ]
     ) { stackView in
@@ -127,7 +127,9 @@ class PaymentFormView: UIView {
             target: self,
             action: #selector(onViewTap)
         )
-        
+
+        [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodConfig.applePayConfig?.shouldRenderApplePay == true)})
+
         setupView()
         setNavigation()
         

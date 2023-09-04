@@ -8,6 +8,7 @@
 import UIKit
 import MangoPayCoreiOS
 import MangoPaySdkAPI
+import PassKit
 //import MangoPayIntent
 
 struct Product {
@@ -116,11 +117,28 @@ class ProductListController: UIViewController {
              apiKey: config.config.apiKey,
              environment: .sandbox
          )
+     
+         let contact = PKContact()
+         contact.name = .init(givenName: "Elikem", familyName: "Savie")
+         
+         let applePayConfig = MangopayApplePayConfig(
+            amount: 10,
+            delegate: self,
+            merchantIdentifier: "merchant.mangopay.com.payline.58937646344908",
+            merchantCapabilities: .capability3DS,
+            currencyCode: "USD",
+            countryCode: "US",
+            supportedNetworks: [.visa, .masterCard],
+            requiredBillingContactFields: [.name],
+            billingContact: contact,
+            shippingType: .delivery
+         )
 
         checkout = MGPPaymentSheet.create(
              client: mgpClient,
              paymentMethodConfig: PaymentMethodConfig(
-                 cardReg: config.cardReg
+                 cardReg: config.cardReg,
+                 applePayConfig: applePayConfig
              ),
              handlePaymentFlow: false,
              branding: PaymentFormStyle(),
@@ -281,3 +299,16 @@ extension ProductListController: ItemCellDelegate {
     
 }
 
+extension ProductListController: MangoPayApplePayDelegate {
+
+    func applePayContext(_ sender: MangoPayApplePay, didSelect shippingMethod: PKShippingMethod, handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
+        print("✅ shippingMethod", shippingMethod)
+    }
+
+    func applePayContext(_ sender: MangoPayApplePay, didCompleteWith status: MangoPayApplePay.PaymentStatus, error: Error?) {
+        print("✅ status", status)
+
+    }
+    
+    
+}

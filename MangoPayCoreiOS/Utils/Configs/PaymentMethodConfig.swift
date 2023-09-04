@@ -13,9 +13,9 @@ public struct PaymentMethodConfig {
     var cardReg: MGPCardRegistration?
     var applePayConfig: MangopayApplePayConfig?
 
-    public init(card: MGPCardInfo? = nil, cardReg: MGPCardRegistration? = nil, applePay: MangopayApplePayConfig? = nil) {
+    public init(card: MGPCardInfo? = nil, cardReg: MGPCardRegistration? = nil, applePayConfig: MangopayApplePayConfig? = nil) {
         self.card = card
         self.cardReg = cardReg
-        self.applePayConfig = applePay
+        self.applePayConfig = applePayConfig
     }
 }
