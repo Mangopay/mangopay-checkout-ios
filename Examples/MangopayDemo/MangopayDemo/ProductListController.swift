@@ -122,7 +122,7 @@ class ProductListController: UIViewController {
          contact.name = .init(givenName: "Elikem", familyName: "Savie")
          
          let applePayConfig = MangopayApplePayConfig(
-            amount: 10,
+            amount: 1,
             delegate: self,
             merchantIdentifier: "merchant.mangopay.com.payline.58937646344908",
             merchantCapabilities: .capability3DS,
