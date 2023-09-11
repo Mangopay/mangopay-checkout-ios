@@ -18,6 +18,7 @@ class PaymentFormController: UIViewController {
     var callback: CallBack
     var paymentMethodConfig: PaymentMethodConfig
     var handlePaymentFlow: Bool
+    let paymentHandler = MGPApplePayHandler()
 
     public init(
         cardConfig: CardConfig? = nil,
@@ -67,8 +68,21 @@ class PaymentFormController: UIViewController {
     func setupObservers() {
         formView.onApplePayTapped = {
             guard let applePayConfig = self.paymentMethodConfig.applePayConfig else { return }
-            let mgpApplePay = MangoPayApplePay(config: applePayConfig)
-            mgpApplePay.presentApplePay(in: self)
+//            let paymentHandler = MGPApplePayHandler(
+//                applePayConfig: applePayConfig,
+//                delegate: self
+//            )
+//            let paymentHandler = MGPApplePayHandler()
+//            paymentHandler.setda
+//            paymentHandler.startPayment { success in
+//                print("✅ Confirmation")
+//            }
+            self.paymentHandler.setData(payRequest: applePayConfig.toPaymentRequest)
+            self.paymentHandler.startPayment(delegate: self) { (success) in
+                if success {
+                    print("✅ Confirmation")
+                }
+            }
         }
 
         formView.onClosedTapped = {
@@ -95,4 +109,24 @@ class PaymentFormController: UIViewController {
     func manuallyValidateForms() {
         formView.manuallyValidateForms()
     }
+}
+
+extension PaymentFormController: MGPApplePayHandlerDelegate {
+
+    func applePayContext(didSelect shippingMethod: PKShippingMethod, handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
+        
+    }
+
+    func applePayContext(didCompleteWith status: MangoPayApplePay.PaymentStatus, error: Error?) {
+        switch status {
+        case .success(let token):
+            print("🤣 MangoPayApplePay.token", token)
+        case .error:
+            print("❌ MangoPayApplePay.error")
+        case .userCancellation: break
+            
+        }
+    }
+    
+    
 }

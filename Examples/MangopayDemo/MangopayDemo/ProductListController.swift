@@ -111,7 +111,7 @@ class ProductListController: UIViewController {
      func didTapDropInCheckout(selectedProduct: Product) {
 
 //         startIntent(amount: Int(selectedProduct.price))
-         
+
          let mgpClient = MangopayClient(
             clientId: config.config.clientId,
              apiKey: config.config.apiKey,
@@ -128,7 +128,12 @@ class ProductListController: UIViewController {
             merchantCapabilities: .capability3DS,
             currencyCode: "USD",
             countryCode: "US",
-            supportedNetworks: [.visa, .masterCard],
+            supportedNetworks: [
+                .amex,
+                .discover,
+                .masterCard,
+                .visa
+            ],
             requiredBillingContactFields: [.name],
             billingContact: contact,
             shippingType: .delivery
@@ -299,13 +304,13 @@ extension ProductListController: ItemCellDelegate {
     
 }
 
-extension ProductListController: MangoPayApplePayDelegate {
+extension ProductListController: MGPApplePayHandlerDelegate {
 
-    func applePayContext(_ sender: MangoPayApplePay, didSelect shippingMethod: PKShippingMethod, handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
+    func applePayContext(didSelect shippingMethod: PKShippingMethod, handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
         print("✅ shippingMethod", shippingMethod)
     }
 
-    func applePayContext(_ sender: MangoPayApplePay, didCompleteWith status: MangoPayApplePay.PaymentStatus, error: Error?) {
+    func applePayContext(didCompleteWith status: MangoPayApplePay.PaymentStatus, error: Error?) {
         print("✅ status", status)
 
     }
