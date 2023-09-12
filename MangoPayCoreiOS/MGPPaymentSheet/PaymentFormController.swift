@@ -68,15 +68,6 @@ class PaymentFormController: UIViewController {
     func setupObservers() {
         formView.onApplePayTapped = {
             guard let applePayConfig = self.paymentMethodConfig.applePayConfig else { return }
-//            let paymentHandler = MGPApplePayHandler(
-//                applePayConfig: applePayConfig,
-//                delegate: self
-//            )
-//            let paymentHandler = MGPApplePayHandler()
-//            paymentHandler.setda
-//            paymentHandler.startPayment { success in
-//                print("✅ Confirmation")
-//            }
             self.paymentHandler.setData(payRequest: applePayConfig.toPaymentRequest)
             self.paymentHandler.startPayment(delegate: self) { (success) in
                 if success {

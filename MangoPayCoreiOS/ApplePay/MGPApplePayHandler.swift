@@ -61,25 +61,13 @@ extension MGPApplePayHandler: PKPaymentAuthorizationControllerDelegate {
 
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
         
-        // Perform basic validation on the provided contact information.
-        var errors = [Error]()
-        var status = PKPaymentAuthorizationStatus.success
-        if payment.shippingContact?.postalAddress?.isoCountryCode != "US" {
-            let pickupError = PKPaymentRequest.paymentShippingAddressUnserviceableError(withLocalizedDescription: "Sample App only available in the United States")
-            let countryError = PKPaymentRequest.paymentShippingAddressInvalidError(withKey: CNPostalAddressCountryKey, localizedDescription: "Invalid country")
-            errors.append(pickupError)
-            errors.append(countryError)
-            status = .failure
-        } else {
-
-        }
+        let status = PKPaymentAuthorizationStatus.success
         
         let token = payment.token.paymentData.base64EncodedString().fromBase64()
-
         print("✅ token,", token)
         self.paymentStatus = status
         self.delegate?.applePayContext(didCompleteWith: .success(token), error: nil)
-        completion(PKPaymentAuthorizationResult(status: status, errors: errors))
+        completion(PKPaymentAuthorizationResult(status: status, errors: []))
     }
     
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
