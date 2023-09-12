@@ -30,7 +30,7 @@ public struct MangopayApplePayConfig {
 
     var paymentSummaryItems = [PKPaymentSummaryItem]()
 
-    public init(amount: Double, delegate: MGPApplePayHandlerDelegate, merchantIdentifier: String, merchantCapabilities: PKMerchantCapability, currencyCode: String, supportedCountries: [String]? = nil, countryCode: String, supportedNetworks: [PKPaymentNetwork], buttonType: PKPaymentButtonType? = nil, buttonStyle: PKPaymentButtonStyle? = nil, requiredBillingContactFields: Set<PKContactField>? = nil, requiredShippingContactFields: Set<PKContactField>?, billingContact: PKContact? = nil, shippingContact: PKContact? = nil, shippingType: PKShippingType? = nil, shippingMethods: [PKShippingMethod]? = nil, applicationData: Data? = nil) {
+    public init(amount: Double, delegate: MGPApplePayHandlerDelegate, merchantIdentifier: String, merchantCapabilities: PKMerchantCapability, currencyCode: String, supportedCountries: [String]? = nil, countryCode: String, supportedNetworks: [PKPaymentNetwork], buttonType: PKPaymentButtonType? = nil, buttonStyle: PKPaymentButtonStyle? = nil, requiredBillingContactFields: Set<PKContactField>? = nil, requiredShippingContactFields: Set<PKContactField>? = nil, billingContact: PKContact? = nil, shippingContact: PKContact? = nil, shippingType: PKShippingType? = nil, shippingMethods: [PKShippingMethod]? = nil, applicationData: Data? = nil) {
         self.amount = amount
         self.delegate = delegate
         self.merchantIdentifier = merchantIdentifier
