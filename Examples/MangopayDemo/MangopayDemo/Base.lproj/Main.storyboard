@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MangoPayExampleCheckout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MangopayDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -111,7 +111,7 @@
         <!--Product List Controller-->
         <scene sceneID="Jq6-KG-GGV">
             <objects>
-                <viewController id="JVb-80-cP8" customClass="ProductListController" customModule="MangoPayExampleCheckout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="JVb-80-cP8" customClass="ProductListController" customModule="MangopayDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JPW-EI-cNk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -179,7 +179,7 @@
         <!--Demo Payment Form-->
         <scene sceneID="YXx-kH-cjJ">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="mrx-6a-c3N" customClass="DemoPaymentForm" customModule="MangoPayExampleCheckout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="mrx-6a-c3N" customClass="DemoPaymentForm" customModule="MangopayDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Xp-1B-lbQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -333,18 +333,19 @@
         <!--Configuration Controller-->
         <scene sceneID="cSh-Ez-ZAw">
             <objects>
-                <viewController id="bcG-M4-7qm" customClass="ConfigurationController" customModule="MangoPayExampleCheckout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bcG-M4-7qm" customClass="ConfigurationController" customModule="MangopayDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Y6y-Fh-oDo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Configuration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2a9-AJ-V0v">
                                 <rect key="frame" x="50" y="140" width="314" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="mJu-SC-jOv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="5ci-2d-Z82">
@@ -352,7 +353,7 @@
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rAE-Wi-uLd"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="5ci-2d-Z82" firstAttribute="centerX" secondItem="rAE-Wi-uLd" secondAttribute="centerX" id="2Xl-Av-BFP"/>
                             <constraint firstItem="2a9-AJ-V0v" firstAttribute="top" secondItem="rAE-Wi-uLd" secondAttribute="top" constant="48" id="Ai9-Wv-0aR"/>
@@ -394,7 +395,7 @@
         <!--View Controller-->
         <scene sceneID="gBl-w0-9gB">
             <objects>
-                <viewController id="mZx-6f-u8P" customClass="ViewController" customModule="MangoPayExampleCheckout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="mZx-6f-u8P" customClass="ViewController" customModule="MangopayDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fDb-RY-kBv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -423,8 +424,7 @@
                                     <action selector="didTapDropInCheckout:" destination="mZx-6f-u8P" eventType="touchUpInside" id="A1I-BY-YEn"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mangopay
- Example Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALk-TJ-soV">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mangopay  Example Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALk-TJ-soV">
                                 <rect key="frame" x="50" y="133" width="314" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="75b-af-mNd"/>

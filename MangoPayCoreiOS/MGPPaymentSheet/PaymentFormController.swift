@@ -63,6 +63,7 @@ class PaymentFormController: UIViewController {
     func setNavigation() {
         title = "Checkout"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeTapped))
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
 
     func setupObservers() {

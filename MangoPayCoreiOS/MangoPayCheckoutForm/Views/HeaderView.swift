@@ -14,6 +14,7 @@ class HeaderView: UIView {
 
     lazy var titleLabel = UILabel.create(
         text: LocalizableString.CARD_INFO_TITLE,
+        color: .black,
         font: UIFont.boldSystemFont(ofSize: 18),
         numberOfLines: 1
     )
