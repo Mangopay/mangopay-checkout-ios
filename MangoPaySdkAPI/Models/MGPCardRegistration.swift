@@ -10,13 +10,13 @@ import MangopayVault
 
 public enum MGPEnvironment: String {
     case sandbox
-    case prod
+    case production
 
     public var url: URL {
         switch self {
         case .sandbox:
             return URL(string: "https://api.sandbox.mangopay.com")!
-        case .prod:
+        case .production:
             return URL(string: "https://api.mangopay.com")!
         }
     }
