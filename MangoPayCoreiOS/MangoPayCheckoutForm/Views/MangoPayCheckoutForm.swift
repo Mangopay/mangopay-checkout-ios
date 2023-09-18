@@ -17,8 +17,8 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     lazy var headerView = HeaderView()
 
     lazy var cardNumberField = MangoPayTextfield(
-        placeholderText: "1234 1234 1234 1234",
-        leftImage: UIImage(assetIdentifier: .card_visa),
+        placeholderText: "Card number",
+        leftImage: UIImage(systemName: "creditcard"),
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [
