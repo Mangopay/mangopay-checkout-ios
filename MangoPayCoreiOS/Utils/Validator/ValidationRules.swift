@@ -134,11 +134,15 @@ class Validator<T: Validatable> {
 
     func isExpDateValid(dateStr: String) -> Bool {
 
-        let currentYear = Calendar.current.component(.year, from: Date()) // This will give you current year (i.e. if 2019 then it will be 19)
-        let currentMonth = Calendar.current.component(.month, from: Date()) // This will
-        print(dateStr) // This is MM/YY Entered by user
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let currentMonth = Calendar.current.component(.month, from: Date())
         
-        guard let actualDate = Date(dateStr, format: "MM/yy") else { return false }
+        var _tempDateStr = dateStr
+        if dateStr.count >= 5 {
+            _tempDateStr.insert(contentsOf: "20", at: _tempDateStr.index(_tempDateStr.startIndex, offsetBy: 3))
+        }
+
+        guard let actualDate = Date(_tempDateStr, format: "MM/yyyy") else { return false }
         let enteredYear = Calendar.current.dateComponents([.year], from: actualDate).year ?? 0
         let enteredMonth = Calendar.current.dateComponents([.month], from: actualDate).month ?? 0
 
