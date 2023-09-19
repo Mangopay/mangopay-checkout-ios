@@ -107,7 +107,7 @@ class Validator<T: Validatable> {
         switch rule {
         case .invalidCardNumber:
             let cardNumber = item.inputData
-            let isValid = cardNumber.count >= 13
+            let isValid = cardNumber.count >= 13 && LuhnChecker.luhnCheck(cardNumber)
             (triggerError && !isValid) ? item.triggerError(message: rule.reason) : ()
             return isValid
         case .cardNumberRequired, .fullNameRequired, .fieldRequired, .cvvRequired, .dateRequired:
