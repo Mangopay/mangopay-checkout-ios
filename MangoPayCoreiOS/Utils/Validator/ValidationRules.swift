@@ -106,7 +106,7 @@ class Validator<T: Validatable> {
     public func validate(using rule: ValidationRules, triggerError: Bool) -> Bool {
         switch rule {
         case .invalidCardNumber:
-            let cardNumber = item.inputData
+            let cardNumber = item.inputData.trimCard()
             let isValid = cardNumber.count >= 13 && LuhnChecker.luhnCheck(cardNumber)
             (triggerError && !isValid) ? item.triggerError(message: rule.reason) : ()
             return isValid

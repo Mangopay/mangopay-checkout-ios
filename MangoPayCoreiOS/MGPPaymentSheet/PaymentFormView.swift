@@ -141,6 +141,12 @@ class PaymentFormView: UIView {
         keyboardUtil?.delegate = self
         keyboardUtil?.register()
         activitySpiner.isHidden = true
+
+        paymentForm.didEndEditing = { form in
+            self.renderPayButton(isValid: form.isFormValid)
+        }
+
+        self.renderPayButton(isValid: false)
     }
 
     required init?(coder: NSCoder) {
@@ -189,6 +195,11 @@ class PaymentFormView: UIView {
 
     func clearForm() {
         paymentForm.clearForm()
+    }
+
+    func renderPayButton(isValid: Bool) {
+        self.paymentButton.backgroundColor = isValid ? self.paymentFormStyle.checkoutButtonBackgroundColor : self.paymentFormStyle.checkoutButtonDisabledBackgroundColor
+        self.paymentButton.isEnabled = isValid
     }
 
     public func setCardNumber(_ cardNumber: String?) {

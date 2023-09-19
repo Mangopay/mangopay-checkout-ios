@@ -26,7 +26,8 @@ public class PaymentFormStyle {
     var errorColor: UIColor = .red
     var checkoutButtonTextColor: UIColor = .white
     var checkoutButtonBackgroundColor: UIColor = .black
-    
+    var checkoutButtonDisabledBackgroundColor: UIColor = .gray
+
     public init(
         font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize),
         borderType: BorderType = .round,
@@ -37,7 +38,8 @@ public class PaymentFormStyle {
         borderFocusedColor: UIColor = .blue,
         errorColor: UIColor = .red,
         checkoutButtonTextColor: UIColor = .white,
-        checkoutButtonBackgroundColor: UIColor = .black
+        checkoutButtonBackgroundColor: UIColor = .black,
+        checkoutButtonDisabledBackgroundColor: UIColor = .gray
     ) {
         self.font = font
         self.borderType = borderType
@@ -49,6 +51,7 @@ public class PaymentFormStyle {
         self.errorColor = errorColor
         self.checkoutButtonTextColor = checkoutButtonTextColor
         self.checkoutButtonBackgroundColor = checkoutButtonBackgroundColor
+        self.checkoutButtonDisabledBackgroundColor = checkoutButtonDisabledBackgroundColor
     }
 }
 
