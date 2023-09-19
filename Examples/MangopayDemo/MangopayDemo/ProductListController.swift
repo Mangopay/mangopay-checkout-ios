@@ -153,9 +153,17 @@ class ProductListController: UIViewController {
                  },
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
-//                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
-                     self.handle3DS(with: cardRegistration.cardID ?? "") {
-                         self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
+                     //                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+                     self.handle3DS(with: cardRegistration.cardID ?? "") { can3DS in
+                         if can3DS {
+                             DispatchQueue.main.async {
+                                 self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
+                             }
+                         } else {
+                             DispatchQueue.main.async {
+                                 topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+                             }
+                         }
                      }
                  }, onPaymentCompleted: {
                      print("✅ onPaymentCompleted")
@@ -197,7 +205,7 @@ class ProductListController: UIViewController {
 //        }
     }
 
-    func handle3DS(with cardId: String, onSuccess: (() -> Void)? ) {
+    func handle3DS(with cardId: String, onSuccess: ((Bool) -> Void)? ) {
         
         let payInObj = AuthorizePayIn(
             tag: "Mangopay Demo Tag",
@@ -243,12 +251,19 @@ class ProductListController: UIViewController {
 
                 MGPPaymentSheet().launch3DSIfPossible(payData: payinData, presentIn: self) { success in
                     print("✅ launch3DSIfPossible", success)
-                    onSuccess?()
+                    onSuccess?(true)
                 } on3DSLauch: { _3dsVC in
-                    self.checkout.tearDown()
-                    self.navigationController?.pushViewController(_3dsVC, animated: true)
+                    DispatchQueue.main.async {
+                        self.checkout.tearDown()
+                        self.navigationController?.pushViewController(_3dsVC, animated: true)
+                    }
                 } on3DSFailure: { error in
                     print("error", error)
+                    switch error {
+                    case ._3dsNotRqd:
+                        onSuccess?(false)
+                    default: break
+                    }
                     
                 }
             } catch {

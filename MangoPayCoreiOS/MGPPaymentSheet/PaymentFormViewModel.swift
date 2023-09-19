@@ -12,6 +12,7 @@ public class PaymentFormViewModel {
 
     var mgpClient: MangopayClient
 //    var callback: CallBack
+    var onTokenisationCompleted: (() -> Void)?
     
     var selectedPaymentMethod: PaymentMethod = .card(.none)
 
@@ -34,6 +35,7 @@ public class PaymentFormViewModel {
         form.tokenizeCard { tokenizedCardData, error in
             if let _tokenized = tokenizedCardData, let card = tokenizedCardData?.card {
                 callback.onTokenizationCompleted?(card.toMGPCardReg)
+                self.onTokenisationCompleted?()
             }
 
             if let _error = error {

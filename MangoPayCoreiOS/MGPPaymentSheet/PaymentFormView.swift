@@ -142,11 +142,18 @@ class PaymentFormView: UIView {
         keyboardUtil?.register()
         activitySpiner.isHidden = true
 
-        paymentForm.didEndEditing = { form in
-            self.renderPayButton(isValid: form.isFormValid)
-        }
+//        paymentForm.didEndEditing = { form in
+//            self.renderPayButton(isValid: form.isFormValid)
+//        }
 
-        self.renderPayButton(isValid: false)
+//        self.renderPayButton(isValid: false)
+        viewModel.onTokenisationCompleted = {
+            DispatchQueue.main.async {
+                self.activitySpiner.isHidden = true
+                self.activitySpiner.startAnimating()
+            }
+
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -170,6 +177,8 @@ class PaymentFormView: UIView {
         activitySpiner.heightAnchor.constraint(equalToConstant: 30).isActive = true
         activitySpiner.widthAnchor.constraint(equalToConstant: 30).isActive = true
         self.backgroundColor = .white
+        activitySpiner.tintColor = .gray
+        activitySpiner.color = .gray
         self.bringSubviewToFront(activitySpiner)
     }
 
@@ -211,8 +220,11 @@ class PaymentFormView: UIView {
     }
 
     @objc func onTappedButton() {
+        guard paymentForm.isFormValid else { return }
         finalizeButtonTapped()
         callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
+        activitySpiner.isHidden = false
+        activitySpiner.startAnimating()
     }
 
     @objc func onApplePayBtnTapped() {

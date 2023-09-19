@@ -88,9 +88,10 @@ public class MGPPaymentSheet {
         
         guard payData?.secureModeNeeded == true else {
             print("😅 secureModeNeeded is false ")
+            on3DSFailure?(MGPError._3dsNotRqd)
             return
         }
-        
+
         guard let _payData = payData else {
             on3DSFailure?(MGPError._3dsPayInDataRqd)
             return
@@ -106,8 +107,6 @@ public class MGPPaymentSheet {
         }
         
         print("😅 url", url)
-        
-        
         
         let _3dsVC = ThreeDSController(
             secureModeReturnURL: url,

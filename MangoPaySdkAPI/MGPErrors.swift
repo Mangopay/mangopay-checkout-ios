@@ -13,6 +13,7 @@ public enum MGPError: Error {
     case cardRegistrationNotSet
     case initializationRqd
     case tokenizationError(additionalInfo: String?)
+    case _3dsNotRqd
     case _3dsPayInDataRqd
     case _3dsPresentingVCRqd
     case _3dsSecureURLRqd
@@ -36,6 +37,8 @@ public enum MGPError: Error {
             return "SDK initialisation not set, kindly call MGPPegasus.initialize"
         case .tokenizationError(let errorStr):
             return "Tokenisation Error \(errorStr ?? "")"
+        case ._3dsNotRqd:
+            return "_3dsNotRqd"
         case ._3dsPayInDataRqd:
             return "PayIn Object required for 3DS"
         case ._3dsPresentingVCRqd:
