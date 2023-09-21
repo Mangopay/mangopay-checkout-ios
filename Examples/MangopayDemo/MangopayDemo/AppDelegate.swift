@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true
         MangoPayCoreiOS.initialize(clientId: "checkoutsquatest", environment: .sandbox)
-        MGPPaymentSheet.initialize(clientId: "checkoutsquatest", environment: .sandbox)
         return true
     }
 

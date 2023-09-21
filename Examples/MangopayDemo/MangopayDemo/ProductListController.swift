@@ -111,12 +111,6 @@ class ProductListController: UIViewController {
      func didTapDropInCheckout(selectedProduct: Product) {
 
 //         startIntent(amount: Int(selectedProduct.price))
-
-         let mgpClient = MangopayClient(
-            clientId: config.config.clientId,
-             apiKey: config.config.apiKey,
-             environment: .sandbox
-         )
      
          let contact = PKContact()
          contact.name = .init(givenName: "Elikem", familyName: "Savie")
@@ -140,7 +134,6 @@ class ProductListController: UIViewController {
          )
 
         checkout = MGPPaymentSheet.create(
-             client: mgpClient,
              paymentMethodConfig: PaymentMethodConfig(
                  cardReg: config.cardReg,
                  applePayConfig: applePayConfig

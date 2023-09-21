@@ -13,7 +13,7 @@ class PaymentFormController: UIViewController {
 
     var formView: PaymentFormView!
 
-    var client: MangopayClient
+//    var client: MangopayClient
     var paymentFormStyle: PaymentFormStyle
     var callback: CallBack
     var paymentMethodConfig: PaymentMethodConfig
@@ -22,7 +22,7 @@ class PaymentFormController: UIViewController {
 
     public init(
         cardConfig: CardConfig? = nil,
-        client: MangopayClient,
+//        client: MangopayClient,
         paymentMethodConfig: PaymentMethodConfig,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle?,
@@ -31,12 +31,15 @@ class PaymentFormController: UIViewController {
 
         self.paymentFormStyle = branding ?? PaymentFormStyle()
         self.callback = callback
-        self.client = client
+//        self.client = client
         self.paymentMethodConfig = paymentMethodConfig
         self.handlePaymentFlow = handlePaymentFlow
 
         formView = PaymentFormView(
-            client: client,
+            client: MangopayClient(
+                clientId: MangoPayCoreiOS.clientId,
+                environment: MangoPayCoreiOS.environment)
+            ,
             paymentMethodConfig: paymentMethodConfig,
             handlePaymentFlow: handlePaymentFlow,
             branding: branding,

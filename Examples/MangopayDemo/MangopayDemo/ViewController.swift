@@ -80,7 +80,6 @@ class ViewController: UIViewController {
             }
             
             var checkout = MGPPaymentSheet.create(
-                client: mgpClient,
                 paymentMethodConfig: PaymentMethodConfig(
                     cardReg: cardRegistration
                 ),
