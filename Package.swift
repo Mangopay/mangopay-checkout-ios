@@ -16,10 +16,7 @@ let package = Package(
             targets: ["MangoPayCoreiOS", "NethoneSDK"]),
         .library(
             name: "MangoPaySdkAPI",
-            targets: ["MangoPaySdkAPI"]),
-        .library(
-            name: "MangoPayIntent",
-            targets: ["MangoPayIntent"])
+            targets: ["MangoPaySdkAPI"])
     ],
     dependencies: [
         .package(
@@ -44,13 +41,6 @@ let package = Package(
                 .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk")
             ],
             path: "MangoPaySdkAPI"
-        ),
-        .target(
-            name: "MangoPayIntent",
-            dependencies: [
-                "MangoPaySdkAPI",
-            ],
-            path: "MangoPayIntent"
         ),
         .binaryTarget(
             name: "NethoneSDK",
