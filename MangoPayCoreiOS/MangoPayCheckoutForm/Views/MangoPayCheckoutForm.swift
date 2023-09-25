@@ -51,7 +51,8 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         returnKeyType: .next,
         validationRule: [
             .dateRequired,
-            .dateExpired
+            .dateExpired,
+            .dateInFuture
         ],
         style: self.paymentFormStyle,
         textfieldDelegate: self

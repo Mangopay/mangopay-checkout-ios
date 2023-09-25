@@ -33,5 +33,6 @@ enum LocalizableString {
     static let ERROR_CVC_REQUIRED = localize("ERROR_CVC_REQUIRED")
     static let ERROR_EXPIRED_DATE_REQUIRED = localize("ERROR_EXPIRED_DATE_REQUIRED")
     static let ERROR_EXPIRED_DATE = localize("ERROR_EXPIRED_DATE")
+    static let ERROR_FUTURE_DATE = localize("ERROR_FUTURE_DATE")
     static let ERROR_TEXT_TOO_SHORT = localize("ERROR_TEXT_TOO_SHORT")
 }

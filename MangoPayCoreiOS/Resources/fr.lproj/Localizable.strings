@@ -24,4 +24,4 @@
 "ERROR_EXPIRED_DATE_REQUIRED" = "Date de réexpiration du CVC requise";
 "ERROR_TEXT_TOO_SHORT" = "Le texte est trop court.";
 "ERROR_EXPIRED_DATE" = "Date d'expiration de la carte";
-
+"ERROR_FUTURE_DATE" = "Date trop loin dans le futur";
