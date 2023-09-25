@@ -59,8 +59,12 @@ class PaymentFormController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavigation()
         setupObservers()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setNavigation()
     }
 
     func setNavigation() {

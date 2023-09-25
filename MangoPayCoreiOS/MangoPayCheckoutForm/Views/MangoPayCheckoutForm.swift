@@ -322,8 +322,8 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                 in: range,
                 with: string
             ).replacingOccurrences(of: " ", with: "")
-            
-            if text.count >= 4 && text.count <= cardType?.cardCount ?? 16 {
+
+            if text.count >= 4 && text.count <= cardType?.cardCount ?? 16 && !string.isBackspace {
                 var newString = ""
                 for i in stride(from: 0, to: text.count, by: 4) {
                     let upperBoundIndex = i + 4
@@ -331,7 +331,7 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                     let lowerBound = String.Index.init(encodedOffset: i)
                     let upperBound = String.Index.init(encodedOffset: upperBoundIndex)
                     
-                    if upperBoundIndex <= text.count  {
+                    if upperBoundIndex <= text.count {
                         newString += String(text[lowerBound..<upperBound]) + " "
                         if newString.count > 19 {
                             newString = String(newString.dropLast())
@@ -427,24 +427,3 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
     }
 }
 
-extension MangoPayCheckoutForm: KeyboardUtilDelegate {
-    
-    func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
-        let padding: CGFloat = 180
-        let moveBy = rect.height - safeAreaInsets.bottom - padding - 120
-        print("🤣 moveBy", moveBy)
-        topConstriant.constant = -moveBy
-        
-        UIView.animate(withDuration: animationDuration) {
-            self.layoutIfNeeded()
-        }
-        
-    }
-    
-    func keyboardDidHide(sender: KeyboardUtil, animationDuration: Double) {
-        topConstriant.constant = sender.original
-        UIView.animate(withDuration: animationDuration) {
-            self.layoutIfNeeded()
-        }
-    }
-}

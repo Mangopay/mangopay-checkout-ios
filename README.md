@@ -20,127 +20,43 @@ Use repository URL (https://github.com/Mangopay/mangopay-ios-sdk) and select the
 
 Checkout SDK comes in 3 forms, Elements, DropIn and Headless.
 
-# Elements & DropIn
-
-1. Import Checkout SDK 
+# Initialize the SDK
+Initialize the SDK with your ClientId and select your environment (Sandbox or Production).
 
     ```swift
-    import checkout_ios_sdk
+    MangoPayCoreiOS.initialize(clientId = "your-mangopay-client-id", environment = .sandbox)
     ```
+### Initialization parameters
 
-2. Set the supported Card Brands
-    ```swift
-    let cardConfig = CardConfig(supportedCardBrands: [.visa, .amex])
-    ```
+| Argument | Type | Description |
+| --- | --- | --- |
+| clientId | String | Your Mangopay ClientID |
+| environment | MGPEnvironment | Expected backend environment.
 
-3. Set the Forms Styling through the `PaymentFormStyle` object.
+Default value: MGPEnvironment.sandbox
 
-    ```swift
-    let style = PaymentFormStyle(
-        font: .systemFont(ofSize: 10),
-        borderType: .round,
-        textColor: .black,
-        placeHolderColor: .gray,
-        errorColor: .red,
-        checkoutButtonTextColor: .white,
-        checkoutButtonBackgroundColor: .black
-    )
-    ```
+Allowed values: Environment.sandbox, Environment.production.
 
-4. Set the Element Options
 
-   i. This configuration aids in:
-    - ensuring you receive access for the request
-    - enable us to prevalidate supported schemes at input stage
-    - prefill user information (Optional but may go a long way with User Experience if able to provide)
-    - Respond to events (with the delegates)
+### Configure and present the PaymentSheet
 
-```swift
-let elementOptions = ElementsOptions(
-        apiKey: "<Your Public Key>",
-        style: style,
-        customerId: nil,
-        amount: 200,
-        currencyCode: "USD",
-        delegate: self
-)
-```
-
-  ii. Setup Elements Event Delegates
-  ```swift
-    extension ViewController: ElementsFormDelegate {
-        func onPaymentStarted(sender: PaymentFormViewModel, payment: GetPayment) {
-            
-        }
-
-        func onApplePayCompleteElement(status: MangoPayApplePay.PaymentStatus) {
-
-        }
-
-        func onTokenGenerated(tokenizedCard: tokenizeCard) {
-            print("Element Token Succesfully Generated \(tokenizedCard.token)")
-        }
-
-        func onTokenGenerationFailed(error: Error) {
-            print("Element Token Failed")
-        }
-
-    }
-  ```
-
-5. Set the Dropin Options 
-    i. The dropin Configuration comes with extra params for `orderId`, `threeDSRedirectURL` and `flowId`. To handle 3DS, you will have to provide a `threeDSRedirectURL` a URL.
+# 1. Create a MangopayClient
 
     ```swift
-        let dropInOptions = DropInOptions(
-            apiKey: <your_public_key>,
-            orderId: nil,
-            style: style,
-            customerId: nil,
-            flowId: <your_flowID>,
-            amount: 2000,
-            currencyCode: "USD",
-            countryCode: "US",
-            threeDSRedirectURL: <your_redirect_url>,
-            delegate: self
+        let mgpClient = MangopayClient(
+            clientId: "your-mangopay-client-id",
+            apiKey: "your-mangopay-apikey-id",
+            environment: .sandbox
         )
     ```
 
-    ii. Setup Event Delegates
-    ```swift
-        extension ViewController: DropInFormDelegate {
-
-        func onPaymentStarted(sender: PaymentFormViewModel) {
-            
-        }
-        
-        func onApplePayCompleteDropIn(status: MangoPayApplePay.PaymentStatus) {
-            //success
-            //error
-            //userCancellation
-        }
-        
-
-        func onPaymentCompleted(sender: PaymentFormViewModel, payment: GetPayment) {
-        }
-
-        func onPaymentFailed(sender: PaymentFormViewModel, error: MangoPayError) {
-        }
-        
-    }
-    ```
-
-
-6. Present in Host Controller
+# 2. Create a checkout Sheet instance in your viewcontroller
 
     ```swift
-    MangoPaySDK.buildDropInForm(
-        with: dropInOptions,
-        cardConfig: cardConfig,
-        present: self,
-        dropInDelegate: self
-    )
+        var checkout: MGPPaymentSheet!
     ```
+
+# 3. Initialize Chec
 
 ## Other Features
 
