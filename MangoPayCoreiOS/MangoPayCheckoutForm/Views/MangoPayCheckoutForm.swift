@@ -17,8 +17,8 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     lazy var headerView = HeaderView()
 
     lazy var cardNumberField = MangoPayTextfield(
-        placeholderText: "1234 1234 1234 1234",
-        leftImage: UIImage(assetIdentifier: .card_visa),
+        placeholderText: "Card number",
+        leftImage: UIImage(systemName: "creditcard"),
         keyboardType: .numberPad,
         returnKeyType: .next,
         validationRule: [
@@ -110,6 +110,8 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     var expiryYear: Int?
 
     var onRightButtonTappedAction: (() -> Void)?
+    var didEndEditing: ((MangoPayCheckoutForm) -> Void)?
+
     var currentAttempt: String?
     
     var cardRegistration: MGPCardRegistration?
@@ -118,7 +120,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     var cardType: CardType?
 
     var isFormValid: Bool {
-        guard let cardNumber = cardNumberField.text?.replacingOccurrences(of: " ", with: "") else { return false }
+        guard let cardNumber = cardNumberField.text?.trimCard() else { return false }
         return areFormsValidShowingError() && LuhnChecker.luhnCheck(cardNumber)
     }
 
@@ -127,7 +129,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         let expStr = monStr + String(expiryYear ?? 0).suffix(2)
 
         return MGPCardInfo(
-            cardNumber: cardNumberField.text?.replacingOccurrences(of: " ", with: ""),
+            cardNumber: cardNumberField.text?.trimCard(),
             cardExpirationDate: expStr,
             cardCvx: cvvField.text,
             cardType: "CB_VISA_MASTERCARD"
@@ -421,6 +423,7 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
             isFormValid(cvvField)
         default: break
         }
+        didEndEditing?(self)
     }
 }
 

@@ -81,7 +81,8 @@ public class MangoPayDropDownTextfield: UIView {
 
     public lazy var textfield: UITextField = {
         let view = UITextField()
-        view.tintColor = .clear
+        view.tintColor = .black
+        view.textColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(didBeginEditing), for: .editingDidBegin)
         view.addTarget(self, action: #selector(didEndEditing), for: .editingDidEnd)

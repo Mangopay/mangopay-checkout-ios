@@ -10,7 +10,7 @@
 
 
 ## Integration
-MangoPay Checkout SDK can be installed via SPM(highly recomended) or Cocoa Pods.
+Mangopay Checkout SDK can be installed via SPM(highly recomended) or Cocoa Pods.
 
 ## Swift Package Manager
 

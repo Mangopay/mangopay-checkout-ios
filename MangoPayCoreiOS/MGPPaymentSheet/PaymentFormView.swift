@@ -68,8 +68,8 @@ class PaymentFormView: UIView {
         views: [
             paymentForm,
             paymentButton,
-//            orPayWith,
-//            applePayButton,
+            orPayWith,
+            applePayButton,
             statusLabel
         ]
     ) { stackView in
@@ -127,7 +127,9 @@ class PaymentFormView: UIView {
             target: self,
             action: #selector(onViewTap)
         )
-        
+
+        [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodConfig.applePayConfig?.shouldRenderApplePay == true)})
+
         setupView()
         setNavigation()
         
@@ -139,6 +141,19 @@ class PaymentFormView: UIView {
         keyboardUtil?.delegate = self
         keyboardUtil?.register()
         activitySpiner.isHidden = true
+
+//        paymentForm.didEndEditing = { form in
+//            self.renderPayButton(isValid: form.isFormValid)
+//        }
+
+//        self.renderPayButton(isValid: false)
+        viewModel.onTokenisationCompleted = {
+            DispatchQueue.main.async {
+                self.activitySpiner.isHidden = true
+                self.activitySpiner.startAnimating()
+            }
+
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -162,6 +177,8 @@ class PaymentFormView: UIView {
         activitySpiner.heightAnchor.constraint(equalToConstant: 30).isActive = true
         activitySpiner.widthAnchor.constraint(equalToConstant: 30).isActive = true
         self.backgroundColor = .white
+        activitySpiner.tintColor = .gray
+        activitySpiner.color = .gray
         self.bringSubviewToFront(activitySpiner)
     }
 
@@ -189,6 +206,11 @@ class PaymentFormView: UIView {
         paymentForm.clearForm()
     }
 
+    func renderPayButton(isValid: Bool) {
+        self.paymentButton.backgroundColor = isValid ? self.paymentFormStyle.checkoutButtonBackgroundColor : self.paymentFormStyle.checkoutButtonDisabledBackgroundColor
+        self.paymentButton.isEnabled = isValid
+    }
+
     public func setCardNumber(_ cardNumber: String?) {
         self.paymentForm.setCardNumber(cardNumber)
     }
@@ -198,8 +220,11 @@ class PaymentFormView: UIView {
     }
 
     @objc func onTappedButton() {
+        guard paymentForm.isFormValid else { return }
         finalizeButtonTapped()
         callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
+        activitySpiner.isHidden = false
+        activitySpiner.startAnimating()
     }
 
     @objc func onApplePayBtnTapped() {

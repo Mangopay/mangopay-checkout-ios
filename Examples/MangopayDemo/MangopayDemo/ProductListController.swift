@@ -8,6 +8,7 @@
 import UIKit
 import MangoPayCoreiOS
 import MangoPaySdkAPI
+import PassKit
 //import MangoPayIntent
 
 struct Product {
@@ -110,17 +111,32 @@ class ProductListController: UIViewController {
      func didTapDropInCheckout(selectedProduct: Product) {
 
 //         startIntent(amount: Int(selectedProduct.price))
+     
+         let contact = PKContact()
+         contact.name = .init(givenName: "Elikem", familyName: "Savie")
          
-         let mgpClient = MangopayClient(
-            clientId: config.config.clientId,
-             apiKey: config.config.apiKey,
-             environment: .sandbox
+         let applePayConfig = MangopayApplePayConfig(
+            amount: 1,
+            delegate: self,
+            merchantIdentifier: "merchant.mangopay.com.payline.58937646344908",
+            merchantCapabilities: .capability3DS,
+            currencyCode: "USD",
+            countryCode: "US",
+            supportedNetworks: [
+                .amex,
+                .discover,
+                .masterCard,
+                .visa
+            ],
+            requiredBillingContactFields: [.name],
+            billingContact: contact,
+            shippingType: .delivery
          )
 
         checkout = MGPPaymentSheet.create(
-             client: mgpClient,
              paymentMethodConfig: PaymentMethodConfig(
-                 cardReg: config.cardReg
+                 cardReg: config.cardReg,
+                 applePayConfig: applePayConfig
              ),
              handlePaymentFlow: false,
              branding: PaymentFormStyle(),
@@ -130,9 +146,17 @@ class ProductListController: UIViewController {
                  },
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
-//                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
-                     self.handle3DS(with: cardRegistration.cardID ?? "") {
-                         self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
+                     //                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+                     self.handle3DS(with: cardRegistration.cardID ?? "") { can3DS in
+                         if can3DS {
+                             DispatchQueue.main.async {
+                                 self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
+                             }
+                         } else {
+                             DispatchQueue.main.async {
+                                 topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+                             }
+                         }
                      }
                  }, onPaymentCompleted: {
                      print("✅ onPaymentCompleted")
@@ -174,7 +198,7 @@ class ProductListController: UIViewController {
 //        }
     }
 
-    func handle3DS(with cardId: String, onSuccess: (() -> Void)? ) {
+    func handle3DS(with cardId: String, onSuccess: ((Bool) -> Void)? ) {
         
         let payInObj = AuthorizePayIn(
             tag: "Mangopay Demo Tag",
@@ -220,12 +244,19 @@ class ProductListController: UIViewController {
 
                 MGPPaymentSheet().launch3DSIfPossible(payData: payinData, presentIn: self) { success in
                     print("✅ launch3DSIfPossible", success)
-                    onSuccess?()
+                    onSuccess?(true)
                 } on3DSLauch: { _3dsVC in
-                    self.checkout.tearDown()
-                    self.navigationController?.pushViewController(_3dsVC, animated: true)
+                    DispatchQueue.main.async {
+                        self.checkout.tearDown()
+                        self.navigationController?.pushViewController(_3dsVC, animated: true)
+                    }
                 } on3DSFailure: { error in
                     print("error", error)
+                    switch error {
+                    case ._3dsNotRqd:
+                        onSuccess?(false)
+                    default: break
+                    }
                     
                 }
             } catch {
@@ -281,3 +312,16 @@ extension ProductListController: ItemCellDelegate {
     
 }
 
+extension ProductListController: MGPApplePayHandlerDelegate {
+
+    func applePayContext(didSelect shippingMethod: PKShippingMethod, handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
+        print("✅ shippingMethod", shippingMethod)
+    }
+
+    func applePayContext(didCompleteWith status: MangoPayApplePay.PaymentStatus, error: Error?) {
+        print("✅ status", status)
+
+    }
+    
+    
+}

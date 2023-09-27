@@ -9,33 +9,26 @@ import Foundation
 import PassKit
 import MangoPaySdkAPI
 
-public protocol MangoPayApplePayDelegate {
+public typealias PaymentCompletionHandler = (Bool) -> Void
+
+public protocol MGPApplePayHandlerDelegate {
 
     func applePayContext(
-       _ sender: MangoPayApplePay,
        didSelect shippingMethod: PKShippingMethod,
        handler: @escaping (_ update: PKPaymentRequestShippingMethodUpdate) -> Void
    )
 
    func applePayContext(
-       _ sender: MangoPayApplePay,
        didCompleteWith status: MangoPayApplePay.PaymentStatus,
        error: Error?
    )
-
-//    func applePayContext(
-//        _ sender: WhenThenApplePay,
-//        didCreatePaymentMethod paymentMethod: StripeAPI.PaymentMethod,
-//        paymentInformation: PKPayment,
-//        completion: @escaping STPIntentClientSecretCompletionBlock
-//    )
 
 }
 
 public class MangoPayApplePay: NSObject {
 
     public enum PaymentStatus {
-       case success
+       case success(String)
        case error
        case userCancellation
    }
@@ -48,7 +41,7 @@ public class MangoPayApplePay: NSObject {
    }
 
    var authorizationController: PKPaymentAuthorizationViewController?
-   var delegate: MangoPayApplePayDelegate?
+//   var delegate: MangoPayApplePayDelegate?
    var paymentState: PaymentState = .notStarted
    var orderId: String?
    var flowId: String?
@@ -66,36 +59,24 @@ public class MangoPayApplePay: NSObject {
     var paymentRequest: PKPaymentRequest!
 
    private var didCancelOrTimeoutWhilePending = false
+   var completionHandler: PaymentCompletionHandler!
 
-   public init(
-       withMerchantIdentifier merchantIdentifier: String,
-       amount: Double,
-       country countryCode: String,
-       currency currencyCode: String,
-       orderId: String?,
-       flowId: String?,
-       delegate: MangoPayApplePayDelegate
-   ) {
-       self.orderId = orderId
-       self.flowId = flowId
-       self.amount = amount
-       self.currencyCode = currencyCode
-       self.applePayMerchantId = merchantIdentifier
+
+   public init(config: MangopayApplePayConfig) {
+       self.amount = config.amount
+       self.currencyCode = config.currencyCode
+       self.applePayMerchantId = config.merchantIdentifier
        super.init()
-       let paymentRequest = makePaymentRequest(
-           withMerchantIdentifier: merchantIdentifier,
-           amount: amount,
-           country: countryCode,
-           currency: currencyCode
-       )
-       self.paymentRequest = paymentRequest
+       self.paymentRequest = config.toPaymentRequest
+       print("✅ merchantIdentifier", paymentRequest.merchantIdentifier)
+       print("✅ paymentRequest", paymentRequest)
 
        authorizationController = PKPaymentAuthorizationViewController(
            paymentRequest: paymentRequest
        )
-
-       self.delegate = delegate
-       authorizationController?.delegate = self
+//
+//       self.delegate = config.delegate
+//       authorizationController?.delegate = self
    }
 
    public func presentApplePay(in controller: UIViewController) {
@@ -143,17 +124,39 @@ extension MangoPayApplePay: PKPaymentAuthorizationViewControllerDelegate {
        handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
        
        // Perform basic validation on the provided contact information.
-       let errors = [Error]()
+//       let errors = [Error]()
        
-       var token = payment.token.paymentData
-       print("token,", token)
-       
-       completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+//       var token = payment.token.paymentData
+//       print("token,", token)
+//       let tokenStr = payment.token.paymentData.base64EncodedString().fromBase64()
+//
+////       _completePayment(with: payment, completion: completion)
+//
+//        self. v?.applePayContext(self, didCompleteWith: .success(tokenStr), error: nil)
+        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+           
+//           var errors = [Error]()
+//             var status = PKPaymentAuthorizationStatus.success
+//             if payment.shippingContact?.postalAddress?.isoCountryCode != "US" {
+//                 let pickupError = PKPaymentRequest.paymentShippingAddressUnserviceableError(withLocalizedDescription: "Sample App only available in the United States")
+//                 let countryError = PKPaymentRequest.paymentShippingAddressInvalidError(withKey: CNPostalAddressCountryKey, localizedDescription: "Invalid country")
+//                 errors.append(pickupError)
+//                 errors.append(countryError)
+//                 status = .failure
+//             } else {
+//                 // Send the payment token to your server or payment provider to process here.
+//                 // Once processed, return an appropriate status in the completion handler (success, failure, and so on).
+//             }
+//
+////             self.paymentStatus = status
+//             completion(PKPaymentAuthorizationResult(status: status, errors: errors))
+
+//           print("❌ ERRORS", errors)
    }
 
    func _completePayment(
        with payment: PKPayment,
-       completion: @escaping (PKPaymentAuthorizationStatus, Error?) -> Void
+       completion: @escaping (PKPaymentAuthorizationResult) -> Void
    ) {
        
        let handleFinalState: ((PaymentState, Error?) -> Void) = { state, error in
@@ -161,22 +164,28 @@ extension MangoPayApplePay: PKPaymentAuthorizationViewControllerDelegate {
            case .error:
                self.paymentState = .error
                DispatchQueue.main.async {
-                   
                    self.authorizationController?.dismiss(animated: true) {
-                       self.delegate?.applePayContext(self, didCompleteWith: .error, error: error)
-                       self.delegate = nil
+//                       self.delegate?.applePayContext(self, didCompleteWith: .error, error: error)
+//                       self.delegate = nil
                        self.authorizationController = nil
-                       completion(PKPaymentAuthorizationStatus.failure, error)
+                       let _failure = PKPaymentAuthorizationResult(status: .failure, errors: [error!])
+                       completion(_failure)
                    }
                }
                
                return
            case .success:
+               var token = payment.token.paymentData.base64EncodedString().fromBase64()
+               token = "{ \"paymentData\": \(token) }" //wrap token in paymentData object
+               
+               print("😀 apple pay token", token)
+       
                self.paymentState = .success
                DispatchQueue.main.async {
                    self.authorizationController?.dismiss(animated: true) {
-                       self.delegate?.applePayContext(self, didCompleteWith: .success, error: nil)
-                       completion(PKPaymentAuthorizationStatus.success, nil)
+//                       self.delegate?.applePayContext(self, didCompleteWith: .success(token), error: nil)
+                       let _success = PKPaymentAuthorizationResult(status: .success, errors: nil)
+                       completion(_success)
                    }
                }
                
@@ -185,11 +194,6 @@ extension MangoPayApplePay: PKPaymentAuthorizationViewControllerDelegate {
                return
            }
        }
-       
-       var token = payment.token.paymentData.base64EncodedString().fromBase64()
-       token = "{ \"paymentData\": \(token) }" //wrap token in paymentData object
-       
-       print("😀 apple pay token", token)
        
 //        let authData = AuthorisedPayment(
 //            orderId: self.orderId,

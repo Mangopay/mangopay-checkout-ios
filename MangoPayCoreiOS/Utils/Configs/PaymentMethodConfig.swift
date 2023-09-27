@@ -11,11 +11,11 @@ import MangoPaySdkAPI
 public struct PaymentMethodConfig {
     var card: MGPCardInfo?
     var cardReg: MGPCardRegistration?
-    var applePay: MangoPayApplePay?
+    var applePayConfig: MangopayApplePayConfig?
 
-    public init(card: MGPCardInfo? = nil, cardReg: MGPCardRegistration? = nil, applePay: MangoPayApplePay? = nil) {
+    public init(card: MGPCardInfo? = nil, cardReg: MGPCardRegistration? = nil, applePayConfig: MangopayApplePayConfig? = nil) {
         self.card = card
         self.cardReg = cardReg
-        self.applePay = applePay
+        self.applePayConfig = applePayConfig
     }
 }

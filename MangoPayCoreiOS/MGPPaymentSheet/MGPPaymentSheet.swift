@@ -11,36 +11,24 @@ import UIKit
 
 public class MGPPaymentSheet {
 
-    static var clientId: String!
-    static var environment: MGPEnvironment!
-
     private static var paymentFormVC: PaymentFormController!
     private var presentingVC: UIViewController!
     private var navVC: UINavigationController!
 
     public init() {
         self.presentingVC = nil
-//        self.navVC = nil
         navVC = UINavigationController(rootViewController: MGPPaymentSheet.paymentFormVC)
         navVC.modalPresentationStyle = .fullScreen
 
     }
 
-    public static func initialize(clientId: String, environment: MGPEnvironment) {
-        self.clientId = clientId
-        self.environment = environment
-        Tokenizer.initialize(clientId: clientId, environment: environment)
-    }
-
     public static func create(
-        client: MangopayClient,
         paymentMethodConfig: PaymentMethodConfig,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle,
         callback: CallBack
     ) -> MGPPaymentSheet {
         paymentFormVC = PaymentFormController(
-            client: client,
             paymentMethodConfig: paymentMethodConfig,
             handlePaymentFlow: handlePaymentFlow,
             branding: branding,
@@ -60,7 +48,6 @@ public class MGPPaymentSheet {
 
     public func tearDown() {
         guard presentingVC != nil else { return }
-//        presentingVC.dismiss(animated: true)
         navVC.dismiss(animated: true)
     }
 
@@ -88,9 +75,10 @@ public class MGPPaymentSheet {
         
         guard payData?.secureModeNeeded == true else {
             print("😅 secureModeNeeded is false ")
+            on3DSFailure?(MGPError._3dsNotRqd)
             return
         }
-        
+
         guard let _payData = payData else {
             on3DSFailure?(MGPError._3dsPayInDataRqd)
             return
@@ -106,8 +94,6 @@ public class MGPPaymentSheet {
         }
         
         print("😅 url", url)
-        
-        
         
         let _3dsVC = ThreeDSController(
             secureModeReturnURL: url,

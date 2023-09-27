@@ -27,6 +27,10 @@ extension String {
         let base64Decode = Data(base64Encoded: self)!
         return String(data: base64Decode, encoding: .utf8)!
     }
+
+    func trimCard() -> String {
+        self.replacingOccurrences(of: " ", with: "")
+    }
 }
 
 extension String {
