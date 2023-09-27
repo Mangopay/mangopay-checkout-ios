@@ -139,6 +139,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
 
     public init(
         paymentFormStyle: PaymentFormStyle?,
+        supportedCardBrands: [CardType]? = nil,
         callBack: MangoPayTokenizedCallBack? = nil
     ) {
 
@@ -152,7 +153,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         )
         
         setupView()
-        setCards(cards: CardConfig(supportedCardBrands: [.visa, .mastercard]))
+        setCards(cards: CardConfig(supportedCardBrands: supportedCardBrands))
         initiateNethone()
 //        cardNumberField.text = "4970105181818183"
         
@@ -314,6 +315,7 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
         
         switch textField {
         case cardNumberField.textfield:
+            
             if [6, 11, 16].contains(textField.text?.count ?? 0) && string.isEmpty {
                 textField.text = String(textField.text!.dropLast())
                 return true
@@ -324,7 +326,12 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                 with: string
             ).replacingOccurrences(of: " ", with: "")
 
-            if text.count >= 4 && text.count <= cardType?.cardCount ?? 16 && !string.isBackspace {
+            let cardType = CardTypeChecker.getCreditCardType(
+                cardNumber: text.trimCard()
+            )
+            cardNumberField.setLeftImage(cardType.icon)
+
+            if text.count >= 4 && text.count <= cardType.cardCount && !string.isBackspace {
                 var newString = ""
                 for i in stride(from: 0, to: text.count, by: 4) {
                     let upperBoundIndex = i + 4
@@ -348,14 +355,11 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                 return false
             }
             
-            if text.count > cardType?.cardCount ?? 16 {
+            if text.count > cardType.cardCount {
                 return false
             }
             
-            let cardType = CardTypeChecker.getCreditCardType(
-                cardNumber: text.trimmingCharacters(in: .whitespaces)
-            )
-            cardNumberField.setLeftImage(cardType.icon)
+
             return true
             
         case expiryDateField.textfield:

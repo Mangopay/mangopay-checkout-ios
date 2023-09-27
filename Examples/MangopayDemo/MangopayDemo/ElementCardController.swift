@@ -15,7 +15,10 @@ class ElementCardController: UIViewController {
     var clientId: String!
 
     lazy var elementForm: MangoPayCheckoutForm = {
-       let form = MangoPayCheckoutForm(paymentFormStyle: PaymentFormStyle())
+        let form = MangoPayCheckoutForm(
+            paymentFormStyle: PaymentFormStyle(),
+            supportedCardBrands: [.visa, .mastercard, .maestro]
+        )
         form.translatesAutoresizingMaskIntoConstraints = false
         return form
     }()

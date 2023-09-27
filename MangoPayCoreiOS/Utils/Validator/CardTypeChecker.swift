@@ -35,6 +35,8 @@ public struct CardTypeChecker {
             return .discover
         } else if cardNumber.isMatch(JCB_Regex) {
             return .jcb
+        } else if cardNumber.isMatch(maestro) {
+            return .maestro
         } else {
             return .none
         }
@@ -51,6 +53,7 @@ public enum CardType: String, Codable, CaseIterable {
     case mastercard = "MASTERCARD"
     case discover = "DISCOVER"
     case jcb
+    case maestro = "MAESTRO"
     case none
 
     public var icon: UIImage? {
@@ -69,6 +72,8 @@ public enum CardType: String, Codable, CaseIterable {
             return UIImage.init(assetIdentifier: .card_discover)
         case .jcb:
             return UIImage.init(assetIdentifier: .card_jcb)
+        case .maestro:
+            return UIImage.init(assetIdentifier: .card_maestro)
         case .none:
             return UIImage(systemName: "creditcard")
         }
@@ -90,6 +95,8 @@ public enum CardType: String, Codable, CaseIterable {
             return 16
         case .jcb:
             return 16
+        case .maestro:
+            return 19
         case .none:
             return 16
         }
