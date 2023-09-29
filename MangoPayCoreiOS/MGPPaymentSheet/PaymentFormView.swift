@@ -11,8 +11,10 @@ import MangoPaySdkAPI
 
 class PaymentFormView: UIView {
 
+    public lazy var navView = NavView()
+
     private lazy var paymentForm: MangoPayCheckoutForm = {
-        let view = MangoPayCheckoutForm(paymentFormStyle: PaymentFormStyle())
+        let view = MangoPayCheckoutForm(paymentFormStyle: paymentFormStyle)
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
        return view
@@ -52,7 +54,7 @@ class PaymentFormView: UIView {
     lazy var paymentButton: UIButton = {
        let button = UIButton()
         button.backgroundColor = paymentFormStyle.checkoutButtonBackgroundColor
-        button.setTitle("Pay", for: .normal)
+        button.setTitle(paymentFormStyle.checkoutButtonText, for: .normal)
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)
@@ -66,6 +68,7 @@ class PaymentFormView: UIView {
         distribution: .fill,
         padding: UIEdgeInsets(top: 8, left: 0, bottom: 32, right: 0),
         views: [
+            navView,
             paymentForm,
             paymentButton,
             orPayWith,
@@ -134,7 +137,12 @@ class PaymentFormView: UIView {
             DispatchQueue.main.async {
                 Loader.hide()
             }
+        }
 
+        viewModel.onTokenisationError = { _ in
+            DispatchQueue.main.async {
+                Loader.hide()
+            }
         }
     }
 
@@ -144,7 +152,7 @@ class PaymentFormView: UIView {
 
     private func setupView() {
         addSubview(vStack)
-        vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+        vStack.topAnchor.constraint(equalTo: topAnchor, constant: 32).isActive = true
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
         vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true

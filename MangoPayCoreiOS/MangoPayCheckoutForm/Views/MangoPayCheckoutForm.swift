@@ -214,7 +214,17 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         self.cardRegistration = cardRegistration
     }
 
+    func cancelNethoneAttemptIfAny() {
+        do {
+            try NethoneSDK.NTHNethone.cancelAttempt()
+            print(" cancelAttempt success")
+        } catch { error
+            print("Nethone cancelAttempt Error", error.localizedDescription)
+        }
+    }
+
     func initiateNethone() {
+        cancelNethoneAttemptIfAny()
         NTHNethone.setMerchantNumber("428242");
         let nethoneConfig = NTHAttemptConfiguration()
         nethoneConfig.sensitiveFields = [
@@ -284,7 +294,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         ) { tokenizedCardData, error in
             print("tokenizedCardData", tokenizedCardData)
             print("error", error)
-            callBack(tokenizedCardData, nil)
+            callBack(tokenizedCardData, error)
         }
 
     }

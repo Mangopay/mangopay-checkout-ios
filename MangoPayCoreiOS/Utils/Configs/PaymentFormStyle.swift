@@ -27,6 +27,7 @@ public class PaymentFormStyle {
     var checkoutButtonTextColor: UIColor = .white
     var checkoutButtonBackgroundColor: UIColor = .black
     var checkoutButtonDisabledBackgroundColor: UIColor = .gray
+    var checkoutButtonText: String = "Pay"
 
     public init(
         font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize),
@@ -39,7 +40,8 @@ public class PaymentFormStyle {
         errorColor: UIColor = .red,
         checkoutButtonTextColor: UIColor = .white,
         checkoutButtonBackgroundColor: UIColor = .black,
-        checkoutButtonDisabledBackgroundColor: UIColor = .gray
+        checkoutButtonDisabledBackgroundColor: UIColor = .gray,
+        checkoutButtonText: String = "Pay"
     ) {
         self.font = font
         self.borderType = borderType
@@ -52,26 +54,6 @@ public class PaymentFormStyle {
         self.checkoutButtonTextColor = checkoutButtonTextColor
         self.checkoutButtonBackgroundColor = checkoutButtonBackgroundColor
         self.checkoutButtonDisabledBackgroundColor = checkoutButtonDisabledBackgroundColor
+        self.checkoutButtonText = checkoutButtonText
     }
 }
-
-
-//public class CheckoutTheme {
-//    /// Background color of the views
-//    public  var primaryBackgroundColor: UIColor = UIColor.groupTableViewBackground
-//    public  var secondaryBackgroundColor: UIColor = .white
-//    /// Background used for the Table View Cell in country selection table
-//    public  var tertiaryBackgroundColor: UIColor = .white
-//    /// Main text color
-//    public  var color: UIColor = .black
-//    /// Secondary text color
-//    public  var secondaryColor: UIColor = .lightGray
-//    /// Error text color
-//    public  var errorColor: UIColor = .red
-//    /// Chevron color
-//    public  var chevronColor: UIColor = .black
-//    /// Font
-//    public  var font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
-//    /// Bar style, used for the search bar
-//    public  var barStyle: UIBarStyle = UIBarStyle.default
-//}
