@@ -20,7 +20,7 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "main"),
+            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "feature/date_improvements"),
     ],
     targets: [
         .target(

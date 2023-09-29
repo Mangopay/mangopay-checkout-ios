@@ -6,7 +6,7 @@
       "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
       "state" : {
         "branch" : "master",
-        "revision" : "87df5580201aae98b519999eafc7f35470c7d78d"
+        "revision" : "47548c2cdde7a2282a64b9b5fa0a6aeb2397c37b"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
       "state" : {
-        "branch" : "main",
-        "revision" : "2f1c684e45a32c1a47c8206e8008a6d83ee19be9"
+        "branch" : "feature/date_improvements",
+        "revision" : "8690a4c3393afeb733ac0fdf57c8c35aa13d1e78"
       }
     },
     {
