@@ -146,7 +146,6 @@ class ProductListController: UIViewController {
                  },
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
-                     //                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
                      self.handle3DS(with: cardRegistration.cardID ?? "") { can3DS in
                          if can3DS {
                              DispatchQueue.main.async {
@@ -154,7 +153,16 @@ class ProductListController: UIViewController {
                              }
                          } else {
                              DispatchQueue.main.async {
-                                 topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+//                                 topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+//                                 topmostViewController?.dismiss(animated: true)
+                                 self.checkout.tearDown {
+                                     self.navigationController?.popToRootViewController(animated: true)
+//                                     self.dismiss(animated: true) {
+
+                                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+//                                     }
+                                 }
+
                              }
                          }
                      }
@@ -165,7 +173,7 @@ class ProductListController: UIViewController {
                  },
                  onError: { error in
                      print("❌ error", error.reason)
-                     self.showAlert(with: error.reason, title: "Error")
+                     topmostViewController?.showAlert(with: error.reason, title: "Error")
                  },
                  onSheetDismissed: {
                      print("✅ sheet dismisses")

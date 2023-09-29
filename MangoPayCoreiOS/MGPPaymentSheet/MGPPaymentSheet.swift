@@ -43,12 +43,13 @@ public class MGPPaymentSheet {
         guard MGPPaymentSheet.paymentFormVC != nil else { return }
         navVC = UINavigationController(rootViewController: MGPPaymentSheet.paymentFormVC)
         navVC.modalPresentationStyle = .fullScreen
+        navVC.setNavigationBarHidden(true, animated: false)
         viewController.present(navVC, animated: true)
     }
 
-    public func tearDown() {
+    public func tearDown(completion: (() -> Void)? = nil) {
         guard presentingVC != nil else { return }
-        navVC.dismiss(animated: true)
+        navVC.dismiss(animated: true, completion: completion)
     }
 
     public func isPaymentFormValid() -> Bool {
