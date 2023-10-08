@@ -69,43 +69,46 @@ public class MGPPaymentSheet {
         presentIn viewController: UIViewController?,
         on3DSSucces: ((String) -> ())? = nil,
         on3DSLauch: ((UIViewController) -> ())? = nil,
-        on3DSFailure: ((MGPError) -> ())? = nil
+        on3DSFailure: ((String) -> ())? = nil,
+        on3DSError: ((MGPError) -> ())? = nil
     ) {
         
         self.presentingVC = viewController
         
         guard payData?.secureModeNeeded == true else {
             print("😅 secureModeNeeded is false ")
-            on3DSFailure?(MGPError._3dsNotRqd)
+            on3DSError?(MGPError._3dsNotRqd)
             return
         }
 
         guard let _payData = payData else {
-            on3DSFailure?(MGPError._3dsPayInDataRqd)
+            on3DSError?(MGPError._3dsPayInDataRqd)
             return
         }
         
         guard let _vc = viewController else {
-            on3DSFailure?(MGPError._3dsPresentingVCRqd)
+            on3DSError?(MGPError._3dsPresentingVCRqd)
             return
         }
         
         guard let urlStr = payData?.secureModeRedirectURL, let url = URL(string: urlStr) else {
             return
         }
-        
-        print("😅 url", url)
-        
+                
         let _3dsVC = ThreeDSController(
             secureModeReturnURL: url,
             secureModeRedirectURL: nil,
-            onSuccess: { paymentId in
-                on3DSSucces?(paymentId)
-            },
-            onFailure: { error in
-                on3DSFailure?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
+            transactionType: .cardDirect,
+            onComplete: { result in
+                switch result.status {
+                case .SUCCEEDED:
+                    on3DSSucces?(result.id)
+                case .FAILED:
+                    on3DSFailure?(result.id)
+                }
+            }) { error in
+                on3DSError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
             }
-        )
         
         on3DSLauch?(_3dsVC)
         

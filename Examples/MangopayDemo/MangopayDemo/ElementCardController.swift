@@ -113,7 +113,7 @@ class ElementCardController: UIViewController {
 //                secureModeReturnURL: "https://docs.mangopay.com"
 //            )
 
-            MangoPayCoreiOS.tokenizeCard(
+            MangopayCoreiOS.tokenizeCard(
                 form: elementForm,
                 with: cardRegistration,
                 presentIn: self
@@ -206,7 +206,7 @@ class ElementCardController: UIViewController {
                 
                 guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
 
-                MangoPayCoreiOS.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
+                MangopayCoreiOS.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
                     print("✅ launch3DSIfPossible", success)
                     onSuccess?()
                 } on3DSFailure: { error in

@@ -34,8 +34,8 @@ class PaymentFormController: UIViewController {
 
         formView = PaymentFormView(
             client: MangopayClient(
-                clientId: MangoPayCoreiOS.clientId,
-                environment: MangoPayCoreiOS.environment)
+                clientId: MangopayCoreiOS.clientId,
+                environment: MangopayCoreiOS.environment)
             ,
             paymentMethodConfig: paymentMethodConfig,
             handlePaymentFlow: handlePaymentFlow,
@@ -65,7 +65,6 @@ class PaymentFormController: UIViewController {
     }
 
     func setNavigation() {
-//
         formView.navView.closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
     }
 
@@ -88,9 +87,6 @@ class PaymentFormController: UIViewController {
     }
 
     @objc func closeTapped() {
-//        self.navigationController?.dismiss(animated: true, completion: {
-//            self.callback.onSheetDismissed?()
-//        })
         self.dismiss(animated: true) {
             self.callback.onSheetDismissed?()
         }

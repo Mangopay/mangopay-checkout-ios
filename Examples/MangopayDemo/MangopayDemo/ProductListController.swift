@@ -25,9 +25,7 @@ struct Product {
 class ProductListController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    let apikey = "zFSxUNrqFc2TYTPaCb2Ki0dXy3qMWGu7mqnbC4W6V2UTSnXaSb"
-//    let clientKey = "ct_test_LVB7OyjnVO8ZJ236"
-    let flowID = "c1241bd1-9c7f-4371-a087-c03434434610"
+
     var intentId = ""
 
     let productData = [
@@ -68,63 +66,27 @@ class ProductListController: UIViewController {
     }
 
     func didTapElementCheckout(selectedProduct: Product) {
-//        let cardConfig = CardConfig(supportedCardBrands: [.visa, .amex])
-//                            
-//        let style = PaymentFormStyle(
-//            font: .systemFont(ofSize: 10),
-//            borderType: .round,
-//            textColor: .black,
-//            placeHolderColor: .gray,
-//            errorColor: .red,
-//            checkoutButtonTextColor: .white,
-//            checkoutButtonBackgroundColor: .black
-//        )
-//        
-//        let elementOptions = ElementsOptions(
-//            apiKey: "ct_test_aSk3Ht5l9aCdjSaI",
-//            clientId: "",
-//            style: style,
-//            customerId: nil,
-//            amount: selectedProduct.price,
-//            countryCode: "US",
-//            currencyCode: "USD",
-//            delegate: self
-//        )
-//
-//        MangoPaySDK.buildElementForm(
-//            with: elementOptions,
-//            cardConfig: cardConfig,
-//            present: self
-//        )
-
         let viewController = ElementCardController(
             cardRegistration: config.cardReg,
             clientId: config.config.clientId
         )
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .coverVertical
-//        present(viewController, animated: true)
         self.navigationController?.pushViewController(viewController, animated: true)
-
     }
     
      func didTapDropInCheckout(selectedProduct: Product) {
-
-//         startIntent(amount: Int(selectedProduct.price))
-     
          let contact = PKContact()
          contact.name = .init(givenName: "Elikem", familyName: "Savie")
          
          let applePayConfig = MangopayApplePayConfig(
             amount: 1,
             delegate: self,
-            merchantIdentifier: "merchant.mangopay.com.payline.58937646344908",
+            merchantIdentifier: config.config.merchantID,
             merchantCapabilities: .capability3DS,
             currencyCode: "USD",
             countryCode: "US",
             supportedNetworks: [
-                .amex,
-                .discover,
                 .masterCard,
                 .visa
             ],
@@ -173,7 +135,9 @@ class ProductListController: UIViewController {
                  },
                  onError: { error in
                      print("❌ error", error.reason)
-                     topmostViewController?.showAlert(with: error.reason, title: "Error")
+//                     DispatchQueue.main.async {
+                         topmostViewController?.showAlert(with: error.reason, title: "Error")
+//                     }
                  },
                  onSheetDismissed: {
                      print("✅ sheet dismisses")
@@ -184,37 +148,15 @@ class ProductListController: UIViewController {
          checkout.present(in: self)
     }
 
-    func startIntent(amount: Int) {
-//        let intentClient = MangoPayIntent(clientKey: apikey)
-//        let trackingId = UUID().uuidString
-//        let amountInt = amount
-//        Task {
-//            do {
-//                let indtentData = try await intentClient.startIntent(
-//                    trackingId: trackingId,
-//                    flowId: flowID,
-//                    amount: MGPIntentAmountInput(amount: amountInt, currency: "USD"),
-//                    location: MGPIntentLocationInput(country: "USA")
-//                )
-//                self.intentId = indtentData.id
-//                MangoPaySDK.setIntentId(indtentData.id)
-////                print("🤣 indtentData", indtentData)
-//            } catch {
-//                print("❌❌ Intent Error", error)
-//            }
-//
-//        }
-    }
-
     func handle3DS(with cardId: String, onSuccess: ((Bool) -> Void)? ) {
         
         let payInObj = AuthorizePayIn(
             tag: "Mangopay Demo Tag",
-            authorID: "158091557",
-            creditedUserID: "158091557",
+            authorID: config.config.userId,
+            creditedUserID: config.config.userId,
             debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
             fees: DebitedFunds(currency: "EUR", amount: 1),
-            creditedWalletID: "159834019",
+            creditedWalletID: config.config.walletId ?? "",
             cardID: cardId,
             secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
             secureModeRedirectURL: "https://docs.mangopay.com/please-ignore",
@@ -239,13 +181,12 @@ class ProductListController: UIViewController {
             
             do {
                 let regResponse = try await PaymentCoreClient(
-                    env: .sandbox
+                    env: .t3
                 ).authorizePayIn(
                     payInObj,
-                    clientId: "checkoutsquatest",
-                    apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+                    clientId: config.config.clientId,
+                    apiKey: config.config.apiKey
                 )
-                //            showLoader(false)
                 print("✅ res", regResponse)
                 
                 guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
@@ -259,16 +200,20 @@ class ProductListController: UIViewController {
                         self.navigationController?.pushViewController(_3dsVC, animated: true)
                     }
                 } on3DSFailure: { error in
+                    DispatchQueue.main.async {
+                        topmostViewController?.showAlert(with: "", title: "3DS challenge failed")
+
+                    }
+                } on3DSError: { error in
                     print("error", error)
                     switch error {
                     case ._3dsNotRqd:
                         onSuccess?(false)
                     default: break
                     }
-                    
                 }
             } catch {
-                print("❌ Error Creating Card Registration")
+                print("❌ authorizePayIn Error Creating Card Registration")
                 //            showLoader(false)
             }
             

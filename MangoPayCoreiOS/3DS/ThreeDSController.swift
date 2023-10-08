@@ -22,9 +22,9 @@ public class ThreeDSController: UIViewController {
     public var secureModeReturnURL: URL?
     var authUrlNavigation: WKNavigation?
     private let urlHelper: URLHelping = URLHelper()
-
-    var onSuccess: ((String) -> ())?
-    var onFailure: ((Error?) -> ())?
+    private var onComplete: ((_3DSResult) -> ())?
+    private var onError: ((Error?) -> ())?
+    private var transactionType: _3DSTransactionType!
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,16 +41,17 @@ public class ThreeDSController: UIViewController {
     init(
         secureModeReturnURL: URL,
         secureModeRedirectURL: URL?,
-        onSuccess: ((String) -> ())?,
-        onFailure: ((Error?) -> ())?
+        transactionType: _3DSTransactionType?,
+        onComplete: ((_3DSResult) -> ())?,
+        onError: ((Error?) -> ())?
     ) {
-        self.onSuccess = onSuccess
-        self.onFailure = onFailure
+        self.transactionType = transactionType
+        self.onError = onError
         self.secureModeReturnURL = secureModeReturnURL
+        self.onComplete = onComplete
         super.init(nibName: nil, bundle: nil)
     }
 
-    /// Returns an object initialized from data in a given unarchiver.
     required public init?(coder aDecoder: NSCoder) {
         secureModeReturnURL = nil
         super.init(coder: aDecoder)
@@ -77,52 +78,20 @@ extension ThreeDSController: WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
 
-        guard let payinID = urlHelper.extractPreAuth(from: webView.url!) else { return }
-        handleDismiss(paymentId: payinID)
-//        handleDismiss(preAuthID: status)
-        print("✅ didReceiveServerRedirectForProvisionalNavigation Logs", webView.url!)
-        print("✅ status Logs", payinID)
-    }
-
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("✅ navigation Logs", webView.url!)
+        guard let _3dsResult = urlHelper.extract3DSResult(from: webView.url!, type: transactionType) else {
+            self.onError?(MGPError._3dsIdExtractionError)
+            return
+        }
+        handleDismiss(_3dsResult: _3dsResult)
     }
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print("✅ didFail", error, webView.url!)
-        self.onFailure?(MGPError._3dsError(additionalInfo: error.localizedDescription))
+        self.onError?(MGPError._3dsError(additionalInfo: error.localizedDescription))
     }
 
-    private func handleDismiss(paymentId: String) {
-        Task {
-            guard let payIn = await check3DSStatus(paymentID: paymentId), let status = payIn.statusenum else { return }
-    
-            self.dismiss(animated: true) {
-                switch status {
-                case .success:
-                    self.onSuccess?(paymentId)
-                case .failed:
-                    self.onFailure?(MGPError._3dsUserFailedChallenge(reaon: payIn.resultCode))
-                }
-            }
+    private func handleDismiss(_3dsResult: _3DSResult) {
+        self.dismiss(animated: true) {
+            self.onComplete?(_3dsResult)
         }
     }
-
-    private func check3DSStatus(paymentID: String) async -> PayIn? {
-        do {
-            let payIn = try await PaymentCoreClient(
-                env: .sandbox
-            ).getPayIn(
-                clientId: MangoPayCoreiOS.clientId,
-                apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
-                payInId: paymentID
-            )
-            return payIn
-        } catch {
-            print("❌ Error Getting PayIn", error.localizedDescription)
-            self.onFailure?(MGPError._3dsError(additionalInfo: error.localizedDescription))
-            return nil
-        }
-    }
-
 }

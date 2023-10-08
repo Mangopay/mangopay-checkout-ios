@@ -17,6 +17,7 @@ public enum MGPError: Error {
     case _3dsPayInDataRqd
     case _3dsPresentingVCRqd
     case _3dsSecureURLRqd
+    case _3dsIdExtractionError
     case _3dsUserFailedChallenge(reaon: String?)
     case _3dsError(additionalInfo: String?)
     case applePayErrorMerchantIdEmpty
@@ -41,6 +42,8 @@ public enum MGPError: Error {
             return "_3dsNotRqd"
         case ._3dsPayInDataRqd:
             return "PayIn Object required for 3DS"
+        case ._3dsIdExtractionError:
+            return "Error extracting PayIn ID"
         case ._3dsPresentingVCRqd:
             return "Presenting ViewcController required for 3DS"
         case ._3dsSecureURLRqd:

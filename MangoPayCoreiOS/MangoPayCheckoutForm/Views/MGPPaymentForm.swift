@@ -12,7 +12,7 @@ import MangoPaySdkAPI
 import NethoneSDK
 import MangopayVault
 
-public class MangoPayCheckoutForm: UIView, FormValidatable {
+public class MGPPaymentForm: UIView, FormValidatable {
 
     lazy var headerView = HeaderView()
 
@@ -111,12 +111,12 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     var expiryYear: Int?
 
     var onRightButtonTappedAction: (() -> Void)?
-    var didEndEditing: ((MangoPayCheckoutForm) -> Void)?
+    var didEndEditing: ((MGPPaymentForm) -> Void)?
 
     var currentAttempt: String?
     
     var cardRegistration: MGPCardRegistration?
-    var callBack: MangoPayTokenizedCallBack?
+//    var callBack: MangopayTokenizedCallBack?
 
     var cardType: CardType?
 
@@ -140,11 +140,11 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     public init(
         paymentFormStyle: PaymentFormStyle?,
         supportedCardBrands: [CardType]? = nil,
-        callBack: MangoPayTokenizedCallBack? = nil
+        callBack: MangopayTokenizedCallBack? = nil
     ) {
 
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
-        self.callBack = callBack
+//        self.callBack = callBack
 
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
@@ -155,7 +155,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         setupView()
         setCards(cards: CardConfig(supportedCardBrands: supportedCardBrands))
         initiateNethone()
-//        cardNumberField.text = "4970105181818183"
+        cardNumberField.text = "4970105181818183"
         
         cardNumberField.onEditingChanged = { text in
             self.cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
@@ -178,6 +178,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         vStack.heightAnchor.constraint(equalToConstant: 320).isActive = true
 
         self.backgroundColor = .white
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     @objc func onViewTap() {
@@ -271,7 +272,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         )
     }
 
-    func tokenizeCard(callBack: @escaping MangoPayTokenizedCallBack) {
+    func tokenizeCard(callBack: @escaping MangopayTokenizedCallBack) {
         guard self.isFormValid else {
             callBack(nil, MGPError.invalidForm)
             return
@@ -300,7 +301,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     }
 }
 
-extension MangoPayCheckoutForm: UITextFieldDelegate {
+extension MGPPaymentForm: UITextFieldDelegate {
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case cardNumberField.textfield:
