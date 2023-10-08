@@ -2,7 +2,7 @@ import MangoPaySdkAPI
 import Foundation
 import UIKit
 
-public struct MangoPayCoreiOS {
+public struct MangopayCoreiOS {
 
     static var clientId: String!
     static var environment: MGPEnvironment!
@@ -14,13 +14,11 @@ public struct MangoPayCoreiOS {
     }
 
     public static func tokenizeCard(
-        form: MangoPayCheckoutForm,
+        form: MGPPaymentForm,
         with cardReg: MGPCardRegistration,
         payData: PayInPreAuthProtocol? = nil,
         presentIn viewController: UIViewController? = nil,
-        callBack: @escaping MangoPayTokenizedCallBack,
-        on3DSSucces: ((String) -> ())? = nil,
-        on3DSFailure: ((MGPError) -> ())? = nil
+        callBack: @escaping MangopayTokenizedCallBack
     ) {
 
 //        guard clientId != nil, !clientId.isEmpty else {
@@ -53,63 +51,43 @@ public struct MangoPayCoreiOS {
         payData: PayInPreAuthProtocol? = nil,
         presentIn viewController: UIViewController?,
         on3DSSucces: ((String) -> ())? = nil,
-        on3DSFailure: ((MGPError) -> ())? = nil
+        on3DSFailure: ((String) -> ())? = nil,
+        on3DSError: ((MGPError) -> ())? = nil
     ) {
         guard payData?.secureModeNeeded == true else {
-            print("😅 secureModeNeeded is false ")
+            print("secureModeNeeded is false ")
             return
         }
-
-        guard let _payData = payData else { 
-            on3DSFailure?(MGPError._3dsPayInDataRqd)
+        
+        guard let _payData = payData else {
+            on3DSError?(MGPError._3dsPayInDataRqd)
             return
         }
-
+        
         guard let _vc = viewController else {
-            on3DSFailure?(MGPError._3dsPresentingVCRqd)
+            on3DSError?(MGPError._3dsPresentingVCRqd)
             return
         }
-
+        
         guard let urlStr = payData?.secureModeRedirectURL, let url = URL(string: urlStr) else {
             return
         }
-        
-//        guard let payIn = payData as? PreAuthCard else { return }
-        
-//        Task {
-//            do {
-//                let pre = try await PaymentCoreClient(env: .sandbox).createPreAuth(
-//                    clientId: clientId,
-//                    apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
-//                    preAuth: payIn
-//                )
 
-//                guard let secureModeReturnURL = URL(string: pre.secureModeReturnURL!) else {
-//                    return
-//                }
-                print("😅 url", url)
+        let _3dsVC = ThreeDSController(
+            secureModeReturnURL: url,
+            secureModeRedirectURL: nil,
+            transactionType: .cardDirect,
+            onComplete: { result in
+                switch result.status {
+                case .SUCCEEDED:
+                    on3DSSucces?(result.id)
+                case .FAILED:
+                    on3DSFailure?(result.id)
+                }
+            }) { error in
+                on3DSError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
+            }
         
-        
-
-                let _3dsVC = ThreeDSController(
-                    secureModeReturnURL: url,
-                    secureModeRedirectURL: nil,
-                    onSuccess: { paymentId in
-                        on3DSSucces?(paymentId)
-                    },
-                    onFailure: { error in
-                        on3DSFailure?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
-                    }
-                )
-                
-                 viewController?.present(_3dsVC, animated: true)
-                
-//            } catch { error
-//                print("❌ createPreAuth", error)
-//            }
-            
-//        }
-    
-
+        viewController?.present(_3dsVC, animated: true)
     }
 }

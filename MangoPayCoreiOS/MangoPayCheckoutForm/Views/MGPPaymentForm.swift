@@ -116,7 +116,6 @@ public class MGPPaymentForm: UIView, FormValidatable {
     var currentAttempt: String?
     
     var cardRegistration: MGPCardRegistration?
-//    var callBack: MangopayTokenizedCallBack?
 
     var cardType: CardType?
 
@@ -144,7 +143,6 @@ public class MGPPaymentForm: UIView, FormValidatable {
     ) {
 
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
-//        self.callBack = callBack
 
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
@@ -155,7 +153,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
         setupView()
         setCards(cards: CardConfig(supportedCardBrands: supportedCardBrands))
         initiateNethone()
-        cardNumberField.text = "4970105181818183"
+//        cardNumberField.text = "4970105181818183"
         
         cardNumberField.onEditingChanged = { text in
             self.cardType = CardTypeChecker.getCreditCardType(cardNumber: text)

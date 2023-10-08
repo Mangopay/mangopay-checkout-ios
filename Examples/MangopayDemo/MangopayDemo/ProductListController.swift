@@ -115,14 +115,10 @@ class ProductListController: UIViewController {
                              }
                          } else {
                              DispatchQueue.main.async {
-//                                 topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
-//                                 topmostViewController?.dismiss(animated: true)
                                  self.checkout.tearDown {
                                      self.navigationController?.popToRootViewController(animated: true)
-//                                     self.dismiss(animated: true) {
 
                                      topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
-//                                     }
                                  }
 
                              }

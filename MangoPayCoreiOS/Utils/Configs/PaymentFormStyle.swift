@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 #endif
 
+import PassKit
+
+
 public enum BorderType {
     case square
     case round
@@ -29,6 +32,10 @@ public class PaymentFormStyle {
     var checkoutButtonDisabledBackgroundColor: UIColor = .gray
     var checkoutButtonText: String = "Pay"
 
+    var applePayButtonType: PKPaymentButtonType = .plain
+    var applePayButtonStyle: PKPaymentButtonStyle = .black
+    var applePayButtonCornerRadius: CGFloat = 8
+    
     public init(
         font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize),
         borderType: BorderType = .round,
@@ -41,7 +48,10 @@ public class PaymentFormStyle {
         checkoutButtonTextColor: UIColor = .white,
         checkoutButtonBackgroundColor: UIColor = .black,
         checkoutButtonDisabledBackgroundColor: UIColor = .gray,
-        checkoutButtonText: String = "Pay"
+        checkoutButtonText: String = "Pay",
+        applePayButtonType: PKPaymentButtonType = .plain,
+        applePayButtonStyle: PKPaymentButtonStyle = .black,
+        applePayButtonCornerRadius: CGFloat = 8
     ) {
         self.font = font
         self.borderType = borderType
@@ -55,5 +65,8 @@ public class PaymentFormStyle {
         self.checkoutButtonBackgroundColor = checkoutButtonBackgroundColor
         self.checkoutButtonDisabledBackgroundColor = checkoutButtonDisabledBackgroundColor
         self.checkoutButtonText = checkoutButtonText
+        self.applePayButtonType = applePayButtonType
+        self.applePayButtonStyle = applePayButtonStyle
+        self.applePayButtonCornerRadius = applePayButtonCornerRadius
     }
 }

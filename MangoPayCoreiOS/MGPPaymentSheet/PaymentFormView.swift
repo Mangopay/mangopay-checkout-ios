@@ -13,8 +13,8 @@ class PaymentFormView: UIView {
 
     public lazy var navView = NavView()
 
-    private lazy var paymentForm: MangoPayCheckoutForm = {
-        let view = MangoPayCheckoutForm(paymentFormStyle: paymentFormStyle)
+    private lazy var paymentForm: MGPPaymentForm = {
+        let view = MGPPaymentForm(paymentFormStyle: paymentFormStyle)
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
        return view
@@ -36,10 +36,10 @@ class PaymentFormView: UIView {
 
     lazy var applePayButton: PKPaymentButton = {
         let appleButton = PKPaymentButton(
-            paymentButtonType: .plain,
-            paymentButtonStyle: .black
+            paymentButtonType: paymentFormStyle.applePayButtonType,
+            paymentButtonStyle: paymentFormStyle.applePayButtonStyle
         )
-        appleButton.cornerRadius = 8
+        appleButton.cornerRadius = paymentFormStyle.applePayButtonCornerRadius
         appleButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         appleButton.titleLabel?.font = .systemFont(ofSize: 2)
         appleButton.addTarget(
@@ -134,15 +134,11 @@ class PaymentFormView: UIView {
         setupView()
 
         viewModel.onTokenisationCompleted = {
-            DispatchQueue.main.async {
-                Loader.hide()
-            }
+            Loader.hide()
         }
 
         viewModel.onTokenisationError = { _ in
-            DispatchQueue.main.async {
-                Loader.hide()
-            }
+            Loader.hide()
         }
     }
 
