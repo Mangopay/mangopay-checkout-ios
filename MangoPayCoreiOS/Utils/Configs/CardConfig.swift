@@ -8,9 +8,9 @@
 import Foundation
 
 public struct CardConfig {
-    public var supportedCardBrands: [CardType]?
+    public var supportedCardBrands: [CardType]
     
     public init(supportedCardBrands: [CardType]? = nil) {
-        self.supportedCardBrands = supportedCardBrands
+        self.supportedCardBrands = supportedCardBrands ?? [.visa, .mastercard]
     }
 }

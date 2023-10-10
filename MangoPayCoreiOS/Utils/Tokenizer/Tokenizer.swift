@@ -20,14 +20,14 @@ struct Tokenizer {
     ) {
         self.clientId = clientId
         self.environment = environment
-        MangopayVault.initialize(clientId: clientId, environment: environment == .sandbox ? .sandbox : .prod)
+        MangopayVault.initialize(clientId: clientId, environment: environment == .sandbox ? .sandbox : environment == .t3 ? .t3 : .prod)
     }
 
     public static func tokenize(
         card: MGPCardInfo,
         with cardReg: CardRegistration,
         nethoeAttemptedRef: String,
-        mangoPayVaultCallback: @escaping MangoPayTokenizedCallBack
+        mangoPayVaultCallback: @escaping MangopayTokenizedCallBack
     ) {
 
         guard clientId != nil, !clientId.isEmpty else {

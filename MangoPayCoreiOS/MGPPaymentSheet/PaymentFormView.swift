@@ -11,8 +11,10 @@ import MangoPaySdkAPI
 
 class PaymentFormView: UIView {
 
-    private lazy var paymentForm: MangoPayCheckoutForm = {
-        let view = MangoPayCheckoutForm(paymentFormStyle: PaymentFormStyle())
+    public lazy var navView = NavView()
+
+    private lazy var paymentForm: MGPPaymentForm = {
+        let view = MGPPaymentForm(paymentFormStyle: paymentFormStyle)
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
        return view
@@ -34,10 +36,10 @@ class PaymentFormView: UIView {
 
     lazy var applePayButton: PKPaymentButton = {
         let appleButton = PKPaymentButton(
-            paymentButtonType: .plain,
-            paymentButtonStyle: .black
+            paymentButtonType: paymentFormStyle.applePayButtonType,
+            paymentButtonStyle: paymentFormStyle.applePayButtonStyle
         )
-        appleButton.cornerRadius = 8
+        appleButton.cornerRadius = paymentFormStyle.applePayButtonCornerRadius
         appleButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         appleButton.titleLabel?.font = .systemFont(ofSize: 2)
         appleButton.addTarget(
@@ -52,7 +54,7 @@ class PaymentFormView: UIView {
     lazy var paymentButton: UIButton = {
        let button = UIButton()
         button.backgroundColor = paymentFormStyle.checkoutButtonBackgroundColor
-        button.setTitle("Pay", for: .normal)
+        button.setTitle(paymentFormStyle.checkoutButtonText, for: .normal)
         button.heightAnchor.constraint(equalToConstant: 60).isActive = true
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)
@@ -66,6 +68,7 @@ class PaymentFormView: UIView {
         distribution: .fill,
         padding: UIEdgeInsets(top: 8, left: 0, bottom: 32, right: 0),
         views: [
+            navView,
             paymentForm,
             paymentButton,
             orPayWith,
@@ -81,8 +84,6 @@ class PaymentFormView: UIView {
     public var isFormValid: Bool {
         return paymentForm.isFormValid
     }
-
-    lazy var activitySpiner = UIActivityIndicatorView()
     
     var expiryMonth: Int?
     var expiryYear: Int?
@@ -131,28 +132,13 @@ class PaymentFormView: UIView {
         [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodConfig.applePayConfig?.shouldRenderApplePay == true)})
 
         setupView()
-        setNavigation()
-        
-        keyboardUtil = KeyboardUtil(
-            original: self.topConstriant.constant,
-            padding: 0
-        )
 
-        keyboardUtil?.delegate = self
-        keyboardUtil?.register()
-        activitySpiner.isHidden = true
-
-//        paymentForm.didEndEditing = { form in
-//            self.renderPayButton(isValid: form.isFormValid)
-//        }
-
-//        self.renderPayButton(isValid: false)
         viewModel.onTokenisationCompleted = {
-            DispatchQueue.main.async {
-                self.activitySpiner.isHidden = true
-                self.activitySpiner.startAnimating()
-            }
+            Loader.hide()
+        }
 
+        viewModel.onTokenisationError = { _ in
+            Loader.hide()
         }
     }
 
@@ -162,35 +148,11 @@ class PaymentFormView: UIView {
 
     private func setupView() {
         addSubview(vStack)
-        addSubview(activitySpiner)
-        
-        topConstriant = vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16)
-        topConstriant.isActive = true
-
+        vStack.topAnchor.constraint(equalTo: topAnchor, constant: 32).isActive = true
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
         vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        
-        activitySpiner.translatesAutoresizingMaskIntoConstraints = false
-        activitySpiner.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        activitySpiner.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        activitySpiner.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        activitySpiner.widthAnchor.constraint(equalToConstant: 30).isActive = true
         self.backgroundColor = .white
-        activitySpiner.tintColor = .gray
-        activitySpiner.color = .gray
-        self.bringSubviewToFront(activitySpiner)
-    }
-
-    func setNavigation() {
-        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 44))
-        self.addSubview(navBar)
-
-        let navItem = UINavigationItem(title: "SomeTitle")
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .close, target: nil, action: #selector(closeTapped))
-        navItem.rightBarButtonItem = doneItem
-
-        navBar.setItems([navItem], animated: false)
     }
 
     @objc func closeTapped() {
@@ -223,8 +185,8 @@ class PaymentFormView: UIView {
         guard paymentForm.isFormValid else { return }
         finalizeButtonTapped()
         callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
-        activitySpiner.isHidden = false
-        activitySpiner.startAnimating()
+        Loader.show()
+
     }
 
     @objc func onApplePayBtnTapped() {
@@ -241,29 +203,3 @@ class PaymentFormView: UIView {
     }
 }
 
-extension PaymentFormView: KeyboardUtilDelegate {
-
-    func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
-        let padding: CGFloat = 180
-        let moveBy = rect.height - safeAreaInsets.bottom - padding - 120
-        topConstriant.constant = -moveBy
-
-        UIView.animate(withDuration: animationDuration) {
-            self.layoutIfNeeded()
-        }
-
-    }
-
-    func keyboardDidHide(sender: KeyboardUtil, animationDuration: Double) {
-        topConstriant.constant = sender.original
-        UIView.animate(withDuration: animationDuration) {
-            self.layoutIfNeeded()
-        }
-    }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-
-    }
-
-
-}

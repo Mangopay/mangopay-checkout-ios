@@ -20,6 +20,7 @@ extension UIImage {
         case card_mastercard
         case card_discover
         case card_jcb
+        case card_maestro
         case none
     }
 

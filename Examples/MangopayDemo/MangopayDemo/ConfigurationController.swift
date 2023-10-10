@@ -37,6 +37,7 @@ public struct Configuration {
     var walletId: String?
     var amount: Double
     var currency: Currency
+    var merchantID = "merchant.mangopay.com.payline.58937646344908"
 
     public init(sdkMode: SDKProvier, apiKey: String, clientId: String, authorId: String? = nil, userId: String, walletId: String?, amount: Double, currency: Currency) {
         self.sdkMode = sdkMode
@@ -264,7 +265,7 @@ class ConfigurationController: UIViewController {
             showLoader(true)
 
             let regResponse = try await PaymentCoreClient(
-                env: .sandbox
+                env: .t3
             ).createCardRegistration(
                 cardReg,
                 clientId: clientId,
@@ -309,12 +310,21 @@ class ConfigurationController: UIViewController {
 //        creditedWalletField.text = "6658354"
 //        authorField.text = "6658353"
         
+//        providerTextfield.text = "MangoPay"
+//        apiKeyField.text = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+//        clientField.text = "checkoutsquatest"
+//        creditedUserField.text = "158091557"
+//        creditedWalletField.text = "159834019"
+//        authorField.text = "158091557"
+//        amountField.text = "1"
+//        currencyField.text = "EUR"
+
         providerTextfield.text = "MangoPay"
-        apiKeyField.text = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
-        clientField.text = "checkoutsquatest"
-        creditedUserField.text = "158091557"
-        creditedWalletField.text = "159834019"
-        authorField.text = "158091557"
+        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
+        clientField.text = "12345"
+        creditedUserField.text = "6658353"
+        creditedWalletField.text = "6658354"
+        authorField.text = "6658353"
         amountField.text = "1"
         currencyField.text = "EUR"
     }

@@ -18,6 +18,7 @@ public enum ValidationRules: String {
     case cvvRequired
     case dateRequired
     case dateExpired
+    case dateInFuture
     case textTooShort
     case fieldRequired
 
@@ -39,6 +40,8 @@ public enum ValidationRules: String {
             return LocalizableString.ERROR_EXPIRED_DATE_REQUIRED
         case .dateExpired:
             return LocalizableString.ERROR_EXPIRED_DATE
+        case .dateInFuture:
+            return LocalizableString.ERROR_FUTURE_DATE
         case .textTooShort:
             return LocalizableString.ERROR_TEXT_TOO_SHORT
         case .fieldRequired:
@@ -129,6 +132,11 @@ class Validator<T: Validatable> {
             let isValid = isExpDateValid(dateStr: item.inputData)
             (triggerError && !isValid) ? item.triggerError(message: rule.reason) : ()
             return isValid
+        case .dateInFuture:
+            let dateStr = item.inputData
+            let isValid = !isTooFarInFuture(dateStr: dateStr)
+            (triggerError && !isValid) ? item.triggerError(message: rule.reason) : ()
+            return isValid
         }
     }
 
@@ -166,6 +174,24 @@ class Validator<T: Validatable> {
             return false
         }
 
+    }
+
+    func isTooFarInFuture(dateStr: String) -> Bool {
+    
+        let currentYear = Calendar.current.component(.year, from: Date())
+        
+        var _tempDateStr = dateStr
+        if dateStr.count >= 5 {
+            _tempDateStr.insert(contentsOf: "20", at: _tempDateStr.index(_tempDateStr.startIndex, offsetBy: 3))
+        }
+        
+        guard let actualDate = Date(_tempDateStr, format: "MM/yyyy") else { return false }
+        let enteredYear = Calendar.current.dateComponents([.year], from: actualDate).year ?? 0
+
+        guard enteredYear > (currentYear + 20) else {
+            return false
+        }
+        return true
     }
 
     public func isValid(triggeringError triggerError: Bool) -> Bool {

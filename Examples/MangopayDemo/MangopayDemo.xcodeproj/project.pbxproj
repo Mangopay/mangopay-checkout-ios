@@ -28,7 +28,6 @@
 		9813A3AC2A8261330036F556 /* CongratsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9813A3A12A8261330036F556 /* CongratsController.xib */; };
 		9813A3AD2A8261330036F556 /* Segue+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3A22A8261330036F556 /* Segue+Additions.swift */; };
 		98A5AE712AA99C1B00BA6042 /* MangoPayCoreiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 98A5AE702AA99C1B00BA6042 /* MangoPayCoreiOS */; };
-		98A5AE732AA99C1B00BA6042 /* MangoPayIntent in Frameworks */ = {isa = PBXBuildFile; productRef = 98A5AE722AA99C1B00BA6042 /* MangoPayIntent */; };
 		98A5AE752AA99C1B00BA6042 /* MangoPaySdkAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 98A5AE742AA99C1B00BA6042 /* MangoPaySdkAPI */; };
 		98D535862A82661800EE6381 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 98D535852A82661800EE6381 /* IQKeyboardManagerSwift */; };
 		98D535882A826CA300EE6381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D535872A826CA300EE6381 /* Assets.xcassets */; };
@@ -88,7 +87,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				98A5AE752AA99C1B00BA6042 /* MangoPaySdkAPI in Frameworks */,
-				98A5AE732AA99C1B00BA6042 /* MangoPayIntent in Frameworks */,
 				98DF69A62A83B3EA00B08198 /* netfox in Frameworks */,
 				98D535862A82661800EE6381 /* IQKeyboardManagerSwift in Frameworks */,
 				98A5AE712AA99C1B00BA6042 /* MangoPayCoreiOS in Frameworks */,
@@ -213,7 +211,6 @@
 				98D535852A82661800EE6381 /* IQKeyboardManagerSwift */,
 				98DF69A52A83B3EA00B08198 /* netfox */,
 				98A5AE702AA99C1B00BA6042 /* MangoPayCoreiOS */,
-				98A5AE722AA99C1B00BA6042 /* MangoPayIntent */,
 				98A5AE742AA99C1B00BA6042 /* MangoPaySdkAPI */,
 			);
 			productName = MangopayDemo;
@@ -723,10 +720,6 @@
 		98A5AE702AA99C1B00BA6042 /* MangoPayCoreiOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MangoPayCoreiOS;
-		};
-		98A5AE722AA99C1B00BA6042 /* MangoPayIntent */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MangoPayIntent;
 		};
 		98A5AE742AA99C1B00BA6042 /* MangoPaySdkAPI */ = {
 			isa = XCSwiftPackageProductDependency;

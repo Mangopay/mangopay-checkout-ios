@@ -8,7 +8,7 @@
 import Foundation
 import MangopayVault
 
-public typealias MangoPayTokenizedCallBack = ((TokenizedCardData?, MGPError?) -> ())
+public typealias MangopayTokenizedCallBack = ((TokenizedCardData?, MGPError?) -> ())
 
 public struct FraudData: Codable {
     let provider: String

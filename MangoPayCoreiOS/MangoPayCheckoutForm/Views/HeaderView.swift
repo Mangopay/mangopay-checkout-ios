@@ -26,7 +26,8 @@ class HeaderView: UIView {
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         cv.backgroundColor = .clear
-        cv.isScrollEnabled = true
+        cv.isScrollEnabled = false
+        cv.isPagingEnabled = false
         cv.register(CardCell.self, forCellWithReuseIdentifier: CardCell.id)
         cv.dataSource = self
         cv.delegate = self

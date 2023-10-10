@@ -12,7 +12,7 @@ import MangoPaySdkAPI
 import NethoneSDK
 import MangopayVault
 
-public class MangoPayCheckoutForm: UIView, FormValidatable {
+public class MGPPaymentForm: UIView, FormValidatable {
 
     lazy var headerView = HeaderView()
 
@@ -51,7 +51,8 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         returnKeyType: .next,
         validationRule: [
             .dateRequired,
-            .dateExpired
+            .dateExpired,
+            .dateInFuture
         ],
         style: self.paymentFormStyle,
         textfieldDelegate: self
@@ -110,12 +111,11 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
     var expiryYear: Int?
 
     var onRightButtonTappedAction: (() -> Void)?
-    var didEndEditing: ((MangoPayCheckoutForm) -> Void)?
+    var didEndEditing: ((MGPPaymentForm) -> Void)?
 
     var currentAttempt: String?
     
     var cardRegistration: MGPCardRegistration?
-    var callBack: MangoPayTokenizedCallBack?
 
     var cardType: CardType?
 
@@ -138,11 +138,11 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
 
     public init(
         paymentFormStyle: PaymentFormStyle?,
-        callBack: MangoPayTokenizedCallBack? = nil
+        supportedCardBrands: [CardType]? = nil,
+        callBack: MangopayTokenizedCallBack? = nil
     ) {
 
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
-        self.callBack = callBack
 
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
@@ -151,7 +151,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         )
         
         setupView()
-        setCards(cards: CardConfig(supportedCardBrands: [.visa, .mastercard]))
+        setCards(cards: CardConfig(supportedCardBrands: supportedCardBrands))
         initiateNethone()
 //        cardNumberField.text = "4970105181818183"
         
@@ -176,6 +176,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         vStack.heightAnchor.constraint(equalToConstant: 320).isActive = true
 
         self.backgroundColor = .white
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     @objc func onViewTap() {
@@ -212,7 +213,17 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         self.cardRegistration = cardRegistration
     }
 
+    func cancelNethoneAttemptIfAny() {
+        do {
+            try NethoneSDK.NTHNethone.cancelAttempt()
+            print(" cancelAttempt success")
+        } catch { error
+            print("Nethone cancelAttempt Error", error.localizedDescription)
+        }
+    }
+
     func initiateNethone() {
+        cancelNethoneAttemptIfAny()
         NTHNethone.setMerchantNumber("428242");
         let nethoneConfig = NTHAttemptConfiguration()
         nethoneConfig.sensitiveFields = [
@@ -259,7 +270,7 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         )
     }
 
-    func tokenizeCard(callBack: @escaping MangoPayTokenizedCallBack) {
+    func tokenizeCard(callBack: @escaping MangopayTokenizedCallBack) {
         guard self.isFormValid else {
             callBack(nil, MGPError.invalidForm)
             return
@@ -282,13 +293,13 @@ public class MangoPayCheckoutForm: UIView, FormValidatable {
         ) { tokenizedCardData, error in
             print("tokenizedCardData", tokenizedCardData)
             print("error", error)
-            callBack(tokenizedCardData, nil)
+            callBack(tokenizedCardData, error)
         }
 
     }
 }
 
-extension MangoPayCheckoutForm: UITextFieldDelegate {
+extension MGPPaymentForm: UITextFieldDelegate {
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case cardNumberField.textfield:
@@ -313,6 +324,7 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
         
         switch textField {
         case cardNumberField.textfield:
+            
             if [6, 11, 16].contains(textField.text?.count ?? 0) && string.isEmpty {
                 textField.text = String(textField.text!.dropLast())
                 return true
@@ -322,8 +334,13 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                 in: range,
                 with: string
             ).replacingOccurrences(of: " ", with: "")
-            
-            if text.count >= 4 && text.count <= cardType?.cardCount ?? 16 {
+
+            let cardType = CardTypeChecker.getCreditCardType(
+                cardNumber: text.trimCard()
+            )
+            cardNumberField.setLeftImage(cardType.icon)
+
+            if text.count >= 4 && text.count <= cardType.cardCount && !string.isBackspace {
                 var newString = ""
                 for i in stride(from: 0, to: text.count, by: 4) {
                     let upperBoundIndex = i + 4
@@ -331,7 +348,7 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                     let lowerBound = String.Index.init(encodedOffset: i)
                     let upperBound = String.Index.init(encodedOffset: upperBoundIndex)
                     
-                    if upperBoundIndex <= text.count  {
+                    if upperBoundIndex <= text.count {
                         newString += String(text[lowerBound..<upperBound]) + " "
                         if newString.count > 19 {
                             newString = String(newString.dropLast())
@@ -347,14 +364,11 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
                 return false
             }
             
-            if text.count > cardType?.cardCount ?? 16 {
+            if text.count > cardType.cardCount {
                 return false
             }
             
-            let cardType = CardTypeChecker.getCreditCardType(
-                cardNumber: text.trimmingCharacters(in: .whitespaces)
-            )
-            cardNumberField.setLeftImage(cardType.icon)
+
             return true
             
         case expiryDateField.textfield:
@@ -427,24 +441,3 @@ extension MangoPayCheckoutForm: UITextFieldDelegate {
     }
 }
 
-extension MangoPayCheckoutForm: KeyboardUtilDelegate {
-    
-    func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double) {
-        let padding: CGFloat = 180
-        let moveBy = rect.height - safeAreaInsets.bottom - padding - 120
-        print("🤣 moveBy", moveBy)
-        topConstriant.constant = -moveBy
-        
-        UIView.animate(withDuration: animationDuration) {
-            self.layoutIfNeeded()
-        }
-        
-    }
-    
-    func keyboardDidHide(sender: KeyboardUtil, animationDuration: Double) {
-        topConstriant.constant = sender.original
-        UIView.animate(withDuration: animationDuration) {
-            self.layoutIfNeeded()
-        }
-    }
-}

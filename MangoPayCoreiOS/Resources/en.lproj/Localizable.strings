@@ -24,3 +24,4 @@
 "ERROR_EXPIRED_DATE_REQUIRED" = "Expiry Date Required";
 "ERROR_TEXT_TOO_SHORT" = "Text is too short.";
 "ERROR_EXPIRED_DATE" = "Expired Card Date";
+"ERROR_FUTURE_DATE" = "Date too far in the future";

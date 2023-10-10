@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 #endif
 
+import PassKit
+
+
 public enum BorderType {
     case square
     case round
@@ -27,7 +30,12 @@ public class PaymentFormStyle {
     var checkoutButtonTextColor: UIColor = .white
     var checkoutButtonBackgroundColor: UIColor = .black
     var checkoutButtonDisabledBackgroundColor: UIColor = .gray
+    var checkoutButtonText: String = "Pay"
 
+    var applePayButtonType: PKPaymentButtonType = .plain
+    var applePayButtonStyle: PKPaymentButtonStyle = .black
+    var applePayButtonCornerRadius: CGFloat = 8
+    
     public init(
         font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize),
         borderType: BorderType = .round,
@@ -39,7 +47,11 @@ public class PaymentFormStyle {
         errorColor: UIColor = .red,
         checkoutButtonTextColor: UIColor = .white,
         checkoutButtonBackgroundColor: UIColor = .black,
-        checkoutButtonDisabledBackgroundColor: UIColor = .gray
+        checkoutButtonDisabledBackgroundColor: UIColor = .gray,
+        checkoutButtonText: String = "Pay",
+        applePayButtonType: PKPaymentButtonType = .plain,
+        applePayButtonStyle: PKPaymentButtonStyle = .black,
+        applePayButtonCornerRadius: CGFloat = 8
     ) {
         self.font = font
         self.borderType = borderType
@@ -52,26 +64,9 @@ public class PaymentFormStyle {
         self.checkoutButtonTextColor = checkoutButtonTextColor
         self.checkoutButtonBackgroundColor = checkoutButtonBackgroundColor
         self.checkoutButtonDisabledBackgroundColor = checkoutButtonDisabledBackgroundColor
+        self.checkoutButtonText = checkoutButtonText
+        self.applePayButtonType = applePayButtonType
+        self.applePayButtonStyle = applePayButtonStyle
+        self.applePayButtonCornerRadius = applePayButtonCornerRadius
     }
 }
-
-
-//public class CheckoutTheme {
-//    /// Background color of the views
-//    public  var primaryBackgroundColor: UIColor = UIColor.groupTableViewBackground
-//    public  var secondaryBackgroundColor: UIColor = .white
-//    /// Background used for the Table View Cell in country selection table
-//    public  var tertiaryBackgroundColor: UIColor = .white
-//    /// Main text color
-//    public  var color: UIColor = .black
-//    /// Secondary text color
-//    public  var secondaryColor: UIColor = .lightGray
-//    /// Error text color
-//    public  var errorColor: UIColor = .red
-//    /// Chevron color
-//    public  var chevronColor: UIColor = .black
-//    /// Font
-//    public  var font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
-//    /// Bar style, used for the search bar
-//    public  var barStyle: UIBarStyle = UIBarStyle.default
-//}

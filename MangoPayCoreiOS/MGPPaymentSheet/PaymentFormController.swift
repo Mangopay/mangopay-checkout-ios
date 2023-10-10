@@ -13,7 +13,6 @@ class PaymentFormController: UIViewController {
 
     var formView: PaymentFormView!
 
-//    var client: MangopayClient
     var paymentFormStyle: PaymentFormStyle
     var callback: CallBack
     var paymentMethodConfig: PaymentMethodConfig
@@ -22,7 +21,6 @@ class PaymentFormController: UIViewController {
 
     public init(
         cardConfig: CardConfig? = nil,
-//        client: MangopayClient,
         paymentMethodConfig: PaymentMethodConfig,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle?,
@@ -31,14 +29,13 @@ class PaymentFormController: UIViewController {
 
         self.paymentFormStyle = branding ?? PaymentFormStyle()
         self.callback = callback
-//        self.client = client
         self.paymentMethodConfig = paymentMethodConfig
         self.handlePaymentFlow = handlePaymentFlow
 
         formView = PaymentFormView(
             client: MangopayClient(
-                clientId: MangoPayCoreiOS.clientId,
-                environment: MangoPayCoreiOS.environment)
+                clientId: MangopayCoreiOS.clientId,
+                environment: MangopayCoreiOS.environment)
             ,
             paymentMethodConfig: paymentMethodConfig,
             handlePaymentFlow: handlePaymentFlow,
@@ -59,14 +56,16 @@ class PaymentFormController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavigation()
         setupObservers()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setNavigation()
+    }
+
     func setNavigation() {
-        title = "Checkout"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeTapped))
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        formView.navView.closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
     }
 
     func setupObservers() {
@@ -88,9 +87,10 @@ class PaymentFormController: UIViewController {
     }
 
     @objc func closeTapped() {
-        self.navigationController?.dismiss(animated: true, completion: {
+        self.dismiss(animated: true) {
             self.callback.onSheetDismissed?()
-        })
+        }
+
     }
 
     func clearForm() {

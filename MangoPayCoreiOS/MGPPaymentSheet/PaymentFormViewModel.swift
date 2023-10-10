@@ -11,22 +11,20 @@ import MangoPaySdkAPI
 public class PaymentFormViewModel {
 
     var mgpClient: MangopayClient
-//    var callback: CallBack
     var onTokenisationCompleted: (() -> Void)?
-    
+    var onTokenisationError: ((MGPError) -> ())?
+
     var selectedPaymentMethod: PaymentMethod = .card(.none)
 
     init(
         client: MangopayClient,
         paymentMethodConfig: PaymentMethodConfig
-//        callback: CallBack
     ) {
         self.mgpClient = client
-//        self.callback = callback
     }
     
     func tokenizeCard(
-        form: MangoPayCheckoutForm,
+        form: MGPPaymentForm,
         cardRegistration: MGPCardRegistration?,
         callback: CallBack
     ) {
@@ -34,12 +32,17 @@ public class PaymentFormViewModel {
         form.setCardRegistration(cardRegistration)
         form.tokenizeCard { tokenizedCardData, error in
             if let _tokenized = tokenizedCardData, let card = tokenizedCardData?.card {
-                callback.onTokenizationCompleted?(card.toMGPCardReg)
-                self.onTokenisationCompleted?()
+                DispatchQueue.main.async {
+                    callback.onTokenizationCompleted?(card.toMGPCardReg)
+                    self.onTokenisationCompleted?()
+                }
             }
 
             if let _error = error {
-                callback.onError?(_error)
+                DispatchQueue.main.async {
+                    self.onTokenisationError?(_error)
+                    callback.onError?(_error)
+                }
             }
         }
     }
