@@ -7,7 +7,7 @@
 
 import Foundation
 import PassKit
-import MangoPaySdkAPI
+import MangopaySdkAPI
 
 public typealias PaymentCompletionHandler = (Bool) -> Void
 

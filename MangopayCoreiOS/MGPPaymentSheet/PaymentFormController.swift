@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MangoPaySdkAPI
+import MangopaySdkAPI
 import PassKit
 
 class PaymentFormController: UIViewController {

@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
       "state" : {
-        "branch" : "feature/date_improvements",
-        "revision" : "8690a4c3393afeb733ac0fdf57c8c35aa13d1e78"
+        "branch" : "main",
+        "revision" : "41e86a35e4ef910d32e9216476085dc69693153f"
       }
     },
     {

@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import MangoPayCoreiOS
-import MangoPaySdkAPI
+import MangopayCoreiOS
+import MangopaySdkAPI
 
 class ElementCardController: UIViewController {
     

@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MangoPayiOSSDK",
+    name: "MangopayiOSSDK",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v10_15),
@@ -12,35 +12,35 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MangoPayCoreiOS",
-            targets: ["MangoPayCoreiOS", "NethoneSDK"]),
+            name: "MangopayCoreiOS",
+            targets: ["MangopayCoreiOS", "NethoneSDK"]),
         .library(
-            name: "MangoPaySdkAPI",
-            targets: ["MangoPaySdkAPI"])
+            name: "MangopaySdkAPI",
+            targets: ["MangopaySdkAPI"])
     ],
     dependencies: [
         .package(
-            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "feature/date_improvements"),
+            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "main"),
     ],
     targets: [
         .target(
-            name: "MangoPayCoreiOS",
+            name: "MangopayCoreiOS",
             dependencies: [
-                "MangoPaySdkAPI",
+                "MangopaySdkAPI",
                 .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk"),
             ],
-            path: "MangoPayCoreiOS",
+            path: "MangopayCoreiOS",
             resources: [
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
             ]
         ),
         .target(
-            name: "MangoPaySdkAPI",
+            name: "MangopaySdkAPI",
             dependencies: [
                 .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk")
             ],
-            path: "MangoPaySdkAPI"
+            path: "MangopaySdkAPI"
         ),
         .binaryTarget(
             name: "NethoneSDK",
@@ -49,8 +49,8 @@ let package = Package(
         .testTarget(
             name: "Tests",
             dependencies: [
-                "MangoPaySdkAPI",
-                "MangoPayCoreiOS"
+                "MangopaySdkAPI",
+                "MangopayCoreiOS"
             ],
             path: "Tests"
 //            swiftSettings: [
