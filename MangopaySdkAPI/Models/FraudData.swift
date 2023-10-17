@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MangopayVault
+import MangopayVaultSDK
 
 public typealias MangopayTokenizedCallBack = ((TokenizedCardData?, MGPError?) -> ())
 
