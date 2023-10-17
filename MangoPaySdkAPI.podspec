@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "MangoPaySdkAPI"
-    s.version      = "0.0.50-beta"
+    s.version      = "1.0.0-beta"
     s.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift"
     s.description  = <<-DESC
     Checkout API Client and Payment Form Utilities in Swift.

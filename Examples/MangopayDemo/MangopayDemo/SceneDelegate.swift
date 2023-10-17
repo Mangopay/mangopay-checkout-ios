@@ -1,11 +1,12 @@
 //
 //  SceneDelegate.swift
-//  ApplePayDemo
+//  MangopayDemo
 //
-//  Created by Elikem Savie on 04/12/2022.
+//  Created by Elikem Savie on 08/08/2023.
 //
 
 import UIKit
+import netfox
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,9 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-
-        self.window?.rootViewController = ElementCardController()
-        self.window?.makeKeyAndVisible()
+        NFX.sharedInstance().start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

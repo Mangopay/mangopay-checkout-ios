@@ -1,0 +1,27 @@
+//
+//  Localizable.swift
+//  
+//
+//  Created by Elikem Savie on 18/10/2022.
+//
+
+
+"CARD_INFO_TITLE" = "Informations sur la carte";
+"CARD_NAME_PLACEHOLDER" = "Nom sur la carte";
+"CARD_EXPIRIY_PLACEHOLDER" = "MM/AA";
+"CARD_CVV" = "CVV";
+"SAVE_PAYMENT_CHECKMARK" = "Enregistrer les détails de paiement pour une utilisation future";
+"BILLING_ADDRESS_CHECKMARK" = "L'adresse de facturation est la même que celle d'expédition";
+"BILLING_INFO_TITLE" = "détails de facturation";
+"CARD_COUNTRY_PLACEHOLDER" = "Choisissez le pays";
+"CARD_ZIP_PLACEHOLDER" = "Zip / code postal";
+"ERROR_CARD_NUMBER_INVALID" = "Card Number Invalid";
+"ERROR_CARD_NUMBER_REQUIRED" = "Card Number Required";
+"ERROR_CARD_MIN_NUMBER" = "Numéro de carte invalide";
+"ERROR_FULLNAME_REQUIRED" = "Nom complet requis";
+"ERROR_CARD_EXPIRED" = "La date d'expiration de votre carte n'est pas valide";
+"ERROR_CVC_REQUIRED" = "CVC requis";
+"ERROR_EXPIRED_DATE_REQUIRED" = "Date de réexpiration du CVC requise";
+"ERROR_TEXT_TOO_SHORT" = "Le texte est trop court.";
+"ERROR_EXPIRED_DATE" = "Date d'expiration de la carte";
+"ERROR_FUTURE_DATE" = "Date trop loin dans le futur";

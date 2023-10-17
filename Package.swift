@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MangoPayiOSSDK",
+    name: "MangopayiOSSDK",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v10_15),
@@ -12,57 +12,35 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MangoPayCoreiOS",
-            targets: ["MangoPayCoreiOS", "NethoneSDK"]),
+            name: "MangopayCoreiOS",
+            targets: ["MangopayCoreiOS", "NethoneSDK"]),
         .library(
-            name: "MangoPaySdkAPI",
-            targets: ["MangoPaySdkAPI"]),
-        .library(
-            name: "MangoPayIntent",
-            targets: ["MangoPayIntent"]),
-        .library(
-            name: "MangoPayVault",
-            targets: ["MangoPayVault"]),
+            name: "MangopaySdkAPI",
+            targets: ["MangopaySdkAPI"])
     ],
     dependencies: [
         .package(
-            url: "https://github.com/apollographql/apollo-ios.git",
-            .upToNextMinor(from: "1.0.5")
-        ),
+            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "main"),
     ],
     targets: [
         .target(
-            name: "MangoPayCoreiOS",
+            name: "MangopayCoreiOS",
             dependencies: [
-                "MangoPaySdkAPI",
+                "MangopaySdkAPI",
+                .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk"),
             ],
-            path: "MangoPayCoreiOS",
+            path: "MangopayCoreiOS",
             resources: [
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
             ]
         ),
         .target(
-            name: "MangoPaySdkAPI",
+            name: "MangopaySdkAPI",
             dependencies: [
-                .product(name: "Apollo", package: "apollo-ios"),
+                .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk")
             ],
-            path: "MangoPaySdkAPI"
-        ),
-        .target(
-            name: "MangoPayIntent",
-            dependencies: [
-                "MangoPaySdkAPI",
-            ],
-            path: "MangoPayIntent"
-        ),
-        .target(
-            name: "MangoPayVault",
-            dependencies: [
-                "MangoPaySdkAPI",
-                "MangoPayCoreiOS"
-            ],
-            path: "MangoPayVault"
+            path: "MangopaySdkAPI"
         ),
         .binaryTarget(
             name: "NethoneSDK",
@@ -71,9 +49,8 @@ let package = Package(
         .testTarget(
             name: "Tests",
             dependencies: [
-                "MangoPayVault",
-                "MangoPaySdkAPI",
-                "MangoPayCoreiOS"
+                "MangopaySdkAPI",
+                "MangopayCoreiOS"
             ],
             path: "Tests"
 //            swiftSettings: [
