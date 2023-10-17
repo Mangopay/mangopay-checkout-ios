@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MangoPaySdkAPI
+import MangopaySdkAPI
 
 public class PaymentFormViewModel {
 

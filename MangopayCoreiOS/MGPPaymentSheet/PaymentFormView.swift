@@ -7,7 +7,7 @@
 
 import UIKit
 import PassKit
-import MangoPaySdkAPI
+import MangopaySdkAPI
 
 class PaymentFormView: UIView {
 

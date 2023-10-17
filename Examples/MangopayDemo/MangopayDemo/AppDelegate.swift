@@ -7,7 +7,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
-import MangoPayCoreiOS
+import MangopayCoreiOS
 import netfox
 
 @main

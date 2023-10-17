@@ -8,7 +8,7 @@
 #if os(iOS)
 import UIKit
 #endif
-import MangoPaySdkAPI
+import MangopaySdkAPI
 import NethoneSDK
 import MangopayVault
 
@@ -153,7 +153,6 @@ public class MGPPaymentForm: UIView, FormValidatable {
         setupView()
         setCards(cards: CardConfig(supportedCardBrands: supportedCardBrands))
         initiateNethone()
-//        cardNumberField.text = "4970105181818183"
         
         cardNumberField.onEditingChanged = { text in
             self.cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
@@ -216,7 +215,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
     func cancelNethoneAttemptIfAny() {
         do {
             try NethoneSDK.NTHNethone.cancelAttempt()
-            print(" cancelAttempt success")
+            print("CancelAttempt success")
         } catch { error
             print("Nethone cancelAttempt Error", error.localizedDescription)
         }
@@ -238,9 +237,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
         do {
             try NTHNethone.beginAttempt(with: nethoneConfig)
             currentAttempt = NTHNethone.attemptReference()
-            print("✅ currentAttempt", currentAttempt)
         } catch { error
-            print("❌ Nethone intiation Error", error.localizedDescription)
+            print("Nethone intiation Error", error.localizedDescription)
         }
     }
 

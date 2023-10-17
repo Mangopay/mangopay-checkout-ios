@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MangoPaySdkAPI
+import MangopaySdkAPI
 import UIKit
 
 public class MGPPaymentSheet {
@@ -24,7 +24,7 @@ public class MGPPaymentSheet {
 
     public static func create(
         paymentMethodConfig: PaymentMethodConfig,
-        handlePaymentFlow: Bool,
+        handlePaymentFlow: Bool = false,
         branding: PaymentFormStyle,
         callback: CallBack
     ) -> MGPPaymentSheet {
@@ -76,7 +76,7 @@ public class MGPPaymentSheet {
         self.presentingVC = viewController
         
         guard payData?.secureModeNeeded == true else {
-            print("😅 secureModeNeeded is false ")
+            print("secureModeNeeded is false ")
             on3DSError?(MGPError._3dsNotRqd)
             return
         }
