@@ -7,8 +7,6 @@
 
 import UIKit
 import MangopayCoreiOS
-import MangopaySdkAPI
-//import MangoPayIntent
 import MangopayVault
 
 class ViewController: UIViewController {

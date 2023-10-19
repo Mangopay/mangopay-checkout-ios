@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MangopaySdkAPI
 
 public struct CallBack {
     var onPaymentMethodSelected: ((PaymentMethod) -> Void)?

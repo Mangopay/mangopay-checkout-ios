@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MangopaySdkAPI
 import UIKit
 
 public class MGPPaymentSheet {

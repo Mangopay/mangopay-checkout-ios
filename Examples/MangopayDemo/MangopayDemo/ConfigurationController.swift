@@ -8,7 +8,6 @@
 import UIKit
 import MangopayCoreiOS
 import MangopayVault
-import MangopaySdkAPI
 
 public enum SDKProvier: String, CaseIterable {
     case MangoPay

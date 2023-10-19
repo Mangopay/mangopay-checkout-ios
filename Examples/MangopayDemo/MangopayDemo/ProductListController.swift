@@ -7,7 +7,6 @@
 
 import UIKit
 import MangopayCoreiOS
-import MangopaySdkAPI
 import PassKit
 //import MangoPayIntent
 

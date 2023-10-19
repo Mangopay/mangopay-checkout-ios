@@ -13,10 +13,10 @@ let package = Package(
     products: [
         .library(
             name: "MangopayCoreiOS",
-            targets: ["MangopayCoreiOS", "NethoneSDK"]),
-        .library(
-            name: "MangopaySdkAPI",
-            targets: ["MangopaySdkAPI"])
+            targets: ["MangopayCoreiOS", "NethoneSDK"])
+//        .library(
+//            name: "MangopaySdkAPI",
+//            targets: ["MangopaySdkAPI"])
     ],
     dependencies: [
         .package(
@@ -26,7 +26,7 @@ let package = Package(
         .target(
             name: "MangopayCoreiOS",
             dependencies: [
-                "MangopaySdkAPI",
+//                "MangopaySdkAPI",
                 .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk"),
             ],
             path: "MangopayCoreiOS",
@@ -35,13 +35,13 @@ let package = Package(
                 .process("Resources/Images")
             ]
         ),
-        .target(
-            name: "MangopaySdkAPI",
-            dependencies: [
-                .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk")
-            ],
-            path: "MangopaySdkAPI"
-        ),
+//        .target(
+//            name: "MangopaySdkAPI",
+//            dependencies: [
+//                .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk")
+//            ],
+//            path: "MangopaySdkAPI"
+//        ),
         .binaryTarget(
             name: "NethoneSDK",
             path: "Integrations/NethoneSDK.xcframework"
@@ -49,7 +49,6 @@ let package = Package(
         .testTarget(
             name: "Tests",
             dependencies: [
-                "MangopaySdkAPI",
                 "MangopayCoreiOS"
             ],
             path: "Tests"

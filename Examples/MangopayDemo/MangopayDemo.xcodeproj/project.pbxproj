@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		98068AF82ADCF63C00609BE7 /* MangopayCoreiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 98068AF72ADCF63C00609BE7 /* MangopayCoreiOS */; };
-		98068AFA2ADCF63C00609BE7 /* MangopaySdkAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 98068AF92ADCF63C00609BE7 /* MangopaySdkAPI */; };
 		9813A3672A8254CD0036F556 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3662A8254CD0036F556 /* AppDelegate.swift */; };
 		9813A3692A8254CD0036F556 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3682A8254CD0036F556 /* SceneDelegate.swift */; };
 		9813A36B2A8254CD0036F556 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A36A2A8254CD0036F556 /* ViewController.swift */; };
@@ -88,7 +87,6 @@
 			files = (
 				98DF69A62A83B3EA00B08198 /* netfox in Frameworks */,
 				98D535862A82661800EE6381 /* IQKeyboardManagerSwift in Frameworks */,
-				98068AFA2ADCF63C00609BE7 /* MangopaySdkAPI in Frameworks */,
 				98068AF82ADCF63C00609BE7 /* MangopayCoreiOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,7 +209,6 @@
 				98D535852A82661800EE6381 /* IQKeyboardManagerSwift */,
 				98DF69A52A83B3EA00B08198 /* netfox */,
 				98068AF72ADCF63C00609BE7 /* MangopayCoreiOS */,
-				98068AF92ADCF63C00609BE7 /* MangopaySdkAPI */,
 			);
 			productName = MangopayDemo;
 			productReference = 9813A3632A8254CD0036F556 /* MangopayDemo.app */;
@@ -720,10 +717,6 @@
 		98068AF72ADCF63C00609BE7 /* MangopayCoreiOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MangopayCoreiOS;
-		};
-		98068AF92ADCF63C00609BE7 /* MangopaySdkAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MangopaySdkAPI;
 		};
 		98D535852A82661800EE6381 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;

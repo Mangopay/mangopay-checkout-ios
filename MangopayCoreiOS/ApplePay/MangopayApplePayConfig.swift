@@ -7,7 +7,6 @@
 
 import Foundation
 import PassKit
-import MangopaySdkAPI
 
 
 public struct MangopayApplePayConfig {

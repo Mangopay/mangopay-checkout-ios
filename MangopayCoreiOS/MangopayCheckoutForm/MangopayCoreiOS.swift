@@ -1,4 +1,3 @@
-import MangopaySdkAPI
 import Foundation
 import UIKit
 
