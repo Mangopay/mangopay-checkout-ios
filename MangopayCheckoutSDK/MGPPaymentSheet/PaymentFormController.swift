@@ -33,8 +33,8 @@ class PaymentFormController: UIViewController {
 
         formView = PaymentFormView(
             client: MangopayClient(
-                clientId: MangopayCoreiOS.clientId,
-                environment: MangopayCoreiOS.environment)
+                clientId: MangopayCheckoutSDK.clientId,
+                environment: MangopayCheckoutSDK.environment)
             ,
             paymentMethodConfig: paymentMethodConfig,
             handlePaymentFlow: handlePaymentFlow,

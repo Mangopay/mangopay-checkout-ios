@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-public struct MangopayCoreiOS {
+public struct MangopayCheckoutSDK {
 
     static var clientId: String!
     static var environment: MGPEnvironment!

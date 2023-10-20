@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import MangopayCoreiOS
+import MangopayCheckoutSDK
 
 class ElementCardController: UIViewController {
     
@@ -111,7 +111,7 @@ class ElementCardController: UIViewController {
 //                secureModeReturnURL: "https://docs.mangopay.com"
 //            )
 
-            MangopayCoreiOS.tokenizeCard(
+            MangopayCheckoutSDK.tokenizeCard(
                 form: elementForm,
                 with: cardRegistration,
                 presentIn: self
@@ -204,7 +204,7 @@ class ElementCardController: UIViewController {
                 
                 guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
 
-                MangopayCoreiOS.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
+                MangopayCheckoutSDK.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
                     print("✅ launch3DSIfPossible", success)
                     onSuccess?()
                 } on3DSFailure: { error in
