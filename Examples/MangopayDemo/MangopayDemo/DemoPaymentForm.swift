@@ -7,8 +7,7 @@
 
 import UIKit
 import MangopayVault
-import MangopaySdkAPI
-//import MangoPayIntent
+import MangopayCheckoutSDK
 
 class DemoPaymentForm: UIViewController {
     

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MangopaySdkAPI
 
 public struct PaymentMethodConfig {
     var card: MGPCardInfo?

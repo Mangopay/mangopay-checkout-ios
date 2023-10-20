@@ -8,7 +8,6 @@
 #if os(iOS)
 import UIKit
 #endif
-import MangopaySdkAPI
 import NethoneSDK
 import MangopayVault
 

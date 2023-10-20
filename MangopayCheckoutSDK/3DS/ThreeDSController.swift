@@ -8,7 +8,6 @@
 import WebKit
 #if os(iOS)
 import UIKit
-import MangopaySdkAPI
 #endif
 
 public protocol ThreeDSControllerDelegate: AnyObject {

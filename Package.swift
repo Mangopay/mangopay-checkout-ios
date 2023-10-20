@@ -12,11 +12,8 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MangopayCoreiOS",
-            targets: ["MangopayCoreiOS", "NethoneSDK"]),
-        .library(
-            name: "MangopaySdkAPI",
-            targets: ["MangopaySdkAPI"])
+            name: "MangopayCheckoutSDK",
+            targets: ["MangopayCheckoutSDK", "NethoneSDK"])
     ],
     dependencies: [
         .package(
@@ -24,23 +21,15 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MangopayCoreiOS",
+            name: "MangopayCheckoutSDK",
             dependencies: [
-                "MangopaySdkAPI",
                 .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk"),
             ],
-            path: "MangopayCoreiOS",
+            path: "MangopayCheckoutSDK",
             resources: [
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
             ]
-        ),
-        .target(
-            name: "MangopaySdkAPI",
-            dependencies: [
-                .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk")
-            ],
-            path: "MangopaySdkAPI"
         ),
         .binaryTarget(
             name: "NethoneSDK",
@@ -49,23 +38,9 @@ let package = Package(
         .testTarget(
             name: "Tests",
             dependencies: [
-                "MangopaySdkAPI",
-                "MangopayCoreiOS"
+                "MangopayCheckoutSDK"
             ],
             path: "Tests"
-//            swiftSettings: [
-//                .unsafeFlags(["-enable-testing-search-paths"]),
-//            ]
         )
-
-//        .plugin(name: "SwiftLintCommandPlugin.swift",
-//                capability: .command(
-//                    intent: .sourceCodeFormatting(),
-//                    permissions: [
-//                        .writeToPackageDirectory(reason: "This command reformats source files")
-//                    ]
-//                )
-//               )
-        
     ]
 )

@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import MangopaySdkAPI
 
 final class MangoPayiOSSDKTests: XCTestCase {
 

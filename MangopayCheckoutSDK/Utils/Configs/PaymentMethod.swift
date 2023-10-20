@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MangopaySdkAPI
 
 public enum PaymentMethod {
     case card(MGPCardInfo?)
