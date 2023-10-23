@@ -9,7 +9,7 @@
 import UIKit
 #endif
 import NethoneSDK
-import MangopayVault
+import MangopayVaultSDK
 
 public class MGPPaymentForm: UIView, FormValidatable {
 

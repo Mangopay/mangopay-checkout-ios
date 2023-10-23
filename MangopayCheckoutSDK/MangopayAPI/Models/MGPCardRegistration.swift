@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MangopayVault
+import MangopayVaultSDK
 
 public enum MGPEnvironment: String {
     case sandbox

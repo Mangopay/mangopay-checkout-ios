@@ -23,7 +23,7 @@ let package = Package(
         .target(
             name: "MangopayCheckoutSDK",
             dependencies: [
-                .product(name: "MangopayVault", package: "mangopay-ios-vault-sdk"),
+                .product(name: "MangopayVaultSDK", package: "mangopay-ios-vault-sdk"),
             ],
             path: "MangopayCheckoutSDK",
             resources: [
