@@ -78,8 +78,10 @@ class ProductListController: UIViewController {
          let contact = PKContact()
          contact.name = .init(givenName: "Elikem", familyName: "Savie")
          
+         config.config.amount = Double(selectedProduct.price)
+     
          let applePayConfig = MangopayApplePayConfig(
-            amount: 1,
+            amount: Double(selectedProduct.price),
             delegate: self,
             merchantIdentifier: config.config.merchantID,
             merchantCapabilities: .capability3DS,
@@ -100,7 +102,7 @@ class ProductListController: UIViewController {
                  applePayConfig: applePayConfig
              ),
              handlePaymentFlow: false,
-             branding: PaymentFormStyle(),
+             branding: PaymentFormStyle(checkoutButtonText: "Pay " + config.config.formattedAmount, checkoutTitleText: "My Checkout"),
              callback: CallBack(
                  onPaymentMethodSelected: { paymentMethod in
                      print("✅ cardinfo", paymentMethod)
