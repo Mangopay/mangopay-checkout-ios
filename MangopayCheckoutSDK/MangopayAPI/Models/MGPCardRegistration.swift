@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import MangopayVault
+import MangopayVaultSDK
 
-public enum MGPEnvironment: String {
+public enum MGPEnvironment: String, CaseIterable {
     case sandbox
     case production
     case t3

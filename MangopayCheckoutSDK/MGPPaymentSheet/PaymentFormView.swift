@@ -139,6 +139,8 @@ class PaymentFormView: UIView {
         viewModel.onTokenisationError = { _ in
             Loader.hide()
         }
+
+        navView.setTitle(paymentFormStyle.checkoutTitleText)
     }
 
     required init?(coder: NSCoder) {

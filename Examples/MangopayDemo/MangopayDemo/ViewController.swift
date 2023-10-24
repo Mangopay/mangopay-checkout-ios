@@ -7,7 +7,7 @@
 
 import UIKit
 import MangopayCheckoutSDK
-import MangopayVault
+import MangopayVaultSDK
 
 class ViewController: UIViewController {
 

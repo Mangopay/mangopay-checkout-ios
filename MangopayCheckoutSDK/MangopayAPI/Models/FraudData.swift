@@ -6,22 +6,22 @@
 //
 
 import Foundation
-import MangopayVault
+import MangopayVaultSDK
 
 public typealias MangopayTokenizedCallBack = ((TokenizedCardData?, MGPError?) -> ())
 
 public struct FraudData: Codable {
     let provider: String
-    let attemptReference: String
+    let profilingAttemptReference: String
 
-    public init(provider: String = "Nethone", attemptReference: String) {
+    public init(provider: String = "Nethone", profilingAttemptReference: String) {
         self.provider = provider
-        self.attemptReference = attemptReference
+        self.profilingAttemptReference = profilingAttemptReference
     }
 
     enum CodingKeys: String, CodingKey {
         case provider
-        case attemptReference = "AttemptReference"
+        case profilingAttemptReference = "AttemptReference"
     }
 }
 

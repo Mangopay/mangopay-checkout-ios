@@ -7,7 +7,8 @@
 
 import UIKit
 import MangopayCheckoutSDK
-import MangopayVault
+import MangopayVaultSDK
+import Foundation
 
 public enum SDKProvier: String, CaseIterable {
     case MangoPay
@@ -29,6 +30,7 @@ public enum Currency: String, CaseIterable {
 
 public struct Configuration {
     var sdkMode: SDKProvier
+    var env: MGPEnvironment
     var apiKey: String
     var clientId: String
     var authorId: String?
@@ -36,10 +38,23 @@ public struct Configuration {
     var walletId: String?
     var amount: Double
     var currency: Currency
-    var merchantID = "merchant.mangopay.com.payline.58937646344908"
 
-    public init(sdkMode: SDKProvier, apiKey: String, clientId: String, authorId: String? = nil, userId: String, walletId: String?, amount: Double, currency: Currency) {
+    var merchantID: String {
+        switch env {
+        case .sandbox, .t3:
+            return "merchant.mangopay.com.payline.58937646344908"
+        case .production:
+            return "merchant.mangopay.com.payline.43461661979437"
+        }
+    }
+
+    var formattedAmount: String {
+        return currency.rawValue + " " + amount.formatAsCurrency
+    }
+
+    public init(sdkMode: SDKProvier, env: MGPEnvironment, apiKey: String, clientId: String, authorId: String? = nil, userId: String, walletId: String?, amount: Double, currency: Currency) {
         self.sdkMode = sdkMode
+        self.env = env
         self.apiKey = apiKey
         self.clientId = clientId
         self.authorId = authorId
@@ -81,6 +96,13 @@ class ConfigurationController: UIViewController {
         textfieldDelegate: self
     )
 
+    lazy var envTextfield = MangoPayDropDownTextfield(
+        placeholderText: "Environment",
+        showDropDownIcon: true,
+        style: PaymentFormStyle(),
+        textfieldDelegate: self
+    )
+    
     lazy var apiKeyField = MangoPayTextfield(
         placeholderText: "API Key",
         returnKeyType: .next,
@@ -160,7 +182,8 @@ class ConfigurationController: UIViewController {
         distribution: .fill,
         padding: UIEdgeInsets(top: 8, left: 0, bottom: 32, right: 0),
         views: [
-            providerTextfield,
+//            providerTextfield,
+            envTextfield,
             apiKeyField,
             clientField,
             authorField,
@@ -191,7 +214,7 @@ class ConfigurationController: UIViewController {
         showLoader(false)
         setupUI()
         setupData()
-        setDummyData()
+        setDummyData(env: nil)
     }
     
     func setupUI() {
@@ -223,17 +246,23 @@ class ConfigurationController: UIViewController {
     func setupData() {
         providerTextfield.update(with: SDKProvier.allCases.map({$0.rawValue}))
         currencyField.update(with: Currency.allCases.map({$0.rawValue}))
+        envTextfield.update(with: MGPEnvironment.allCases.map({$0.rawValue}))
     }
 
     func grabData() -> Configuration? {
         
-        guard let prov = providerTextfield.text, !prov.isEmpty else {
-            providerTextfield.errorText = "Field Required"
-            return nil
-        }
+//        guard let prov = providerTextfield.text, !prov.isEmpty else {
+//            providerTextfield.errorText = "Field Required"
+//            return nil
+//        }
 
         guard let cur = currencyField.text, !cur.isEmpty else {
             currencyField.errorText = "Field Required"
+            return nil
+        }
+
+        guard let env = envTextfield.text, !cur.isEmpty else {
+            envTextfield.errorText = "Field Required"
             return nil
         }
 
@@ -242,9 +271,13 @@ class ConfigurationController: UIViewController {
               let userIdStr = creditedUserField.text,
               let amountStr = amountField.text
         else { return nil }
+        
+        let __env = MGPEnvironment(rawValue: env)!
+        MangopayCheckoutSDK.initialize(clientId: clientIDStr, environment: __env)
 
         return Configuration(
-            sdkMode: SDKProvier(rawValue: prov)!,
+            sdkMode: .MangoPay,
+            env: __env,
             apiKey: apiKeyStr,
             clientId: clientIDStr,
             authorId: authorField.text,
@@ -257,6 +290,7 @@ class ConfigurationController: UIViewController {
         
     func performCreateCardReg(
         cardReg: MGPCardRegistration.Initiate,
+        config: Configuration,
         clientId: String,
         apiKey: String
     ) async -> MGPCardRegistration? {
@@ -264,7 +298,7 @@ class ConfigurationController: UIViewController {
             showLoader(true)
 
             let regResponse = try await PaymentCoreClient(
-                env: .t3
+                env: config.env
             ).createCardRegistration(
                 cardReg,
                 clientId: clientId,
@@ -288,6 +322,7 @@ class ConfigurationController: UIViewController {
                     UserId: configuration.userId,
                     Currency: configuration.currency.rawValue,
                     CardType: "CB_VISA_MASTERCARD"),
+                config: configuration,
                 clientId: configuration.clientId,
                 apiKey: configuration.apiKey
             ) {
@@ -302,7 +337,27 @@ class ConfigurationController: UIViewController {
         }
     }
 
-    func setDummyData() {
+    func setDummyData(env: MGPEnvironment?) {
+        currencyField.text = "EUR"
+
+        guard let _env = env else { return }
+        switch _env {
+        case .sandbox:
+            apiKeyField.text = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+            clientField.text = "checkoutsquatest"
+            creditedUserField.text = "158091557"
+            creditedWalletField.text = "159834019"
+            authorField.text = "158091557"
+            amountField.text = "1"
+        case .production: break
+        case .t3:
+            apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
+            clientField.text = "12345"
+            creditedUserField.text = "6658353"
+            creditedWalletField.text = "6658354"
+            authorField.text = "6658353"
+            amountField.text = "1"
+        }
 //        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
 //        clientField.text = "12345"
 //        creditedUserField.text = "6658353"
@@ -318,14 +373,14 @@ class ConfigurationController: UIViewController {
 //        amountField.text = "1"
 //        currencyField.text = "EUR"
 
-        providerTextfield.text = "MangoPay"
-        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
-        clientField.text = "12345"
-        creditedUserField.text = "6658353"
-        creditedWalletField.text = "6658354"
-        authorField.text = "6658353"
-        amountField.text = "1"
-        currencyField.text = "EUR"
+//        providerTextfield.text = "MangoPay"
+//        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
+//        clientField.text = "12345"
+//        creditedUserField.text = "6658353"
+//        creditedWalletField.text = "6658354"
+//        authorField.text = "6658353"
+//        amountField.text = "1"
+//        currencyField.text = "EUR"
     }
 
 }
@@ -353,6 +408,18 @@ extension ConfigurationController: UITextFieldDelegate {
         default: break
         }
         return true
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        switch textField {
+        case envTextfield.textfield:
+            guard let env = envTextfield.text else {
+                return
+            }
+            let selected = MGPEnvironment(rawValue: env)!
+            setDummyData(env: selected)
+        default: break
+        }
     }
     
 }
@@ -388,5 +455,24 @@ extension ConfigurationController: SegueHandlerType {
 
     func routeToWhenThenDemo(config: DataCapsule) {
         performSegueWithIdentifier(segueIdentifier: .segueToWhenThen, sender: config)
+    }
+}
+
+var decimalFormatter: NumberFormatter {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.usesGroupingSeparator = true
+    formatter.decimalSeparator = "."
+    formatter.currencyDecimalSeparator = "."
+    formatter.groupingSeparator = ","
+    formatter.currencyGroupingSeparator = ","
+    formatter.maximumFractionDigits = 2
+    formatter.minimumFractionDigits = 2
+    return formatter
+}
+
+extension Double {
+    var formatAsCurrency: String {
+        decimalFormatter.string(from: NSNumber(value: self)) ?? ""
     }
 }
