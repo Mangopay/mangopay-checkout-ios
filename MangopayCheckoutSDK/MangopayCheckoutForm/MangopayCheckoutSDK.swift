@@ -41,7 +41,9 @@ public struct MangopayCheckoutSDK {
         ) { tokenizedCardData, error in
             var _payinData = payData
             _payinData?.cardID = tokenizedCardData?.card.cardID
-            callBack(tokenizedCardData, error)
+            DispatchQueue.main.async {
+                callBack(tokenizedCardData, error)
+            }
 //            launch3DSIfPossible(payData: _payinData, presentIn: viewController, on3DSSucces: on3DSSucces, on3DSFailure: on3DSFailure)
         }
     }
