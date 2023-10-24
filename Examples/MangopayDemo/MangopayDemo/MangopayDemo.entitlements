@@ -5,6 +5,7 @@
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
 		<string>merchant.mangopay.com.payline.58937646344908</string>
+		<string>merchant.mangopay.com.payline.43461661979437</string>
 	</array>
 </dict>
 </plist>

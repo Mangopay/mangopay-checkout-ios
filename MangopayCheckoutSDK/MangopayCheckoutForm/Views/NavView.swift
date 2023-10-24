@@ -10,7 +10,7 @@ import UIKit
 
 class NavView: UIView {
     
-    lazy var titleLabel: UILabel = UILabel.create(text: "Checkout", color: .black, font: .boldSystemFont(ofSize: 18))
+    lazy var titleLabel: UILabel = UILabel.create(text: title, color: .black, font: .boldSystemFont(ofSize: 18))
 
     lazy var closeButton: UIButton = {
         let button = UIButton()
@@ -23,9 +23,19 @@ class NavView: UIView {
         return button
     }()
 
+    var title: String? = "Checkout" {
+        didSet {
+            titleLabel.text = title
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+    }
+
+    func setTitle(_ title: String) {
+        self.title = title
     }
 
     required init?(coder: NSCoder) {

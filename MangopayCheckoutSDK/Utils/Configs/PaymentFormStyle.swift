@@ -21,7 +21,6 @@ public enum BorderType {
 public class PaymentFormStyle {
     var font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
     var borderType: BorderType = .round
-//    var backgroundColor: UIColor = .white
     var textColor: UIColor = .black
     var placeHolderColor: UIColor = .gray
     var borderColor: UIColor = .gray
@@ -31,6 +30,7 @@ public class PaymentFormStyle {
     var checkoutButtonBackgroundColor: UIColor = .black
     var checkoutButtonDisabledBackgroundColor: UIColor = .gray
     var checkoutButtonText: String = "Pay"
+    var checkoutTitleText: String = "Checkout"
 
     var applePayButtonType: PKPaymentButtonType = .plain
     var applePayButtonStyle: PKPaymentButtonStyle = .black
@@ -49,13 +49,13 @@ public class PaymentFormStyle {
         checkoutButtonBackgroundColor: UIColor = .black,
         checkoutButtonDisabledBackgroundColor: UIColor = .gray,
         checkoutButtonText: String = "Pay",
+        checkoutTitleText: String = "Checkout",
         applePayButtonType: PKPaymentButtonType = .plain,
         applePayButtonStyle: PKPaymentButtonStyle = .black,
         applePayButtonCornerRadius: CGFloat = 8
     ) {
         self.font = font
         self.borderType = borderType
-//        self.backgroundColor = backgroundColor
         self.textColor = textColor
         self.placeHolderColor = placeHolderColor
         self.borderColor = borderColor
@@ -65,6 +65,7 @@ public class PaymentFormStyle {
         self.checkoutButtonBackgroundColor = checkoutButtonBackgroundColor
         self.checkoutButtonDisabledBackgroundColor = checkoutButtonDisabledBackgroundColor
         self.checkoutButtonText = checkoutButtonText
+        self.checkoutTitleText = checkoutTitleText
         self.applePayButtonType = applePayButtonType
         self.applePayButtonStyle = applePayButtonStyle
         self.applePayButtonCornerRadius = applePayButtonCornerRadius

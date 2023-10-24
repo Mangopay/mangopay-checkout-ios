@@ -178,7 +178,7 @@ class ProductListController: UIViewController {
             
             do {
                 let regResponse = try await PaymentCoreClient(
-                    env: .t3
+                    env: config.config.env
                 ).authorizePayIn(
                     payInObj,
                     clientId: config.config.clientId,
