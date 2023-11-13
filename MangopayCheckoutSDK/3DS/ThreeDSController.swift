@@ -25,6 +25,13 @@ public class ThreeDSController: UIViewController {
     private var onError: ((Error?) -> ())?
     private var transactionType: _3DSTransactionType!
 
+    lazy var activityIndiicatorView: UIActivityIndicatorView = {
+       let view = UIActivityIndicatorView()
+        view.style = .large
+        view.translatesAutoresizingMaskIntoConstraints = false
+       return view
+    }()
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,6 +67,12 @@ public class ThreeDSController: UIViewController {
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.websiteDataStore = .nonPersistent()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.addSubview(activityIndiicatorView)
+        activityIndiicatorView.centerXAnchor.constraint(equalTo: webView.centerXAnchor).isActive = true
+        activityIndiicatorView.centerYAnchor.constraint(equalTo: webView.centerYAnchor).isActive = true
+        webView.bringSubviewToFront(activityIndiicatorView)
+        activityIndiicatorView.startAnimating()
+        activityIndiicatorView.hidesWhenStopped = true
         view = webView
     }
 
@@ -86,6 +99,7 @@ extension ThreeDSController: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.onError?(MGPError._3dsError(additionalInfo: error.localizedDescription))
+        activityIndiicatorView.stopAnimating()
     }
 
     private func handleDismiss(_3dsResult: _3DSResult) {
@@ -93,4 +107,9 @@ extension ThreeDSController: WKNavigationDelegate {
             self.onComplete?(_3dsResult)
         }
     }
+
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        activityIndiicatorView.stopAnimating()
+    }
+
 }

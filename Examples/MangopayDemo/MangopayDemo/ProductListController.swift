@@ -80,7 +80,7 @@ class ProductListController: UIViewController {
          
          config.config.amount = Double(selectedProduct.price)
      
-         let applePayConfig = MangopayApplePayConfig(
+         let applePayConfig = MGPApplePayConfig(
             amount: Double(selectedProduct.price),
             delegate: self,
             merchantIdentifier: config.config.merchantID,
@@ -151,7 +151,7 @@ class ProductListController: UIViewController {
             tag: "Mangopay Demo Tag",
             authorID: config.config.userId,
             creditedUserID: config.config.userId,
-            debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
+            debitedFunds: DebitedFunds(currency: "EUR", amount: 2),
             fees: DebitedFunds(currency: "EUR", amount: 1),
             creditedWalletID: config.config.walletId ?? "",
             cardID: cardId,
@@ -171,19 +171,38 @@ class ProductListController: UIViewController {
             ),
             ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
             billing: Ing(firstName: "eli", lastName: "Sav", address: Address(addressLine1: "jko", addressLine2: "234", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR")),
-            shipping: Ing(firstName: "DAF", lastName: "FEAM", address: Address(addressLine1: "DASD", addressLine2: "sff", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR"))
+            shipping: Ing(firstName: "DAF", lastName: "FEAM", address: Address(addressLine1: "DASD", addressLine2: "sff", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR")),
+            secureModeNeeded: true
         )
         
+        let validationObj = CardValidation(
+            authorID: config.config.userId,
+            tag: "Mangopay Demo Tag",
+            debitedFunds: nil,
+            secureMode: nil,
+            cardID: cardId,
+            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore", secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
+            browserInfo: BrowserInfo(
+                acceptHeader: "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+                javaEnabled: false,
+                language: "EN-EN",
+                colorDepth: 4,
+                screenHeight: 750,
+                screenWidth: 400,
+                timeZoneOffset: 60,
+                userAgent: "iOS",
+                javascriptEnabled: false
+            )
+        )
+
+
         Task {
             
             do {
                 let regResponse = try await PaymentCoreClient(
                     env: config.config.env
-                ).authorizePayIn(
-                    payInObj,
-                    clientId: config.config.clientId,
-                    apiKey: config.config.apiKey
-                )
+                ).validateCard(validationObj, cardId: cardId, clientId: config.config.clientId, apiKey: config.config.apiKey)
                 print("✅ res", regResponse)
                 
                 guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
@@ -268,7 +287,7 @@ extension ProductListController: MGPApplePayHandlerDelegate {
         print("✅ shippingMethod", shippingMethod)
     }
 
-    func applePayContext(didCompleteWith status: MangoPayApplePay.PaymentStatus, error: Error?) {
+    func applePayContext(didCompleteWith status: MGPApplePay.PaymentStatus, error: Error?) {
         print("✅ status", status)
 
     }
