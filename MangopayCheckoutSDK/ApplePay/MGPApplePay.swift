@@ -18,13 +18,13 @@ public protocol MGPApplePayHandlerDelegate {
    )
 
    func applePayContext(
-       didCompleteWith status: MangoPayApplePay.PaymentStatus,
+       didCompleteWith status: MGPApplePay.PaymentStatus,
        error: Error?
    )
 
 }
 
-public class MangoPayApplePay: NSObject {
+public class MGPApplePay: NSObject {
 
     public enum PaymentStatus {
        case success(String)
@@ -106,7 +106,7 @@ public class MangoPayApplePay: NSObject {
    }
 }
 
-extension MangoPayApplePay: PKPaymentAuthorizationViewControllerDelegate {
+extension MGPApplePay: PKPaymentAuthorizationViewControllerDelegate {
    
    public func paymentAuthorizationViewControllerWillAuthorizePayment(_ controller: PKPaymentAuthorizationViewController) {
        print("✅ Authorisinggg")
