@@ -19,6 +19,8 @@ class CardCell: UICollectionViewCell {
         contentMode: .center
     )
 
+    var topconstriant: NSLayoutConstraint!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -32,18 +34,24 @@ class CardCell: UICollectionViewCell {
         addSubview(cardImage)
 //        layer.borderWidth = 1
 //        layer.borderColor = UIColor.gray.cgColor
-        cardImage.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        topconstriant = cardImage.topAnchor.constraint(equalTo: topAnchor, constant: 0)
+        topconstriant.isActive = true
+//        cardImage.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         cardImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 4).isActive = true
         cardImage.rightAnchor.constraint(equalTo: rightAnchor, constant: -4).isActive = true
         cardImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
         layer.cornerRadius = 4
         cardImage.clipsToBounds = true
+        self.clipsToBounds = true
     }
 
  
     func configure(with card: CardType) {
-//        cardImage.image = UIImage(assetIdentifier: .dropDownIcon)
         cardImage.image = card.icon
+        if card == .maestro {
+//            topconstriant.constant += 4  
+            cardImage.contentMode = .scaleAspectFit
+        }
     }
 
 }

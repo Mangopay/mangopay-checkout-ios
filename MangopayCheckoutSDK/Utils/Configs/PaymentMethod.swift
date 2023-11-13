@@ -9,5 +9,5 @@ import Foundation
 
 public enum PaymentMethod {
     case card(MGPCardInfo?)
-    case applePay(MangoPayApplePay?)
+    case applePay(MGPApplePay?)
 }

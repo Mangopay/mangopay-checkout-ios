@@ -71,11 +71,13 @@ extension FormValidatable {
         return !forms.contains(where: {$0.containsValidInput() == false})
     }
 
+    @discardableResult
     public func areFormsValidShowingError() -> Bool {
         forms.forEach({$0.containsValidInputWithError()})
         return !forms.contains(where: {$0.containsValidInput() == false})
     }
 
+    @discardableResult
     public func isFormValid(_ form: Validatable) -> Bool {
         let _form = forms.first(where: {$0.identifier == form.identifier})
         let _ = _form?.containsValidInputWithError()

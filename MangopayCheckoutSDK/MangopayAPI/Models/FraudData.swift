@@ -35,6 +35,7 @@ public struct TokenizedCardData: Codable {
     }
 
     public var str: String {
-        return "Tokenised Card: \(card.cardID) \n FraudData: \(fraud)"
+        guard let id = card.cardID else { return "" }
+        return "Tokenised Card: \(id) \n FraudData: \(fraud)"
     }
 }

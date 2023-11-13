@@ -105,7 +105,10 @@ extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        let card = viewModel.card(at: indexPath.row)
+        if card == .maestro {
+            return CGSize(width: 40, height: 19)
+        }
         return CGSize(width: 48, height: 28)
     }
 

@@ -215,8 +215,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
         do {
             try NethoneSDK.NTHNethone.cancelAttempt()
             print("CancelAttempt success")
-        } catch { error
-            print("Nethone cancelAttempt Error", error.localizedDescription)
+        } catch { 
+//            print("Nethone cancelAttempt Error", error.localizedDescription)
         }
     }
 
@@ -237,7 +237,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
             try NTHNethone.beginAttempt(with: nethoneConfig)
             currentAttempt = NTHNethone.attemptReference()
         } catch { error
-            print("Nethone intiation Error", error.localizedDescription)
+//            print("Nethone intiation Error", error.localizedDescription)
         }
     }
 
@@ -288,8 +288,6 @@ public class MGPPaymentForm: UIView, FormValidatable {
             with: cardReg.toVaultCardReg,
             nethoeAttemptedRef: attemptRef
         ) { tokenizedCardData, error in
-            print("tokenizedCardData", tokenizedCardData)
-            print("error", error)
             callBack(tokenizedCardData, error)
         }
 
@@ -409,9 +407,6 @@ extension MGPPaymentForm: UITextFieldDelegate {
 
     private func expDateValidation(dateStr: String) {
 
-        let currentYear = Calendar.current.component(.year, from: Date()) // This will give you current year (i.e. if 2019 then it will be 19)
-        let currentMonth = Calendar.current.component(.month, from: Date()) // This will give you current month (i.e if June then it will be 6)
-        
         guard let actualDate = Date(dateStr, format: "MM/yy") else { return }
         let enteredYear = Calendar.current.dateComponents([.year], from: actualDate).year ?? 0
         let enteredMonth = Calendar.current.dateComponents([.month], from: actualDate).month ?? 0

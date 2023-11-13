@@ -20,6 +20,12 @@ public protocol PaymentCoreClientProtocol {
     func fetchPayInCards(clientId: String, apiKey: String, userId: String, active: Bool) async throws -> [PayInCard]
     func createPreAuth(clientId: String, apiKey: String, preAuth: PreAuthCard) async throws -> PreAuthCard
     func viewPreAuth(clientId: String, apiKey: String, preAuthId: String) async throws -> PreAuthCard
+    func validateCard(
+        _ authorizeData: CardValidation,
+        cardId: String,
+        clientId: String,
+        apiKey: String
+    ) async throws -> AuthorizePayIn
 }
 
 public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
@@ -103,6 +109,33 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
 
         let url = baseUrl.appendingPathComponent(
             "/\(apiVersion)/\(clientId)/payins/card/direct",
+            isDirectory: false
+        )
+
+        return try await request(
+            url: url,
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: authorizeData.toDict(),
+            expecting: AuthorizePayIn.self,
+            basicAuthDict: [
+                "Username" : clientId,
+                "Password": apiKey
+            ],
+            verbose: true
+        )
+    }
+
+    public func validateCard(
+        _ authorizeData: CardValidation,
+        cardId: String,
+        clientId: String,
+        apiKey: String
+    ) async throws -> AuthorizePayIn {
+        let url = baseUrl.appendingPathComponent(
+            "/\(apiVersion)/\(clientId)/cards/\(cardId)/validation",
             isDirectory: false
         )
 

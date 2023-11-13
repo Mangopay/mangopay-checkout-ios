@@ -111,7 +111,7 @@ extension PaymentFormController: MGPApplePayHandlerDelegate {
         
     }
 
-    func applePayContext(didCompleteWith status: MangoPayApplePay.PaymentStatus, error: Error?) {
+    func applePayContext(didCompleteWith status: MGPApplePay.PaymentStatus, error: Error?) {
         switch status {
         case .success(let token):
             print("🤣 MangoPayApplePay.token", token)

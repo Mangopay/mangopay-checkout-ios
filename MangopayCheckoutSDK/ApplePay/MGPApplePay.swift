@@ -61,14 +61,12 @@ public class MGPApplePay: NSObject {
    var completionHandler: PaymentCompletionHandler!
 
 
-   public init(config: MangopayApplePayConfig) {
+   public init(config: MGPApplePayConfig) {
        self.amount = config.amount
        self.currencyCode = config.currencyCode
        self.applePayMerchantId = config.merchantIdentifier
        super.init()
        self.paymentRequest = config.toPaymentRequest
-       print("✅ merchantIdentifier", paymentRequest.merchantIdentifier)
-       print("✅ paymentRequest", paymentRequest)
 
        authorizationController = PKPaymentAuthorizationViewController(
            paymentRequest: paymentRequest
@@ -158,7 +156,7 @@ extension MGPApplePay: PKPaymentAuthorizationViewControllerDelegate {
        completion: @escaping (PKPaymentAuthorizationResult) -> Void
    ) {
        
-       let handleFinalState: ((PaymentState, Error?) -> Void) = { state, error in
+       let _: ((PaymentState, Error?) -> Void) = { state, error in
            switch state {
            case .error:
                self.paymentState = .error
