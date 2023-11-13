@@ -60,12 +60,12 @@ public struct MangopayCheckoutSDK {
             return
         }
         
-        guard let _payData = payData else {
+        guard let _ = payData else {
             on3DSError?(MGPError._3dsPayInDataRqd)
             return
         }
         
-        guard let _vc = viewController else {
+        guard let _ = viewController else {
             on3DSError?(MGPError._3dsPresentingVCRqd)
             return
         }

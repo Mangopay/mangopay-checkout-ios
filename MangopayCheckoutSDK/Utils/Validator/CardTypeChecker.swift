@@ -18,11 +18,10 @@ public struct CardTypeChecker {
         let DinersClub_Regex = "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$"
         let Discover_Regex = "^(6011|65|64[4-9])\\d*$"
         let JCB_Regex = "^(2131|1800|35)\\d*$"
-        let diner = "^3(0[0-5]|[689])\\d*$"
-        let unionPay = "^(((620|(621(?!83|88|98|99))|622(?!06|018)|62[3-6]|627[02,06,07]|628(?!0|1)|629[1,2]))\\d*|622018\\d{12})$"
+        _ = "^3(0[0-5]|[689])\\d*$" //diner
+        _ = "^(((620|(621(?!83|88|98|99))|622(?!06|018)|62[3-6]|627[02,06,07]|628(?!0|1)|629[1,2]))\\d*|622018\\d{12})$" //unionPay
         let maestro = "^(?:5[06789]\\d\\d|(?!6011[0234])(?!60117[4789])(?!60118[6789])(?!60119)(?!64[456789])(?!65)6\\d{3})\\d{8,15}$"
     
-        print("🤣 cardNumber", cardNumber)
         if cardNumber.isMatch(VISA_Regex) {
             return .visa
         } else if cardNumber.isMatch(MasterCard_Regex) {

@@ -29,7 +29,7 @@ class Loader: UIViewController {
     }
 
     static func show() {
-          guard let view = UIApplication.shared.keyWindow else {return}
+          guard let view = UIApplication.shared.keyWindow else { return }
           let loader = Loader.shared
           loader.setupView()
           loader.view.tag = 987
@@ -48,7 +48,7 @@ class Loader: UIViewController {
     }
 
     static func hide() {
-        guard let view = UIApplication.shared.keyWindow else {return}
+        guard let view = UIApplication.shared.keyWindow else { return }
         view.subviews.first(where: {$0.tag == 987})?.removeFromSuperview()
       }
 

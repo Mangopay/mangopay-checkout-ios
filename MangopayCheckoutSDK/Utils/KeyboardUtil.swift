@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 #endif
 
-protocol KeyboardUtilDelegate: class {
+protocol KeyboardUtilDelegate: AnyObject {
     func keyboardDidShow(sender: KeyboardUtil, rect: CGRect, animationDuration: Double)
     func keyboardDidHide(sender: KeyboardUtil, animationDuration: Double)
 }

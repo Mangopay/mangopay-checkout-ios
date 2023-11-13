@@ -10,9 +10,9 @@ import Foundation
 public struct PaymentMethodConfig {
     var card: MGPCardInfo?
     var cardReg: MGPCardRegistration?
-    var applePayConfig: MangopayApplePayConfig?
+    var applePayConfig: MGPApplePayConfig?
 
-    public init(card: MGPCardInfo? = nil, cardReg: MGPCardRegistration? = nil, applePayConfig: MangopayApplePayConfig? = nil) {
+    public init(card: MGPCardInfo? = nil, cardReg: MGPCardRegistration? = nil, applePayConfig: MGPApplePayConfig? = nil) {
         self.card = card
         self.cardReg = cardReg
         self.applePayConfig = applePayConfig

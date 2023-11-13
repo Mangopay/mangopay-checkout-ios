@@ -9,7 +9,7 @@ import Foundation
 import PassKit
 
 
-public struct MangopayApplePayConfig {
+public struct MGPApplePayConfig {
     var amount: Double
     var delegate: MGPApplePayHandlerDelegate
     var merchantIdentifier: String

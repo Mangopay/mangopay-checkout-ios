@@ -349,7 +349,13 @@ class ConfigurationController: UIViewController {
             creditedWalletField.text = "159834019"
             authorField.text = "158091557"
             amountField.text = "1"
-        case .production: break
+        case .production:
+            apiKeyField.text = "FPuqRtn4A6LhH7JGJ9QUDSfc3M0aTsbiQfScW8boGyfaAD57h3"
+            clientField.text = "arthurinc"
+            creditedUserField.text = "4234427192"
+            creditedWalletField.text = "4234431137"
+            authorField.text = "4234427192"
+            amountField.text = "1"
         case .t3:
             apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
             clientField.text = "12345"

@@ -18,13 +18,13 @@ public protocol MGPApplePayHandlerDelegate {
    )
 
    func applePayContext(
-       didCompleteWith status: MangoPayApplePay.PaymentStatus,
+       didCompleteWith status: MGPApplePay.PaymentStatus,
        error: Error?
    )
 
 }
 
-public class MangoPayApplePay: NSObject {
+public class MGPApplePay: NSObject {
 
     public enum PaymentStatus {
        case success(String)
@@ -61,14 +61,12 @@ public class MangoPayApplePay: NSObject {
    var completionHandler: PaymentCompletionHandler!
 
 
-   public init(config: MangopayApplePayConfig) {
+   public init(config: MGPApplePayConfig) {
        self.amount = config.amount
        self.currencyCode = config.currencyCode
        self.applePayMerchantId = config.merchantIdentifier
        super.init()
        self.paymentRequest = config.toPaymentRequest
-       print("✅ merchantIdentifier", paymentRequest.merchantIdentifier)
-       print("✅ paymentRequest", paymentRequest)
 
        authorizationController = PKPaymentAuthorizationViewController(
            paymentRequest: paymentRequest
@@ -106,7 +104,7 @@ public class MangoPayApplePay: NSObject {
    }
 }
 
-extension MangoPayApplePay: PKPaymentAuthorizationViewControllerDelegate {
+extension MGPApplePay: PKPaymentAuthorizationViewControllerDelegate {
    
    public func paymentAuthorizationViewControllerWillAuthorizePayment(_ controller: PKPaymentAuthorizationViewController) {
        print("✅ Authorisinggg")
@@ -158,7 +156,7 @@ extension MangoPayApplePay: PKPaymentAuthorizationViewControllerDelegate {
        completion: @escaping (PKPaymentAuthorizationResult) -> Void
    ) {
        
-       let handleFinalState: ((PaymentState, Error?) -> Void) = { state, error in
+       let _: ((PaymentState, Error?) -> Void) = { state, error in
            switch state {
            case .error:
                self.paymentState = .error
