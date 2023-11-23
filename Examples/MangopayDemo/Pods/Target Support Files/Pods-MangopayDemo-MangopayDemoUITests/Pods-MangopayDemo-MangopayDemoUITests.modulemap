@@ -1,0 +1,6 @@
+framework module Pods_MangopayDemo_MangopayDemoUITests {
+  umbrella header "Pods-MangopayDemo-MangopayDemoUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
