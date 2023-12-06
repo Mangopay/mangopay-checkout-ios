@@ -25,12 +25,14 @@ public class MGPPaymentSheet {
         paymentMethodConfig: PaymentMethodConfig,
         handlePaymentFlow: Bool = false,
         branding: PaymentFormStyle,
+        supportedCardBrands: [CardType]? = nil,
         callback: CallBack
     ) -> MGPPaymentSheet {
         paymentFormVC = PaymentFormController(
             paymentMethodConfig: paymentMethodConfig,
             handlePaymentFlow: handlePaymentFlow,
             branding: branding,
+            supportedCardBrands: supportedCardBrands,
             callback: callback
         )
         let mgp = MGPPaymentSheet()

@@ -103,6 +103,7 @@ class ProductListController: UIViewController {
              ),
              handlePaymentFlow: false,
              branding: PaymentFormStyle(checkoutButtonText: "Pay " + config.config.formattedAmount, checkoutTitleText: "My Checkout"),
+             supportedCardBrands: [.visa, .mastercard, .amex, .maestro],
              callback: CallBack(
                  onPaymentMethodSelected: { paymentMethod in
                  },

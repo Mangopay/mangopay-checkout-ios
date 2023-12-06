@@ -7,7 +7,7 @@
 */
 
 "CARD_INFO_TITLE" = "Card Information";
-"CARD_NAME_PLACEHOLDER" = "Name on Card";
+"CARD_NAME_PLACEHOLDER" = "Name on card";
 "CARD_EXPIRIY_PLACEHOLDER" = "MM/YY";
 "CARD_CVV" = "CVV";
 "SAVE_PAYMENT_CHECKMARK" = "Save payment details for future use";

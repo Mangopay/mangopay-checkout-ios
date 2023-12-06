@@ -17,12 +17,14 @@ class PaymentFormController: UIViewController {
     var paymentMethodConfig: PaymentMethodConfig
     var handlePaymentFlow: Bool
     let paymentHandler = MGPApplePayHandler()
+    var supportedCardBrands: [CardType]?
 
     public init(
         cardConfig: CardConfig? = nil,
         paymentMethodConfig: PaymentMethodConfig,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle?,
+        supportedCardBrands: [CardType]? = nil,
         callback: CallBack
     ) {
 
@@ -39,6 +41,7 @@ class PaymentFormController: UIViewController {
             paymentMethodConfig: paymentMethodConfig,
             handlePaymentFlow: handlePaymentFlow,
             branding: branding,
+            supportedCardBrands: supportedCardBrands,
             callback: callback
         )
 
@@ -71,7 +74,7 @@ class PaymentFormController: UIViewController {
         formView.onApplePayTapped = {
             guard let applePayConfig = self.paymentMethodConfig.applePayConfig else { return }
             self.paymentHandler.setData(payRequest: applePayConfig.toPaymentRequest)
-            self.paymentHandler.startPayment(delegate: self) { (success) in
+            self.paymentHandler.startPayment(delegate: applePayConfig.delegate) { (success) in
                 if success {
                     print("✅ Confirmation")
                 }
@@ -86,10 +89,20 @@ class PaymentFormController: UIViewController {
     }
 
     @objc func closeTapped() {
-        self.dismiss(animated: true) {
-            self.callback.onSheetDismissed?()
-        }
-
+        self.displayAlert(
+            with: "Are you sure you want to leave",
+            message: "",
+            preferredStyle: .alert,
+            actions: [
+                UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+                    self.dismiss(animated: true) {
+                        self.callback.onSheetDismissed?()
+                    }
+                }),
+                UIAlertAction(title: "No", style: .default)
+            ]
+            
+        )
     }
 
     func clearForm() {
@@ -103,24 +116,4 @@ class PaymentFormController: UIViewController {
     func manuallyValidateForms() {
         formView.manuallyValidateForms()
     }
-}
-
-extension PaymentFormController: MGPApplePayHandlerDelegate {
-
-    func applePayContext(didSelect shippingMethod: PKShippingMethod, handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
-        
-    }
-
-    func applePayContext(didCompleteWith status: MGPApplePay.PaymentStatus, error: Error?) {
-        switch status {
-        case .success(let token):
-            print("🤣 MangoPayApplePay.token", token)
-        case .error:
-            print("❌ MangoPayApplePay.error")
-        case .userCancellation: break
-            
-        }
-    }
-    
-    
 }

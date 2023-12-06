@@ -13,7 +13,10 @@ class PaymentFormView: UIView {
     public lazy var navView = NavView()
 
     private lazy var paymentForm: MGPPaymentForm = {
-        let view = MGPPaymentForm(paymentFormStyle: paymentFormStyle)
+        let view = MGPPaymentForm(
+            paymentFormStyle: paymentFormStyle,
+            supportedCardBrands: supportedCardBrands
+        )
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
        return view
@@ -98,6 +101,7 @@ class PaymentFormView: UIView {
     
     var paymentFormStyle: PaymentFormStyle
     var currentAttempt: String?
+    var supportedCardBrands: [CardType]?
 
     var client: MangopayClient
     var callback: CallBack
@@ -109,12 +113,14 @@ class PaymentFormView: UIView {
         paymentMethodConfig: PaymentMethodConfig,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle?,
+        supportedCardBrands: [CardType]? = nil,
         callback: CallBack
     ) {
         self.paymentFormStyle = branding ?? PaymentFormStyle()
         self.callback = callback
         self.client = client
         self.paymentMethodConfig = paymentMethodConfig
+        self.supportedCardBrands = supportedCardBrands
         self.handlePaymentFlow = handlePaymentFlow
         
         self.viewModel = PaymentFormViewModel(

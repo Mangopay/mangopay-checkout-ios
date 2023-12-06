@@ -16,7 +16,7 @@ class ElementCardController: UIViewController {
     lazy var elementForm: MGPPaymentForm = {
         let form = MGPPaymentForm(
             paymentFormStyle: PaymentFormStyle(),
-            supportedCardBrands: [.visa, .mastercard, .maestro]
+            supportedCardBrands: [.visa, .mastercard, .maestro, .amex]
         )
         return form
     }()
