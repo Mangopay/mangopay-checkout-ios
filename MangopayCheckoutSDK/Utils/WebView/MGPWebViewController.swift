@@ -15,7 +15,6 @@ public class MGPWebViewController: UIViewController {
     var webView: WKWebView!
     private var url: URL?
     private var onError: ((Error?) -> ())?
-    private var secureModeReturnURL: URL?
     var authUrlNavigation: WKNavigation?
 
     lazy var activityIndiicatorView: UIActivityIndicatorView = {
@@ -28,18 +27,18 @@ public class MGPWebViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let authUrl = secureModeReturnURL else {
+        guard let authUrl = url else {
             return
         }
 
         let authRequest = URLRequest(url: authUrl)
         webView.navigationDelegate = self
         authUrlNavigation = webView.load(authRequest)
-        title = "3DS authentication"
+        title = "Pay with Paypal"
         addBackButton()
     }
     
-    init(
+    public init(
         url: URL,
         onError: ((Error?) -> ())?
     ) {
@@ -49,7 +48,7 @@ public class MGPWebViewController: UIViewController {
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        secureModeReturnURL = nil
+        url = nil
         super.init(coder: aDecoder)
     }
 
@@ -64,6 +63,16 @@ public class MGPWebViewController: UIViewController {
         activityIndiicatorView.startAnimating()
         activityIndiicatorView.hidesWhenStopped = true
         view = webView
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     func addBackButton() {

@@ -106,6 +106,14 @@ class ProductListController: UIViewController {
              supportedCardBrands: [.visa, .mastercard, .amex, .maestro],
              callback: CallBack(
                  onPaymentMethodSelected: { paymentMethod in
+                     switch paymentMethod {
+                     case .card(_):
+                         break
+                     case .applePay(_):
+                         break
+                     case .payPal:
+                         self.mockAndHandlePaypal()
+                     }
                  },
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
@@ -142,9 +150,7 @@ class ProductListController: UIViewController {
                  },
                  onError: { error in
                      print("❌ error", error.reason)
-//                     DispatchQueue.main.async {
                          topmostViewController?.showAlert(with: error.reason, title: "Error")
-//                     }
                  },
                  onSheetDismissed: {
                      print("✅ sheet dismisses")
@@ -153,6 +159,66 @@ class ProductListController: UIViewController {
          )
 
          checkout.present(in: self)
+    }
+
+    func mockAndHandlePaypal() {
+        let paypal = Paypal(
+            authorID: config.config.userId,
+            debitedFunds: DebitedFunds(currency: "EUR", amount: 200),
+            fees: DebitedFunds(currency: "EUR", amount: 0),
+            creditedWalletID: config.config.walletId,
+            returnURL: "http://mango.hugobailey.com/returnurl/?check=payin&env=\(config.config.env.rawValue)",
+            shippingAddress: PPAddress(
+                recipientName: "John Doe",
+                address: Address(
+                    addressLine1: "3 rue de la Feature",
+                    addressLine2: "Bat. MGP",
+                    city: "Paris",
+                    region: "IDF",
+                    postalCode: "75009",
+                    country: "FR"
+                )
+            ),
+            tag: "Postman create a payin paypal",
+            culture: "fr",
+            lineItems: [
+                LineItem(
+                    name: "running shoe 1",
+                    quantity: 1,
+                    unitAmount: 200,
+                    taxAmount: 0,
+                    description: "sub-seller information"
+                    )
+            ],
+            shippingPreference: "GET_FROM_FILE",
+            reference: "123-456",
+            redirectURL: nil
+        )
+
+        Task {
+            
+            do {
+                let regResponse = try await PaymentCoreClient(
+                    env: self.config.config.env
+                ).createWebPayIn(
+                    clientId: self.config.config.clientId,
+                    apiKey: self.config.config.apiKey,
+                    paypalData: paypal
+                )
+                
+                print("✅ res", regResponse)
+                
+                if let _urlStr = regResponse.redirectURL, let url = URL(string: _urlStr) {
+                    let urlController = MGPWebViewController(url: url, onError: nil)
+                    
+                    self.checkout.pushViewController(urlController)
+                }
+                
+            } catch {
+                print("❌ payInpaypal Error ")
+            }
+            
+        }
     }
 
     func handle3DS(with cardId: String, onSuccess: ((Bool) -> Void)? ) {

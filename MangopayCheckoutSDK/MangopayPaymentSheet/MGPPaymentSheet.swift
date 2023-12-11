@@ -65,6 +65,12 @@ public class MGPPaymentSheet {
         MGPPaymentSheet.paymentFormVC.manuallyValidateForms()
     }
 
+    public func pushViewController(_ viewController: UIViewController) {
+        print("🤣 pushing Checkout VC")
+        self.navVC.pushViewController(viewController, animated: true)
+    }
+    
+
     public func launch3DSIfPossible(
         payData: PayInPreAuthProtocol? = nil,
         presentIn viewController: UIViewController?,

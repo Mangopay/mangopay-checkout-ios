@@ -91,10 +91,6 @@ public class ThreeDSController: UIViewController {
         backButton.setTitleColor(backButton.tintColor, for: .normal)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        
-//        let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeTapped))
-//        self.navigationItem.setRightBarButton(closeButton, animated: true)
-
     }
 
     @objc func closeTapped() {
