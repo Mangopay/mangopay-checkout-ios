@@ -64,6 +64,16 @@ class PaymentFormView: UIView {
         return button
     }()
 
+    lazy var payPalButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .yellow
+        button.setImage(UIImage(assetIdentifier: .paypal), for: .normal)
+        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        button.layer.cornerRadius = 8
+        button.addTarget(self, action: #selector(onPaypalButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     private lazy var vStack = UIScrollView.createWithVStack(
         spacing: 8,
         alignment: .fill,
@@ -73,6 +83,7 @@ class PaymentFormView: UIView {
             navView,
             paymentForm,
             paymentButton,
+            payPalButton,
             orPayWith,
             applePayButton,
             statusLabel
@@ -193,7 +204,11 @@ class PaymentFormView: UIView {
         finalizeButtonTapped()
         callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
         Loader.show()
+    }
 
+    @objc func onPaypalButtonTapped() {
+        callback.onPaymentMethodSelected?(.payPal)
+//        Loader.show()
     }
 
     @objc func onApplePayBtnTapped() {
