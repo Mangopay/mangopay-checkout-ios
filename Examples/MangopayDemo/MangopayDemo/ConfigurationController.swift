@@ -357,12 +357,20 @@ class ConfigurationController: UIViewController {
             authorField.text = "4234427192"
             amountField.text = "1"
         case .t3:
-            apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
-            clientField.text = "12345"
-            creditedUserField.text = "6658353"
-            creditedWalletField.text = "6658354"
-            authorField.text = "6658353"
+//            apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
+//            clientField.text = "12345"
+//            creditedUserField.text = "6658353"
+//            creditedWalletField.text = "6658354"
+//            authorField.text = "6658353"
+//            amountField.text = "1"
+            
+            apiKeyField.text = "B8hGcedwVBXpHnVJc6pu96gpBuLKuc3ohx3JSoT6NUec5MrmPu"
+            clientField.text = "pablo123"
+            creditedUserField.text = "user_01HGZDQ9G3791XVYV7T7PBGV9W"
+            creditedWalletField.text = "wlt_01HGZDQQPREJ83B0WJDB3PGZAJ"
+            authorField.text = "user_01HGZDQ9G3791XVYV7T7PBGV9W"
             amountField.text = "1"
+            
         }
 //        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
 //        clientField.text = "12345"
