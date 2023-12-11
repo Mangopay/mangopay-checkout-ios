@@ -205,9 +205,7 @@ class ProductListController: UIViewController {
                     apiKey: self.config.config.apiKey,
                     paypalData: paypal
                 )
-                
-                print("✅ res", regResponse)
-                
+                                
                 if let _urlStr = regResponse.redirectURL, let url = URL(string: _urlStr) {
                     let urlController = MGPWebViewController(url: url, onError: nil)
                     

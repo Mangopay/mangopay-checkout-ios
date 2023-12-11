@@ -66,7 +66,6 @@ public class MGPPaymentSheet {
     }
 
     public func pushViewController(_ viewController: UIViewController) {
-        print("🤣 pushing Checkout VC")
         self.navVC.pushViewController(viewController, animated: true)
     }
     
