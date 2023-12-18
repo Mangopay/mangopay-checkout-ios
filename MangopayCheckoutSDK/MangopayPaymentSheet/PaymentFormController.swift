@@ -83,6 +83,11 @@ class PaymentFormController: UIViewController {
                 self.callback.onSheetDismissed?()
             })
         }
+
+    }
+
+    @objc func doneAction() {
+        self.navigationController?.popViewController(animated: true)
     }
 
     @objc func closeTapped() {

@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "iqkeyboardmanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "f137f7ffc158c09582574d0abf1ffaf6108ad88e"
+      }
+    },
+    {
+      "identity" : "mangopay-ios-vault-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
+      "state" : {
+        "branch" : "main",
+        "revision" : "05f9184d74635e379ee3deb410545d6db2e5dee1"
+      }
+    },
+    {
+      "identity" : "netfox",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kasketis/netfox",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "150d41ac4e3b49d80bc5508c5c6895ca057e5d8e"
+      }
+    }
+  ],
+  "version" : 2
+}
