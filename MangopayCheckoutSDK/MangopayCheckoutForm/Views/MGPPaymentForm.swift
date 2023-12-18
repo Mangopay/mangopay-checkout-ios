@@ -73,6 +73,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
         textfield.accessibilityLabel = "cvvField"
     }
 
+    lazy var privacyView = PrivacyView()
+
     private lazy var hStack = UIStackView.create(
         spacing: 8,
         axis: .horizontal,
@@ -90,7 +92,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
             headerView,
             cardNumberField,
             cardNameField,
-            hStack
+            hStack,
+            privacyView
         ]
     )
 
@@ -157,6 +160,11 @@ public class MGPPaymentForm: UIView, FormValidatable {
             self.cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
             self.cardNumberField.setLeftImage(self.cardType?.icon)
         }
+    
+        privacyView.didTapPrivacyAction = {
+            guard let webVC = WebViewController.openWebView(with: "https://mangopay.com/privacy-statement") else { return }
+            topmostViewController?.present(webVC, animated: true)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -171,7 +179,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
         vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        vStack.heightAnchor.constraint(equalToConstant: 320).isActive = true
+        vStack.heightAnchor.constraint(equalToConstant: 370).isActive = true
 
         self.backgroundColor = .white
         self.translatesAutoresizingMaskIntoConstraints = false
