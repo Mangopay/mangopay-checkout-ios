@@ -101,6 +101,7 @@
                 <outlet property="copyButton" destination="Hda-03-tkj" id="Ijn-GY-iQK"/>
                 <outlet property="copyLabel" destination="8ZJ-jo-hIj" id="cwX-Uq-Mt7"/>
                 <outlet property="ctaButton" destination="qsu-jW-61b" id="Q9n-BP-9Aq"/>
+                <outlet property="imageView" destination="Pp1-A4-dwr" id="rpl-SK-awq"/>
                 <outlet property="resultLabel" destination="7EC-ir-wkz" id="bod-iN-zs2"/>
                 <outlet property="titleLabel" destination="eSK-jf-7Lr" id="N3L-h0-ob3"/>
             </connections>

@@ -26,7 +26,7 @@ public protocol PaymentCoreClientProtocol {
         clientId: String,
         apiKey: String
     ) async throws -> AuthorizePayIn
-    func createWebPayIn(clientId: String, apiKey: String, paypalData: Paypal) async throws -> Paypal
+    func createWebPayIn(clientId: String, apiKey: String, paypalData: APMInfo) async throws -> APMInfo
 }
 
 public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
@@ -244,7 +244,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
         )
     }
 
-    public func createWebPayIn(clientId: String, apiKey: String, paypalData: Paypal) async throws -> Paypal {
+    public func createWebPayIn(clientId: String, apiKey: String, paypalData: APMInfo) async throws -> APMInfo {
         
         let url = baseUrl.appendingPathComponent(
             "/\(apiVersion)/\(clientId)/payins/payment-methods/paypal",
@@ -258,7 +258,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Content-Type" : "application/json",
             ],
             bodyParam: paypalData.toDict(),
-            expecting: Paypal.self,
+            expecting: APMInfo.self,
             basicAuthDict: [
                 "Username" : clientId,
                 "Password": apiKey

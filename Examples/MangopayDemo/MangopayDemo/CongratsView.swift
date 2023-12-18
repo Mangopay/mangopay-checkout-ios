@@ -14,7 +14,8 @@ class CongratsView: UIView {
     @IBOutlet weak var ctaButton: UIButton!
     @IBOutlet weak var copyButton: UIButton!
     @IBOutlet weak var copyLabel: UILabel!
-
+    @IBOutlet weak var imageView: UIImageView!
+    
     var buttonAction: (() -> Void)?
     var resultText: String!
 
@@ -45,10 +46,21 @@ class CongratsView: UIView {
         }
     }
 
-    func renderLabel(title: String = "Payment Succesful", result: String) {
-        titleLabel.text = title
-        resultLabel.text = "Result: " + result
-        self.resultText = result
+    func renderLabel(
+        title: String = "Payment Succesful",
+        result: String,
+        isSucessful: Bool = true
+    ) {
+        if isSucessful {
+            titleLabel.text = title
+            resultLabel.text = "Result: " + result
+            self.resultText = result
+        } else {
+            titleLabel.text = "Payment Failed"
+            imageView.image = UIImage(systemName: "xmark")
+            resultLabel.isHidden = true
+            
+        }
     }
 
 }

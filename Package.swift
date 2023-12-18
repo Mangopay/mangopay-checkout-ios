@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .macOS(.v10_15),
-        .iOS(.v13)
+        .iOS(.v14)
     ],
     products: [
         .library(
@@ -18,12 +18,15 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "main"),
+        .package(
+            url: "https://github.com/paypal/paypal-ios/", branch: "main"),
     ],
     targets: [
         .target(
             name: "MangopayCheckoutSDK",
             dependencies: [
                 .product(name: "MangopayVaultSDK", package: "mangopay-ios-vault-sdk"),
+                .product(name: "PaymentButtons", package: "paypal-ios"),
             ],
             path: "MangopayCheckoutSDK",
             resources: [

@@ -52,7 +52,7 @@ public struct CardValidation: Codable, PayInPreAuthProtocol {
     }
 }
 
-public struct Paypal: Codable {
+public struct APMInfo: Codable {
     let authorID: String?
     let debitedFunds, fees: DebitedFunds?
     public let creditedWalletID, returnURL: String?, redirectURL: String?

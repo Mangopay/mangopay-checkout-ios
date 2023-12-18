@@ -86,6 +86,7 @@ class ViewController: UIViewController {
                 callback: CallBack(
                     onPaymentMethodSelected: { paymentMethod in
                         print("✅ cardinfo", paymentMethod)
+                        return nil
                     },
                     onTokenizationCompleted: { cardRegistration in
                         print("✅ cardRegistration", cardRegistration)
@@ -93,7 +94,7 @@ class ViewController: UIViewController {
                         self.handle3DS(with: cardRegistration.cardID ?? "") {
                             self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
                         }
-                    }, onPaymentCompleted: {
+                    }, onPaymentCompleted: { _, _ in
                         print("✅ onPaymentCompleted")
                     }, onCancelled: {
                         

@@ -99,7 +99,8 @@ class ProductListController: UIViewController {
         checkout = MGPPaymentSheet.create(
              paymentMethodConfig: PaymentMethodConfig(
                  cardReg: config.cardReg,
-                 applePayConfig: applePayConfig
+                 applePayConfig: applePayConfig,
+                 paypalConfig: MGPPaypalConfig()
              ),
              handlePaymentFlow: false,
              branding: PaymentFormStyle(checkoutButtonText: "Pay " + config.config.formattedAmount, checkoutTitleText: "My Checkout"),
@@ -108,11 +109,12 @@ class ProductListController: UIViewController {
                  onPaymentMethodSelected: { paymentMethod in
                      switch paymentMethod {
                      case .card(_):
-                         break
+                         return nil
                      case .applePay(_):
-                         break
+                         return nil
                      case .payPal:
-                         self.mockAndHandlePaypal()
+                         guard let paypalResponse = await self.mockAndHandlePaypal() else { return nil }
+                         return paypalResponse
                      }
                  },
                  onTokenizationCompleted: { cardRegistration in
@@ -143,8 +145,18 @@ class ProductListController: UIViewController {
                              }
                          }
                      }
-                 }, onPaymentCompleted: {
+                 }, onPaymentCompleted: { id, results in
                      print("✅ onPaymentCompleted")
+                     guard let res = results, let status = results?.status else { return }
+                     switch status {
+                     case .SUCCEEDED:
+                         self.showSuccessDialog(
+                            title: "✅ Paypal Payment",
+                            result: res.id
+                         )
+                     case .FAILED:
+                         self.showAlert(with: "", title: "Payment failed")
+                     }
                  }, onCancelled: {
                      
                  },
@@ -161,15 +173,15 @@ class ProductListController: UIViewController {
          checkout.present(in: self)
     }
 
-    func mockAndHandlePaypal() {
-        let paypal = Paypal(
+    func mockAndHandlePaypal() async -> APMInfo? {
+        let paypal = APMInfo(
             authorID: config.config.userId,
             debitedFunds: DebitedFunds(currency: "EUR", amount: 200),
             fees: DebitedFunds(currency: "EUR", amount: 0),
             creditedWalletID: config.config.walletId,
-            returnURL: "http://mango.hugobailey.com/returnurl/?check=payin&env=\(config.config.env.rawValue)",
+            returnURL: "https://github.com/?check=payin&env=\(config.config.env.rawValue)",
             shippingAddress: PPAddress(
-                recipientName: "John Doe",
+                recipientName: "Elikem",
                 address: Address(
                     addressLine1: "3 rue de la Feature",
                     addressLine2: "Bat. MGP",
@@ -192,10 +204,8 @@ class ProductListController: UIViewController {
             ],
             shippingPreference: "GET_FROM_FILE",
             reference: "123-456",
-            redirectURL: nil
+            redirectURL: "https://github.com"
         )
-
-        Task {
             
             do {
                 let regResponse = try await PaymentCoreClient(
@@ -206,17 +216,31 @@ class ProductListController: UIViewController {
                     paypalData: paypal
                 )
                                 
-                if let _urlStr = regResponse.redirectURL, let url = URL(string: _urlStr) {
-                    let urlController = MGPWebViewController(url: url, onError: nil)
+//                if let _urlStr = regResponse.redirectURL, let url = URL(string: _urlStr) {
+//                    let urlController = MGPWebViewController(
+//                        url: url,
+//                        onComplete: { status in 
+//                            switch status.status {
+//                            case .SUCCEEDED:
+//                                self.showSuccessDialog(title: "✅ Paypal Payment", result: status.id )
+//                            case .FAILED:
+//                                self.showAlert(with: "", title: "Payment failed")
+//                            }
+//                        },
+//                        onError: { error in
+//                            topmostViewController?.showAlert(with: error?.localizedDescription ?? "", title: "Error")
+//                        }
+//                    )
                     
-                    self.checkout.pushViewController(urlController)
-                }
-                
+//                    self.checkout.pushViewController(urlController)
+//                }
+    
+                return regResponse
             } catch {
                 print("❌ payInpaypal Error ")
+                return nil
             }
             
-        }
     }
 
     func handle3DS(with cardId: String, onSuccess: ((Bool) -> Void)? ) {

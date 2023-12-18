@@ -86,6 +86,22 @@ class PaymentFormController: UIViewController {
                 self.callback.onSheetDismissed?()
             })
         }
+
+        formView.onAPMTapped = { apmInfo in
+            if let _urlStr = apmInfo.redirectURL, let url = URL(string: _urlStr) {
+                let urlController = MGPWebViewController(
+                    url: url,
+                    onComplete: { status in
+                        self.callback.onPaymentCompleted?(nil, status)
+                    },
+                    onError: { error in
+                        self.callback.onError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
+                    }
+                )
+
+                self.navigationController?.pushViewController(urlController, animated: true)
+            }
+        }
     }
 
     @objc func closeTapped() {

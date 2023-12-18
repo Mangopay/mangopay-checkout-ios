@@ -7,6 +7,7 @@
 
 import UIKit
 import PassKit
+import PaymentButtons
 
 class PaymentFormView: UIView {
 
@@ -64,14 +65,12 @@ class PaymentFormView: UIView {
         return button
     }()
 
-    lazy var payPalButton: UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .yellow
-        button.setImage(UIImage(assetIdentifier: .paypal), for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        button.layer.cornerRadius = 8
-        button.addTarget(self, action: #selector(onPaypalButtonTapped), for: .touchUpInside)
-        return button
+    lazy var payPalButton: PayPalButton = {
+        let payPalButton = PayPalButton()
+        payPalButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        payPalButton.layer.cornerRadius = 8
+        payPalButton.addTarget(self, action: #selector(onPaypalButtonTapped), for: .touchUpInside)
+        return payPalButton
     }()
 
     private lazy var vStack = UIScrollView.createWithVStack(
@@ -103,6 +102,7 @@ class PaymentFormView: UIView {
 
     var tapGesture: UIGestureRecognizer?
     var onApplePayTapped: (() -> ())?
+    var onAPMTapped: ((APMInfo) -> ())?
 
     var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
@@ -146,7 +146,7 @@ class PaymentFormView: UIView {
         )
 
         [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodConfig.applePayConfig?.shouldRenderApplePay == true)})
-
+        payPalButton.isHidden = paymentMethodConfig.paypalConfig == nil
         setupView()
 
         viewModel.onTokenisationCompleted = {
@@ -202,18 +202,27 @@ class PaymentFormView: UIView {
     @objc func onTappedButton() {
         guard paymentForm.isFormValid else { return }
         finalizeButtonTapped()
-        callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
+        Task {
+            await callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
+        }
         Loader.show()
     }
 
     @objc func onPaypalButtonTapped() {
-        callback.onPaymentMethodSelected?(.payPal)
-//        Loader.show()
+        Task {
+            Loader.show()
+            if let paypalAPM = await callback.onPaymentMethodSelected?(.payPal) {
+                self.onAPMTapped?(paypalAPM)
+            }
+            Loader.hide()
+        }
     }
 
     @objc func onApplePayBtnTapped() {
         onApplePayTapped?()
-        callback.onPaymentMethodSelected?(.applePay(.none))
+        Task {
+            await callback.onPaymentMethodSelected?(.applePay(.none))
+        }
     }
 
     func finalizeButtonTapped() {

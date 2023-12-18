@@ -20,7 +20,11 @@ public extension UIView {
 
 extension UIViewController {
     
-    func showSuccessDialog(title: String = "Payment Succesful", result: String) {
+    func showSuccessDialog(
+        title: String = "Payment Succesful",
+        result: String,
+        isSucessful: Bool = true
+    ) {
         let alertController = CFAlertViewController(
             title: nil,
             message: "",
@@ -31,7 +35,7 @@ extension UIViewController {
         
         let congratsView = CongratsView.fromNib() as CongratsView
         
-        congratsView.renderLabel(title: title, result: result)
+        congratsView.renderLabel(title: title, result: result, isSucessful: isSucessful)
         congratsView.buttonAction = {
             alertController.dismissAlert(withAnimation: true, completion: nil)
         }

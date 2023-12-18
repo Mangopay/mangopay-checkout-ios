@@ -12,17 +12,23 @@ import UIKit
 
 public class MGPWebViewController: UIViewController {
 
-    var webView: WKWebView!
+//    var webView: WKWebView!
     private var url: URL?
+    private let urlHelper: URLHelping = URLHelper()
+    
+    private var onComplete: ((_3DSResult) -> ())?
     private var onError: ((Error?) -> ())?
+
     var authUrlNavigation: WKNavigation?
 
-    lazy var activityIndiicatorView: UIActivityIndicatorView = {
-       let view = UIActivityIndicatorView()
-        view.style = .large
-        view.translatesAutoresizingMaskIntoConstraints = false
-       return view
-    }()
+//    lazy var activityIndiicatorView: UIActivityIndicatorView = {
+//       let view = UIActivityIndicatorView()
+//        view.style = .large
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//       return view
+//    }()
+
+    lazy var mgpWebView = MGPWebView()
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +38,19 @@ public class MGPWebViewController: UIViewController {
         }
 
         let authRequest = URLRequest(url: authUrl)
-        webView.navigationDelegate = self
-        authUrlNavigation = webView.load(authRequest)
+        mgpWebView.webView.navigationDelegate = self
+        authUrlNavigation = mgpWebView.webView.load(authRequest)
         title = "Pay with Paypal"
         addBackButton()
     }
     
     public init(
         url: URL,
+        onComplete: ((_3DSResult) -> ())?,
         onError: ((Error?) -> ())?
     ) {
         self.url = url
+        self.onComplete = onComplete
         self.onError = onError
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,16 +61,7 @@ public class MGPWebViewController: UIViewController {
     }
 
     public override func loadView() {
-        let webConfiguration = WKWebViewConfiguration()
-        webConfiguration.websiteDataStore = .nonPersistent()
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.addSubview(activityIndiicatorView)
-        activityIndiicatorView.centerXAnchor.constraint(equalTo: webView.centerXAnchor).isActive = true
-        activityIndiicatorView.centerYAnchor.constraint(equalTo: webView.centerYAnchor).isActive = true
-        webView.bringSubviewToFront(activityIndiicatorView)
-        activityIndiicatorView.startAnimating()
-        activityIndiicatorView.hidesWhenStopped = true
-        view = webView
+        view = mgpWebView
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -110,35 +109,63 @@ extension MGPWebViewController: WKNavigationDelegate {
     }
     
     public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        print("🤣 url: redirect", webView.url!)
 
-//        guard let _3dsResult = urlHelper.extract3DSResult(from: webView.url!, type: transactionType) else {
+        guard var _3dsResult = urlHelper.extract3DSResult(from: webView.url!, type: .cardDirect) else {
 //            self.onError?(MGPError._3dsIdExtractionError)
-//            return
-//        }
-//        handleDismiss(_3dsResult: _3dsResult)
+            return
+        }
+        
+        Task {
+            
+            do {
+                let regResponse = try await PaymentCoreClient(
+                    env: .t3
+                ).getPayIn(clientId: "pablo123", apiKey: "B8hGcedwVBXpHnVJc6pu96gpBuLKuc3ohx3JSoT6NUec5MrmPu", payInId: _3dsResult.id)
+  
+                print("🤣 Get pay IN", regResponse)
+                _3dsResult = _3DSResult(
+                    type: .cardDirect,
+                    status: .SUCCEEDED,
+                    id: _3dsResult.id
+                )
+                self.handleDismiss(_3dsResult: _3dsResult)
+
+            } catch {
+                print("❌ getPayIn Error ")
+                _3dsResult = _3DSResult(
+                    type: .cardDirect,
+                    status: .FAILED,
+                    id: _3dsResult.id
+                )
+                self.handleDismiss(_3dsResult: _3dsResult)
+            }
+            
+        }
     }
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.onError?(MGPError._3dsError(additionalInfo: error.localizedDescription))
-        activityIndiicatorView.stopAnimating()
+        mgpWebView.activityIndiicatorView.stopAnimating()
+        print("🤣 url: navigation", webView.url!)
     }
 
-//    private func handleDismiss(_3dsResult: _3DSResult) {
-//        self.dismiss(animated: true) {
-//            self.onComplete?(_3dsResult)
-//        }
-//    }
+    private func handleDismiss(_3dsResult: _3DSResult) {
+        self.dismiss(animated: true) {
+            self.onComplete?(_3dsResult)
+        }
+    }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        activityIndiicatorView.stopAnimating()
+        mgpWebView.activityIndiicatorView.stopAnimating()
     }
 
 }
 
 extension MGPWebViewController {
-    static func openUrl(url: URL, in controller: UIViewController) {
-        let urlController = MGPWebViewController(url: url, onError: nil)
-        controller.present(urlController, animated: true)
-    }
+//    static func openUrl(url: URL, in controller: UIViewController) {
+//        let urlController = MGPWebViewController(url: url, onError: nil)
+//        controller.present(urlController, animated: true)
+//    }
 }
 

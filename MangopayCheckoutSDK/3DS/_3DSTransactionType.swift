@@ -12,7 +12,7 @@ public enum _3DSTransactionType: String, Codable {
     case preauthorized = "PREAUTHORIZED"
     case cardValidated = "CARD_VALIDATION"
 
-    var id: String {
+    public var id: String {
         switch self {
         case .cardDirect:
             return "transactionId"
@@ -30,7 +30,7 @@ public enum _3DSStatus: String, Codable {
 }
 
 public struct _3DSResult: Codable {
-    let type: _3DSTransactionType
-    let status: _3DSStatus
-    let id: String
+    public let type: _3DSTransactionType
+    public let status: _3DSStatus
+    public let id: String
 }
