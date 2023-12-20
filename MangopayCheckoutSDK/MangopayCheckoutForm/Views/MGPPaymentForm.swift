@@ -95,7 +95,10 @@ public class MGPPaymentForm: UIView, FormValidatable {
             hStack,
             privacyView
         ]
-    )
+    ) {
+        stackview in
+        stackview.setCustomSpacing(4, after: self.hStack)
+    }
 
     lazy public var forms: [Validatable] = [
         cardNumberField,
@@ -179,7 +182,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
         vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        vStack.heightAnchor.constraint(equalToConstant: 370).isActive = true
+        vStack.heightAnchor.constraint(equalToConstant: 350).isActive = true
 
         self.backgroundColor = .white
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -245,7 +248,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
             try NTHNethone.beginAttempt(with: nethoneConfig)
             currentAttempt = NTHNethone.attemptReference()
         } catch { error
-//            print("Nethone intiation Error", error.localizedDescription)
+            print("Nethone intiation Error", error.localizedDescription)
         }
     }
 

@@ -25,13 +25,13 @@ public class PrivacyView: UIView {
                 NSAttributedString(
                     string: "Mangopay is the payment service provider processing your transaction. Check our ",
                     attributes: [
-                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10),
                         NSAttributedString.Key.foregroundColor: UIColor.gray
                     ])
             )
             
             attrStr.append(NSAttributedString(string: "Privacy Statement.", attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10),
                 NSAttributedString.Key.foregroundColor: UIColor.gray,
                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
                 NSAttributedString.Key.underlineColor: UIColor.gray
@@ -68,7 +68,7 @@ public class PrivacyView: UIView {
         hStack.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
         hStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         self.backgroundColor = .white
-        self.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 
     private func setupTapActions() {
