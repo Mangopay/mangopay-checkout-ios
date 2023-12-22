@@ -74,7 +74,7 @@ The data obtained in the response will be used in the `CardRegistration` configu
 Initialize the SDK with your `ClientId` and select your environment (Sandbox or Production). 
 
 ```swift
-MangoPayCoreiOS.initialize(clientId: "<client_id>", environment: .sandbox)
+MangopayCheckoutSDK.initialize(clientId: "<client_id>", environment: .sandbox)
 ```
 
 ### Initialization parameters
@@ -208,7 +208,7 @@ MGPPaymentForm
   }
 ```
 
-`**MangopayCoreiOS.tokenizeCard()**`
+`**MangopayCheckoutSDK.tokenizeCard()**`
 
 | Property | Type | Description |
 | --- | --- | --- |

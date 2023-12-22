@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import MangopayCoreiOS
-import MangopaySdkAPI
-//import MangoPayIntent
-import MangopayVault
+import MangopayCheckoutSDK
+import MangopayVaultSDK
 
 class ViewController: UIViewController {
 
@@ -232,7 +230,7 @@ class ViewController: UIViewController {
                 
                 guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
 
-                MangopayCoreiOS.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
+                MangopayCheckoutSDK.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
                     print("✅ launch3DSIfPossible", success)
                     onSuccess?()
                 } on3DSFailure: { error in
