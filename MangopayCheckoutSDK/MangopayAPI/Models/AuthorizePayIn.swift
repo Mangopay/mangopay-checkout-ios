@@ -11,7 +11,7 @@ public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
     
 
     public var id, tag, authorID, creditedUserID: String?
-    public var debitedFunds, fees: DebitedFunds?
+    public var debitedFunds, fees: Amount?
     public var creditedWalletID, secureMode, cardID: String?
     public var secureModeReturnURL, secureModeRedirectURL: String?
     var statementDescriptor: String?
@@ -44,8 +44,8 @@ public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
         tag: String? = nil,
         authorID: String,
         creditedUserID: String? = nil,
-        debitedFunds: DebitedFunds,
-        fees: DebitedFunds,
+        debitedFunds: Amount,
+        fees: Amount,
         creditedWalletID: String,
         secureMode: String? = nil,
         cardID: String,
@@ -161,7 +161,7 @@ public struct BrowserInfo: Codable {
     }
 }
 
-public struct DebitedFunds: Codable {
+public struct Amount: Codable {
     var currency: String?
     var amount: Int?
 

@@ -16,7 +16,7 @@ class ElementCardController: UIViewController {
     lazy var elementForm: MGPPaymentForm = {
         let form = MGPPaymentForm(
             paymentFormStyle: PaymentFormStyle(),
-            supportedCardBrands: [.visa, .mastercard, .maestro]
+            supportedCardBrands: [.visa, .mastercard, .maestro, .amex]
         )
         return form
     }()
@@ -166,8 +166,8 @@ class ElementCardController: UIViewController {
             tag: "Mangopay Demo Tag",
             authorID: "158091557",
             creditedUserID: "158091557",
-            debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
-            fees: DebitedFunds(currency: "EUR", amount: 1),
+            debitedFunds: Amount(currency: "EUR", amount: 10),
+            fees: Amount(currency: "EUR", amount: 1),
             creditedWalletID: "159834019",
             cardID: cardId,
             secureModeReturnURL: "https://docs.mangopay.com/please-ignore",

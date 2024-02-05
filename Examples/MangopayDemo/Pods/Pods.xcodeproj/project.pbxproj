@@ -1,0 +1,1031 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B62E5759225D4F1D83D2F22F5C4CD02 /* CFAlertTitleSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B93804702731D226E3B1C5622DA84F0B /* CFAlertTitleSubtitleTableViewCell.xib */; };
+		13C3B5B97281CCFE85275A537C0D6D4A /* CFAlertActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2213825FE947FAEA4454431EA03147F /* CFAlertActionTableViewCell.swift */; };
+		140E4AC1E72FEDA60C560715579027B9 /* CFAlertViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB15907B79DD483477E7FC26A5E766 /* CFAlertViewController-dummy.m */; };
+		14E6B2AD03BB92A606BB578D18EE820C /* CFAlertNotificationTransitionGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE4E7A1C5AA5BC34B9FE4EFD07CF8B3 /* CFAlertNotificationTransitionGestureRecognizer.swift */; };
+		193C028C7CA3C6B0EC8B3EB318440C5C /* CFAlertActionSheetInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F495C35E984725993A8652D493906 /* CFAlertActionSheetInteractiveTransition.swift */; };
+		27B8B3867C9C4DEC5F4BD5A7A2D6C610 /* Pods-MangopayDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FD3740575FF5B8F813DECF257A1D43 /* Pods-MangopayDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		373BEB425764AC9FC24255C3EB3113AB /* CFAlertPopupTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52753ED9FC868E93FF8A14F43DAF694C /* CFAlertPopupTransition.swift */; };
+		4DB3A94514A36E1CFDCFFAC086C2D559 /* Pods-MangopayDemo-MangopayDemoUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 60DB075DD9AD21455482020B549B4E0A /* Pods-MangopayDemo-MangopayDemoUITests-dummy.m */; };
+		6182137DCF914FB35830140259B1114C /* CFAlertActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2EBB2750101381971D892C172F6C2B /* CFAlertActionTableViewCell.xib */; };
+		680E230B7510310641F107E05463F8E8 /* CFAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBE8749A184D53300869A21972791744 /* CFAlertViewController.xib */; };
+		69770A611F6C4F274A7D07EE839474EA /* CFAlertNotificationInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2469C10C8EBBB320B1D7CDB5C78E3C52 /* CFAlertNotificationInteractiveTransition.swift */; };
+		7846086CE18D46A94D4F4E59D1CE85DB /* CFAlertBaseInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0D352B6EFC5008BD1B7452956093D5 /* CFAlertBaseInteractiveTransition.swift */; };
+		8509E2E4F659FCCDE382BC63F871E31F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D245E0514AAC1A2B9A6D5EA2F383E90F /* UIKit.framework */; };
+		8D76EE833BEB193A60072959F5E07D0E /* CFAlertViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 888A0DF98BDC8BEBF1E133DEC6369FD8 /* CFAlertViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		94E7E683514A4D21FFC5F617698B5312 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB6F611E86A4758835A715E4B4184F6 /* Foundation.framework */; };
+		976FAAF37CFFB480510FCACCA537CBF9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB6F611E86A4758835A715E4B4184F6 /* Foundation.framework */; };
+		9868E6566690DC2275DC0E68680F88A3 /* CFAlertTitleSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F16722264D0F0F9E749B2C7E266E7C6 /* CFAlertTitleSubtitleTableViewCell.swift */; };
+		A7491E866C058184309ADE95397A846A /* Pods-MangopayDemoTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 501E2F4F859540702A9CD06244695F4C /* Pods-MangopayDemoTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7ED1779FBA69B9DD4BB67B8E6A9C01B /* Pods-MangopayDemoTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B74FF856C06497EAE9841D4AD2E500 /* Pods-MangopayDemoTests-dummy.m */; };
+		CA6A6287B4687F978070CB5A6FC0AD28 /* Pods-MangopayDemo-MangopayDemoUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C736BBC235243BD7F37BABF365065DA /* Pods-MangopayDemo-MangopayDemoUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CA9DE8199A2C266BE3B389A943542753 /* CFAlertBaseTransitionGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313CCFCEEF82E6C6094C0DA67CBBB775 /* CFAlertBaseTransitionGestureRecognizer.swift */; };
+		D3AF0CFD913B01F3F645CB64F7D8037B /* Pods-MangopayDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AC6F2F41C98C81963E3B217C0E814692 /* Pods-MangopayDemo-dummy.m */; };
+		E1E8AF4CCFE44CBE0A609CC961497D0E /* CFPushButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7427BD5E307BEBCAD624669CD7DABD7E /* CFPushButton.swift */; };
+		E20338FB21C2CF552A4AE8AA024B0455 /* CFAlertActionSheetTransitionGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449EF69018D2C01076F62B4C34757ADB /* CFAlertActionSheetTransitionGestureRecognizer.swift */; };
+		EA05E0D7E24E44EB0C8F5DE3FF4D321F /* CFAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33655A98CBB98A96A663A5B2E2E75DB /* CFAlertAction.swift */; };
+		ED06BC290952E60FD545F604744FF489 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB6F611E86A4758835A715E4B4184F6 /* Foundation.framework */; };
+		EE2442B675C4C5A34205D88EAA8B2315 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB6F611E86A4758835A715E4B4184F6 /* Foundation.framework */; };
+		F3337502C79297C0AC9B9C54D890E5E1 /* CFAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080C875319669F39B9FD55D6194E1A56 /* CFAlertViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		295E4FB510B2F43913A479658EF7C558 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C23279291C3BA646D8964B3A9BCC068;
+			remoteInfo = "Pods-MangopayDemo";
+		};
+		53E7177D38AA8BFC6A3F4725502E0EDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 902E26B6547F079F6F96B6EA275C1C93;
+			remoteInfo = CFAlertViewController;
+		};
+		659A8B8B2CC28A6B9079831A72604874 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 902E26B6547F079F6F96B6EA275C1C93;
+			remoteInfo = CFAlertViewController;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		040C8AA5FF2993D598A512661948CAB8 /* Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		080C875319669F39B9FD55D6194E1A56 /* CFAlertViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertViewController.swift; path = CFAlertViewController/CFAlertViewController.swift; sourceTree = "<group>"; };
+		0D182BE154DED5C8CD8517FBFDB27F9E /* CFAlertViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CFAlertViewController-prefix.pch"; sourceTree = "<group>"; };
+		0E0D352B6EFC5008BD1B7452956093D5 /* CFAlertBaseInteractiveTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertBaseInteractiveTransition.swift; path = CFAlertViewController/Transitions/Base/CFAlertBaseInteractiveTransition.swift; sourceTree = "<group>"; };
+		110141F3354CA55F6BD7D746F3C231FA /* CFAlertViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CFAlertViewController.release.xcconfig; sourceTree = "<group>"; };
+		11A1442A0D820119E3FDAFE7506F9ED0 /* Pods-MangopayDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MangopayDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		205FE58562745103954EAAEA030848FE /* Pods-MangopayDemo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MangopayDemo-Info.plist"; sourceTree = "<group>"; };
+		22B74FF856C06497EAE9841D4AD2E500 /* Pods-MangopayDemoTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MangopayDemoTests-dummy.m"; sourceTree = "<group>"; };
+		2469C10C8EBBB320B1D7CDB5C78E3C52 /* CFAlertNotificationInteractiveTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertNotificationInteractiveTransition.swift; path = CFAlertViewController/Transitions/Notification/CFAlertNotificationInteractiveTransition.swift; sourceTree = "<group>"; };
+		2FFD6035818006FD789DB2D81619A011 /* CFAlertViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CFAlertViewController.modulemap; sourceTree = "<group>"; };
+		313CCFCEEF82E6C6094C0DA67CBBB775 /* CFAlertBaseTransitionGestureRecognizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertBaseTransitionGestureRecognizer.swift; path = CFAlertViewController/Transitions/Base/CFAlertBaseTransitionGestureRecognizer.swift; sourceTree = "<group>"; };
+		334141354EDC16FA77A53A03A3BCA2E1 /* Pods-MangopayDemoTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MangopayDemoTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		364BE5C8276787DA7CDA3647FE9A5C10 /* Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		449EF69018D2C01076F62B4C34757ADB /* CFAlertActionSheetTransitionGestureRecognizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertActionSheetTransitionGestureRecognizer.swift; path = "CFAlertViewController/Transitions/Action Sheet/CFAlertActionSheetTransitionGestureRecognizer.swift"; sourceTree = "<group>"; };
+		45D383287988AE1BEFE3CE6D005F6257 /* Pods-MangopayDemo-MangopayDemoUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-MangopayDemo-MangopayDemoUITests"; path = Pods_MangopayDemo_MangopayDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		501E2F4F859540702A9CD06244695F4C /* Pods-MangopayDemoTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MangopayDemoTests-umbrella.h"; sourceTree = "<group>"; };
+		52753ED9FC868E93FF8A14F43DAF694C /* CFAlertPopupTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertPopupTransition.swift; path = CFAlertViewController/Transitions/Popup/CFAlertPopupTransition.swift; sourceTree = "<group>"; };
+		5F16722264D0F0F9E749B2C7E266E7C6 /* CFAlertTitleSubtitleTableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertTitleSubtitleTableViewCell.swift; path = CFAlertViewController/Cells/CFAlertTitleSubtitleTableViewCell.swift; sourceTree = "<group>"; };
+		60DB075DD9AD21455482020B549B4E0A /* Pods-MangopayDemo-MangopayDemoUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MangopayDemo-MangopayDemoUITests-dummy.m"; sourceTree = "<group>"; };
+		652D0BBC00031119F1C44BB482E77E71 /* Pods-MangopayDemoTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MangopayDemoTests.modulemap"; sourceTree = "<group>"; };
+		665EFF0AD87AEAF562103E06148151A0 /* Pods-MangopayDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MangopayDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6C2EBB2750101381971D892C172F6C2B /* CFAlertActionTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = CFAlertActionTableViewCell.xib; path = CFAlertViewController/Cells/CFAlertActionTableViewCell.xib; sourceTree = "<group>"; };
+		7427BD5E307BEBCAD624669CD7DABD7E /* CFPushButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFPushButton.swift; path = CFAlertViewController/Subclass/CFPushButton/CFPushButton.swift; sourceTree = "<group>"; };
+		7B036DDC3F1D0445DA621FB6D3F09DEC /* Pods-MangopayDemo */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-MangopayDemo"; path = Pods_MangopayDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E2134958B7AB8E3AFF117B36983B7AB /* Pods-MangopayDemo-MangopayDemoUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MangopayDemo-MangopayDemoUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7E9CE65EDBCD15B8E5E312D82DBAF1AC /* Pods-MangopayDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MangopayDemo.modulemap"; sourceTree = "<group>"; };
+		7EEB15907B79DD483477E7FC26A5E766 /* CFAlertViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CFAlertViewController-dummy.m"; sourceTree = "<group>"; };
+		80C6FDD9CC68AD3065D1561D863A0C41 /* CFAlertViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CFAlertViewController.debug.xcconfig; sourceTree = "<group>"; };
+		888A0DF98BDC8BEBF1E133DEC6369FD8 /* CFAlertViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CFAlertViewController-umbrella.h"; sourceTree = "<group>"; };
+		8F74829AE4D9C97CF8D24BB7DEA32FAA /* CFAlertViewController-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CFAlertViewController-Info.plist"; sourceTree = "<group>"; };
+		93F0D40E5443550C35B7849B85EEFED7 /* Pods-MangopayDemoTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MangopayDemoTests-Info.plist"; sourceTree = "<group>"; };
+		9C736BBC235243BD7F37BABF365065DA /* Pods-MangopayDemo-MangopayDemoUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MangopayDemo-MangopayDemoUITests-umbrella.h"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9DE4E7A1C5AA5BC34B9FE4EFD07CF8B3 /* CFAlertNotificationTransitionGestureRecognizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertNotificationTransitionGestureRecognizer.swift; path = CFAlertViewController/Transitions/Notification/CFAlertNotificationTransitionGestureRecognizer.swift; sourceTree = "<group>"; };
+		9F914A7498FBE10312BF3E5DD5F654D8 /* CFAlertViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CFAlertViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1A273901DD73A91A213C78F88803BB8 /* Pods-MangopayDemo-MangopayDemoUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MangopayDemo-MangopayDemoUITests-Info.plist"; sourceTree = "<group>"; };
+		AC6F2F41C98C81963E3B217C0E814692 /* Pods-MangopayDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MangopayDemo-dummy.m"; sourceTree = "<group>"; };
+		B93804702731D226E3B1C5622DA84F0B /* CFAlertTitleSubtitleTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = CFAlertTitleSubtitleTableViewCell.xib; path = CFAlertViewController/Cells/CFAlertTitleSubtitleTableViewCell.xib; sourceTree = "<group>"; };
+		BC0A24F5CCF1DF87DC3E125CDA6B749C /* Pods-MangopayDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MangopayDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		C33655A98CBB98A96A663A5B2E2E75DB /* CFAlertAction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertAction.swift; path = CFAlertViewController/Models/CFAlertAction.swift; sourceTree = "<group>"; };
+		C5C3282228BB31B7DA4BE051FD319BB8 /* Pods-MangopayDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MangopayDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		CA3018DFDB09FCBC1E38301AD9074004 /* Pods-MangopayDemo-MangopayDemoUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MangopayDemo-MangopayDemoUITests-frameworks.sh"; sourceTree = "<group>"; };
+		CC50C6380EDE854911684288B383B153 /* Pods-MangopayDemo-MangopayDemoUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MangopayDemo-MangopayDemoUITests.modulemap"; sourceTree = "<group>"; };
+		D0A3219BA64C62C2AC32595222768782 /* Pods-MangopayDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MangopayDemo.release.xcconfig"; sourceTree = "<group>"; };
+		D141E76F48542091C31650E370A03DB6 /* Pods-MangopayDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MangopayDemo-frameworks.sh"; sourceTree = "<group>"; };
+		D1FD3740575FF5B8F813DECF257A1D43 /* Pods-MangopayDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MangopayDemo-umbrella.h"; sourceTree = "<group>"; };
+		D245E0514AAC1A2B9A6D5EA2F383E90F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		DBE8749A184D53300869A21972791744 /* CFAlertViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = CFAlertViewController.xib; path = CFAlertViewController/CFAlertViewController.xib; sourceTree = "<group>"; };
+		DC4F495C35E984725993A8652D493906 /* CFAlertActionSheetInteractiveTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertActionSheetInteractiveTransition.swift; path = "CFAlertViewController/Transitions/Action Sheet/CFAlertActionSheetInteractiveTransition.swift"; sourceTree = "<group>"; };
+		DE1DC34440DFA20204EB89AF4C36BFD3 /* Pods-MangopayDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MangopayDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		DF8FD0F6EF495B5FC0FD28CA8378B74D /* Pods-MangopayDemo-MangopayDemoUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MangopayDemo-MangopayDemoUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		EAB6F611E86A4758835A715E4B4184F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		F2213825FE947FAEA4454431EA03147F /* CFAlertActionTableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CFAlertActionTableViewCell.swift; path = CFAlertViewController/Cells/CFAlertActionTableViewCell.swift; sourceTree = "<group>"; };
+		F4765DC1392DAC2F6341A79C1E973B9F /* Pods-MangopayDemoTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MangopayDemoTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		FAC991B10DE9BD8DF72444868792F4FD /* Pods-MangopayDemoTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-MangopayDemoTests"; path = Pods_MangopayDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5B3C03073F3EB9CCD2FE67CBB58D662D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94E7E683514A4D21FFC5F617698B5312 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		77A99AC0C59D64CA096DCF5B2F6BD5E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED06BC290952E60FD545F604744FF489 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9974DF896E3832734CCBDADEED9E45B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE2442B675C4C5A34205D88EAA8B2315 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7CEA1BEA636A8A6E1DB0D50A4D514D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				976FAAF37CFFB480510FCACCA537CBF9 /* Foundation.framework in Frameworks */,
+				8509E2E4F659FCCDE382BC63F871E31F /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				59DA5C1F72E1D5BABC43EACBA672C3BA /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		34670ED626B2290AEC87367268192611 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6C2EBB2750101381971D892C172F6C2B /* CFAlertActionTableViewCell.xib */,
+				B93804702731D226E3B1C5622DA84F0B /* CFAlertTitleSubtitleTableViewCell.xib */,
+				DBE8749A184D53300869A21972791744 /* CFAlertViewController.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		59DA5C1F72E1D5BABC43EACBA672C3BA /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				EAB6F611E86A4758835A715E4B4184F6 /* Foundation.framework */,
+				D245E0514AAC1A2B9A6D5EA2F383E90F /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		64C26A920586EEA9A165712552B44111 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9F914A7498FBE10312BF3E5DD5F654D8 /* CFAlertViewController.framework */,
+				7B036DDC3F1D0445DA621FB6D3F09DEC /* Pods-MangopayDemo */,
+				45D383287988AE1BEFE3CE6D005F6257 /* Pods-MangopayDemo-MangopayDemoUITests */,
+				FAC991B10DE9BD8DF72444868792F4FD /* Pods-MangopayDemoTests */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7AEE8221F606E0C6944EA751DCD07EAE /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2FFD6035818006FD789DB2D81619A011 /* CFAlertViewController.modulemap */,
+				7EEB15907B79DD483477E7FC26A5E766 /* CFAlertViewController-dummy.m */,
+				8F74829AE4D9C97CF8D24BB7DEA32FAA /* CFAlertViewController-Info.plist */,
+				0D182BE154DED5C8CD8517FBFDB27F9E /* CFAlertViewController-prefix.pch */,
+				888A0DF98BDC8BEBF1E133DEC6369FD8 /* CFAlertViewController-umbrella.h */,
+				80C6FDD9CC68AD3065D1561D863A0C41 /* CFAlertViewController.debug.xcconfig */,
+				110141F3354CA55F6BD7D746F3C231FA /* CFAlertViewController.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/CFAlertViewController";
+			sourceTree = "<group>";
+		};
+		90DCC1D0BECE3CAAACB5F4720E8B36BC /* CFAlertViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C33655A98CBB98A96A663A5B2E2E75DB /* CFAlertAction.swift */,
+				DC4F495C35E984725993A8652D493906 /* CFAlertActionSheetInteractiveTransition.swift */,
+				449EF69018D2C01076F62B4C34757ADB /* CFAlertActionSheetTransitionGestureRecognizer.swift */,
+				F2213825FE947FAEA4454431EA03147F /* CFAlertActionTableViewCell.swift */,
+				0E0D352B6EFC5008BD1B7452956093D5 /* CFAlertBaseInteractiveTransition.swift */,
+				313CCFCEEF82E6C6094C0DA67CBBB775 /* CFAlertBaseTransitionGestureRecognizer.swift */,
+				2469C10C8EBBB320B1D7CDB5C78E3C52 /* CFAlertNotificationInteractiveTransition.swift */,
+				9DE4E7A1C5AA5BC34B9FE4EFD07CF8B3 /* CFAlertNotificationTransitionGestureRecognizer.swift */,
+				52753ED9FC868E93FF8A14F43DAF694C /* CFAlertPopupTransition.swift */,
+				5F16722264D0F0F9E749B2C7E266E7C6 /* CFAlertTitleSubtitleTableViewCell.swift */,
+				080C875319669F39B9FD55D6194E1A56 /* CFAlertViewController.swift */,
+				7427BD5E307BEBCAD624669CD7DABD7E /* CFPushButton.swift */,
+				34670ED626B2290AEC87367268192611 /* Resources */,
+				7AEE8221F606E0C6944EA751DCD07EAE /* Support Files */,
+			);
+			path = CFAlertViewController;
+			sourceTree = "<group>";
+		};
+		B50EB0C647B358FDB2206425EA648504 /* Pods-MangopayDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7E9CE65EDBCD15B8E5E312D82DBAF1AC /* Pods-MangopayDemo.modulemap */,
+				C5C3282228BB31B7DA4BE051FD319BB8 /* Pods-MangopayDemo-acknowledgements.markdown */,
+				DE1DC34440DFA20204EB89AF4C36BFD3 /* Pods-MangopayDemo-acknowledgements.plist */,
+				AC6F2F41C98C81963E3B217C0E814692 /* Pods-MangopayDemo-dummy.m */,
+				D141E76F48542091C31650E370A03DB6 /* Pods-MangopayDemo-frameworks.sh */,
+				205FE58562745103954EAAEA030848FE /* Pods-MangopayDemo-Info.plist */,
+				D1FD3740575FF5B8F813DECF257A1D43 /* Pods-MangopayDemo-umbrella.h */,
+				BC0A24F5CCF1DF87DC3E125CDA6B749C /* Pods-MangopayDemo.debug.xcconfig */,
+				D0A3219BA64C62C2AC32595222768782 /* Pods-MangopayDemo.release.xcconfig */,
+			);
+			name = "Pods-MangopayDemo";
+			path = "Target Support Files/Pods-MangopayDemo";
+			sourceTree = "<group>";
+		};
+		BBEBCB92584762153140499F7ADD3450 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				90DCC1D0BECE3CAAACB5F4720E8B36BC /* CFAlertViewController */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CACA5FF9ADF40D134D29CE4F9C7C242C /* Pods-MangopayDemo-MangopayDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CC50C6380EDE854911684288B383B153 /* Pods-MangopayDemo-MangopayDemoUITests.modulemap */,
+				7E2134958B7AB8E3AFF117B36983B7AB /* Pods-MangopayDemo-MangopayDemoUITests-acknowledgements.markdown */,
+				DF8FD0F6EF495B5FC0FD28CA8378B74D /* Pods-MangopayDemo-MangopayDemoUITests-acknowledgements.plist */,
+				60DB075DD9AD21455482020B549B4E0A /* Pods-MangopayDemo-MangopayDemoUITests-dummy.m */,
+				CA3018DFDB09FCBC1E38301AD9074004 /* Pods-MangopayDemo-MangopayDemoUITests-frameworks.sh */,
+				A1A273901DD73A91A213C78F88803BB8 /* Pods-MangopayDemo-MangopayDemoUITests-Info.plist */,
+				9C736BBC235243BD7F37BABF365065DA /* Pods-MangopayDemo-MangopayDemoUITests-umbrella.h */,
+				040C8AA5FF2993D598A512661948CAB8 /* Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig */,
+				364BE5C8276787DA7CDA3647FE9A5C10 /* Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig */,
+			);
+			name = "Pods-MangopayDemo-MangopayDemoUITests";
+			path = "Target Support Files/Pods-MangopayDemo-MangopayDemoUITests";
+			sourceTree = "<group>";
+		};
+		CD113D672B4268BFBBE2EF43A39273AB /* Pods-MangopayDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				652D0BBC00031119F1C44BB482E77E71 /* Pods-MangopayDemoTests.modulemap */,
+				F4765DC1392DAC2F6341A79C1E973B9F /* Pods-MangopayDemoTests-acknowledgements.markdown */,
+				334141354EDC16FA77A53A03A3BCA2E1 /* Pods-MangopayDemoTests-acknowledgements.plist */,
+				22B74FF856C06497EAE9841D4AD2E500 /* Pods-MangopayDemoTests-dummy.m */,
+				93F0D40E5443550C35B7849B85EEFED7 /* Pods-MangopayDemoTests-Info.plist */,
+				501E2F4F859540702A9CD06244695F4C /* Pods-MangopayDemoTests-umbrella.h */,
+				665EFF0AD87AEAF562103E06148151A0 /* Pods-MangopayDemoTests.debug.xcconfig */,
+				11A1442A0D820119E3FDAFE7506F9ED0 /* Pods-MangopayDemoTests.release.xcconfig */,
+			);
+			name = "Pods-MangopayDemoTests";
+			path = "Target Support Files/Pods-MangopayDemoTests";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */,
+				BBEBCB92584762153140499F7ADD3450 /* Pods */,
+				64C26A920586EEA9A165712552B44111 /* Products */,
+				FB157CDE0607C6916C74EBEFAA230D8A /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		FB157CDE0607C6916C74EBEFAA230D8A /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B50EB0C647B358FDB2206425EA648504 /* Pods-MangopayDemo */,
+				CACA5FF9ADF40D134D29CE4F9C7C242C /* Pods-MangopayDemo-MangopayDemoUITests */,
+				CD113D672B4268BFBBE2EF43A39273AB /* Pods-MangopayDemoTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3480289F1186A8D7AE64EBC14E2D21D9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27B8B3867C9C4DEC5F4BD5A7A2D6C610 /* Pods-MangopayDemo-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		77849BDCAD53A973FBD1DF64B46EC77E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7491E866C058184309ADE95397A846A /* Pods-MangopayDemoTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2941889C9A2A9A0FEEE42B67444BE33 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D76EE833BEB193A60072959F5E07D0E /* CFAlertViewController-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB75DC8A20907F9B1CFB9036F3AFBEC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA6A6287B4687F978070CB5A6FC0AD28 /* Pods-MangopayDemo-MangopayDemoUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1C23279291C3BA646D8964B3A9BCC068 /* Pods-MangopayDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC9DB7163666DE566D17EF1D50528CCB /* Build configuration list for PBXNativeTarget "Pods-MangopayDemo" */;
+			buildPhases = (
+				3480289F1186A8D7AE64EBC14E2D21D9 /* Headers */,
+				82B7B17A4105A96AB6BE53CFA0E427A0 /* Sources */,
+				77A99AC0C59D64CA096DCF5B2F6BD5E0 /* Frameworks */,
+				8794CD5E3B3EE72E753132332C9171D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				393DE2CB80B83CDE5F890EDBE75BFEF5 /* PBXTargetDependency */,
+			);
+			name = "Pods-MangopayDemo";
+			productName = Pods_MangopayDemo;
+			productReference = 7B036DDC3F1D0445DA621FB6D3F09DEC /* Pods-MangopayDemo */;
+			productType = "com.apple.product-type.framework";
+		};
+		902E26B6547F079F6F96B6EA275C1C93 /* CFAlertViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B57D4F1D365C9BF2A90E04380A07EA0 /* Build configuration list for PBXNativeTarget "CFAlertViewController" */;
+			buildPhases = (
+				B2941889C9A2A9A0FEEE42B67444BE33 /* Headers */,
+				7A343760997494A3705400E09E776D0C /* Sources */,
+				B7CEA1BEA636A8A6E1DB0D50A4D514D9 /* Frameworks */,
+				770919F489E34C390B11605B6F207A30 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CFAlertViewController;
+			productName = CFAlertViewController;
+			productReference = 9F914A7498FBE10312BF3E5DD5F654D8 /* CFAlertViewController.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		9E97C698B14B79DE4FA4382525749F41 /* Pods-MangopayDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C0C9828DC4C5310743C8DC0CAB380A9 /* Build configuration list for PBXNativeTarget "Pods-MangopayDemoTests" */;
+			buildPhases = (
+				77849BDCAD53A973FBD1DF64B46EC77E /* Headers */,
+				9CDC88AC658DEC75821855C2A8869CA5 /* Sources */,
+				5B3C03073F3EB9CCD2FE67CBB58D662D /* Frameworks */,
+				AFA3751145C01F9DD2F172B9566FF534 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1C11587963ADD13838340F43BFDB6683 /* PBXTargetDependency */,
+			);
+			name = "Pods-MangopayDemoTests";
+			productName = Pods_MangopayDemoTests;
+			productReference = FAC991B10DE9BD8DF72444868792F4FD /* Pods-MangopayDemoTests */;
+			productType = "com.apple.product-type.framework";
+		};
+		A716DBDC266502094A2ED32A19976ABF /* Pods-MangopayDemo-MangopayDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC575B72F2850F775CAC996576FB7171 /* Build configuration list for PBXNativeTarget "Pods-MangopayDemo-MangopayDemoUITests" */;
+			buildPhases = (
+				EBB75DC8A20907F9B1CFB9036F3AFBEC /* Headers */,
+				1028973B3A5C6E907A2B6501DAA4020B /* Sources */,
+				9974DF896E3832734CCBDADEED9E45B6 /* Frameworks */,
+				A6CA5436AB8EE70DBEF1530052B5F73C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E1D8CB775AE8E6A57A5CD3635080D54A /* PBXTargetDependency */,
+			);
+			name = "Pods-MangopayDemo-MangopayDemoUITests";
+			productName = Pods_MangopayDemo_MangopayDemoUITests;
+			productReference = 45D383287988AE1BEFE3CE6D005F6257 /* Pods-MangopayDemo-MangopayDemoUITests */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 64C26A920586EEA9A165712552B44111 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				902E26B6547F079F6F96B6EA275C1C93 /* CFAlertViewController */,
+				1C23279291C3BA646D8964B3A9BCC068 /* Pods-MangopayDemo */,
+				A716DBDC266502094A2ED32A19976ABF /* Pods-MangopayDemo-MangopayDemoUITests */,
+				9E97C698B14B79DE4FA4382525749F41 /* Pods-MangopayDemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		770919F489E34C390B11605B6F207A30 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6182137DCF914FB35830140259B1114C /* CFAlertActionTableViewCell.xib in Resources */,
+				0B62E5759225D4F1D83D2F22F5C4CD02 /* CFAlertTitleSubtitleTableViewCell.xib in Resources */,
+				680E230B7510310641F107E05463F8E8 /* CFAlertViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8794CD5E3B3EE72E753132332C9171D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6CA5436AB8EE70DBEF1530052B5F73C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFA3751145C01F9DD2F172B9566FF534 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1028973B3A5C6E907A2B6501DAA4020B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DB3A94514A36E1CFDCFFAC086C2D559 /* Pods-MangopayDemo-MangopayDemoUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A343760997494A3705400E09E776D0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA05E0D7E24E44EB0C8F5DE3FF4D321F /* CFAlertAction.swift in Sources */,
+				193C028C7CA3C6B0EC8B3EB318440C5C /* CFAlertActionSheetInteractiveTransition.swift in Sources */,
+				E20338FB21C2CF552A4AE8AA024B0455 /* CFAlertActionSheetTransitionGestureRecognizer.swift in Sources */,
+				13C3B5B97281CCFE85275A537C0D6D4A /* CFAlertActionTableViewCell.swift in Sources */,
+				7846086CE18D46A94D4F4E59D1CE85DB /* CFAlertBaseInteractiveTransition.swift in Sources */,
+				CA9DE8199A2C266BE3B389A943542753 /* CFAlertBaseTransitionGestureRecognizer.swift in Sources */,
+				69770A611F6C4F274A7D07EE839474EA /* CFAlertNotificationInteractiveTransition.swift in Sources */,
+				14E6B2AD03BB92A606BB578D18EE820C /* CFAlertNotificationTransitionGestureRecognizer.swift in Sources */,
+				373BEB425764AC9FC24255C3EB3113AB /* CFAlertPopupTransition.swift in Sources */,
+				9868E6566690DC2275DC0E68680F88A3 /* CFAlertTitleSubtitleTableViewCell.swift in Sources */,
+				F3337502C79297C0AC9B9C54D890E5E1 /* CFAlertViewController.swift in Sources */,
+				140E4AC1E72FEDA60C560715579027B9 /* CFAlertViewController-dummy.m in Sources */,
+				E1E8AF4CCFE44CBE0A609CC961497D0E /* CFPushButton.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82B7B17A4105A96AB6BE53CFA0E427A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3AF0CFD913B01F3F645CB64F7D8037B /* Pods-MangopayDemo-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CDC88AC658DEC75821855C2A8869CA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7ED1779FBA69B9DD4BB67B8E6A9C01B /* Pods-MangopayDemoTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1C11587963ADD13838340F43BFDB6683 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-MangopayDemo";
+			target = 1C23279291C3BA646D8964B3A9BCC068 /* Pods-MangopayDemo */;
+			targetProxy = 295E4FB510B2F43913A479658EF7C558 /* PBXContainerItemProxy */;
+		};
+		393DE2CB80B83CDE5F890EDBE75BFEF5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CFAlertViewController;
+			target = 902E26B6547F079F6F96B6EA275C1C93 /* CFAlertViewController */;
+			targetProxy = 53E7177D38AA8BFC6A3F4725502E0EDB /* PBXContainerItemProxy */;
+		};
+		E1D8CB775AE8E6A57A5CD3635080D54A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CFAlertViewController;
+			target = 902E26B6547F079F6F96B6EA275C1C93 /* CFAlertViewController */;
+			targetProxy = 659A8B8B2CC28A6B9079831A72604874 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		05F01F29EBEDE255B4270DA2B08DD7BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0A3219BA64C62C2AC32595222768782 /* Pods-MangopayDemo.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3055DE04570765C11C01DA8D861C3426 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 040C8AA5FF2993D598A512661948CAB8 /* Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		9553C89E183877A5CB2F3C6801BEC129 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		B9E02B44DCD5A2EA85B721336320462D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC0A24F5CCF1DF87DC3E125CDA6B749C /* Pods-MangopayDemo.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C3D75697FC93ACEDDF3B34833F99CB9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 110141F3354CA55F6BD7D746F3C231FA /* CFAlertViewController.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CFAlertViewController/CFAlertViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CFAlertViewController/CFAlertViewController-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/CFAlertViewController/CFAlertViewController.modulemap";
+				PRODUCT_MODULE_NAME = CFAlertViewController;
+				PRODUCT_NAME = CFAlertViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D6DD2FAB050E27D4157E3E49B8835EFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 364BE5C8276787DA7CDA3647FE9A5C10 /* Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E887F7585EA823C57FBFE83639F8D882 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 11A1442A0D820119E3FDAFE7506F9ED0 /* Pods-MangopayDemoTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MangopayDemoTests/Pods-MangopayDemoTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MangopayDemoTests/Pods-MangopayDemoTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		ED04F1C61B543EC3DD22B24469A25322 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80C6FDD9CC68AD3065D1561D863A0C41 /* CFAlertViewController.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CFAlertViewController/CFAlertViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CFAlertViewController/CFAlertViewController-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/CFAlertViewController/CFAlertViewController.modulemap";
+				PRODUCT_MODULE_NAME = CFAlertViewController;
+				PRODUCT_NAME = CFAlertViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		ED8538A8A8147FB8D07A2597C0096B80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 665EFF0AD87AEAF562103E06148151A0 /* Pods-MangopayDemoTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MangopayDemoTests/Pods-MangopayDemoTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MangopayDemoTests/Pods-MangopayDemoTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0C0C9828DC4C5310743C8DC0CAB380A9 /* Build configuration list for PBXNativeTarget "Pods-MangopayDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED8538A8A8147FB8D07A2597C0096B80 /* Debug */,
+				E887F7585EA823C57FBFE83639F8D882 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */,
+				9553C89E183877A5CB2F3C6801BEC129 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4B57D4F1D365C9BF2A90E04380A07EA0 /* Build configuration list for PBXNativeTarget "CFAlertViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED04F1C61B543EC3DD22B24469A25322 /* Debug */,
+				C3D75697FC93ACEDDF3B34833F99CB9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC9DB7163666DE566D17EF1D50528CCB /* Build configuration list for PBXNativeTarget "Pods-MangopayDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9E02B44DCD5A2EA85B721336320462D /* Debug */,
+				05F01F29EBEDE255B4270DA2B08DD7BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC575B72F2850F775CAC996576FB7171 /* Build configuration list for PBXNativeTarget "Pods-MangopayDemo-MangopayDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3055DE04570765C11C01DA8D861C3426 /* Debug */,
+				D6DD2FAB050E27D4157E3E49B8835EFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

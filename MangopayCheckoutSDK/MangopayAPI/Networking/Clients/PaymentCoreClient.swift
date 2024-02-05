@@ -26,6 +26,7 @@ public protocol PaymentCoreClientProtocol {
         clientId: String,
         apiKey: String
     ) async throws -> AuthorizePayIn
+    func createWebPayIn(clientId: String, apiKey: String, paypalData: APMInfo) async throws -> APMInfo
 }
 
 public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
@@ -59,6 +60,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Username" : clientId,
                 "Password": apiKey
             ],
+            apiKey: apiKey,
             verbose: true
         )
     }
@@ -124,6 +126,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Username" : clientId,
                 "Password": apiKey
             ],
+            apiKey: apiKey,
             verbose: true
         )
     }
@@ -151,6 +154,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Username" : clientId,
                 "Password": apiKey
             ],
+            apiKey: apiKey,
             verbose: true
         )
     }
@@ -173,6 +177,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Username" : clientId,
                 "Password": apiKey
             ],
+            apiKey: apiKey,
             verbose: true
         )
     }
@@ -196,6 +201,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Username" : clientId,
                 "Password": apiKey
             ],
+            apiKey: apiKey,
             verbose: true
         )
     }
@@ -218,6 +224,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Username" : clientId,
                 "Password": apiKey
             ],
+            apiKey: apiKey,
             verbose: true
         )
     }
@@ -235,6 +242,30 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Content-Type" : "application/json",
             ],
             expecting: PreAuthCard.self,
+            basicAuthDict: [
+                "Username" : clientId,
+                "Password": apiKey
+            ],
+            apiKey: apiKey,
+            verbose: true
+        )
+    }
+
+    public func createWebPayIn(clientId: String, apiKey: String, paypalData: APMInfo) async throws -> APMInfo {
+        
+        let url = baseUrl.appendingPathComponent(
+            "/\(apiVersion)/\(clientId)/payins/payment-methods/paypal",
+            isDirectory: false
+        )
+        
+        return try await request(
+            url: url,
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: paypalData.toDict(),
+            expecting: APMInfo.self,
             basicAuthDict: [
                 "Username" : clientId,
                 "Password": apiKey

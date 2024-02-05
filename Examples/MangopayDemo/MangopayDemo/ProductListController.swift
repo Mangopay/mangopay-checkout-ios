@@ -74,7 +74,7 @@ class ProductListController: UIViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-     func didTapDropInCheckout(selectedProduct: Product) {
+    func didTapPaymentSheet(selectedProduct: Product, shouldPerform3ds: Bool = true) {
          let contact = PKContact()
          contact.name = .init(givenName: "Elikem", familyName: "Savie")
          
@@ -99,42 +99,70 @@ class ProductListController: UIViewController {
         checkout = MGPPaymentSheet.create(
              paymentMethodConfig: PaymentMethodConfig(
                  cardReg: config.cardReg,
-                 applePayConfig: applePayConfig
+                 applePayConfig: applePayConfig,
+                 paypalConfig: MGPPaypalConfig()
              ),
              handlePaymentFlow: false,
              branding: PaymentFormStyle(checkoutButtonText: "Pay " + config.config.formattedAmount, checkoutTitleText: "My Checkout"),
+             supportedCardBrands: [.visa, .mastercard, .amex, .maestro],
              callback: CallBack(
                  onPaymentMethodSelected: { paymentMethod in
-                     print("✅ cardinfo", paymentMethod)
+                     switch paymentMethod {
+                     case .card(_):
+                         return nil
+                     case .applePay(_):
+                         return nil
+                     case .payPal:
+                         guard let paypalResponse = await self.mockAndHandlePaypal() else { return nil }
+                         return paypalResponse
+                     }
                  },
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
-                     self.handle3DS(with: cardRegistration.cardID ?? "") { can3DS in
+                     guard shouldPerform3ds else {
+                         DispatchQueue.main.async {
+                             self.checkout.tearDown {
+                                 self.navigationController?.popToRootViewController(animated: true)
+                                 self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
+                             }
+                         }
+                         return
+                     }
+                     self.handle3DS(with: cardRegistration.card.cardID ?? "") { can3DS in
                          if can3DS {
                              DispatchQueue.main.async {
-                                 self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
+                                 self.showSuccessDialog(title: "3DS succesful", result: cardRegistration.str ?? "")
                              }
                          } else {
                              DispatchQueue.main.async {
                                  self.checkout.tearDown {
                                      self.navigationController?.popToRootViewController(animated: true)
 
-                                     topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
+                                     self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
+
                                  }
 
                              }
                          }
                      }
-                 }, onPaymentCompleted: {
+                 }, onPaymentCompleted: { id, results in
                      print("✅ onPaymentCompleted")
+                     guard let res = results, let status = results?.status else { return }
+                     switch status {
+                     case .SUCCEEDED:
+                         self.showSuccessDialog(
+                            title: "✅ Paypal Payment",
+                            result: res.id
+                         )
+                     case .FAILED:
+                         self.showAlert(with: "", title: "Payment failed")
+                     }
                  }, onCancelled: {
                      
                  },
                  onError: { error in
                      print("❌ error", error.reason)
-//                     DispatchQueue.main.async {
                          topmostViewController?.showAlert(with: error.reason, title: "Error")
-//                     }
                  },
                  onSheetDismissed: {
                      print("✅ sheet dismisses")
@@ -145,14 +173,84 @@ class ProductListController: UIViewController {
          checkout.present(in: self)
     }
 
+    func mockAndHandlePaypal() async -> APMInfo? {
+        let paypal = APMInfo(
+            authorID: config.config.userId,
+            debitedFunds: Amount(currency: "EUR", amount: 200),
+            fees: Amount(currency: "EUR", amount: 0),
+            creditedWalletID: config.config.walletId,
+            returnURL: "https://github.com/?check=payin&env=\(config.config.env.rawValue)",
+            shippingAddress: PPAddress(
+                recipientName: "Elikem",
+                address: Address(
+                    addressLine1: "3 rue de la Feature",
+                    addressLine2: "Bat. MGP",
+                    city: "Paris",
+                    region: "IDF",
+                    postalCode: "75009",
+                    country: "FR"
+                )
+            ),
+            tag: "Postman create a payin paypal",
+            culture: "fr",
+            lineItems: [
+                LineItem(
+                    name: "running shoe 1",
+                    quantity: 1,
+                    unitAmount: 200,
+                    taxAmount: 0,
+                    description: "sub-seller information"
+                    )
+            ],
+            shippingPreference: "GET_FROM_FILE",
+            reference: "123-456",
+            redirectURL: "https://github.com"
+        )
+            
+            do {
+                let regResponse = try await PaymentCoreClient(
+                    env: self.config.config.env
+                ).createWebPayIn(
+                    clientId: self.config.config.clientId,
+                    apiKey: self.config.config.apiKey,
+                    paypalData: paypal
+                )
+                                
+//                if let _urlStr = regResponse.redirectURL, let url = URL(string: _urlStr) {
+//                    let urlController = MGPWebViewController(
+//                        url: url,
+//                        onComplete: { status in 
+//                            switch status.status {
+//                            case .SUCCEEDED:
+//                                self.showSuccessDialog(title: "✅ Paypal Payment", result: status.id )
+//                            case .FAILED:
+//                                self.showAlert(with: "", title: "Payment failed")
+//                            }
+//                        },
+//                        onError: { error in
+//                            topmostViewController?.showAlert(with: error?.localizedDescription ?? "", title: "Error")
+//                        }
+//                    )
+                    
+//                    self.checkout.pushViewController(urlController)
+//                }
+    
+                return regResponse
+            } catch {
+                print("❌ payInpaypal Error ")
+                return nil
+            }
+            
+    }
+
     func handle3DS(with cardId: String, onSuccess: ((Bool) -> Void)? ) {
         
         let payInObj = AuthorizePayIn(
             tag: "Mangopay Demo Tag",
             authorID: config.config.userId,
             creditedUserID: config.config.userId,
-            debitedFunds: DebitedFunds(currency: "EUR", amount: 2),
-            fees: DebitedFunds(currency: "EUR", amount: 1),
+            debitedFunds: Amount(currency: "EUR", amount: 2),
+            fees: Amount(currency: "EUR", amount: 1),
             creditedWalletID: config.config.walletId ?? "",
             cardID: cardId,
             secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
@@ -231,6 +329,7 @@ class ProductListController: UIViewController {
             } catch {
                 print("❌ authorizePayIn Error Creating Card Registration")
                 //            showLoader(false)
+                onSuccess?(false)
             }
             
         }
@@ -270,13 +369,16 @@ extension ProductListController: ItemCellDelegate {
         let ac = UIAlertController(title: "Checkout Options", message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Payment Form", style: .default, handler: {_ in
             self.didTapElementCheckout(selectedProduct: prod)
-           }))
-        ac.addAction(UIAlertAction(title: "Payment Sheet", style: .default, handler: { _ in
-            self.didTapDropInCheckout(selectedProduct: prod)
         }))
-           ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-           ac.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
-           present(ac, animated: true)
+        ac.addAction(UIAlertAction(title: "Payment Sheet", style: .default, handler: { _ in
+            self.didTapPaymentSheet(selectedProduct: prod)
+        }))
+        ac.addAction(UIAlertAction(title: "Payment Sheet(3DS Only)", style: .default, handler: { _ in
+            self.didTapPaymentSheet(selectedProduct: prod)
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        present(ac, animated: true)
     }
     
 }
@@ -288,8 +390,19 @@ extension ProductListController: MGPApplePayHandlerDelegate {
     }
 
     func applePayContext(didCompleteWith status: MGPApplePay.PaymentStatus, error: Error?) {
-        print("✅ status", status)
-
+        switch status {
+        case .success(let token):
+            print("🤣 MangoPayApplePay.token", token)
+//            Loader
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+//                self.showSuccessDialog(title: "🤣 MangoPayApplePay.token", result: token)
+                ResultView.show(title: "MangoPayApplePay.token", result: token)
+//            })
+        case .error:
+            print("❌ MangoPayApplePay.error")
+        case .userCancellation: break
+            
+        }
     }
     
     

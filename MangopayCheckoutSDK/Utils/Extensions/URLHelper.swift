@@ -28,7 +28,8 @@ final class URLHelper: URLHelping {
         return _3DSResult(
             type: type,
             status: _3DSStatus(rawValue: statusStr) ?? .FAILED,
-            id: id
+            id: id,
+            nethoneAttemptReference: nil
         )
     }
 

@@ -26,6 +26,15 @@ public enum Currency: String, CaseIterable {
     case euro = "EUR"
     case dollars = "USD"
     case britishPounds = "GBP"
+    case dirham = "AED"
+    case australianDollar = "AUD"
+    case canadianDollar = "CAD"
+    case swissFranc = "CHF"
+    case danishKrone = "DKK"
+    case japaneseYen = "JPY"
+    case norwegianKrone = "NOK"
+    case polishZloty = "PLN"
+    case swidishKrona = "SEK"
 }
 
 public struct Configuration {
@@ -357,12 +366,31 @@ class ConfigurationController: UIViewController {
             authorField.text = "4234427192"
             amountField.text = "1"
         case .t3:
-            apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
-            clientField.text = "12345"
-            creditedUserField.text = "6658353"
-            creditedWalletField.text = "6658354"
-            authorField.text = "6658353"
+//            apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
+//            clientField.text = "12345"
+//            creditedUserField.text = "6658353"
+//            creditedWalletField.text = "6658354"
+//            authorField.text = "6658353"
+//            amountField.text = "1"
+            
+            // apiKeyField.text = "B8hGcedwVBXpHnVJc6pu96gpBuLKuc3ohx3JSoT6NUec5MrmPu"
+            // clientField.text = "pablo123"
+            // creditedUserField.text = "user_01HGZDQ9G3791XVYV7T7PBGV9W"
+            // creditedWalletField.text = "wlt_01HGZDQQPREJ83B0WJDB3PGZAJ"
+            // authorField.text = "user_01HGZDQ9G3791XVYV7T7PBGV9W"
+            apiKeyField.text = "309ac92700674a0aacfdb9e64e29135c"
+            clientField.text = "checkoutsquad"
+            
+            
+//            creditedUserField.text = "6664602"
+//            creditedWalletField.text = "wlt_m_01HNG8W2BCX2RGD0WCM8T1TTTR"
+            
+            creditedUserField.text = "user_m_01HNG8VKTGTKX51M1S7TAPC524"
+            creditedWalletField.text = "wlt_m_01HNG8W2BCX2RGD0WCM8T1TTTR"
+            
+            authorField.text = "6664602"
             amountField.text = "1"
+            
         }
 //        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
 //        clientField.text = "12345"

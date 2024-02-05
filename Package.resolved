@@ -8,6 +8,15 @@
         "branch" : "main",
         "revision" : "05f9184d74635e379ee3deb410545d6db2e5dee1"
       }
+    },
+    {
+      "identity" : "paypal-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/paypal/paypal-ios/",
+      "state" : {
+        "branch" : "main",
+        "revision" : "2e7393cd4d2a93c710d6f95b3ea359c3d1608270"
+      }
     }
   ],
   "version" : 2

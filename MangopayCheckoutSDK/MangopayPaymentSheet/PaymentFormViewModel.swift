@@ -30,9 +30,9 @@ public class PaymentFormViewModel {
 
         form.setCardRegistration(cardRegistration)
         form.tokenizeCard { tokenizedCardData, error in
-            if let _ = tokenizedCardData, let card = tokenizedCardData?.card {
+            if let _ = tokenizedCardData, let card = tokenizedCardData?.card, let cardData = tokenizedCardData {
                 DispatchQueue.main.async {
-                    callback.onTokenizationCompleted?(card.toMGPCardReg)
+                    callback.onTokenizationCompleted?(cardData)
                     self.onTokenisationCompleted?()
                 }
             }

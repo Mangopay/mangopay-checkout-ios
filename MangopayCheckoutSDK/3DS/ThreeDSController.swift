@@ -42,6 +42,8 @@ public class ThreeDSController: UIViewController {
         let authRequest = URLRequest(url: authUrl)
         webView.navigationDelegate = self
         authUrlNavigation = webView.load(authRequest)
+        title = "3DS authentication"
+        addBackButton()
     }
 
     init(
@@ -78,6 +80,32 @@ public class ThreeDSController: UIViewController {
 
     func dismiss3DS() {
         self.dismiss(animated: true)
+    }
+
+    func addBackButton() {
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        backButton.imageView?.contentMode = .scaleAspectFit
+        backButton.setTitle("", for: .normal)
+        backButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
+        backButton.setTitleColor(backButton.tintColor, for: .normal)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+
+    @objc func closeTapped() {
+        self.displayAlert(
+            with: "Are you sure you want to leave",
+            message: "",
+            preferredStyle: .alert,
+            actions: [
+                UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }),
+                UIAlertAction(title: "No", style: .default)
+            ]
+            
+        )
     }
 
 }

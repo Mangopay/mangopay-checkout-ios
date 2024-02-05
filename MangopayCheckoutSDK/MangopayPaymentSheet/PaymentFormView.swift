@@ -7,13 +7,18 @@
 
 import UIKit
 import PassKit
+import PaymentButtons
+import NethoneSDK
 
 class PaymentFormView: UIView {
 
     public lazy var navView = NavView()
 
     private lazy var paymentForm: MGPPaymentForm = {
-        let view = MGPPaymentForm(paymentFormStyle: paymentFormStyle)
+        let view = MGPPaymentForm(
+            paymentFormStyle: paymentFormStyle,
+            supportedCardBrands: supportedCardBrands
+        )
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
        return view
@@ -61,6 +66,14 @@ class PaymentFormView: UIView {
         return button
     }()
 
+    lazy var payPalButton: PayPalButton = {
+        let payPalButton = PayPalButton()
+        payPalButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        payPalButton.layer.cornerRadius = 8
+        payPalButton.addTarget(self, action: #selector(onPaypalButtonTapped), for: .touchUpInside)
+        return payPalButton
+    }()
+
     private lazy var vStack = UIScrollView.createWithVStack(
         spacing: 8,
         alignment: .fill,
@@ -70,6 +83,7 @@ class PaymentFormView: UIView {
             navView,
             paymentForm,
             paymentButton,
+            payPalButton,
             orPayWith,
             applePayButton,
             statusLabel
@@ -89,6 +103,7 @@ class PaymentFormView: UIView {
 
     var tapGesture: UIGestureRecognizer?
     var onApplePayTapped: (() -> ())?
+    var onAPMTapped: ((APMInfo) -> ())?
 
     var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
@@ -98,6 +113,7 @@ class PaymentFormView: UIView {
     
     var paymentFormStyle: PaymentFormStyle
     var currentAttempt: String?
+    var supportedCardBrands: [CardType]?
 
     var client: MangopayClient
     var callback: CallBack
@@ -109,12 +125,14 @@ class PaymentFormView: UIView {
         paymentMethodConfig: PaymentMethodConfig,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle?,
+        supportedCardBrands: [CardType]? = nil,
         callback: CallBack
     ) {
         self.paymentFormStyle = branding ?? PaymentFormStyle()
         self.callback = callback
         self.client = client
         self.paymentMethodConfig = paymentMethodConfig
+        self.supportedCardBrands = supportedCardBrands
         self.handlePaymentFlow = handlePaymentFlow
         
         self.viewModel = PaymentFormViewModel(
@@ -129,7 +147,7 @@ class PaymentFormView: UIView {
         )
 
         [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodConfig.applePayConfig?.shouldRenderApplePay == true)})
-
+        payPalButton.isHidden = paymentMethodConfig.paypalConfig == nil
         setupView()
 
         viewModel.onTokenisationCompleted = {
@@ -185,22 +203,46 @@ class PaymentFormView: UIView {
     @objc func onTappedButton() {
         guard paymentForm.isFormValid else { return }
         finalizeButtonTapped()
-        callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
+        Task {
+            await callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
+        }
         Loader.show()
+    }
 
+    @objc func onPaypalButtonTapped() {
+        Task {
+            Loader.show()
+            if let paypalAPM = await callback.onPaymentMethodSelected?(.payPal) {
+                self.onAPMTapped?(paypalAPM)
+            }
+            Loader.hide()
+        }
     }
 
     @objc func onApplePayBtnTapped() {
         onApplePayTapped?()
-        callback.onPaymentMethodSelected?(.applePay(.none))
+        Task {
+            await callback.onPaymentMethodSelected?(.applePay(.none))
+        }
     }
 
     func finalizeButtonTapped() {
-        viewModel.tokenizeCard(
-            form: self.paymentForm,
-            cardRegistration: paymentMethodConfig.cardReg,
-            callback: callback
-        )
+        do {
+            try NTHNethone.finalizeAttempt { [self] res in
+                print("🤣 finalizeAttempt", res)
+                self.viewModel.tokenizeCard(
+                    form: self.paymentForm,
+                    cardRegistration: self.paymentMethodConfig.cardReg,
+                    callback: self.callback
+                )
+            }
+        } catch {
+            
+        }
+//        try? NTHNethone.finalizeAttempt { error in
+//            print("Error finalizing Nethone attempt", error?.localizedDescription ?? "")
+//        }
+
     }
 }
 

@@ -25,12 +25,14 @@ public class MGPPaymentSheet {
         paymentMethodConfig: PaymentMethodConfig,
         handlePaymentFlow: Bool = false,
         branding: PaymentFormStyle,
+        supportedCardBrands: [CardType]? = nil,
         callback: CallBack
     ) -> MGPPaymentSheet {
         paymentFormVC = PaymentFormController(
             paymentMethodConfig: paymentMethodConfig,
             handlePaymentFlow: handlePaymentFlow,
             branding: branding,
+            supportedCardBrands: supportedCardBrands,
             callback: callback
         )
         let mgp = MGPPaymentSheet()
@@ -62,6 +64,11 @@ public class MGPPaymentSheet {
     public func validate() {
         MGPPaymentSheet.paymentFormVC.manuallyValidateForms()
     }
+
+    public func pushViewController(_ viewController: UIViewController) {
+        self.navVC.pushViewController(viewController, animated: true)
+    }
+    
 
     public func launch3DSIfPossible(
         payData: PayInPreAuthProtocol? = nil,

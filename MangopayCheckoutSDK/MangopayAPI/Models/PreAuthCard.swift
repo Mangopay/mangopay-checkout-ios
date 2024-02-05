@@ -9,7 +9,7 @@ import Foundation
 
 public protocol PayInPreAuthProtocol {
     var authorID: String? { set get }
-    var debitedFunds: DebitedFunds? { set get }
+    var debitedFunds: Amount? { set get }
     var secureMode: String? { set get }
     var cardID: String? { set get }
     var secureModeNeeded: Bool? { set get }
@@ -33,7 +33,7 @@ public struct PreAuthCard: Codable, PayInPreAuthProtocol {
     }
 
     public var authorID: String?
-    public var debitedFunds, remainingFunds: DebitedFunds?
+    public var debitedFunds, remainingFunds: Amount?
     var status, paymentStatus, resultCode, resultMessage: String?
     public var executionType, secureMode, cardID: String?
     public var secureModeNeeded: Bool?
@@ -83,7 +83,7 @@ public struct PreAuthCard: Codable, PayInPreAuthProtocol {
         case shipping = "Shipping"
     }
 
-    public init(authorID: String, debitedFunds: DebitedFunds, remainingFunds: DebitedFunds? = nil, status: String? = nil, paymentStatus: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String, secureModeNeeded: Bool, secureModeRedirectURL: String? = nil, secureModeReturnURL: String? = nil, expirationDate: Int? = nil, payInID: String? = nil, billing: Ing? = nil, securityInfo: SecurityInfo? = nil, culture: String? = nil, multiCapture: Bool? = nil, ipAddress: String = "2001:0620:0000:0000:0211:24FF:FE80:C12C", browserInfo: BrowserInfo = BrowserInfo(), shipping: Ing? = nil) {
+    public init(authorID: String, debitedFunds: Amount, remainingFunds: Amount? = nil, status: String? = nil, paymentStatus: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String, secureModeNeeded: Bool, secureModeRedirectURL: String? = nil, secureModeReturnURL: String? = nil, expirationDate: Int? = nil, payInID: String? = nil, billing: Ing? = nil, securityInfo: SecurityInfo? = nil, culture: String? = nil, multiCapture: Bool? = nil, ipAddress: String = "2001:0620:0000:0000:0211:24FF:FE80:C12C", browserInfo: BrowserInfo = BrowserInfo(), shipping: Ing? = nil) {
         self.authorID = authorID
         self.debitedFunds = debitedFunds
         self.remainingFunds = remainingFunds

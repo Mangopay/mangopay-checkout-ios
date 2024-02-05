@@ -233,8 +233,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
 
     func initiateNethone() {
         cancelNethoneAttemptIfAny()
-        NTHNethone.setMerchantNumber("428242");
         let nethoneConfig = NTHAttemptConfiguration()
+        nethoneConfig.registeredTextFieldsOnly = true
         nethoneConfig.sensitiveFields = [
             "cardNumberField",
             "cardNameField",
@@ -255,25 +255,25 @@ public class MGPPaymentForm: UIView, FormValidatable {
     func registerTextfieldsToNethone() {
         NTHNethone.register(
             cardNumberField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cardNumberField"
         )
 
         NTHNethone.register(
             cardNameField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cardNameField"
         )
 
         NTHNethone.register(
             expiryDateField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "expiryDateField"
         )
 
         NTHNethone.register(
             cvvField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cvvField"
         )
     }
