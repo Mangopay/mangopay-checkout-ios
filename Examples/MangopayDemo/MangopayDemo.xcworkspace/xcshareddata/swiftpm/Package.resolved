@@ -6,7 +6,7 @@
       "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
       "state" : {
         "branch" : "master",
-        "revision" : "6f357ea18e0da4e089368da3b2b278d09102df65"
+        "revision" : "f137f7ffc158c09582574d0abf1ffaf6108ad88e"
       }
     },
     {
@@ -33,7 +33,7 @@
       "location" : "https://github.com/paypal/paypal-ios/",
       "state" : {
         "branch" : "main",
-        "revision" : "2e7393cd4d2a93c710d6f95b3ea359c3d1608270"
+        "revision" : "6c25b9f8b90a6fe6c2235bbec023aa62782ce18b"
       }
     }
   ],

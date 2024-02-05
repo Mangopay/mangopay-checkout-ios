@@ -11,7 +11,7 @@ public struct CardValidation: Codable, PayInPreAuthProtocol {
 
     public var authorID: String?
     public var tag: String?
-    public var debitedFunds: DebitedFunds?
+    public var debitedFunds: Amount?
     public var secureMode: String?
     public var cardID: String?
     public var secureModeNeeded: Bool?
@@ -36,7 +36,7 @@ public struct CardValidation: Codable, PayInPreAuthProtocol {
         case secureModeNeeded = "SecureModeNeeded"
     }
 
-    public init(authorID: String? = nil, tag: String? = nil, debitedFunds: DebitedFunds? = nil, secureMode: String? = nil, cardID: String? = nil, secureModeNeeded: Bool? = nil, secureModeRedirectURL: String? = nil, secureModeReturnURL: String? = nil, status: String? = nil, culture: String? = nil, ipAddress: String? = nil, browserInfo: BrowserInfo? = nil) {
+    public init(authorID: String? = nil, tag: String? = nil, debitedFunds: Amount? = nil, secureMode: String? = nil, cardID: String? = nil, secureModeNeeded: Bool? = nil, secureModeRedirectURL: String? = nil, secureModeReturnURL: String? = nil, status: String? = nil, culture: String? = nil, ipAddress: String? = nil, browserInfo: BrowserInfo? = nil) {
         self.authorID = authorID
         self.tag = tag
         self.debitedFunds = debitedFunds
@@ -54,7 +54,7 @@ public struct CardValidation: Codable, PayInPreAuthProtocol {
 
 public struct APMInfo: Codable {
     let authorID: String?
-    let debitedFunds, fees: DebitedFunds?
+    let debitedFunds, fees: Amount?
     public let creditedWalletID, returnURL: String?, redirectURL: String?
     let shippingAddress: PPAddress?
     let tag, culture: String?
@@ -77,7 +77,7 @@ public struct APMInfo: Codable {
         case reference = "Reference"
     }
 
-    public init(authorID: String?, debitedFunds: DebitedFunds?, fees: DebitedFunds?, creditedWalletID: String?, returnURL: String?, shippingAddress: PPAddress?, tag: String?, culture: String?, lineItems: [LineItem]?, shippingPreference: String?, reference: String?, redirectURL: String?) {
+    public init(authorID: String?, debitedFunds: Amount?, fees: Amount?, creditedWalletID: String?, returnURL: String?, shippingAddress: PPAddress?, tag: String?, culture: String?, lineItems: [LineItem]?, shippingPreference: String?, reference: String?, redirectURL: String?) {
         self.authorID = authorID
         self.debitedFunds = debitedFunds
         self.fees = fees

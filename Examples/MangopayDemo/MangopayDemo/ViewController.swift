@@ -91,7 +91,7 @@ class ViewController: UIViewController {
                     onTokenizationCompleted: { cardRegistration in
                         print("✅ cardRegistration", cardRegistration)
 //                        topmostViewController?.showAlert(with: cardRegistration.cardID ?? "", title: "✅ cardRegistration")
-                        self.handle3DS(with: cardRegistration.cardID ?? "") {
+                        self.handle3DS(with: cardRegistration.card.cardID ?? "") {
                             self.showAlert(with: "3DS succesful", title: "🎉 Payment complete")
                         }
                     }, onPaymentCompleted: { _, _ in
@@ -193,8 +193,8 @@ class ViewController: UIViewController {
             tag: "Mangopay Demo Tag",
             authorID: "158091557",
             creditedUserID: "158091557",
-            debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
-            fees: DebitedFunds(currency: "EUR", amount: 1),
+            debitedFunds: Amount(currency: "EUR", amount: 10),
+            fees: Amount(currency: "EUR", amount: 1),
             creditedWalletID: "159834019",
             cardID: cardId,
             secureModeReturnURL: "https://docs.mangopay.com/please-ignore",

@@ -123,22 +123,22 @@ class ProductListController: UIViewController {
                          DispatchQueue.main.async {
                              self.checkout.tearDown {
                                  self.navigationController?.popToRootViewController(animated: true)
-                                 self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.cardID ?? "")
+                                 self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
                              }
                          }
                          return
                      }
-                     self.handle3DS(with: cardRegistration.cardID ?? "") { can3DS in
+                     self.handle3DS(with: cardRegistration.card.cardID ?? "") { can3DS in
                          if can3DS {
                              DispatchQueue.main.async {
-                                 self.showSuccessDialog(title: "3DS succesful", result: cardRegistration.cardID ?? "")
+                                 self.showSuccessDialog(title: "3DS succesful", result: cardRegistration.str ?? "")
                              }
                          } else {
                              DispatchQueue.main.async {
                                  self.checkout.tearDown {
                                      self.navigationController?.popToRootViewController(animated: true)
 
-                                     self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.cardID ?? "")
+                                     self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
 
                                  }
 
@@ -176,8 +176,8 @@ class ProductListController: UIViewController {
     func mockAndHandlePaypal() async -> APMInfo? {
         let paypal = APMInfo(
             authorID: config.config.userId,
-            debitedFunds: DebitedFunds(currency: "EUR", amount: 200),
-            fees: DebitedFunds(currency: "EUR", amount: 0),
+            debitedFunds: Amount(currency: "EUR", amount: 200),
+            fees: Amount(currency: "EUR", amount: 0),
             creditedWalletID: config.config.walletId,
             returnURL: "https://github.com/?check=payin&env=\(config.config.env.rawValue)",
             shippingAddress: PPAddress(
@@ -249,8 +249,8 @@ class ProductListController: UIViewController {
             tag: "Mangopay Demo Tag",
             authorID: config.config.userId,
             creditedUserID: config.config.userId,
-            debitedFunds: DebitedFunds(currency: "EUR", amount: 2),
-            fees: DebitedFunds(currency: "EUR", amount: 1),
+            debitedFunds: Amount(currency: "EUR", amount: 2),
+            fees: Amount(currency: "EUR", amount: 1),
             creditedWalletID: config.config.walletId ?? "",
             cardID: cardId,
             secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
@@ -329,6 +329,7 @@ class ProductListController: UIViewController {
             } catch {
                 print("❌ authorizePayIn Error Creating Card Registration")
                 //            showLoader(false)
+                onSuccess?(false)
             }
             
         }

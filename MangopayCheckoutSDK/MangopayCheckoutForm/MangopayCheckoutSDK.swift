@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import NethoneSDK
 
 public struct MangopayCheckoutSDK {
 
@@ -10,6 +11,7 @@ public struct MangopayCheckoutSDK {
         self.clientId = clientId
         self.environment = environment
         Tokenizer.initialize(clientId: clientId, environment: environment)
+        NTHNethone.setMerchantNumber(Constants.nethoneMerchantId);
     }
 
     public static func tokenizeCard(

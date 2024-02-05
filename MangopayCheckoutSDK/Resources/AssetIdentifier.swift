@@ -22,6 +22,7 @@ extension UIImage {
         case card_jcb
         case card_maestro
         case paypal
+        case app_icon
         case none
     }
 

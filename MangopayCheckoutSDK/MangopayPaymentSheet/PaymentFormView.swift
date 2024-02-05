@@ -8,6 +8,7 @@
 import UIKit
 import PassKit
 import PaymentButtons
+import NethoneSDK
 
 class PaymentFormView: UIView {
 
@@ -226,11 +227,22 @@ class PaymentFormView: UIView {
     }
 
     func finalizeButtonTapped() {
-        viewModel.tokenizeCard(
-            form: self.paymentForm,
-            cardRegistration: paymentMethodConfig.cardReg,
-            callback: callback
-        )
+        do {
+            try NTHNethone.finalizeAttempt { [self] res in
+                print("🤣 finalizeAttempt", res)
+                self.viewModel.tokenizeCard(
+                    form: self.paymentForm,
+                    cardRegistration: self.paymentMethodConfig.cardReg,
+                    callback: self.callback
+                )
+            }
+        } catch {
+            
+        }
+//        try? NTHNethone.finalizeAttempt { error in
+//            print("Error finalizing Nethone attempt", error?.localizedDescription ?? "")
+//        }
+
     }
 }
 

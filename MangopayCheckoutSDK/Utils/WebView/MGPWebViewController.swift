@@ -12,7 +12,6 @@ import UIKit
 
 public class MGPWebViewController: UIViewController {
 
-//    var webView: WKWebView!
     private var url: URL?
     private let urlHelper: URLHelping = URLHelper()
     
@@ -20,13 +19,7 @@ public class MGPWebViewController: UIViewController {
     private var onError: ((Error?) -> ())?
 
     var authUrlNavigation: WKNavigation?
-
-//    lazy var activityIndiicatorView: UIActivityIndicatorView = {
-//       let view = UIActivityIndicatorView()
-//        view.style = .large
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//       return view
-//    }()
+    private var nethoneAttemptReference: String?
 
     lazy var mgpWebView = MGPWebView()
 
@@ -46,10 +39,12 @@ public class MGPWebViewController: UIViewController {
     
     public init(
         url: URL,
+        nethoneAttemptReference: String?,
         onComplete: ((_3DSResult) -> ())?,
         onError: ((Error?) -> ())?
     ) {
         self.url = url
+        self.nethoneAttemptReference = nethoneAttemptReference
         self.onComplete = onComplete
         self.onError = onError
         super.init(nibName: nil, bundle: nil)
@@ -121,13 +116,17 @@ extension MGPWebViewController: WKNavigationDelegate {
             do {
                 let regResponse = try await PaymentCoreClient(
                     env: .t3
-                ).getPayIn(clientId: "pablo123", apiKey: "B8hGcedwVBXpHnVJc6pu96gpBuLKuc3ohx3JSoT6NUec5MrmPu", payInId: _3dsResult.id)
+                ).getPayIn(
+                    clientId: MangopayCheckoutSDK.clientId,
+                    apiKey: "309ac92700674a0aacfdb9e64e29135c",
+                    payInId: _3dsResult.id
+                )
   
-                print("🤣 Get pay IN", regResponse)
                 _3dsResult = _3DSResult(
                     type: .cardDirect,
                     status: .SUCCEEDED,
-                    id: _3dsResult.id
+                    id: _3dsResult.id,
+                    nethoneAttemptReference: nethoneAttemptReference
                 )
                 self.handleDismiss(_3dsResult: _3dsResult)
 
@@ -136,7 +135,8 @@ extension MGPWebViewController: WKNavigationDelegate {
                 _3dsResult = _3DSResult(
                     type: .cardDirect,
                     status: .FAILED,
-                    id: _3dsResult.id
+                    id: _3dsResult.id,
+                    nethoneAttemptReference: nethoneAttemptReference
                 )
                 self.handleDismiss(_3dsResult: _3dsResult)
             }
@@ -147,7 +147,6 @@ extension MGPWebViewController: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.onError?(MGPError._3dsError(additionalInfo: error.localizedDescription))
         mgpWebView.activityIndiicatorView.stopAnimating()
-        print("🤣 url: navigation", webView.url!)
     }
 
     private func handleDismiss(_3dsResult: _3DSResult) {
@@ -162,10 +161,4 @@ extension MGPWebViewController: WKNavigationDelegate {
 
 }
 
-extension MGPWebViewController {
-//    static func openUrl(url: URL, in controller: UIViewController) {
-//        let urlController = MGPWebViewController(url: url, onError: nil)
-//        controller.present(urlController, animated: true)
-//    }
-}
 

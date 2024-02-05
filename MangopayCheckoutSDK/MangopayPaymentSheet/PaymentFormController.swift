@@ -80,17 +80,18 @@ class PaymentFormController: UIViewController {
                 }
             }
         }
-
+        
         formView.onClosedTapped = {
             self.navigationController?.dismiss(animated: true, completion: {
                 self.callback.onSheetDismissed?()
             })
         }
-
+        
         formView.onAPMTapped = { apmInfo in
             if let _urlStr = apmInfo.redirectURL, let url = URL(string: _urlStr) {
                 let urlController = MGPWebViewController(
                     url: url,
+                    nethoneAttemptReference: self.formView.currentAttempt,
                     onComplete: { status in
                         self.callback.onPaymentCompleted?(nil, status)
                     },
@@ -98,10 +99,14 @@ class PaymentFormController: UIViewController {
                         self.callback.onError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
                     }
                 )
-
+                
                 self.navigationController?.pushViewController(urlController, animated: true)
             }
         }
+    }
+
+    @objc func doneAction() {
+        self.navigationController?.popViewController(animated: true)
     }
 
     @objc func closeTapped() {

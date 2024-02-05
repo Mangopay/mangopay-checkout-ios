@@ -14,6 +14,7 @@ public struct MGPCardInfo: Codable, Cardable {
     public var cardType: String?
     public var accessKeyRef: String?
     public var data: String?
+    public var amount: Amount?
 
     public var cvc: String? {
         return cardCvx

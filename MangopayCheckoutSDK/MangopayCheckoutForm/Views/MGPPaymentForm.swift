@@ -73,6 +73,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
         textfield.accessibilityLabel = "cvvField"
     }
 
+    lazy var privacyView = PrivacyView()
+
     private lazy var hStack = UIStackView.create(
         spacing: 8,
         axis: .horizontal,
@@ -90,9 +92,13 @@ public class MGPPaymentForm: UIView, FormValidatable {
             headerView,
             cardNumberField,
             cardNameField,
-            hStack
+            hStack,
+            privacyView
         ]
-    )
+    ) {
+        stackview in
+        stackview.setCustomSpacing(4, after: self.hStack)
+    }
 
     lazy public var forms: [Validatable] = [
         cardNumberField,
@@ -157,6 +163,11 @@ public class MGPPaymentForm: UIView, FormValidatable {
             self.cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
             self.cardNumberField.setLeftImage(self.cardType?.icon)
         }
+    
+        privacyView.didTapPrivacyAction = {
+            guard let webVC = WebViewController.openWebView(with: "https://mangopay.com/privacy-statement") else { return }
+            topmostViewController?.present(webVC, animated: true)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -171,7 +182,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
         vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        vStack.heightAnchor.constraint(equalToConstant: 320).isActive = true
+        vStack.heightAnchor.constraint(equalToConstant: 350).isActive = true
 
         self.backgroundColor = .white
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -222,8 +233,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
 
     func initiateNethone() {
         cancelNethoneAttemptIfAny()
-        NTHNethone.setMerchantNumber("428242");
         let nethoneConfig = NTHAttemptConfiguration()
+        nethoneConfig.registeredTextFieldsOnly = true
         nethoneConfig.sensitiveFields = [
             "cardNumberField",
             "cardNameField",
@@ -237,32 +248,32 @@ public class MGPPaymentForm: UIView, FormValidatable {
             try NTHNethone.beginAttempt(with: nethoneConfig)
             currentAttempt = NTHNethone.attemptReference()
         } catch { error
-//            print("Nethone intiation Error", error.localizedDescription)
+            print("Nethone intiation Error", error.localizedDescription)
         }
     }
 
     func registerTextfieldsToNethone() {
         NTHNethone.register(
             cardNumberField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cardNumberField"
         )
 
         NTHNethone.register(
             cardNameField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cardNameField"
         )
 
         NTHNethone.register(
             expiryDateField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "expiryDateField"
         )
 
         NTHNethone.register(
             cvvField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cvvField"
         )
     }
