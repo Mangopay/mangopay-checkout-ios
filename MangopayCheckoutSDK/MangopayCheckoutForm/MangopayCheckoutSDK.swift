@@ -31,7 +31,8 @@ public struct MangopayCheckoutSDK {
             callBack(nil, MGPError.invalidForm)
             return
         }
-        guard let attemptRef = form.currentAttempt else {
+
+        guard let attemptRef = NTHNethone.attemptReference() else {
             callBack(nil, MGPError.nethoneAttemptReferenceRqd)
             return
         }

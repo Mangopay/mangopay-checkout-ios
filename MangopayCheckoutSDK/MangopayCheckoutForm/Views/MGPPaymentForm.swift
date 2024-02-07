@@ -118,7 +118,6 @@ public class MGPPaymentForm: UIView, FormValidatable {
     var onRightButtonTappedAction: (() -> Void)?
     var didEndEditing: ((MGPPaymentForm) -> Void)?
 
-    var currentAttempt: String?
     
     var cardRegistration: MGPCardRegistration?
 
@@ -246,7 +245,6 @@ public class MGPPaymentForm: UIView, FormValidatable {
 
         do {
             try NTHNethone.beginAttempt(with: nethoneConfig)
-            currentAttempt = NTHNethone.attemptReference()
         } catch { error
             print("Nethone intiation Error", error.localizedDescription)
         }
@@ -284,7 +282,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
             return
         }
 
-        guard let attemptRef = self.currentAttempt else {
+        guard let attemptRef = NTHNethone.attemptReference() else {
             callBack(nil, MGPError.nethoneAttemptReferenceRqd)
             return
         }
