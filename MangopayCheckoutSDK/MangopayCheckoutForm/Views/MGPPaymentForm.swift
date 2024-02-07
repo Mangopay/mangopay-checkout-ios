@@ -221,25 +221,9 @@ public class MGPPaymentForm: UIView, FormValidatable {
         self.cardRegistration = cardRegistration
     }
 
-    func cancelNethoneAttemptIfAny() {
-        do {
-            try NethoneSDK.NTHNethone.cancelAttempt()
-            print("CancelAttempt success")
-        } catch { 
-//            print("Nethone cancelAttempt Error", error.localizedDescription)
-        }
-    }
-
     func initiateNethone() {
-        cancelNethoneAttemptIfAny()
         let nethoneConfig = NTHAttemptConfiguration()
         nethoneConfig.registeredTextFieldsOnly = true
-        nethoneConfig.sensitiveFields = [
-            "cardNumberField",
-            "cardNameField",
-            "expiryDateField",
-            "cvvField"
-        ]
 
         registerTextfieldsToNethone()
 
