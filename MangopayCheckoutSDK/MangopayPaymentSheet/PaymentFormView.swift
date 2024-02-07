@@ -227,22 +227,12 @@ class PaymentFormView: UIView {
     }
 
     func finalizeButtonTapped() {
-        do {
-            try NTHNethone.finalizeAttempt { [self] res in
-                print("🤣 finalizeAttempt", res)
-                self.viewModel.tokenizeCard(
-                    form: self.paymentForm,
-                    cardRegistration: self.paymentMethodConfig.cardReg,
-                    callback: self.callback
-                )
-            }
-        } catch {
-            
-        }
-//        try? NTHNethone.finalizeAttempt { error in
-//            print("Error finalizing Nethone attempt", error?.localizedDescription ?? "")
-//        }
-
+        self.viewModel.tokenizeCard(
+            form: self.paymentForm,
+            cardRegistration: self.paymentMethodConfig.cardReg,
+            callback: self.callback
+        )
     }
+
 }
 
