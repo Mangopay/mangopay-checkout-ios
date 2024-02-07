@@ -7,6 +7,7 @@
 
 import UIKit
 import PassKit
+import NethoneSDK
 
 class PaymentFormController: UIViewController {
 
@@ -84,6 +85,7 @@ class PaymentFormController: UIViewController {
         formView.onClosedTapped = {
             self.navigationController?.dismiss(animated: true, completion: {
                 self.callback.onSheetDismissed?()
+                NethoneManager.shared.cancelNethoneAttemptIfAny()
             })
         }
         
