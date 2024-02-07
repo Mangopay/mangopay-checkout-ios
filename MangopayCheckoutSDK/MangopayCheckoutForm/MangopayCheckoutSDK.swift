@@ -11,7 +11,7 @@ public struct MangopayCheckoutSDK {
         self.clientId = clientId
         self.environment = environment
         Tokenizer.initialize(clientId: clientId, environment: environment)
-        NTHNethone.setMerchantNumber(Constants.nethoneMerchantId);
+        NethoneManager.shared.initialize(with: Constants.nethoneMerchantId)
     }
 
     public static func tokenizeCard(
