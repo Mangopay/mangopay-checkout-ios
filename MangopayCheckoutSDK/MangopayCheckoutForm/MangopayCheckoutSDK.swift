@@ -11,7 +11,7 @@ public struct MangopayCheckoutSDK {
         self.clientId = clientId
         self.environment = environment
         Tokenizer.initialize(clientId: clientId, environment: environment)
-        NTHNethone.setMerchantNumber(Constants.nethoneMerchantId);
+        NethoneManager.shared.initialize(with: Constants.nethoneMerchantId)
     }
 
     public static func tokenizeCard(
@@ -31,7 +31,8 @@ public struct MangopayCheckoutSDK {
             callBack(nil, MGPError.invalidForm)
             return
         }
-        guard let attemptRef = form.currentAttempt else {
+
+        guard let attemptRef = NTHNethone.attemptReference() else {
             callBack(nil, MGPError.nethoneAttemptReferenceRqd)
             return
         }

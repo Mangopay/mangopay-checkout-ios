@@ -31,9 +31,12 @@ public class PaymentFormViewModel {
         form.setCardRegistration(cardRegistration)
         form.tokenizeCard { tokenizedCardData, error in
             if let _ = tokenizedCardData, let card = tokenizedCardData?.card, let cardData = tokenizedCardData {
-                DispatchQueue.main.async {
-                    callback.onTokenizationCompleted?(cardData)
-                    self.onTokenisationCompleted?()
+                
+                NethoneManager.shared.performFinalizeAttempt { _ in
+                    DispatchQueue.main.async {
+                        callback.onTokenizationCompleted?(cardData)
+                        self.onTokenisationCompleted?()
+                    }
                 }
             }
 

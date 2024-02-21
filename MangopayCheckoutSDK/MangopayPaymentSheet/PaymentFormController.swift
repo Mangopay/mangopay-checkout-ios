@@ -7,6 +7,7 @@
 
 import UIKit
 import PassKit
+import NethoneSDK
 
 class PaymentFormController: UIViewController {
 
@@ -84,6 +85,7 @@ class PaymentFormController: UIViewController {
         formView.onClosedTapped = {
             self.navigationController?.dismiss(animated: true, completion: {
                 self.callback.onSheetDismissed?()
+                NethoneManager.shared.cancelNethoneAttemptIfAny()
             })
         }
         
@@ -91,9 +93,11 @@ class PaymentFormController: UIViewController {
             if let _urlStr = apmInfo.redirectURL, let url = URL(string: _urlStr) {
                 let urlController = MGPWebViewController(
                     url: url,
-                    nethoneAttemptReference: self.formView.currentAttempt,
+                    nethoneAttemptReference: NTHNethone.attemptReference(),
                     onComplete: { status in
-                        self.callback.onPaymentCompleted?(nil, status)
+                        NethoneManager.shared.performFinalizeAttempt { res in
+                            self.callback.onPaymentCompleted?(nil, status)
+                        }
                     },
                     onError: { error in
                         self.callback.onError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))

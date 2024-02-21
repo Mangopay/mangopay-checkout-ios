@@ -66,7 +66,9 @@ extension MGPApplePayHandler: PKPaymentAuthorizationControllerDelegate {
         let token = payment.token.paymentData.base64EncodedString().fromBase64()
         print("✅ token,", token)
         self.paymentStatus = status
-        self.delegate?.applePayContext(didCompleteWith: .success(token), error: nil)
+        NethoneManager.shared.performFinalizeAttempt { res in
+            self.delegate?.applePayContext(didCompleteWith: .success(token), error: nil)
+        }
         completion(PKPaymentAuthorizationResult(status: status, errors: []))
     }
     
