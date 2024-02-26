@@ -78,7 +78,7 @@ class ViewController: UIViewController {
             }
             
             var checkout = MGPPaymentSheet.create(
-                paymentMethodConfig: PaymentMethodConfig(
+                paymentMethodConfig: PaymentMethodOptions(
                     cardReg: cardRegistration
                 ),
                 handlePaymentFlow: false,

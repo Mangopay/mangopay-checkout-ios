@@ -22,7 +22,7 @@ public class MGPPaymentSheet {
     }
 
     public static func create(
-        paymentMethodConfig: PaymentMethodConfig,
+        paymentMethodConfig: PaymentMethodOptions,
         handlePaymentFlow: Bool = false,
         branding: PaymentFormStyle,
         supportedCardBrands: [CardType]? = nil,
@@ -109,7 +109,7 @@ public class MGPPaymentSheet {
                 switch result.status {
                 case .SUCCEEDED:
                     on3DSSucces?(result.id)
-                case .FAILED:
+                case .FAILED, .CANCELLED:
                     on3DSFailure?(result.id)
                 }
             }) { error in

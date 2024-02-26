@@ -117,12 +117,12 @@ class PaymentFormView: UIView {
 
     var client: MangopayClient
     var callback: CallBack
-    var paymentMethodConfig: PaymentMethodConfig
+    var paymentMethodConfig: PaymentMethodOptions
     var handlePaymentFlow: Bool
 
     init(
         client: MangopayClient,
-        paymentMethodConfig: PaymentMethodConfig,
+        paymentMethodConfig: PaymentMethodOptions,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle?,
         supportedCardBrands: [CardType]? = nil,
@@ -176,7 +176,7 @@ class PaymentFormView: UIView {
 
     @objc func closeTapped() {
         onClosedTapped?()
-        callback.onCancelled?()
+        callback.onCancel?()
     }
 
     @objc func onViewTap() {
@@ -203,16 +203,23 @@ class PaymentFormView: UIView {
     @objc func onTappedButton() {
         guard paymentForm.isFormValid else { return }
         finalizeButtonTapped()
-        Task {
-            await callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
-        }
+        callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
         Loader.show()
     }
 
     @objc func onPaypalButtonTapped() {
+//        Task {
+//            Loader.show()
+//            if let paypalAPM = await callback.onPaymentMethodSelected?(.payPal) {
+//                self.onAPMTapped?(paypalAPM)
+//            }
+//            Loader.hide()
+//        }
+
         Task {
+            callback.onPaymentMethodSelected?(.payPal)
             Loader.show()
-            if let paypalAPM = await callback.onPaymentMethodSelected?(.payPal) {
+            if let paypalAPM = await callback.onCreatePayment?(.payPal) {
                 self.onAPMTapped?(paypalAPM)
             }
             Loader.hide()
@@ -221,17 +228,28 @@ class PaymentFormView: UIView {
 
     @objc func onApplePayBtnTapped() {
         onApplePayTapped?()
-        Task {
-            await callback.onPaymentMethodSelected?(.applePay(.none))
-        }
+        callback.onPaymentMethodSelected?(.applePay(.none))
     }
 
     func finalizeButtonTapped() {
-        self.viewModel.tokenizeCard(
-            form: self.paymentForm,
-            cardRegistration: self.paymentMethodConfig.cardReg,
-            callback: self.callback
-        )
+        if let cardReg = paymentMethodConfig.cardReg {
+            self.viewModel.tokenizeCard(
+                form: self.paymentForm,
+                cardRegistration: cardReg,
+                callback: self.callback
+            )
+        } else {
+            Task {
+                if let cardReg = await callback.onCreateCardRegistration?(self.paymentForm.cardData) {
+                    self.viewModel.tokenizeCard(
+                        form: self.paymentForm,
+                        cardRegistration: cardReg,
+                        callback: self.callback
+                    )
+                }
+            }
+        }
+        
     }
 
 }

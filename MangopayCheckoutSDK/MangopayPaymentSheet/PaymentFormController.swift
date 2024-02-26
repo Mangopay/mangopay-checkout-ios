@@ -15,14 +15,14 @@ class PaymentFormController: UIViewController {
 
     var paymentFormStyle: PaymentFormStyle
     var callback: CallBack
-    var paymentMethodConfig: PaymentMethodConfig
+    var paymentMethodConfig: PaymentMethodOptions
     var handlePaymentFlow: Bool
     let paymentHandler = MGPApplePayHandler()
     var supportedCardBrands: [CardType]?
 
     public init(
         cardConfig: CardConfig? = nil,
-        paymentMethodConfig: PaymentMethodConfig,
+        paymentMethodConfig: PaymentMethodOptions,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle?,
         supportedCardBrands: [CardType]? = nil,

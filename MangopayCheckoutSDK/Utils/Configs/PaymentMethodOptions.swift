@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PaymentMethodConfig {
+public struct PaymentMethodOptions {
     var card: MGPCardInfo?
     var cardReg: MGPCardRegistration?
     var applePayConfig: MGPApplePayConfig?

@@ -109,12 +109,11 @@ class ProductListController: UIViewController {
                  onPaymentMethodSelected: { paymentMethod in
                      switch paymentMethod {
                      case .card(_):
-                         return nil
+                         return
                      case .applePay(_):
-                         return nil
+                         return
                      case .payPal:
-                         guard let paypalResponse = await self.mockAndHandlePaypal() else { return nil }
-                         return paypalResponse
+                         return
                      }
                  },
                  onTokenizationCompleted: { cardRegistration in
@@ -157,6 +156,28 @@ class ProductListController: UIViewController {
                      case .FAILED:
                          self.showAlert(with: "", title: "Payment failed")
                      }
+                 }, onCreatePayment: { paymentMethod in
+                     switch paymentMethod {
+                     case .card(_):
+                         return nil
+                     case .applePay(_):
+                         return nil
+                     case .payPal:
+                         guard let paypalResponse = await self.mockAndHandlePaypal() else { return nil }
+                         return paypalResponse
+                     }
+                 }, onCreateCardRegistration: { cardInfo in
+                     guard let cardRegistration = await self.performCreateCardReg(
+                        cardReg: MGPCardRegistration.Initiate(
+                            UserId: self.config.userId,
+                            Currency: self.config.currency.rawValue,
+                            CardType: "CB_VISA_MASTERCARD"),
+                        config: self.config,
+                        clientId: self.config.clientId,
+                        apiKey: self.config.apiKey
+                     ) else { return nil }
+                     return cardRegistration
+
                  }, onCancelled: {
                      
                  },
@@ -175,11 +196,11 @@ class ProductListController: UIViewController {
 
     func mockAndHandlePaypal() async -> APMInfo? {
         let paypal = APMInfo(
-            authorID: config.config.userId,
+            authorID: config.userId,
             debitedFunds: Amount(currency: "EUR", amount: 200),
             fees: Amount(currency: "EUR", amount: 0),
-            creditedWalletID: config.config.walletId,
-            returnURL: "https://github.com/?check=payin&env=\(config.config.env.rawValue)",
+            creditedWalletID: config.walletId,
+            returnURL: "https://github.com/?check=payin&env=\(config.env.rawValue)",
             shippingAddress: PPAddress(
                 recipientName: "Elikem",
                 address: Address(
