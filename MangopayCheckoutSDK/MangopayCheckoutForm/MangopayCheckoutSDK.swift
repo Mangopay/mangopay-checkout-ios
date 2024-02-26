@@ -5,6 +5,7 @@ import NethoneSDK
 public struct MangopayCheckoutSDK {
 
     static var clientId: String!
+    public static var apiKey: String!
     static var environment: MGPEnvironment!
 
     public static func initialize(clientId: String, environment: MGPEnvironment) {
@@ -85,7 +86,7 @@ public struct MangopayCheckoutSDK {
                 switch result.status {
                 case .SUCCEEDED:
                     on3DSSucces?(result.id)
-                case .FAILED:
+                case .FAILED, .CANCELLED:
                     on3DSFailure?(result.id)
                 }
             }) { error in

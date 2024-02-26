@@ -270,6 +270,7 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
                 "Username" : clientId,
                 "Password": apiKey
             ],
+            apiKey: apiKey,
             verbose: true
         )
     }

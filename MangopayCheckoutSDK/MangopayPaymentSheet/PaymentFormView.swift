@@ -44,7 +44,7 @@ class PaymentFormView: UIView {
             paymentButtonStyle: paymentFormStyle.applePayButtonStyle
         )
         appleButton.cornerRadius = paymentFormStyle.applePayButtonCornerRadius
-        appleButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        appleButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         appleButton.titleLabel?.font = .systemFont(ofSize: 2)
         appleButton.addTarget(
             self,
@@ -59,7 +59,7 @@ class PaymentFormView: UIView {
        let button = UIButton()
         button.backgroundColor = paymentFormStyle.checkoutButtonBackgroundColor
         button.setTitle(paymentFormStyle.checkoutButtonText, for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)
         button.setTitleColor(paymentFormStyle.checkoutButtonTextColor, for: .normal)
@@ -68,7 +68,7 @@ class PaymentFormView: UIView {
 
     lazy var payPalButton: PayPalButton = {
         let payPalButton = PayPalButton()
-        payPalButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        payPalButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         payPalButton.layer.cornerRadius = 8
         payPalButton.addTarget(self, action: #selector(onPaypalButtonTapped), for: .touchUpInside)
         return payPalButton

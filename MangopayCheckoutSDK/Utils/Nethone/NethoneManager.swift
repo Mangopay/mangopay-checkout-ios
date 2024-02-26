@@ -22,7 +22,7 @@ final class NethoneManager {
     }
 
     static let shared = NethoneManager()
-    private var state: MGPNethoneState = .initiated
+    private var state: MGPNethoneState = .unitiated
     private var nethoneResult: MGPNethoneResult?
 
     private let TIMEOUT_THRESHOLD: TimeInterval = 7
