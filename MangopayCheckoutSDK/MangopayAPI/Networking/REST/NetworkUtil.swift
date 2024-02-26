@@ -44,7 +44,7 @@ extension NetworkUtil {
     var headers: [String: String] {
         var _headers = [String: String]()
         _headers["Accept"] = "*/*"
-        _headers["X-SDK-Version"] = "0.0.45-beta"
+        _headers["CheckoutiOS"] = "0.0.45-beta"
         _headers["User-Agent"] = userAgent
         return _headers
     }
@@ -123,19 +123,6 @@ extension NetworkUtil {
 
          headers.forEach {(request.addValue($0.value, forHTTPHeaderField: $0.key))}
          additionalHeaders?.forEach {(request.addValue($0.value, forHTTPHeaderField: $0.key))}
-         
-         
-//         if let basicAuthData = basicAuthDict {
-//             if let username = basicAuthData["Username"], let password = basicAuthData["Password"] {
-//    
-//                 let authDataStr = String(format: "%@:%@", username, password)
-//                 let authData = authDataStr.data(using: String.Encoding.utf8)!
-//                 let base64LoginString = authData.base64EncodedString()
-//                 
-//                 request.addValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
-//             }
-//
-//         }
          
          if let apiKey = apiKey {
              request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")

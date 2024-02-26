@@ -27,6 +27,7 @@ public enum _3DSTransactionType: String, Codable {
 public enum _3DSStatus: String, Codable {
     case SUCCEEDED
     case FAILED
+    case CANCELLED
 }
 
 public struct _3DSResult: Codable {

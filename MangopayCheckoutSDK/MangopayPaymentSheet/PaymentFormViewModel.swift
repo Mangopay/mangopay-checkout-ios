@@ -17,7 +17,7 @@ public class PaymentFormViewModel {
 
     init(
         client: MangopayClient,
-        paymentMethodConfig: PaymentMethodConfig
+        paymentMethodConfig: PaymentMethodOptions
     ) {
         self.mgpClient = client
     }

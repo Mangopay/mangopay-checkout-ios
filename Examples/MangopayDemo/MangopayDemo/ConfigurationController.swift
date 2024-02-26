@@ -248,7 +248,10 @@ class ConfigurationController: UIViewController {
         guard areFormsValidShowingError() else { return }
         guard let configData = grabData() else { return }
         
-        createCardReg(configuration: configData)
+//        createCardReg(configuration: configData)
+        
+        routeToWhenThenDemo(config: configData)
+
         
     }
 
@@ -324,27 +327,29 @@ class ConfigurationController: UIViewController {
 
     }
 
-    func createCardReg(configuration: Configuration) {
-        Task {
-            if let createdObj = await performCreateCardReg(
-                cardReg: MGPCardRegistration.Initiate(
-                    UserId: configuration.userId,
-                    Currency: configuration.currency.rawValue,
-                    CardType: "CB_VISA_MASTERCARD"),
-                config: configuration,
-                clientId: configuration.clientId,
-                apiKey: configuration.apiKey
-            ) {
-                    
-                switch configuration.sdkMode {
-                case .Payline:
-                    routeToDemoForm(cardRegistration: createdObj, config: configuration)
-                case .MangoPay:
-                    routeToWhenThenDemo(config: DataCapsule(config: configuration, cardReg: createdObj))
-                }
-            }
-        }
-    }
+//    func createCardReg(configuration: Configuration) {
+//        Task {
+//            if let createdObj = await performCreateCardReg(
+//                cardReg: MGPCardRegistration.Initiate(
+//                    UserId: configuration.userId,
+//                    Currency: configuration.currency.rawValue,
+//                    CardType: "CB_VISA_MASTERCARD"),
+//                config: configuration,
+//                clientId: configuration.clientId,
+//                apiKey: configuration.apiKey
+//            ) {
+//                    
+//                switch configuration.sdkMode {
+//                case .Payline:
+//                    routeToDemoForm(cardRegistration: createdObj, config: configuration)
+//                case .MangoPay:
+//                    routeToWhenThenDemo(config: DataCapsule(config: configuration, cardReg: createdObj))
+//                }
+//            } else {
+//                activityLoader.stopAnimating()
+//            }
+//        }
+//    }
 
     func setDummyData(env: MGPEnvironment?) {
         currencyField.text = "EUR"
@@ -366,55 +371,16 @@ class ConfigurationController: UIViewController {
             authorField.text = "4234427192"
             amountField.text = "1"
         case .t3:
-//            apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
-//            clientField.text = "12345"
-//            creditedUserField.text = "6658353"
-//            creditedWalletField.text = "6658354"
-//            authorField.text = "6658353"
-//            amountField.text = "1"
+            apiKeyField.text = "68bcbd4445e34096812d0cf79bd2dee2"
+            clientField.text = "elikemscheckout"
             
-            // apiKeyField.text = "B8hGcedwVBXpHnVJc6pu96gpBuLKuc3ohx3JSoT6NUec5MrmPu"
-            // clientField.text = "pablo123"
-            // creditedUserField.text = "user_01HGZDQ9G3791XVYV7T7PBGV9W"
-            // creditedWalletField.text = "wlt_01HGZDQQPREJ83B0WJDB3PGZAJ"
-            // authorField.text = "user_01HGZDQ9G3791XVYV7T7PBGV9W"
-            apiKeyField.text = "309ac92700674a0aacfdb9e64e29135c"
-            clientField.text = "checkoutsquad"
-            
-            
-//            creditedUserField.text = "6664602"
-//            creditedWalletField.text = "wlt_m_01HNG8W2BCX2RGD0WCM8T1TTTR"
-            
-            creditedUserField.text = "user_m_01HNG8VKTGTKX51M1S7TAPC524"
-            creditedWalletField.text = "wlt_m_01HNG8W2BCX2RGD0WCM8T1TTTR"
+            creditedUserField.text = "user_m_01HPEGHC6W607H0JE456SRDQV1"
+            creditedWalletField.text = "wlt_m_01HPEGHZVSXGR6WAN9JX8JTKTC"
             
             authorField.text = "6664602"
             amountField.text = "1"
             
         }
-//        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
-//        clientField.text = "12345"
-//        creditedUserField.text = "6658353"
-//        creditedWalletField.text = "6658354"
-//        authorField.text = "6658353"
-        
-//        providerTextfield.text = "MangoPay"
-//        apiKeyField.text = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
-//        clientField.text = "checkoutsquatest"
-//        creditedUserField.text = "158091557"
-//        creditedWalletField.text = "159834019"
-//        authorField.text = "158091557"
-//        amountField.text = "1"
-//        currencyField.text = "EUR"
-
-//        providerTextfield.text = "MangoPay"
-//        apiKeyField.text = "Su6k6UaeyXCpnMqZb0vHQzJ2ozyRXT6X5SsCPh20W29KueuVZ3"
-//        clientField.text = "12345"
-//        creditedUserField.text = "6658353"
-//        creditedWalletField.text = "6658354"
-//        authorField.text = "6658353"
-//        amountField.text = "1"
-//        currencyField.text = "EUR"
     }
 
 }
@@ -468,26 +434,26 @@ extension ConfigurationController: SegueHandlerType {
         switch segueIdentifierForSegue(segue: segue) {
         case .segueToDemoForm:
             guard let destination = segue.destination as? DemoPaymentForm else { return }
-            if let tuple = sender as? (CardRegistration, Configuration) {
-                destination.cardRegistration = tuple.0
-                destination.configuration = tuple.1
+            if let config = sender as? Configuration {
+//                destination.cardRegistration = tuple.0
+                destination.configuration = config
             }
         case .segueToWhenThen:
             guard let destination = segue.destination as? ProductListController else { return }
-            if let tuple = sender as? DataCapsule {
+            if let tuple = sender as? Configuration {
                 destination.config = tuple
             }
         }
     }
 
-    func routeToDemoForm(cardRegistration: MGPCardRegistration, config: Configuration) {
+    func routeToDemoForm(config: Configuration) {
         performSegueWithIdentifier(
             segueIdentifier: .segueToDemoForm,
-            sender: (cardRegistration, config)
+            sender: config
         )
     }
 
-    func routeToWhenThenDemo(config: DataCapsule) {
+    func routeToWhenThenDemo(config: Configuration) {
         performSegueWithIdentifier(segueIdentifier: .segueToWhenThen, sender: config)
     }
 }

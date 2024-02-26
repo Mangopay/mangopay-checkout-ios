@@ -86,7 +86,7 @@ class ViewController: UIViewController {
                 callback: CallBack(
                     onPaymentMethodSelected: { paymentMethod in
                         print("✅ cardinfo", paymentMethod)
-                        return nil
+                        return
                     },
                     onTokenizationCompleted: { cardRegistration in
                         print("✅ cardRegistration", cardRegistration)
@@ -96,7 +96,8 @@ class ViewController: UIViewController {
                         }
                     }, onPaymentCompleted: { _, _ in
                         print("✅ onPaymentCompleted")
-                    }, onCancelled: {
+                    },
+                    onCancelled: {
                         
                     },
                     onError: { error in
