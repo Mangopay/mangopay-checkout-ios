@@ -171,7 +171,7 @@ class ProductListController: UIViewController {
                      case .FAILED, .CANCELLED:
                          self.showAlert(with: "", title: "Payment failed")
                      }
-                 }, onCreatePayment: { paymentMethod in
+                 }, onProcessPayment: { paymentMethod in
                      switch paymentMethod {
                      case .card(_):
                          return nil

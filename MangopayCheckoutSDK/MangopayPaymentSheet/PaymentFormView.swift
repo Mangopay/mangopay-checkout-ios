@@ -219,7 +219,7 @@ class PaymentFormView: UIView {
         Task {
             callback.onPaymentMethodSelected?(.payPal)
             Loader.show()
-            if let paypalAPM = await callback.onCreatePayment?(.payPal) {
+            if let paypalAPM = await callback.onProcessPayment?(.payPal) {
                 self.onAPMTapped?(paypalAPM)
             }
             Loader.hide()
