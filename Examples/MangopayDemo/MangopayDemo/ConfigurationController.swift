@@ -357,7 +357,7 @@ class ConfigurationController: UIViewController {
         guard let _env = env else { return }
         switch _env {
         case .sandbox:
-            apiKeyField.text = "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+            apiKeyField.text = "4e3ce72cba1f49dbb947be93fabeddb4"
             clientField.text = "checkoutsquatest"
             creditedUserField.text = "158091557"
             creditedWalletField.text = "159834019"
@@ -371,11 +371,11 @@ class ConfigurationController: UIViewController {
             authorField.text = "4234427192"
             amountField.text = "1"
         case .t3:
-            apiKeyField.text = "68bcbd4445e34096812d0cf79bd2dee2"
-            clientField.text = "elikemscheckout"
+            apiKeyField.text = "8b35136d29a4430983c835f81caf7c05"
+            clientField.text = "valitoreurprodtest2"
             
-            creditedUserField.text = "user_m_01HPEGHC6W607H0JE456SRDQV1"
-            creditedWalletField.text = "wlt_m_01HPEGHZVSXGR6WAN9JX8JTKTC"
+            creditedUserField.text = "user_m_01HP6Y728NHC46PTAT186AM17V"
+            creditedWalletField.text = "wlt_m_01HP6Y7WB48TVZCQ2HQ7BH8KK9"
             
             authorField.text = "6664602"
             amountField.text = "1"

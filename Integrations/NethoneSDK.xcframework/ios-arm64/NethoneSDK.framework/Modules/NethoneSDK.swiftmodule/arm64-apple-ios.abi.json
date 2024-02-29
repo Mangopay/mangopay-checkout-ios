@@ -1,0 +1,782 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "TopLevel",
+    "printedName": "TopLevel",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreMedia",
+        "printedName": "CoreMedia",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "NethoneSDK"
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Adapters\/UserDefaults\/UserDefaultsDBAdapter.swift",
+      "kind": "StringLiteral",
+      "offset": 171,
+      "length": 20,
+      "value": "\"fbjhlkvgb.3l980asw\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Adapters\/UserDefaults\/UserDefaultsDBAdapter.swift",
+      "kind": "StringLiteral",
+      "offset": 56,
+      "length": 21,
+      "value": "\"NethoneSDK.UserDefaultsDBAdapter\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/ErrorEntity.swift",
+      "kind": "StringLiteral",
+      "offset": 159,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/ErrorEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 361,
+      "length": 15,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/ErrorEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 384,
+      "length": 10,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/ErrorEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 402,
+      "length": 12,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/ErrorEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 361,
+      "length": 15,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/ErrorEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 384,
+      "length": 10,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/ErrorEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 402,
+      "length": 12,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/MetaEntity.swift",
+      "kind": "StringLiteral",
+      "offset": 170,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/MetaEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 442,
+      "length": 14,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/MetaEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 470,
+      "length": 20,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/MetaEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 504,
+      "length": 24,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/MetaEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 442,
+      "length": 14,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/MetaEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 470,
+      "length": 20,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Base\/MetaEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 504,
+      "length": 24,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Configuration\/ConfigurationEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 536,
+      "length": 12,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Configuration\/ConfigurationEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 550,
+      "length": 11,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Configuration\/ConfigurationEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 536,
+      "length": 12,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Configuration\/ConfigurationEntity.swift",
+      "kind": "IntegerLiteral",
+      "offset": 550,
+      "length": 11,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Configuration\/ConfigurationEntity.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1097,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/Screenshot\/ScreenshotEntity.swift",
+      "kind": "StringLiteral",
+      "offset": 52,
+      "length": 16,
+      "value": "\"NethoneSDK.ScreenshotEntity\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/TimeAnalyzer\/TimeAnalyzerEntity.swift",
+      "kind": "StringLiteral",
+      "offset": 54,
+      "length": 18,
+      "value": "\"NethoneSDK.TimeAnalyzerEntity\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/DataModel\/Entities\/UserDefaults\/UserDefaultsEntity.swift",
+      "kind": "StringLiteral",
+      "offset": 54,
+      "length": 18,
+      "value": "\"NethoneSDK.UserDefaultsEntity\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Helpers\/CCChecker\/CCChecker.swift",
+      "kind": "Array",
+      "offset": 101,
+      "length": 20,
+      "value": "[14, 15, 16, 18, 19]"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Helpers\/CCChecker\/CCChecker.swift",
+      "kind": "Array",
+      "offset": 155,
+      "length": 6,
+      "value": "[3, 4]"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Helpers\/TFRegistration\/TFRegistrationBundle.swift",
+      "kind": "IntegerLiteral",
+      "offset": 128,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/BaseSwiftDataProvider.swift",
+      "kind": "StringLiteral",
+      "offset": 116,
+      "length": 26,
+      "value": "\"nth-thread-safe-provider\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/BaseSwiftDataProvider.swift",
+      "kind": "BooleanLiteral",
+      "offset": 167,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/BaseSwiftEventProvider.swift",
+      "kind": "StringLiteral",
+      "offset": 151,
+      "length": 26,
+      "value": "\"nth-thread-safe-provider\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/BaseSwiftEventProvider.swift",
+      "kind": "Array",
+      "offset": 221,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/BaseSwiftEventProvider.swift",
+      "kind": "IntegerLiteral",
+      "offset": 258,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/BaseSwiftEventProvider.swift",
+      "kind": "BooleanLiteral",
+      "offset": 283,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/BaseSwiftEventProvider.swift",
+      "kind": "StringLiteral",
+      "offset": 58,
+      "length": 22,
+      "value": "\"NethoneSDK.BaseSwiftEventProvider\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/EventProviding.swift",
+      "kind": "IntegerLiteral",
+      "offset": 108,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/EventProviding.swift",
+      "kind": "IntegerLiteral",
+      "offset": 116,
+      "length": 23,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/EventProviding.swift",
+      "kind": "IntegerLiteral",
+      "offset": 146,
+      "length": 27,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/EventProviding.swift",
+      "kind": "IntegerLiteral",
+      "offset": 180,
+      "length": 21,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/EventProviding.swift",
+      "kind": "IntegerLiteral",
+      "offset": 108,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/EventProviding.swift",
+      "kind": "IntegerLiteral",
+      "offset": 116,
+      "length": 23,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/EventProviding.swift",
+      "kind": "IntegerLiteral",
+      "offset": 146,
+      "length": 27,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Common\/EventProviding.swift",
+      "kind": "IntegerLiteral",
+      "offset": 180,
+      "length": 21,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Hooking\/FunctionAggregator.swift",
+      "kind": "StringLiteral",
+      "offset": 54,
+      "length": 18,
+      "value": "\"NethoneSDK.FunctionAggregator\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Hooking\/FunctionPointerWrapper.swift",
+      "kind": "StringLiteral",
+      "offset": 58,
+      "length": 22,
+      "value": "\"NethoneSDK.FunctionPointerWrapper\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Providers\/Screenshot\/ScreenshotProvider.swift",
+      "kind": "BooleanLiteral",
+      "offset": 287,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptContext.swift",
+      "kind": "BooleanLiteral",
+      "offset": 373,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptContext.swift",
+      "kind": "BooleanLiteral",
+      "offset": 423,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 73,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 100,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 126,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 73,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 100,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 126,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 291,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 322,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 351,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 383,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 414,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 452,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 486,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 520,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 552,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/AttemptLimits.swift",
+      "kind": "IntegerLiteral",
+      "offset": 580,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/Context\/WebViewConfig.swift",
+      "kind": "BooleanLiteral",
+      "offset": 100,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/Events\/AttemptFlowEvent.swift",
+      "kind": "StringLiteral",
+      "offset": 203,
+      "length": 20,
+      "value": "\"io.nethone.attempt\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/Events\/AttemptFlowEvent.swift",
+      "kind": "StringLiteral",
+      "offset": 52,
+      "length": 16,
+      "value": "\"NethoneSDK.AttemptFlowEvent\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/Events\/CanaryEvent.swift",
+      "kind": "StringLiteral",
+      "offset": 193,
+      "length": 19,
+      "value": "\"io.nethone.canary\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/Events\/CanaryEvent.swift",
+      "kind": "StringLiteral",
+      "offset": 47,
+      "length": 11,
+      "value": "\"NethoneSDK.CanaryEvent\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/Events\/CoordinatorEvent.swift",
+      "kind": "StringLiteral",
+      "offset": 206,
+      "length": 24,
+      "value": "\"io.nethone.coordinator\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/Events\/CoordinatorEvent.swift",
+      "kind": "StringLiteral",
+      "offset": 52,
+      "length": 16,
+      "value": "\"NethoneSDK.CoordinatorEvent\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/TimeAnalyzer.swift",
+      "kind": "StringLiteral",
+      "offset": 90,
+      "length": 38,
+      "value": "\"c561bd99-709a-4bec-862b-28d886f09331\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/TimeAnalyzer.swift",
+      "kind": "StringLiteral",
+      "offset": 153,
+      "length": 38,
+      "value": "\"02999160-1ccf-4256-81e4-e15a6e63aecb\""
+    },
+    {
+      "filePath": "\/Users\/administrator\/builds\/tNhbqySV\/0\/mobile-profilers\/ios\/nethone-sdk-ios\/Nethone\/Classes\/Tools\/TimeAnalyzer\/TimeAnalyzerBuffer.swift",
+      "kind": "BooleanLiteral",
+      "offset": 263,
+      "length": 5,
+      "value": "false"
+    }
+  ]
+}
