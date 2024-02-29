@@ -43,6 +43,7 @@ class ProductListController: UIViewController {
     var selectedProduct: Product?
     var config: Configuration!
     var checkout: MGPPaymentSheet!
+    var cardId: String?
 
     @IBOutlet weak var priceAmountLabel: UILabel!
     
@@ -132,6 +133,8 @@ class ProductListController: UIViewController {
                  },
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
+                     self.cardId = cardRegistration.card.cardID
+                 
                      guard shouldPerform3ds else {
                          DispatchQueue.main.async {
                              self.checkout.tearDown {
@@ -171,7 +174,8 @@ class ProductListController: UIViewController {
                      case .FAILED, .CANCELLED:
                          self.showAlert(with: "", title: "Payment failed")
                      }
-                 }, onProcessPayment: { paymentMethod in
+                 },
+                 onProcessPayment: { paymentMethod in
                      switch paymentMethod {
                      case .card(_):
                          return nil
@@ -181,6 +185,14 @@ class ProductListController: UIViewController {
                          guard let paypalResponse = await self.mockAndHandlePaypal() else { return nil }
                          return paypalResponse
                      }
+                 }, onCreatePayment: {
+//                     if let id = self.cardId {
+                     guard let paypalResponse = await self.mockValidateEndpoint(with: self.cardId ?? "") else { return nil }
+                         return paypalResponse
+                     print("🤣 onCreatePayment", paypalResponse)
+//                     }
+
+                     
                  }, onCreateCardRegistration: { cardInfo in
                      guard let cardRegistration = await self.performCreateCardReg(
                         cardReg: MGPCardRegistration.Initiate(
@@ -279,29 +291,6 @@ class ProductListController: UIViewController {
             
     }
 
-//    func createCardReg(configuration: Configuration) {
-//        Task {
-//            if let createdObj = await performCreateCardReg(
-//                cardReg: MGPCardRegistration.Initiate(
-//                    UserId: configuration.userId,
-//                    Currency: configuration.currency.rawValue,
-//                    CardType: "CB_VISA_MASTERCARD"),
-//                config: configuration,
-//                clientId: configuration.clientId,
-//                apiKey: configuration.apiKey
-//            ) {
-//                    
-//                switch configuration.sdkMode {
-//                case .Payline:
-//                    routeToDemoForm(cardRegistration: createdObj, config: configuration)
-//                case .MangoPay:
-//                    routeToWhenThenDemo(config: DataCapsule(config: configuration, cardReg: createdObj))
-//                }
-//            } else {
-//                activityLoader.stopAnimating()
-//            }
-//        }
-//    }
 
     func performCreateCardReg(
         cardReg: MGPCardRegistration.Initiate,
@@ -310,8 +299,6 @@ class ProductListController: UIViewController {
         apiKey: String
     ) async -> MGPCardRegistration? {
         do {
-//            showLoader(true)
-
             let regResponse = try await PaymentCoreClient(
                 env: config.env
             ).createCardRegistration(
@@ -319,12 +306,10 @@ class ProductListController: UIViewController {
                 clientId: clientId,
                 apiKey: apiKey
             )
-//            showLoader(false)
 
             return regResponse
         } catch {
             print("❌ Error Creating Card Registration")
-//            showLoader(false)
             return nil
         }
 
@@ -418,10 +403,57 @@ class ProductListController: UIViewController {
                 //            showLoader(false)
                 onSuccess?(false)
             }
-            
         }
-        
     }
+
+    func mockValidateEndpoint(with cardId: String) async -> PreAuthCard? {
+        
+        let validationObj = CardValidation(
+            authorID: self.config.userId,
+            tag: "Mangopay Demo Tag",
+            debitedFunds: nil,
+            secureMode: nil,
+            cardID: cardId,
+            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore", secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
+            browserInfo: BrowserInfo(
+                acceptHeader: "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+                javaEnabled: false,
+                language: "EN-EN",
+                colorDepth: 4,
+                screenHeight: 750,
+                screenWidth: 400,
+                timeZoneOffset: 60,
+                userAgent: "iOS",
+                javascriptEnabled: false
+            )
+        )
+
+        let preAuth = PreAuthCard(
+            authorID: self.config.userId,
+            debitedFunds: Amount(currency: "EUR", amount: 20),
+            cardID: cardId,
+            secureModeNeeded: true,
+            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore", secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867"
+        )
+
+            do {
+                let regResponse = try await PaymentCoreClient(
+                    env: self.config.env
+                ).createPreAuth(
+                    clientId: self.config.clientId,
+                    apiKey: self.config.apiKey,
+                    preAuth: preAuth
+                )
+                print("✅ preAuth", regResponse)
+                return regResponse
+            } catch {
+                print("❌ preAuth error Creating preAuth")
+                return nil
+        }
+    }
+
 }
 
 

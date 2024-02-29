@@ -36,6 +36,11 @@ public class PaymentFormViewModel {
                     DispatchQueue.main.async {
                         callback.onTokenizationCompleted?(cardData)
                         self.onTokenisationCompleted?()
+                        if let createAction = callback.onCreatePayment {
+                            Task {
+                                await createAction()
+                            }
+                        }
                     }
                 }
             }
