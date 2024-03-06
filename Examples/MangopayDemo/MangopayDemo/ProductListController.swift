@@ -135,65 +135,50 @@ class ProductListController: UIViewController {
                      print("✅ cardRegistration", cardRegistration)
                      self.cardId = cardRegistration.card.cardID
                  
-                     guard shouldPerform3ds else {
-                         DispatchQueue.main.async {
-                             self.checkout.tearDown {
-                                 self.navigationController?.popToRootViewController(animated: true)
-                                 self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
-                             }
-                         }
-                         return
-                     }
-                     self.handle3DS(with: cardRegistration.card.cardID ?? "") { can3DS in
-                         if can3DS {
-                             DispatchQueue.main.async {
-                                 self.showSuccessDialog(title: "3DS succesful", result: cardRegistration.str ?? "")
-                             }
-                         } else {
-                             DispatchQueue.main.async {
-                                 self.checkout.tearDown {
-                                     self.navigationController?.popToRootViewController(animated: true)
-
-                                     self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
-
-                                 }
-
-                             }
-                         }
-                     }
+//                     guard shouldPerform3ds else {
+//                         DispatchQueue.main.async {
+//                             self.checkout.tearDown {
+//                                 self.navigationController?.popToRootViewController(animated: true)
+//                                 self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
+//                             }
+//                         }
+//                         return
+//                     }
+//                     self.handle3DS(with: cardRegistration.card.cardID ?? "") { can3DS in
+//                         if can3DS {
+//                             DispatchQueue.main.async {
+//                                 self.showSuccessDialog(title: "3DS succesful", result: cardRegistration.str ?? "")
+//                             }
+//                         } else {
+//                             DispatchQueue.main.async {
+//                                 self.checkout.tearDown {
+//                                     self.navigationController?.popToRootViewController(animated: true)
+//
+//                                     self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
+//
+//                                 }
+//
+//                             }
+//                         }
+//                     }
                  }, 
                  onPaymentCompleted: { id, results in
                      print("✅ onPaymentCompleted")
                      guard let res = results, let status = results?.status else { return }
-                     switch status {
-                     case .SUCCEEDED:
-                         self.showSuccessDialog(
-                            title: "✅ Paypal Payment",
-                            result: res.id
-                         )
-                     case .FAILED, .CANCELLED:
-                         self.showAlert(with: "", title: "Payment failed")
+                     
+                     self.checkout.tearDown {
+                         switch status {
+                         case .SUCCEEDED:
+                             self.showSuccessDialog(
+                                title: "✅ Payment Completed",
+                                result: res.id
+                             )
+                         case .FAILED, .CANCELLED:
+                             self.showAlert(with: "", title: "Payment failed")
+                         }
                      }
                  },
-                 onProcessPayment: { paymentMethod in
-                     switch paymentMethod {
-                     case .card(_):
-                         return nil
-                     case .applePay(_):
-                         return nil
-                     case .payPal:
-                         guard let paypalResponse = await self.mockAndHandlePaypal() else { return nil }
-                         return paypalResponse
-                     }
-                 }, onCreatePayment: {
-//                     if let id = self.cardId {
-                     guard let paypalResponse = await self.mockValidateEndpoint(with: self.cardId ?? "") else { return nil }
-                         return paypalResponse
-                     print("🤣 onCreatePayment", paypalResponse)
-//                     }
-
-                     
-                 }, onCreateCardRegistration: { cardInfo in
+                 onCreateCardRegistration: { cardInfo in
                      guard let cardRegistration = await self.performCreateCardReg(
                         cardReg: MGPCardRegistration.Initiate(
                             UserId: self.config.userId,
@@ -221,7 +206,7 @@ class ProductListController: UIViewController {
          checkout.present(in: self)
     }
 
-    func mockAndHandlePaypal() async -> APMInfo? {
+    func mockAndHandlePaypal(attemptReference: String?) async -> APMInfo? {
         let paypal = APMInfo(
             authorID: config.userId,
             debitedFunds: Amount(currency: "EUR", amount: 200),
@@ -252,7 +237,8 @@ class ProductListController: UIViewController {
             ],
             shippingPreference: "GET_FROM_FILE",
             reference: "123-456",
-            redirectURL: "https://github.com"
+            redirectURL: "https://github.com",
+            profilingAttemptReference: attemptReference
         )
             
             do {
@@ -316,35 +302,6 @@ class ProductListController: UIViewController {
     }
 
     func handle3DS(with cardId: String, onSuccess: ((Bool) -> Void)? ) {
-        
-        let payInObj = AuthorizePayIn(
-            tag: "Mangopay Demo Tag",
-            authorID: config.userId,
-            creditedUserID: config.userId,
-            debitedFunds: Amount(currency: "EUR", amount: 2),
-            fees: Amount(currency: "EUR", amount: 1),
-            creditedWalletID: config.walletId ?? "",
-            cardID: cardId,
-            secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
-            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore",
-            statementDescriptor: "MANGOPAY",
-            browserInfo: BrowserInfo(
-                acceptHeader: "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
-                javaEnabled: false,
-                language: "EN-EN",
-                colorDepth: 4,
-                screenHeight: 750,
-                screenWidth: 400,
-                timeZoneOffset: 60,
-                userAgent: "iOS",
-                javascriptEnabled: false
-            ),
-            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
-            billing: Ing(firstName: "eli", lastName: "Sav", address: Address(addressLine1: "jko", addressLine2: "234", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR")),
-            shipping: Ing(firstName: "DAF", lastName: "FEAM", address: Address(addressLine1: "DASD", addressLine2: "sff", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR")),
-            secureModeNeeded: true
-        )
-        
         let validationObj = CardValidation(
             authorID: config.userId,
             tag: "Mangopay Demo Tag",
@@ -368,16 +325,15 @@ class ProductListController: UIViewController {
 
 
         Task {
-            
             do {
                 let regResponse = try await PaymentCoreClient(
                     env: config.env
                 ).validateCard(validationObj, cardId: cardId, clientId: config.clientId, apiKey: config.apiKey)
                 print("✅ res", regResponse)
                 
-                guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
+                guard let payinData = regResponse as? Payable else { return }
 
-                MGPPaymentSheet().launch3DSIfPossible(payData: payinData, presentIn: self) { success in
+                MGPPaymentSheet().launch3DSIfPossible(payData: regResponse, presentIn: self) { success in
                     print("✅ launch3DSIfPossible", success)
                     onSuccess?(true)
                 } on3DSLauch: { _3dsVC in
@@ -406,16 +362,48 @@ class ProductListController: UIViewController {
         }
     }
 
-    func mockValidateEndpoint(with cardId: String) async -> PreAuthCard? {
+    func mockPreAuthValidateEndpoint(with cardId: String, attemptReference: String) async -> PreAuthCard? {
         
-        let validationObj = CardValidation(
+        let preAuth = PreAuthCard(
             authorID: self.config.userId,
-            tag: "Mangopay Demo Tag",
-            debitedFunds: nil,
-            secureMode: nil,
+            debitedFunds: Amount(currency: "EUR", amount: 20),
             cardID: cardId,
+            secureModeNeeded: true,
             secureModeRedirectURL: "https://docs.mangopay.com/please-ignore", secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
             ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
+            profilingAttemptReference: attemptReference
+        )
+        
+        do {
+            let regResponse = try await PaymentCoreClient(
+                env: self.config.env
+            ).createPreAuth(
+                clientId: self.config.clientId,
+                apiKey: self.config.apiKey,
+                preAuth: preAuth
+            )
+            print("✅✅ preAuth", regResponse)
+            return regResponse
+        } catch {
+            print("❌ preAuth error Creating preAuth", error)
+            return nil
+        }
+    }
+
+    func mockPayinEndpoint(with cardId: String, attemptReference: String) async -> AuthorizePayIn? {
+        
+        let payInObj = AuthorizePayIn(
+            tag: "Mangopay Demo Tag",
+            authorID: config.userId,
+            creditedUserID: config.userId,
+            debitedFunds: Amount(currency: "EUR", amount: 10),
+            creditedFunds: nil,
+            fees: Amount(currency: "EUR", amount: 0),
+            creditedWalletID: config.walletId ?? "",
+            cardID: cardId,
+            secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore",
+            statementDescriptor: "MANGOPAY",
             browserInfo: BrowserInfo(
                 acceptHeader: "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
                 javaEnabled: false,
@@ -426,34 +414,29 @@ class ProductListController: UIViewController {
                 timeZoneOffset: 60,
                 userAgent: "iOS",
                 javascriptEnabled: false
-            )
-        )
-
-        let preAuth = PreAuthCard(
-            authorID: self.config.userId,
-            debitedFunds: Amount(currency: "EUR", amount: 20),
-            cardID: cardId,
+            ),
+            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
+            billing: Ing(firstName: "eli", lastName: "Sav", address: Address(addressLine1: "jko", addressLine2: "234", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR")),
+            shipping: Ing(firstName: "DAF", lastName: "FEAM", address: Address(addressLine1: "DASD", addressLine2: "sff", city: "Paris", region: "Ile-de-France", postalCode: "75001", country: "FR")),
             secureModeNeeded: true,
-            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore", secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
-            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867"
+            profilingAttemptReference: attemptReference
         )
-
-            do {
-                let regResponse = try await PaymentCoreClient(
-                    env: self.config.env
-                ).createPreAuth(
-                    clientId: self.config.clientId,
-                    apiKey: self.config.apiKey,
-                    preAuth: preAuth
-                )
-                print("✅ preAuth", regResponse)
-                return regResponse
-            } catch {
-                print("❌ preAuth error Creating preAuth")
-                return nil
+        
+        do {
+            let payIn = try await PaymentCoreClient(
+                env: self.config.env
+            ).authorizePayIn(
+                payInObj,
+                clientId: self.config.clientId,
+                apiKey: self.config.apiKey
+            )
+            print("✅✅ payIn", payIn)
+            return payIn
+        } catch {
+            print("❌ Payin failed", error)
+            return nil
         }
     }
-
 }
 
 

@@ -230,7 +230,7 @@ class ViewController: UIViewController {
                 //            showLoader(false)
                 print("✅ res", regResponse)
                 
-                guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
+                guard let payinData = regResponse as? Payable else { return }
 
                 MangopayCheckoutSDK.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
                     print("✅ launch3DSIfPossible", success)
