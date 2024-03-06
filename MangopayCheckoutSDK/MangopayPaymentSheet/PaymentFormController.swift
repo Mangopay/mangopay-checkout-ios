@@ -107,6 +107,14 @@ class PaymentFormController: UIViewController {
                 self.navigationController?.pushViewController(urlController, animated: true)
             }
         }
+
+        formView.viewModel.onCreatePaymentComplete = { paymentObj in
+            guard let payObj = paymentObj else {
+                return
+            }
+
+            self.launch3DSIfPossible(paymentObj: payObj)
+        }
     }
 
     @objc func doneAction() {
@@ -140,5 +148,29 @@ class PaymentFormController: UIViewController {
 
     func manuallyValidateForms() {
         formView.manuallyValidateForms()
+    }
+
+    private func launch3DSIfPossible(
+        paymentObj: Payable? = nil
+    ) {
+        MGPPaymentSheet().launch3DSIfPossible(payData: paymentObj, presentIn: self) { result in
+            print("✅ launch3DSIfPossible", result)
+            self.callback.onPaymentCompleted?(result.id, result)
+        } on3DSLauch: { _3dsVC in
+            DispatchQueue.main.async {
+                self.navVC?.pushViewController(_3dsVC, animated: true)
+            }
+        } on3DSFailure: { error in
+            DispatchQueue.main.async {
+                self.showAlert(with: "", title: "3DS challenge failed")
+            }
+        } on3DSError: { error in
+            print("error", error)
+            switch error {
+            case ._3dsNotRqd:
+                self.callback.onPaymentCompleted?(nil, _3DSResult(type: .cardDirect, status: .SUCCEEDED, id: paymentObj?.cardID ?? ""))
+            default: break
+            }
+        }
     }
 }

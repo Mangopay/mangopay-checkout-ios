@@ -163,7 +163,7 @@ class ProductListController: UIViewController {
 //                     }
                  }, 
                  onPaymentCompleted: { id, results in
-                     print("✅ onPaymentCompleted")
+                     print("✅ onPaymentCompleted", results?.status)
                      guard let res = results, let status = results?.status else { return }
                      
                      self.checkout.tearDown {
@@ -178,7 +178,24 @@ class ProductListController: UIViewController {
                          }
                      }
                  },
-                 onCreateCardRegistration: { cardInfo in
+                 onCreatePayment: { paymentMethod, attemptRef in
+                     
+                     switch paymentMethod {
+                     case .card(_):
+                         guard let payInRes = await self.mockPayinEndpoint(
+                            with: self.cardId ?? "",
+                            attemptReference: attemptRef ?? ""
+                         ) else { return nil }
+                         return payInRes
+                     case .applePay(_):
+                         return nil
+                     case .payPal:
+                         guard let paypalResponse = await self.mockAndHandlePaypal(
+                            attemptReference: attemptRef
+                         ) else { return nil }
+                         return paypalResponse
+                     }
+                 }, onCreateCardRegistration: { cardInfo in
                      guard let cardRegistration = await self.performCreateCardReg(
                         cardReg: MGPCardRegistration.Initiate(
                             UserId: self.config.userId,
