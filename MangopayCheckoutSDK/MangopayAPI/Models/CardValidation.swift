@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CardValidation: Codable, PayInPreAuthProtocol {
+public struct CardValidation: Codable, Payable {
 
     public var authorID: String?
     public var tag: String?
@@ -52,15 +52,32 @@ public struct CardValidation: Codable, PayInPreAuthProtocol {
     }
 }
 
-public struct APMInfo: Codable {
-    let authorID: String?
-    let debitedFunds, fees: Amount?
-    public let creditedWalletID, returnURL: String?, redirectURL: String?
+public struct APMInfo: Codable, Payable {
+
+    
+    public var authorID: String?
+    public var debitedFunds, fees: Amount?
+    public var creditedWalletID, returnURL: String?, redirectURL: String?
     let shippingAddress: PPAddress?
     let tag, culture: String?
     let lineItems: [LineItem]?
     let shippingPreference: String?
     let reference: String?
+    let profilingAttemptReference: String?
+
+    public var secureMode: String?
+    public var cardID: String?
+    public var secureModeNeeded: Bool?
+    public var secureModeRedirectURL: String? {
+        get {
+            redirectURL
+        }
+
+        set {
+            redirectURL = newValue
+        }
+    }
+    public var secureModeReturnURL: String?
 
     enum CodingKeys: String, CodingKey {
         case authorID = "AuthorId"
@@ -75,9 +92,10 @@ public struct APMInfo: Codable {
         case lineItems = "LineItems"
         case shippingPreference = "ShippingPreference"
         case reference = "Reference"
+        case profilingAttemptReference = "ProfilingAttemptReference"
     }
 
-    public init(authorID: String?, debitedFunds: Amount?, fees: Amount?, creditedWalletID: String?, returnURL: String?, shippingAddress: PPAddress?, tag: String?, culture: String?, lineItems: [LineItem]?, shippingPreference: String?, reference: String?, redirectURL: String?) {
+    public init(authorID: String?, debitedFunds: Amount?, fees: Amount?, creditedWalletID: String?, returnURL: String?, shippingAddress: PPAddress?, tag: String?, culture: String?, lineItems: [LineItem]?, shippingPreference: String?, reference: String?, redirectURL: String?, profilingAttemptReference: String?) {
         self.authorID = authorID
         self.debitedFunds = debitedFunds
         self.fees = fees
@@ -90,6 +108,7 @@ public struct APMInfo: Codable {
         self.shippingPreference = shippingPreference
         self.reference = reference
         self.redirectURL = redirectURL
+        self.profilingAttemptReference = profilingAttemptReference
     }
 }
 

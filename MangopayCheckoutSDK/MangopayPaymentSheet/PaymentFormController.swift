@@ -19,7 +19,8 @@ class PaymentFormController: UIViewController {
     var handlePaymentFlow: Bool
     let paymentHandler = MGPApplePayHandler()
     var supportedCardBrands: [CardType]?
-
+    var navVC: UINavigationController?
+    
     public init(
         cardConfig: CardConfig? = nil,
         paymentMethodConfig: PaymentMethodOptions,
@@ -60,6 +61,7 @@ class PaymentFormController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupObservers()
+        self.navVC = self.navigationController
     }
 
     override func viewDidLayoutSubviews() {
@@ -90,12 +92,12 @@ class PaymentFormController: UIViewController {
         }
         
         formView.onAPMTapped = { apmInfo in
-            if let _urlStr = apmInfo.redirectURL, let url = URL(string: _urlStr) {
+            if let _urlStr = apmInfo.secureModeRedirectURL, let url = URL(string: _urlStr) {
                 let urlController = MGPWebViewController(
                     url: url,
                     nethoneAttemptReference: NTHNethone.attemptReference(),
                     onComplete: { status in
-                        NethoneManager.shared.performFinalizeAttempt { res in
+                        NethoneManager.shared.performFinalizeAttempt { res, attemptRef in
                             self.callback.onPaymentCompleted?(nil, status)
                         }
                     },
@@ -174,3 +176,4 @@ class PaymentFormController: UIViewController {
         }
     }
 }
+

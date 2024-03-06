@@ -48,12 +48,12 @@ final class NethoneManager {
         }
     }
 
-    func performFinalizeAttempt(onReturnResult: ((MGPNethoneResult) -> ())? = nil) {
+    func performFinalizeAttempt(onReturnResult: ((MGPNethoneResult, String?) -> ())? = nil) {
         let timerScheduled = Timer.scheduledTimer(withTimeInterval: TIMEOUT_THRESHOLD, repeats: false) { timer in
             timer.invalidate()
             if self.nethoneResult != .success {
                 self.nethoneResult = .timeout
-                onReturnResult?(self.nethoneResult ?? .timeout)
+                onReturnResult?(self.nethoneResult ?? .timeout, NTHNethone.attemptReference())
             }
             self.nethoneResult = .timeout
         }
@@ -62,7 +62,7 @@ final class NethoneManager {
             timerScheduled.invalidate()
             guard self.nethoneResult != .timeout else { return }
             self.nethoneResult = .success
-            onReturnResult?(self.nethoneResult ?? .success)
+            onReturnResult?(self.nethoneResult ?? .success, NTHNethone.attemptReference())
         }
     }
     

@@ -103,7 +103,7 @@ class PaymentFormView: UIView {
 
     var tapGesture: UIGestureRecognizer?
     var onApplePayTapped: (() -> ())?
-    var onAPMTapped: ((APMInfo) -> ())?
+    var onAPMTapped: ((Payable) -> ())?
 
     var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
@@ -208,14 +208,6 @@ class PaymentFormView: UIView {
     }
 
     @objc func onPaypalButtonTapped() {
-//        Task {
-//            Loader.show()
-//            if let paypalAPM = await callback.onPaymentMethodSelected?(.payPal) {
-//                self.onAPMTapped?(paypalAPM)
-//            }
-//            Loader.hide()
-//        }
-
         Task {
             callback.onPaymentMethodSelected?(.payPal)
             Loader.show()

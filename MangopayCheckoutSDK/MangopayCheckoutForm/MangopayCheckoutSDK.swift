@@ -18,7 +18,7 @@ public struct MangopayCheckoutSDK {
     public static func tokenizeCard(
         form: MGPPaymentForm,
         with cardReg: MGPCardRegistration,
-        payData: PayInPreAuthProtocol? = nil,
+        payData: Payable? = nil,
         presentIn viewController: UIViewController? = nil,
         callBack: @escaping MangopayTokenizedCallBack
     ) {
@@ -53,7 +53,7 @@ public struct MangopayCheckoutSDK {
     }
 
     public static func launch3DSIfPossible(
-        payData: PayInPreAuthProtocol? = nil,
+        payData: Payable? = nil,
         presentIn viewController: UIViewController?,
         on3DSSucces: ((String) -> ())? = nil,
         on3DSFailure: ((String) -> ())? = nil,

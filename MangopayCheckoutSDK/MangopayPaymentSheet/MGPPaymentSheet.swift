@@ -17,6 +17,7 @@ public class MGPPaymentSheet {
     public init() {
         self.presentingVC = nil
         navVC = UINavigationController(rootViewController: MGPPaymentSheet.paymentFormVC)
+        navVC.restorationIdentifier = "elikem"
         navVC.modalPresentationStyle = .fullScreen
 
     }
@@ -71,9 +72,9 @@ public class MGPPaymentSheet {
     
 
     public func launch3DSIfPossible(
-        payData: PayInPreAuthProtocol? = nil,
+        payData: Payable? = nil,
         presentIn viewController: UIViewController?,
-        on3DSSucces: ((String) -> ())? = nil,
+        on3DSSucces: ((_3DSResult) -> ())? = nil,
         on3DSLauch: ((UIViewController) -> ())? = nil,
         on3DSFailure: ((String) -> ())? = nil,
         on3DSError: ((MGPError) -> ())? = nil
@@ -108,7 +109,7 @@ public class MGPPaymentSheet {
             onComplete: { result in
                 switch result.status {
                 case .SUCCEEDED:
-                    on3DSSucces?(result.id)
+                    on3DSSucces?(result)
                 case .FAILED, .CANCELLED:
                     on3DSFailure?(result.id)
                 }
