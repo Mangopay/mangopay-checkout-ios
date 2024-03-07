@@ -285,7 +285,7 @@ class ConfigurationController: UIViewController {
         else { return nil }
         
         let __env = MGPEnvironment(rawValue: env)!
-        MangopayCheckoutSDK.initialize(clientId: clientIDStr, environment: __env)
+        MangopayCheckoutSDK.initialize(clientId: clientIDStr, profillingMerchantId: "428242", environment: __env)
 
         return Configuration(
             sdkMode: .MangoPay,

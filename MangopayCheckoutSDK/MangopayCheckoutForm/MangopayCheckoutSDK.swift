@@ -8,11 +8,11 @@ public struct MangopayCheckoutSDK {
     public static var apiKey: String!
     static var environment: MGPEnvironment!
 
-    public static func initialize(clientId: String, environment: MGPEnvironment) {
+    public static func initialize(clientId: String, profillingMerchantId: String, environment: MGPEnvironment) {
         self.clientId = clientId
         self.environment = environment
         Tokenizer.initialize(clientId: clientId, environment: environment)
-        NethoneManager.shared.initialize(with: Constants.nethoneMerchantId)
+        NethoneManager.shared.initialize(with: profillingMerchantId)
     }
 
     public static func tokenizeCard(
