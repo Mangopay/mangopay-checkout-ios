@@ -357,7 +357,7 @@ class ConfigurationController: UIViewController {
         guard let _env = env else { return }
         switch _env {
         case .sandbox:
-            apiKeyField.text = "4e3ce72cba1f49dbb947be93fabeddb4"
+            apiKeyField.text = "304ae659cb8f491d975c3d9fc88cbe8c"
             clientField.text = "checkoutsquatest"
             creditedUserField.text = "158091557"
             creditedWalletField.text = "159834019"

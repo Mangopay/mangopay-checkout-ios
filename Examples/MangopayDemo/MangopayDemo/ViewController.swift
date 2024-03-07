@@ -195,6 +195,7 @@ class ViewController: UIViewController {
             authorID: "158091557",
             creditedUserID: "158091557",
             debitedFunds: Amount(currency: "EUR", amount: 10),
+            creditedFunds: Amount(currency: "EUR", amount: 10),
             fees: Amount(currency: "EUR", amount: 1),
             creditedWalletID: "159834019",
             cardID: cardId,
