@@ -17,7 +17,6 @@ public class MGPPaymentSheet {
     public init() {
         self.presentingVC = nil
         navVC = UINavigationController(rootViewController: MGPPaymentSheet.paymentFormVC)
-        navVC.restorationIdentifier = "elikem"
         navVC.modalPresentationStyle = .fullScreen
 
     }
@@ -83,7 +82,6 @@ public class MGPPaymentSheet {
         self.presentingVC = viewController
         
         guard payData?.secureModeNeeded == true else {
-            print("secureModeNeeded is false ")
             on3DSError?(MGPError._3dsNotRqd)
             return
         }

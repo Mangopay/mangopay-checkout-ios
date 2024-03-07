@@ -457,13 +457,11 @@ extension ProductListController: ItemCellDelegate {
 extension ProductListController: MGPApplePayHandlerDelegate {
 
     func applePayContext(didSelect shippingMethod: PKShippingMethod, handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
-        print("✅ shippingMethod", shippingMethod)
     }
 
     func applePayContext(didCompleteWith status: MGPApplePay.PaymentStatus, error: Error?) {
         switch status {
         case .success(let token):
-            print("🤣 MangoPayApplePay.token", token)
 //            Loader
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
 //                self.showSuccessDialog(title: "🤣 MangoPayApplePay.token", result: token)

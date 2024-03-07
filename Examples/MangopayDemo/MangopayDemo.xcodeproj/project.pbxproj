@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,7 +32,7 @@
 		9813A3AD2A8261330036F556 /* Segue+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3A22A8261330036F556 /* Segue+Additions.swift */; };
 		98413A7E2B04893F00F62F93 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98413A7D2B04893F00F62F93 /* Extensions.swift */; };
 		98413A802B049AEC00F62F93 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98413A7F2B049AEC00F62F93 /* ResultView.swift */; };
-		98983C7B2AE152F600818520 /* MangopayCheckoutSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 98983C7A2AE152F600818520 /* MangopayCheckoutSDK */; };
+		98C533102B9A1AA60023DB93 /* MangopayCheckoutSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 98C5330F2B9A1AA60023DB93 /* MangopayCheckoutSDK */; };
 		98D535862A82661800EE6381 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 98D535852A82661800EE6381 /* IQKeyboardManagerSwift */; };
 		98D535882A826CA300EE6381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D535872A826CA300EE6381 /* Assets.xcassets */; };
 		98DF69A62A83B3EA00B08198 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 98DF69A52A83B3EA00B08198 /* netfox */; };
@@ -103,8 +103,8 @@
 			files = (
 				98DF69A62A83B3EA00B08198 /* netfox in Frameworks */,
 				98D535862A82661800EE6381 /* IQKeyboardManagerSwift in Frameworks */,
-				98983C7B2AE152F600818520 /* MangopayCheckoutSDK in Frameworks */,
 				6D3887DDF994961D7AF95AAE /* Pods_MangopayDemo.framework in Frameworks */,
+				98C533102B9A1AA60023DB93 /* MangopayCheckoutSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +248,7 @@
 			packageProductDependencies = (
 				98D535852A82661800EE6381 /* IQKeyboardManagerSwift */,
 				98DF69A52A83B3EA00B08198 /* netfox */,
-				98983C7A2AE152F600818520 /* MangopayCheckoutSDK */,
+				98C5330F2B9A1AA60023DB93 /* MangopayCheckoutSDK */,
 			);
 			productName = MangopayDemo;
 			productReference = 9813A3632A8254CD0036F556 /* MangopayDemo.app */;
@@ -328,6 +328,7 @@
 			packageReferences = (
 				98D535842A82661800EE6381 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				98DF69A42A83B3EA00B08198 /* XCRemoteSwiftPackageReference "netfox" */,
+				98C5330E2B9A1AA60023DB93 /* XCLocalSwiftPackageReference "../.." */,
 			);
 			productRefGroup = 9813A3642A8254CD0036F556 /* Products */;
 			projectDirPath = "";
@@ -848,6 +849,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		98C5330E2B9A1AA60023DB93 /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		98D535842A82661800EE6381 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -868,7 +876,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		98983C7A2AE152F600818520 /* MangopayCheckoutSDK */ = {
+		98C5330F2B9A1AA60023DB93 /* MangopayCheckoutSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MangopayCheckoutSDK;
 		};

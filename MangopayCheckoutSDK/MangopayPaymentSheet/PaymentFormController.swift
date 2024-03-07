@@ -79,7 +79,6 @@ class PaymentFormController: UIViewController {
             self.paymentHandler.setData(payRequest: applePayConfig.toPaymentRequest)
             self.paymentHandler.startPayment(delegate: applePayConfig.delegate) { (success) in
                 if success {
-                    print("✅ Confirmation")
                 }
             }
         }
@@ -156,7 +155,6 @@ class PaymentFormController: UIViewController {
         paymentObj: Payable? = nil
     ) {
         MGPPaymentSheet().launch3DSIfPossible(payData: paymentObj, presentIn: self) { result in
-            print("✅ launch3DSIfPossible", result)
             self.callback.onPaymentCompleted?(result.id, result)
         } on3DSLauch: { _3dsVC in
             DispatchQueue.main.async {

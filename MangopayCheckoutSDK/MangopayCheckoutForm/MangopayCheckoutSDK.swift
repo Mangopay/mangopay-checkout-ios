@@ -23,10 +23,6 @@ public struct MangopayCheckoutSDK {
         callBack: @escaping MangopayTokenizedCallBack
     ) {
 
-//        guard clientId != nil, !clientId.isEmpty else {
-//            callBack(nil, MGPError.initializationRqd)
-//            return
-//        }
 
         guard form.isFormValid else {
             callBack(nil, MGPError.invalidForm)
@@ -48,7 +44,6 @@ public struct MangopayCheckoutSDK {
             DispatchQueue.main.async {
                 callBack(tokenizedCardData, error)
             }
-//            launch3DSIfPossible(payData: _payinData, presentIn: viewController, on3DSSucces: on3DSSucces, on3DSFailure: on3DSFailure)
         }
     }
 

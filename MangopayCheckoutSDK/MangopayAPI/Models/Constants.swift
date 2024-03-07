@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct Constants {
+struct Constants {
     public static let nethoneMerchantId = "428242"
 }
