@@ -134,36 +134,21 @@ class ProductListController: UIViewController {
                  onTokenizationCompleted: { cardRegistration in
                      print("✅ cardRegistration", cardRegistration)
                      self.cardId = cardRegistration.card.cardID
-                 
-//                     guard shouldPerform3ds else {
-//                         DispatchQueue.main.async {
-//                             self.checkout.tearDown {
-//                                 self.navigationController?.popToRootViewController(animated: true)
-//                                 self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
-//                             }
-//                         }
-//                         return
-//                     }
-//                     self.handle3DS(with: cardRegistration.card.cardID ?? "") { can3DS in
-//                         if can3DS {
-//                             DispatchQueue.main.async {
-//                                 self.showSuccessDialog(title: "3DS succesful", result: cardRegistration.str ?? "")
-//                             }
-//                         } else {
-//                             DispatchQueue.main.async {
-//                                 self.checkout.tearDown {
-//                                     self.navigationController?.popToRootViewController(animated: true)
-//
-//                                     self.showSuccessDialog(title: "✅ cardRegistration", result: cardRegistration.str ?? "")
-//
-//                                 }
-//
-//                             }
-//                         }
-//                     }
                  }, 
+                 onCreateCardRegistration: { cardInfo in
+                    guard let cardRegistration = await self.performCreateCardReg(
+                       cardReg: MGPCardRegistration.Initiate(
+                           UserId: self.config.userId,
+                           Currency: self.config.currency.rawValue,
+                           CardType: "CB_VISA_MASTERCARD"),
+                       config: self.config,
+                       clientId: self.config.clientId,
+                       apiKey: self.config.apiKey
+                    ) else { return nil }
+                    return cardRegistration
+
+                },
                  onPaymentCompleted: { id, results in
-                     print("✅ onPaymentCompleted", results?.status)
                      guard let res = results, let status = results?.status else { return }
                      
                      self.checkout.tearDown {
@@ -195,23 +180,10 @@ class ProductListController: UIViewController {
                          ) else { return nil }
                          return paypalResponse
                      }
-                 }, onCreateCardRegistration: { cardInfo in
-                     guard let cardRegistration = await self.performCreateCardReg(
-                        cardReg: MGPCardRegistration.Initiate(
-                            UserId: self.config.userId,
-                            Currency: self.config.currency.rawValue,
-                            CardType: "CB_VISA_MASTERCARD"),
-                        config: self.config,
-                        clientId: self.config.clientId,
-                        apiKey: self.config.apiKey
-                     ) else { return nil }
-                     return cardRegistration
-
                  }, onCancelled: {
                      
                  },
                  onError: { error in
-                     print("❌ error", error.reason)
                          topmostViewController?.showAlert(with: error.reason, title: "Error")
                  },
                  onSheetDismissed: {
@@ -266,26 +238,6 @@ class ProductListController: UIViewController {
                     apiKey: self.config.apiKey,
                     paypalData: paypal
                 )
-                                
-//                if let _urlStr = regResponse.redirectURL, let url = URL(string: _urlStr) {
-//                    let urlController = MGPWebViewController(
-//                        url: url,
-//                        onComplete: { status in 
-//                            switch status.status {
-//                            case .SUCCEEDED:
-//                                self.showSuccessDialog(title: "✅ Paypal Payment", result: status.id )
-//                            case .FAILED:
-//                                self.showAlert(with: "", title: "Payment failed")
-//                            }
-//                        },
-//                        onError: { error in
-//                            topmostViewController?.showAlert(with: error?.localizedDescription ?? "", title: "Error")
-//                        }
-//                    )
-                    
-//                    self.checkout.pushViewController(urlController)
-//                }
-    
                 return regResponse
             } catch {
                 print("❌ payInpaypal Error ")
