@@ -26,8 +26,8 @@ Pod::Spec.new do |spec|
   spec.dependency     'MangopayVaultSDK', '~> 1.0.8'
 
   
-  spec.resource_bundle = {
-    'MangopayCheckoutSDK' => ['MangopayCheckoutSDK/Resources/**/*.swift', 'MangopayCheckoutSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets']
+  spec.resource_bundles = {
+    'MangopayiOSSDK_MangopayCheckoutSDK' => ['MangopayCheckoutSDK/Resources/**/*.swift', 'MangopayCheckoutSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets']
   }
 
 

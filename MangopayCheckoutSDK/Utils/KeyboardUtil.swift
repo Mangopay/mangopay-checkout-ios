@@ -30,7 +30,7 @@ final class KeyboardUtil {
     func register() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(keyboardWillShow(notification:)),
-            name: NSNotification.Name.UIResponder.keyboardWillShowNotification,
+            name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
 
