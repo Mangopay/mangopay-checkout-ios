@@ -15,7 +15,6 @@ public struct CallBack {
     var onCreatePayment: ((PaymentMethod, String?) async -> Payable?)?
     var onCancel: (() -> Void)?
     var onError: ((MGPError) -> Void)?
-//    var onSheetDismissed: (() -> Void)?
 
     public init(
         onPaymentMethodSelected: ((PaymentMethod) -> Void)? = nil,
@@ -24,8 +23,7 @@ public struct CallBack {
         onPaymentCompleted: ((String?, _3DSResult?) -> Void)? = nil,
         onCreatePayment: ((PaymentMethod, String?) async -> Payable?)? = nil,
         onCancelled: (() -> Void)?,
-        onError: ((MGPError) -> Void)? = nil,
-        onSheetDismissed: (() -> Void)? = nil
+        onError: ((MGPError) -> Void)? = nil
     ) {
         self.onPaymentMethodSelected = onPaymentMethodSelected
         self.onTokenizationCompleted = onTokenizationCompleted
@@ -34,6 +32,5 @@ public struct CallBack {
         self.onPaymentCompleted = onPaymentCompleted
         self.onCancel = onCancelled
         self.onError = onError
-        self.onSheetDismissed = onSheetDismissed
     }
 }
