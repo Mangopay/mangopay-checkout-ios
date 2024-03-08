@@ -21,6 +21,7 @@ public struct CardTypeChecker {
         _ = "^3(0[0-5]|[689])\\d*$" //diner
         _ = "^(((620|(621(?!83|88|98|99))|622(?!06|018)|62[3-6]|627[02,06,07]|628(?!0|1)|629[1,2]))\\d*|622018\\d{12})$" //unionPay
         let maestro = "^(?:5[06789]\\d\\d|(?!6011[0234])(?!60117[4789])(?!60118[6789])(?!60119)(?!64[456789])(?!65)6\\d{3})\\d{8,15}$"
+        let cb = "^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9]{2})[0-9]{12})$"
     
         if cardNumber.isMatch(VISA_Regex) {
             return .visa
@@ -36,6 +37,8 @@ public struct CardTypeChecker {
             return .jcb
         } else if cardNumber.isMatch(maestro) {
             return .maestro
+        } else if cardNumber.isMatch(cb) {
+            return .cb
         } else {
             return .none
         }
@@ -53,6 +56,7 @@ public enum CardType: String, Codable, CaseIterable {
     case discover = "DISCOVER"
     case jcb
     case maestro = "MAESTRO"
+    case cb = "CB"
     case none
 
     public var icon: UIImage? {
@@ -73,6 +77,8 @@ public enum CardType: String, Codable, CaseIterable {
             return UIImage.init(assetIdentifier: .card_jcb)
         case .maestro:
             return UIImage.init(assetIdentifier: .card_maestro)
+        case .cb:
+            return UIImage.init(assetIdentifier: .cartebancaire)
         case .none:
             return UIImage(systemName: "creditcard")
         }
@@ -95,6 +101,8 @@ public enum CardType: String, Codable, CaseIterable {
         case .jcb:
             return 16
         case .maestro:
+            return 19
+        case .cb:
             return 19
         case .none:
             return 16

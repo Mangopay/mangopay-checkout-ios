@@ -71,8 +71,10 @@ public class MGPWebViewController: UIViewController {
 
     func addBackButton() {
         let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        backButton.imageView?.contentMode = .scaleAspectFit
+        backButton.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        backButton.tintColor = .black
+        backButton.imageView?.contentMode = .scaleToFill
         backButton.setTitle("", for: .normal)
         backButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         backButton.setTitleColor(backButton.tintColor, for: .normal)
@@ -111,37 +113,40 @@ extension MGPWebViewController: WKNavigationDelegate {
             return
         }
         
-        Task {
-            
-            do {
-                let regResponse = try await PaymentCoreClient(
-                    env: .t3
-                ).getPayIn(
-                    clientId: MangopayCheckoutSDK.clientId,
-                    apiKey: "309ac92700674a0aacfdb9e64e29135c",
-                    payInId: _3dsResult.id
-                )
-  
-                _3dsResult = _3DSResult(
-                    type: .cardDirect,
-                    status: .SUCCEEDED,
-                    id: _3dsResult.id,
-                    nethoneAttemptReference: nethoneAttemptReference
-                )
-                self.handleDismiss(_3dsResult: _3dsResult)
+        _3dsResult.nethoneAttemptReference = nethoneAttemptReference
+        self.handleDismiss(_3dsResult: _3dsResult)
 
-            } catch {
-                print("❌ getPayIn Error ")
-                _3dsResult = _3DSResult(
-                    type: .cardDirect,
-                    status: .FAILED,
-                    id: _3dsResult.id,
-                    nethoneAttemptReference: nethoneAttemptReference
-                )
-                self.handleDismiss(_3dsResult: _3dsResult)
-            }
-            
-        }
+//        Task {
+//            
+//            do {
+//                let regResponse = try await PaymentCoreClient(
+//                    env: .t3
+//                ).getPayIn(
+//                    clientId: MangopayCheckoutSDK.clientId,
+//                    apiKey: MangopayCheckoutSDK.apiKey,
+//                    payInId: _3dsResult.id
+//                )
+//  
+//                _3dsResult = _3DSResult(
+//                    type: .cardDirect,
+//                    status: .SUCCEEDED,
+//                    id: _3dsResult.id,
+//                    nethoneAttemptReference: nethoneAttemptReference
+//                )
+//                self.handleDismiss(_3dsResult: _3dsResult)
+//
+//            } catch {
+//                print("❌ getPayIn Error ")
+//                _3dsResult = _3DSResult(
+//                    type: .cardDirect,
+//                    status: .FAILED,
+//                    id: _3dsResult.id,
+//                    nethoneAttemptReference: nethoneAttemptReference
+//                )
+//                self.handleDismiss(_3dsResult: _3dsResult)
+//            }
+//            
+//        }
     }
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

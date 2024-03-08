@@ -12,7 +12,7 @@ public enum PayinStatus: String {
     case failed = "FAILED"
 }
 
-public struct PayIn: Codable, PayInPreAuthProtocol {
+public struct PayIn: Codable, Payable {
     
     var id, tag: String?
     var creationDate: Int?

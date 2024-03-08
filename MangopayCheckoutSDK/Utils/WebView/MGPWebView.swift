@@ -33,7 +33,6 @@ class MGPWebView: UIView {
 
     func setupView() {
         self.translatesAutoresizingMaskIntoConstraints = false
-//        webView.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .white
         webView.addSubview(activityIndiicatorView)
         activityIndiicatorView.centerXAnchor.constraint(equalTo: webView.centerXAnchor).isActive = true

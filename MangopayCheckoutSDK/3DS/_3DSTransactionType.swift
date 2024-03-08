@@ -27,12 +27,13 @@ public enum _3DSTransactionType: String, Codable {
 public enum _3DSStatus: String, Codable {
     case SUCCEEDED
     case FAILED
+    case CANCELLED
 }
 
 public struct _3DSResult: Codable {
     public let type: _3DSTransactionType
     public let status: _3DSStatus
     public let id: String
-    public let nethoneAttemptReference: String?
+    public var nethoneAttemptReference: String?
 
 }

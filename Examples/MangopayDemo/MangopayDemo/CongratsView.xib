@@ -36,11 +36,11 @@
                     </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment Succesful" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSK-jf-7Lr">
-                    <rect key="frame" x="70.666666666666671" y="91" width="146.66666666666663" height="22"/>
+                    <rect key="frame" x="65.666666666666671" y="91" width="156.66666666666663" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="ays-Sz-6Xw"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -56,7 +56,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="4Gy-Z0-6zz"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
