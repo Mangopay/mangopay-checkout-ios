@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "MangopayCheckoutSDK"
-  spec.version      = "1.0.0-beta.17"
+  spec.version      = "1.0.0-beta.18"
   spec.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift."
 
   spec.description  = <<-DESC
@@ -28,6 +28,11 @@ Pod::Spec.new do |spec|
   
   spec.resources = "MangopayCheckoutSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets}"
   spec.resources = "MangopayCheckoutSDK/Resources/**/*.swift"
+  
+  spec.resource_bundle = {
+    'MangopayCheckoutSDK' => ['MangopayCheckoutSDK/Resources/**/*.swift', 'MangopayCheckoutSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets']
+  }
+
 
   spec.vendored_frameworks = "Integrations/NethoneSDK.xcframework"
 end
