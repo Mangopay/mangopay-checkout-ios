@@ -185,9 +185,6 @@ class ProductListController: UIViewController {
                  },
                  onError: { error in
                          topmostViewController?.showAlert(with: error.reason, title: "Error")
-                 },
-                 onSheetDismissed: {
-                     print("✅ sheet dismisses")
                  }
              )
          )

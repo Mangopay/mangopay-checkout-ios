@@ -85,7 +85,7 @@ class PaymentFormController: UIViewController {
         
         formView.onClosedTapped = {
             self.navigationController?.dismiss(animated: true, completion: {
-                self.callback.onSheetDismissed?()
+                self.callback.onCancel?()
                 NethoneManager.shared.cancelNethoneAttemptIfAny()
             })
         }
@@ -130,7 +130,8 @@ class PaymentFormController: UIViewController {
             actions: [
                 UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
                     self.dismiss(animated: true) {
-                        self.callback.onSheetDismissed?()
+                        self.callback.onCancel?()
+                        NethoneManager.shared.cancelNethoneAttemptIfAny()
                     }
                 }),
                 UIAlertAction(title: "No", style: .default)

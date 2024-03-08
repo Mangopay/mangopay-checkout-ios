@@ -103,9 +103,6 @@ class ViewController: UIViewController {
                     onError: { error in
                         print("❌ error", error.reason)
                         self.showAlert(with: error.reason, title: "Error")
-                    },
-                    onSheetDismissed: {
-                        print("✅ sheet dismisses")
                     }
                 )
             )

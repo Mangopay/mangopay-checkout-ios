@@ -15,7 +15,7 @@ public struct CallBack {
     var onCreatePayment: ((PaymentMethod, String?) async -> Payable?)?
     var onCancel: (() -> Void)?
     var onError: ((MGPError) -> Void)?
-    var onSheetDismissed: (() -> Void)?
+//    var onSheetDismissed: (() -> Void)?
 
     public init(
         onPaymentMethodSelected: ((PaymentMethod) -> Void)? = nil,
