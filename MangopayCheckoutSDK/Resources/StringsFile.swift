@@ -9,7 +9,7 @@ import Foundation
 
 
 public func localize(_ key: String, comment: String = "") -> String {
-    let x = NSLocalizedString(key, bundle: Bundle.module, comment: comment)
+    let x = NSLocalizedString(key, bundle: Bundle.mgpInternal, comment: comment)
     print("🤣 x", x)
 //    NSLocalizedString(key, bundle: Bundle.module, comment: comment)
     return x
