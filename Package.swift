@@ -26,6 +26,9 @@ let package = Package(
                 .product(name: "MangopayVaultSDK", package: "mangopay-ios-vault-sdk"),
             ],
             path: "MangopayCheckoutSDK",
+            exclude: [
+                "Resources/NonSPMExtension.swift"
+            ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")

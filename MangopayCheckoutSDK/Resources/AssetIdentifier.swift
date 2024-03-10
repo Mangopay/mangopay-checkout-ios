@@ -26,7 +26,7 @@ extension UIImage {
     }
 
     convenience init!(assetIdentifier: AssetIdentifier) {
-        self.init(named: assetIdentifier.rawValue, in: Bundle.module, with: nil)
+        self.init(named: assetIdentifier.rawValue, in: Bundle.mgpInternal, with: nil)
     }
 
 }
