@@ -29,6 +29,9 @@ let package = Package(
                 .product(name: "PaymentButtons", package: "paypal-ios"),
             ],
             path: "MangopayCheckoutSDK",
+            exclude: [
+                "Resources/NonSPMExtension.swift"
+            ],
             resources: [
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
