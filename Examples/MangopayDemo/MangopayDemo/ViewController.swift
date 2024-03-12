@@ -78,10 +78,10 @@ class ViewController: UIViewController {
             }
             
             var checkout = MGPPaymentSheet.create(
-                paymentMethodConfig: PaymentMethodOptions(
-                    cardReg: cardRegistration
-                ),
-                handlePaymentFlow: false,
+                paymentMethodOptions: PaymentMethodOptions(
+                     cardOptions: MGPCardOptions(supportedCardBrands: [.visa, .mastercard, .amex, .maestro, .cb]),
+                     paypalOptions: MGPPaypalOptions()
+                 ),
                 branding: PaymentFormStyle(),
                 callback: CallBack(
                     onPaymentMethodSelected: { paymentMethod in
@@ -97,7 +97,7 @@ class ViewController: UIViewController {
                     }, onPaymentCompleted: { _, _ in
                         print("✅ onPaymentCompleted")
                     },
-                    onCancelled: {
+                    onCancel: {
                         
                     },
                     onError: { error in

@@ -22,7 +22,7 @@ public struct CallBack {
         onCreateCardRegistration: ((MGPCardInfo) async -> MGPCardRegistration?)? = nil,
         onPaymentCompleted: ((String?, _3DSResult?) -> Void)? = nil,
         onCreatePayment: ((PaymentMethod, String?) async -> Payable?)? = nil,
-        onCancelled: (() -> Void)?,
+        onCancel: (() -> Void)?,
         onError: ((MGPError) -> Void)? = nil
     ) {
         self.onPaymentMethodSelected = onPaymentMethodSelected
@@ -30,7 +30,7 @@ public struct CallBack {
         self.onCreateCardRegistration = onCreateCardRegistration
         self.onCreatePayment = onCreatePayment
         self.onPaymentCompleted = onPaymentCompleted
-        self.onCancel = onCancelled
+        self.onCancel = onCancel
         self.onError = onError
     }
 }

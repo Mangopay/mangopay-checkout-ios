@@ -67,7 +67,11 @@ class PaymentFormView: UIView {
     }()
 
     lazy var payPalButton: PayPalButton = {
-        let payPalButton = PayPalButton()
+        let payPalButton = PayPalButton(
+            color: paymentMethodOptions.paypalConfig?.color ?? .gold,
+            edges: paymentMethodOptions.paypalConfig?.edges ?? .softEdges,
+            label: paymentMethodOptions.paypalConfig?.label
+        )
         payPalButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         payPalButton.layer.cornerRadius = 8
         payPalButton.addTarget(self, action: #selector(onPaypalButtonTapped), for: .touchUpInside)
