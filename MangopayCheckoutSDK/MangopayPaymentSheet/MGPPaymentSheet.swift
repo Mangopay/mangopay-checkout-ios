@@ -18,21 +18,16 @@ public class MGPPaymentSheet {
         self.presentingVC = nil
         navVC = UINavigationController(rootViewController: MGPPaymentSheet.paymentFormVC)
         navVC.modalPresentationStyle = .fullScreen
-
     }
 
     public static func create(
-        paymentMethodConfig: PaymentMethodOptions,
-        handlePaymentFlow: Bool = false,
+        paymentMethodOptions: PaymentMethodOptions,
         branding: PaymentFormStyle,
-        supportedCardBrands: [CardType]? = nil,
         callback: CallBack
     ) -> MGPPaymentSheet {
         paymentFormVC = PaymentFormController(
-            paymentMethodConfig: paymentMethodConfig,
-            handlePaymentFlow: handlePaymentFlow,
+            paymentMethodOptions: paymentMethodOptions,
             branding: branding,
-            supportedCardBrands: supportedCardBrands,
             callback: callback
         )
         let mgp = MGPPaymentSheet()

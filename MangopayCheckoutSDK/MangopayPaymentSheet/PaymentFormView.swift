@@ -117,27 +117,23 @@ class PaymentFormView: UIView {
 
     var client: MangopayClient
     var callback: CallBack
-    var paymentMethodConfig: PaymentMethodOptions
-    var handlePaymentFlow: Bool
+    var paymentMethodOptions: PaymentMethodOptions
 
     init(
         client: MangopayClient,
-        paymentMethodConfig: PaymentMethodOptions,
-        handlePaymentFlow: Bool,
+        paymentMethodOptions: PaymentMethodOptions,
         branding: PaymentFormStyle?,
-        supportedCardBrands: [CardType]? = nil,
         callback: CallBack
     ) {
         self.paymentFormStyle = branding ?? PaymentFormStyle()
         self.callback = callback
         self.client = client
-        self.paymentMethodConfig = paymentMethodConfig
-        self.supportedCardBrands = supportedCardBrands
-        self.handlePaymentFlow = handlePaymentFlow
+        self.paymentMethodOptions = paymentMethodOptions
+        self.supportedCardBrands = paymentMethodOptions.cardOptions?.supportedCardBrands
         
         self.viewModel = PaymentFormViewModel(
             client: client,
-            paymentMethodConfig: paymentMethodConfig
+            paymentMethodConfig: paymentMethodOptions
         )
 
         super.init(frame: .zero)
@@ -146,8 +142,8 @@ class PaymentFormView: UIView {
             action: #selector(onViewTap)
         )
 
-        [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodConfig.applePayConfig?.shouldRenderApplePay == true)})
-        payPalButton.isHidden = paymentMethodConfig.paypalConfig == nil
+        [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodOptions.applePayOptions?.shouldRenderApplePay == true)})
+        payPalButton.isHidden = paymentMethodOptions.paypalConfig == nil
         setupView()
 
         viewModel.onTokenisationCompleted = {
@@ -224,7 +220,7 @@ class PaymentFormView: UIView {
     }
 
     func finalizeButtonTapped() {
-        if let cardReg = paymentMethodConfig.cardReg {
+        if let cardReg = paymentMethodOptions.cardOptions?.cardRegistration {
             self.viewModel.tokenizeCard(
                 form: self.paymentForm,
                 cardRegistration: cardReg,

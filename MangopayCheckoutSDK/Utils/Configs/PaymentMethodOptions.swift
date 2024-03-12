@@ -8,20 +8,18 @@
 import Foundation
 
 public struct PaymentMethodOptions {
-    var card: MGPCardInfo?
-    var cardReg: MGPCardRegistration?
-    var applePayConfig: MGPApplePayConfig?
-    var paypalConfig: MGPPaypalConfig?
+    var cardOptions: MGPCardOptions?
+    var applePayOptions: MGPApplePayOptions?
+    var paypalConfig: MGPPaypalOptions?
 
     public init(
-        card: MGPCardInfo? = nil,
-        cardReg: MGPCardRegistration? = nil,
-        applePayConfig: MGPApplePayConfig? = nil,
-        paypalConfig: MGPPaypalConfig? = nil
+        cardOptions: MGPCardOptions,
+        applePayOptions: MGPApplePayOptions? = nil,
+        paypalOptions: MGPPaypalOptions? = nil
     ) {
-        self.card = card
-        self.cardReg = cardReg
-        self.applePayConfig = applePayConfig
-        self.paypalConfig = paypalConfig
+        self.cardOptions =  cardOptions
+        self.applePayOptions = applePayOptions
+        self.paypalConfig = paypalOptions
     }
 }
+
