@@ -10,4 +10,5 @@ import Foundation
 public enum PaymentMethod {
     case card(MGPCardInfo?)
     case applePay(MGPApplePay?)
+    case payPal
 }

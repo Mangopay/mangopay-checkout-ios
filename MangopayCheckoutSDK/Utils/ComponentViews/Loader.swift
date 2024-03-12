@@ -15,7 +15,7 @@ class Loader: UIViewController {
         activity.translatesAutoresizingMaskIntoConstraints = false
         activity.heightAnchor.constraint(equalToConstant: 60).isActive = true
         activity.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        activity.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        activity.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
         activity.startAnimating()
         return activity
     }()

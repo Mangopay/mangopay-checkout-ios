@@ -1,0 +1,16 @@
+PODS:
+  - CFAlertViewController (3.1)
+
+DEPENDENCIES:
+  - CFAlertViewController
+
+SPEC REPOS:
+  trunk:
+    - CFAlertViewController
+
+SPEC CHECKSUMS:
+  CFAlertViewController: a27cf0512d0fa9ef6a3b966862039c295fb0ef69
+
+PODFILE CHECKSUM: e46dadbff283495b3cec0ebfab5518a6e97700e4
+
+COCOAPODS: 1.13.0

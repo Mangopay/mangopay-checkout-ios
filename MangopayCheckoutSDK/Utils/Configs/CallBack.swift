@@ -8,17 +8,17 @@
 import Foundation
 
 public struct CallBack {
-    var onPaymentMethodSelected: ((PaymentMethod) -> Void)?
-    var onTokenizationCompleted: ((MGPCardRegistration) -> Void)?
-    var onPaymentCompleted: (() -> Void)?
+    var onPaymentMethodSelected: ((PaymentMethod) async -> APMInfo?)?
+    var onTokenizationCompleted: ((TokenizedCardData) -> Void)?
+    var onPaymentCompleted: ((String?, _3DSResult?) -> Void)?
     var onCancelled: (() -> Void)?
     var onError: ((MGPError) -> Void)?
     var onSheetDismissed: (() -> Void)?
 
     public init(
-        onPaymentMethodSelected: ((PaymentMethod) -> Void)? = nil,
-        onTokenizationCompleted: ( (MGPCardRegistration) -> Void)? = nil,
-        onPaymentCompleted: ( () -> Void)? = nil,
+        onPaymentMethodSelected: ((PaymentMethod) async -> APMInfo?)? = nil,
+        onTokenizationCompleted: ( (TokenizedCardData) -> Void)? = nil,
+        onPaymentCompleted: ((String?, _3DSResult?) -> Void)? = nil,
         onCancelled: (() -> Void)?,
         onError: ((MGPError) -> Void)? = nil,
         onSheetDismissed: (() -> Void)? = nil
