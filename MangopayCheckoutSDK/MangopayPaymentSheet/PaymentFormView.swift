@@ -176,7 +176,7 @@ class PaymentFormView: UIView {
 
     @objc func closeTapped() {
         onClosedTapped?()
-        callback.onCancelled?()
+        callback.onCancel?()
     }
 
     @objc func onViewTap() {

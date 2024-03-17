@@ -157,7 +157,7 @@ class ProductListController: UIViewController {
                      case .FAILED:
                          self.showAlert(with: "", title: "Payment failed")
                      }
-                 }, onCancelled: {
+                 }, onCancel: {
                      
                  },
                  onError: { error in

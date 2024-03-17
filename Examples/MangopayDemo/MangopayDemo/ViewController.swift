@@ -96,7 +96,7 @@ class ViewController: UIViewController {
                         }
                     }, onPaymentCompleted: { _, _ in
                         print("✅ onPaymentCompleted")
-                    }, onCancelled: {
+                    }, onCancel: {
                         
                     },
                     onError: { error in
