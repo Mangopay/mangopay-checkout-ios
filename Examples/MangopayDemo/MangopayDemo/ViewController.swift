@@ -78,7 +78,7 @@ class ViewController: UIViewController {
             }
             
             var checkout = MGPPaymentSheet.create(
-                paymentMethodConfig: PaymentMethodConfig(
+                paymentMethodConfig: PaymentMethodOptions(
                     cardReg: cardRegistration
                 ),
                 handlePaymentFlow: false,
@@ -86,7 +86,7 @@ class ViewController: UIViewController {
                 callback: CallBack(
                     onPaymentMethodSelected: { paymentMethod in
                         print("✅ cardinfo", paymentMethod)
-                        return nil
+                        return
                     },
                     onTokenizationCompleted: { cardRegistration in
                         print("✅ cardRegistration", cardRegistration)
@@ -96,15 +96,17 @@ class ViewController: UIViewController {
                         }
                     }, onPaymentCompleted: { _, _ in
                         print("✅ onPaymentCompleted")
+<<<<<<< HEAD
                     }, onCancel: {
+=======
+                    },
+                    onCancelled: {
+>>>>>>> checkout-release-readiness
                         
                     },
                     onError: { error in
                         print("❌ error", error.reason)
                         self.showAlert(with: error.reason, title: "Error")
-                    },
-                    onSheetDismissed: {
-                        print("✅ sheet dismisses")
                     }
                 )
             )
@@ -194,6 +196,7 @@ class ViewController: UIViewController {
             authorID: "158091557",
             creditedUserID: "158091557",
             debitedFunds: Amount(currency: "EUR", amount: 10),
+            creditedFunds: Amount(currency: "EUR", amount: 10),
             fees: Amount(currency: "EUR", amount: 1),
             creditedWalletID: "159834019",
             cardID: cardId,
@@ -229,7 +232,7 @@ class ViewController: UIViewController {
                 //            showLoader(false)
                 print("✅ res", regResponse)
                 
-                guard let payinData = regResponse as? PayInPreAuthProtocol else { return }
+                guard let payinData = regResponse as? Payable else { return }
 
                 MangopayCheckoutSDK.launch3DSIfPossible(payData: payinData, presentIn: self) { success in
                     print("✅ launch3DSIfPossible", success)

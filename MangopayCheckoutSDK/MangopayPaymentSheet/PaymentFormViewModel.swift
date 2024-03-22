@@ -11,13 +11,14 @@ public class PaymentFormViewModel {
 
     var mgpClient: MangopayClient
     var onTokenisationCompleted: (() -> Void)?
+    var onCreatePaymentComplete: ((Payable?) -> Void)?
     var onTokenisationError: ((MGPError) -> ())?
 
     var selectedPaymentMethod: PaymentMethod = .card(.none)
 
     init(
         client: MangopayClient,
-        paymentMethodConfig: PaymentMethodConfig
+        paymentMethodConfig: PaymentMethodOptions
     ) {
         self.mgpClient = client
     }
@@ -31,9 +32,20 @@ public class PaymentFormViewModel {
         form.setCardRegistration(cardRegistration)
         form.tokenizeCard { tokenizedCardData, error in
             if let _ = tokenizedCardData, let card = tokenizedCardData?.card, let cardData = tokenizedCardData {
-                DispatchQueue.main.async {
-                    callback.onTokenizationCompleted?(cardData)
-                    self.onTokenisationCompleted?()
+                
+                NethoneManager.shared.performFinalizeAttempt { _ , attemptRef in
+                    DispatchQueue.main.async {
+                        callback.onTokenizationCompleted?(cardData)
+                        self.onTokenisationCompleted?()
+                        if let createAction = callback.onCreatePayment {
+                            Task {
+                                let paymentObj = await createAction(.card(nil), attemptRef)
+                                self.onCreatePaymentComplete?(paymentObj)
+                            }
+                        } else {
+                            callback.onPaymentCompleted?(attemptRef, _3DSResult(type: .cardDirect, status: .SUCCEEDED, id: card.cardID ?? ""))
+                        }
+                    }
                 }
             }
 

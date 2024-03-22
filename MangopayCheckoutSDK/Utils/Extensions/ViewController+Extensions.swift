@@ -14,3 +14,21 @@ var topmostViewController: UIViewController? {
     }
     return rootViewController
 }
+
+extension UIViewController {
+    func showAlert(with cardToken: String, title: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: cardToken,
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(
+            title: "OK",
+            style: .default
+        ) { _ in
+            alert.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+}

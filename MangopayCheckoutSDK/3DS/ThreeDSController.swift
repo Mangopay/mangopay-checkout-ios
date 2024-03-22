@@ -78,6 +78,16 @@ public class ThreeDSController: UIViewController {
         view = webView
     }
 
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
     func dismiss3DS() {
         self.dismiss(animated: true)
     }

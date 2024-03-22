@@ -118,7 +118,6 @@ public class MGPPaymentForm: UIView, FormValidatable {
     var onRightButtonTappedAction: (() -> Void)?
     var didEndEditing: ((MGPPaymentForm) -> Void)?
 
-    var currentAttempt: String?
     
     var cardRegistration: MGPCardRegistration?
 
@@ -222,31 +221,14 @@ public class MGPPaymentForm: UIView, FormValidatable {
         self.cardRegistration = cardRegistration
     }
 
-    func cancelNethoneAttemptIfAny() {
-        do {
-            try NethoneSDK.NTHNethone.cancelAttempt()
-            print("CancelAttempt success")
-        } catch { 
-//            print("Nethone cancelAttempt Error", error.localizedDescription)
-        }
-    }
-
     func initiateNethone() {
-        cancelNethoneAttemptIfAny()
         let nethoneConfig = NTHAttemptConfiguration()
         nethoneConfig.registeredTextFieldsOnly = true
-        nethoneConfig.sensitiveFields = [
-            "cardNumberField",
-            "cardNameField",
-            "expiryDateField",
-            "cvvField"
-        ]
 
         registerTextfieldsToNethone()
 
         do {
             try NTHNethone.beginAttempt(with: nethoneConfig)
-            currentAttempt = NTHNethone.attemptReference()
         } catch { error
             print("Nethone intiation Error", error.localizedDescription)
         }
@@ -284,7 +266,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
             return
         }
 
-        guard let attemptRef = self.currentAttempt else {
+        guard let attemptRef = NTHNethone.attemptReference() else {
             callBack(nil, MGPError.nethoneAttemptReferenceRqd)
             return
         }
