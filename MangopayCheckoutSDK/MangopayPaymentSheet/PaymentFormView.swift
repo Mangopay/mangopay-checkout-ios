@@ -205,6 +205,7 @@ class PaymentFormView: UIView {
         finalizeButtonTapped()
         Task {
             await callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
+            SentryManager.log(name: .PAYMENT_METHOD_SELECTED)
         }
         Loader.show()
     }
@@ -214,6 +215,7 @@ class PaymentFormView: UIView {
             Loader.show()
             if let paypalAPM = await callback.onPaymentMethodSelected?(.payPal) {
                 self.onAPMTapped?(paypalAPM)
+                SentryManager.log(name: .PAYMENT_METHOD_SELECTED)
             }
             Loader.hide()
         }
@@ -223,6 +225,7 @@ class PaymentFormView: UIView {
         onApplePayTapped?()
         Task {
             await callback.onPaymentMethodSelected?(.applePay(.none))
+            SentryManager.log(name: .PAYMENT_METHOD_SELECTED)
         }
     }
 

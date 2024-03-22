@@ -84,6 +84,7 @@ class PaymentFormController: UIViewController {
         formView.onClosedTapped = {
             self.navigationController?.dismiss(animated: true, completion: {
                 self.callback.onSheetDismissed?()
+                SentryManager.log(name: .PAYMENT_CANCELLED)
             })
         }
         
@@ -94,9 +95,16 @@ class PaymentFormController: UIViewController {
                     nethoneAttemptReference: self.formView.currentAttempt,
                     onComplete: { status in
                         self.callback.onPaymentCompleted?(nil, status)
+                        switch status.status {
+                        case .SUCCEEDED:
+                            SentryManager.log(name: .PAYMENT_COMPLETED)
+                        case .FAILED:
+                            SentryManager.log(name: .PAYMENT_ERRORED)
+                        }
                     },
                     onError: { error in
                         self.callback.onError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
+                        SentryManager.log(name: .PAYMENT_FAILED)
                     }
                 )
                 
