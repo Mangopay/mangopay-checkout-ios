@@ -91,6 +91,7 @@ public struct MangopayCheckoutSDK {
                 case .FAILED:
                     on3DSFailure?(result.id)
                     SentryManager.log(name: .THREE_AUTH_FAILED)
+                default: break
                 }
             }) { error in
                 on3DSError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))

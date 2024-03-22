@@ -85,13 +85,9 @@ class PaymentFormController: UIViewController {
         
         formView.onClosedTapped = {
             self.navigationController?.dismiss(animated: true, completion: {
-<<<<<<< HEAD
-                self.callback.onSheetDismissed?()
-                SentryManager.log(name: .PAYMENT_CANCELLED)
-=======
+
                 self.callback.onCancel?()
                 NethoneManager.shared.cancelNethoneAttemptIfAny()
->>>>>>> checkout_release_1_0_0
             })
         }
         
@@ -101,17 +97,19 @@ class PaymentFormController: UIViewController {
                     url: url,
                     nethoneAttemptReference: NTHNethone.attemptReference(),
                     onComplete: { status in
-<<<<<<< HEAD
+
                         self.callback.onPaymentCompleted?(nil, status)
                         switch status.status {
                         case .SUCCEEDED:
                             SentryManager.log(name: .PAYMENT_COMPLETED)
                         case .FAILED:
                             SentryManager.log(name: .PAYMENT_ERRORED)
-=======
-                        NethoneManager.shared.performFinalizeAttempt { res, attemptRef in
-                            self.callback.onPaymentCompleted?(nil, status)
->>>>>>> checkout_release_1_0_0
+
+                            NethoneManager.shared.performFinalizeAttempt { res, attemptRef in
+                                self.callback.onPaymentCompleted?(nil, status)
+                            }
+                        case .CANCELLED: break
+                            
                         }
                     },
                     onError: { error in
