@@ -7,11 +7,11 @@
 
 import Foundation
 
-public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
+public struct AuthorizePayIn: Codable, Payable {
     
 
     public var id, tag, authorID, creditedUserID: String?
-    public var debitedFunds, fees: Amount?
+    public var debitedFunds, creditedFunds, fees: Amount?
     public var creditedWalletID, secureMode, cardID: String?
     public var secureModeReturnURL, secureModeRedirectURL: String?
     var statementDescriptor: String?
@@ -19,12 +19,14 @@ public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
     var ipAddress: String?
     var billing, shipping: Ing?
     public var secureModeNeeded: Bool?
-
+    var profilingAttemptReference: String?
+    
     enum CodingKeys: String, CodingKey {
         case id = "Id"
         case tag = "Tag"
         case authorID = "AuthorId"
         case creditedUserID = "CreditedUserId"
+        case creditedFunds = "CreditedFunds"
         case debitedFunds = "DebitedFunds"
         case fees = "Fees"
         case creditedWalletID = "CreditedWalletId"
@@ -38,6 +40,7 @@ public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
         case billing = "Billing"
         case shipping = "Shipping"
         case secureModeNeeded = "SecureModeNeeded"
+        case profilingAttemptReference = "ProfilingAttemptReference"
     }
 
     public init(
@@ -45,6 +48,7 @@ public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
         authorID: String,
         creditedUserID: String? = nil,
         debitedFunds: Amount,
+        creditedFunds: Amount? = nil,
         fees: Amount,
         creditedWalletID: String,
         secureMode: String? = nil,
@@ -56,11 +60,13 @@ public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
         ipAddress: String,
         billing: Ing? = nil,
         shipping: Ing? = nil,
-        secureModeNeeded: Bool? = false
+        secureModeNeeded: Bool? = false,
+        profilingAttemptReference: String? = nil
     ) {
         self.tag = tag
         self.authorID = authorID
         self.creditedUserID = creditedUserID
+        self.creditedFunds = creditedFunds
         self.debitedFunds = debitedFunds
         self.fees = fees
         self.creditedWalletID = creditedWalletID
@@ -74,6 +80,7 @@ public struct AuthorizePayIn: Codable, PayInPreAuthProtocol {
         self.billing = billing
         self.shipping = shipping
         self.secureModeNeeded = secureModeNeeded
+        self.profilingAttemptReference = profilingAttemptReference
     }
 
 }
@@ -163,14 +170,14 @@ public struct BrowserInfo: Codable {
 
 public struct Amount: Codable {
     var currency: String?
-    var amount: Int?
+    var amount: Double?
 
     enum CodingKeys: String, CodingKey {
         case currency = "Currency"
         case amount = "Amount"
     }
 
-    public init(currency: String? = nil, amount: Int? = nil) {
+    public init(currency: String? = nil, amount: Double? = nil) {
         self.currency = currency
         self.amount = amount
     }

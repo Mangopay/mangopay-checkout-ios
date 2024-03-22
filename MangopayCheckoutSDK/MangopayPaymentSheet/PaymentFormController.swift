@@ -7,6 +7,7 @@
 
 import UIKit
 import PassKit
+import NethoneSDK
 
 class PaymentFormController: UIViewController {
 
@@ -14,14 +15,15 @@ class PaymentFormController: UIViewController {
 
     var paymentFormStyle: PaymentFormStyle
     var callback: CallBack
-    var paymentMethodConfig: PaymentMethodConfig
+    var paymentMethodConfig: PaymentMethodOptions
     var handlePaymentFlow: Bool
     let paymentHandler = MGPApplePayHandler()
     var supportedCardBrands: [CardType]?
-
+    var navVC: UINavigationController?
+    
     public init(
         cardConfig: CardConfig? = nil,
-        paymentMethodConfig: PaymentMethodConfig,
+        paymentMethodConfig: PaymentMethodOptions,
         handlePaymentFlow: Bool,
         branding: PaymentFormStyle?,
         supportedCardBrands: [CardType]? = nil,
@@ -59,6 +61,7 @@ class PaymentFormController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupObservers()
+        self.navVC = self.navigationController
     }
 
     override func viewDidLayoutSubviews() {
@@ -76,24 +79,26 @@ class PaymentFormController: UIViewController {
             self.paymentHandler.setData(payRequest: applePayConfig.toPaymentRequest)
             self.paymentHandler.startPayment(delegate: applePayConfig.delegate) { (success) in
                 if success {
-                    print("✅ Confirmation")
                 }
             }
         }
         
         formView.onClosedTapped = {
             self.navigationController?.dismiss(animated: true, completion: {
-                self.callback.onSheetDismissed?()
+                self.callback.onCancel?()
+                NethoneManager.shared.cancelNethoneAttemptIfAny()
             })
         }
         
         formView.onAPMTapped = { apmInfo in
-            if let _urlStr = apmInfo.redirectURL, let url = URL(string: _urlStr) {
+            if let _urlStr = apmInfo.secureModeRedirectURL, let url = URL(string: _urlStr) {
                 let urlController = MGPWebViewController(
                     url: url,
-                    nethoneAttemptReference: self.formView.currentAttempt,
+                    nethoneAttemptReference: NTHNethone.attemptReference(),
                     onComplete: { status in
-                        self.callback.onPaymentCompleted?(nil, status)
+                        NethoneManager.shared.performFinalizeAttempt { res, attemptRef in
+                            self.callback.onPaymentCompleted?(nil, status)
+                        }
                     },
                     onError: { error in
                         self.callback.onError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
@@ -102,6 +107,14 @@ class PaymentFormController: UIViewController {
                 
                 self.navigationController?.pushViewController(urlController, animated: true)
             }
+        }
+
+        formView.viewModel.onCreatePaymentComplete = { paymentObj in
+            guard let payObj = paymentObj else {
+                return
+            }
+
+            self.launch3DSIfPossible(paymentObj: payObj)
         }
     }
 
@@ -117,7 +130,8 @@ class PaymentFormController: UIViewController {
             actions: [
                 UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
                     self.dismiss(animated: true) {
-                        self.callback.onSheetDismissed?()
+                        self.callback.onCancel?()
+                        NethoneManager.shared.cancelNethoneAttemptIfAny()
                     }
                 }),
                 UIAlertAction(title: "No", style: .default)
@@ -137,4 +151,28 @@ class PaymentFormController: UIViewController {
     func manuallyValidateForms() {
         formView.manuallyValidateForms()
     }
+
+    private func launch3DSIfPossible(
+        paymentObj: Payable? = nil
+    ) {
+        MGPPaymentSheet().launch3DSIfPossible(payData: paymentObj, presentIn: self) { result in
+            self.callback.onPaymentCompleted?(result.id, result)
+        } on3DSLauch: { _3dsVC in
+            DispatchQueue.main.async {
+                self.navVC?.pushViewController(_3dsVC, animated: true)
+            }
+        } on3DSFailure: { error in
+            DispatchQueue.main.async {
+                self.showAlert(with: "", title: "3DS challenge failed")
+            }
+        } on3DSError: { error in
+            print("error", error)
+            switch error {
+            case ._3dsNotRqd:
+                self.callback.onPaymentCompleted?(nil, _3DSResult(type: .cardDirect, status: .SUCCEEDED, id: paymentObj?.cardID ?? ""))
+            default: break
+            }
+        }
+    }
 }
+

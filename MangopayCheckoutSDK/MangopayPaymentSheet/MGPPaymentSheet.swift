@@ -22,7 +22,7 @@ public class MGPPaymentSheet {
     }
 
     public static func create(
-        paymentMethodConfig: PaymentMethodConfig,
+        paymentMethodConfig: PaymentMethodOptions,
         handlePaymentFlow: Bool = false,
         branding: PaymentFormStyle,
         supportedCardBrands: [CardType]? = nil,
@@ -71,9 +71,9 @@ public class MGPPaymentSheet {
     
 
     public func launch3DSIfPossible(
-        payData: PayInPreAuthProtocol? = nil,
+        payData: Payable? = nil,
         presentIn viewController: UIViewController?,
-        on3DSSucces: ((String) -> ())? = nil,
+        on3DSSucces: ((_3DSResult) -> ())? = nil,
         on3DSLauch: ((UIViewController) -> ())? = nil,
         on3DSFailure: ((String) -> ())? = nil,
         on3DSError: ((MGPError) -> ())? = nil
@@ -82,7 +82,6 @@ public class MGPPaymentSheet {
         self.presentingVC = viewController
         
         guard payData?.secureModeNeeded == true else {
-            print("secureModeNeeded is false ")
             on3DSError?(MGPError._3dsNotRqd)
             return
         }
@@ -108,8 +107,8 @@ public class MGPPaymentSheet {
             onComplete: { result in
                 switch result.status {
                 case .SUCCEEDED:
-                    on3DSSucces?(result.id)
-                case .FAILED:
+                    on3DSSucces?(result)
+                case .FAILED, .CANCELLED:
                     on3DSFailure?(result.id)
                 }
             }) { error in
