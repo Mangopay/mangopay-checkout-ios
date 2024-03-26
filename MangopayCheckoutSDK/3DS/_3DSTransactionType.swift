@@ -7,10 +7,11 @@
 
 import Foundation
 
-public enum _3DSTransactionType: String, Codable {
+public enum _3DSTransactionType: String, Codable, CaseIterable {
     case cardDirect = "CARD_DIRECT"
     case preauthorized = "PREAUTHORIZED"
     case cardValidated = "CARD_VALIDATION"
+    case depositPreAuth = "DEPOSIT_PREAUTH"
 
     public var id: String {
         switch self {
@@ -20,6 +21,8 @@ public enum _3DSTransactionType: String, Codable {
             return "preAuthorizationId"
         case .cardValidated:
             return "cardValidationId"
+        case .depositPreAuth:
+            return "depositId"
         }
     }
 }

@@ -11,26 +11,41 @@ import Foundation
 protocol URLHelping {
 
     func urlsMatch(redirectUrl: URL, matchingUrl: URL) -> Bool
-    func extract3DSResult(from url: URL, type: _3DSTransactionType) -> _3DSResult?
+    func extract3DSResult(from url: URL, type: _3DSTransactionType?) -> _3DSResult?
     func extractPreAuth(from url: URL, queryKey: String) -> String?
 }
 
 final class URLHelper: URLHelping {
 
-    func extract3DSResult(from url: URL, type: _3DSTransactionType) -> _3DSResult? {
+    func extract3DSResult(from url: URL, type: _3DSTransactionType?) -> _3DSResult? {
 
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
 
         let statusStr = components.queryItems?.first { $0.name == "status" }?.value ?? "FAILED"
         
-        guard let id = components.queryItems?.first(where: { $0.name == type.id })?.value else { return nil }
+        if let _type = type {
+            guard let id = components.queryItems?.first(where: { $0.name == _type.id })?.value else { return nil }
+            return _3DSResult(
+                type: _type,
+                status: _3DSStatus(rawValue: statusStr) ?? .FAILED,
+                id: id,
+                nethoneAttemptReference: nil
+            )
+        } else {
+            for type in _3DSTransactionType.allCases {
+                guard let id = components.queryItems?.first(where: { $0.name == type.id })?.value else { continue }
+                return _3DSResult(
+                    type: type,
+                    status: _3DSStatus(rawValue: statusStr) ?? .FAILED,
+                    id: id,
+                    nethoneAttemptReference: nil
+                )
+            }
+
+            return nil
+        }
         
-        return _3DSResult(
-            type: type,
-            status: _3DSStatus(rawValue: statusStr) ?? .FAILED,
-            id: id,
-            nethoneAttemptReference: nil
-        )
+
     }
 
     func extractPreAuth(from url: URL, queryKey: String) -> String? {

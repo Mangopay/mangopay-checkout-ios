@@ -96,14 +96,14 @@ public class MGPPaymentSheet {
             return
         }
         
-        guard let urlStr = payData?.secureModeRedirectURL, let url = URL(string: urlStr) else {
+        guard let urlStr = payData?.secureModeReturnURL, let url = URL(string: urlStr) else {
             return
         }
                 
         let _3dsVC = ThreeDSController(
             secureModeReturnURL: url,
             secureModeRedirectURL: nil,
-            transactionType: .cardDirect,
+            transactionType: nil,
             onComplete: { result in
                 switch result.status {
                 case .SUCCEEDED:

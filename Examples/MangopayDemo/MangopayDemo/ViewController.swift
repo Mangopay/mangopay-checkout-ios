@@ -96,15 +96,8 @@ class ViewController: UIViewController {
                         }
                     }, onPaymentCompleted: { _, _ in
                         print("✅ onPaymentCompleted")
-<<<<<<< HEAD
                     }, onCancel: {
-=======
-                    },
-                    onCancelled: {
->>>>>>> checkout-release-readiness
-                        
-                    },
-                    onError: { error in
+                    },onError: { error in
                         print("❌ error", error.reason)
                         self.showAlert(with: error.reason, title: "Error")
                     }
