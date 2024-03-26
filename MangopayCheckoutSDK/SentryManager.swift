@@ -30,15 +30,39 @@ enum MGPEvent: String {
 
 final public class SentryManager {
 
-    static func initialize() {
+    static func initialize(environment: MGPEnvironment) {
         SentrySDK.start { options in
-            options.dsn  = "https://61b32fa858ecb972d966bf2a9bdb1dff@o4506778679181312.ingest.us.sentry.io/4506863051603969"
+            switch environment {
+            case .sandbox, .t3:
+                options.dsn = Constants.sentryDev
+                options.releaseName = "1.1.0"
+                options.environment = "dev"
+            case .production:
+                options.dsn  = Constants.sentryProd
+                options.releaseName = "1.1.0"
+                options.environment = "production"
+            }
+
             options.debug  = false
+        }
+    
+        SentrySDK.configureScope { scope in
+            scope.setTag(value: "<clientid>", key: "clientid")
+            scope.setTag(value: "<checkoutReference>", key: "checkoutReference")
         }
     }
 
-    static func log(name: MGPEvent) {
+    static func log(name: MGPEvent, metadata: [String: String]? = nil) {
         SentrySDK.capture(message: name.rawValue)
+
+        if let _data = metadata {
+            let crumb = Breadcrumb()
+            crumb.level = SentryLevel.info
+            crumb.category = "logs"
+            crumb.message = name.rawValue
+            crumb.data = metadata
+            SentrySDK.addBreadcrumb(crumb)
+        }
     }
 
 }

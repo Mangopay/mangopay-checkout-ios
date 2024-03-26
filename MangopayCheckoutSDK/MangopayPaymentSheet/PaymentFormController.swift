@@ -62,6 +62,7 @@ class PaymentFormController: UIViewController {
         super.viewDidLoad()
         setupObservers()
         self.navVC = self.navigationController
+        SentryManager.log(name: .PAYMENT_METHODS_RENDERED)
     }
 
     override func viewDidLayoutSubviews() {

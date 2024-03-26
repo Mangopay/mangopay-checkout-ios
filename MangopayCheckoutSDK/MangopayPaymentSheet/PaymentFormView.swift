@@ -204,8 +204,8 @@ class PaymentFormView: UIView {
         guard paymentForm.isFormValid else { return }
         finalizeButtonTapped()
         Task {
-            await callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
-            SentryManager.log(name: .PAYMENT_METHOD_SELECTED)
+            callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
+            SentryManager.log(name: .PAYMENT_METHOD_SELECTED, metadata: ["PaymentMethodType": "Card"])
         }
         Loader.show()
     }
@@ -216,7 +216,7 @@ class PaymentFormView: UIView {
             Loader.show()
             if let paypalAPM = await callback.onCreatePayment?(.payPal, NTHNethone.attemptReference() ?? "") {
                 self.onAPMTapped?(paypalAPM)
-                SentryManager.log(name: .PAYMENT_METHOD_SELECTED)
+                SentryManager.log(name: .PAYMENT_METHOD_SELECTED, metadata: ["PaymentMethodType": "Paypal"])
             }
             Loader.hide()
         }
@@ -225,8 +225,9 @@ class PaymentFormView: UIView {
     @objc func onApplePayBtnTapped() {
         onApplePayTapped?()
         Task {
-            await callback.onPaymentMethodSelected?(.applePay(.none))
-            SentryManager.log(name: .PAYMENT_METHOD_SELECTED)
+            callback.onPaymentMethodSelected?(.applePay(.none))
+            SentryManager.log(name: .PAYMENT_METHOD_SELECTED, metadata: ["PaymentMethodType": "ApplePay"])
+
         }
     }
 

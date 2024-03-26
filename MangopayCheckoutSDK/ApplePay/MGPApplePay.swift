@@ -87,6 +87,8 @@ public class MGPApplePay: NSObject {
        country countryCode: String,
        currency currencyCode: String
    ) -> PKPaymentRequest {
+       
+       SentryManager.log(name: .APPLEPAY_INITIALIZED)
        let paymentRequest = PKPaymentRequest()
        paymentRequest.merchantIdentifier = merchantIdentifier
        paymentRequest.supportedNetworks = [.amex, .masterCard, .visa, .discover]

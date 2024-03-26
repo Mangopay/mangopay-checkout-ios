@@ -11,7 +11,7 @@ public struct MangopayCheckoutSDK {
     public static func initialize(clientId: String, profillingMerchantId: String, environment: MGPEnvironment) {
         self.clientId = clientId
         self.environment = environment
-        SentryManager.initialize()
+        SentryManager.initialize(environment: environment)
         Tokenizer.initialize(clientId: clientId, environment: environment)
 
         SentryManager.log(name: .SDK_INITIALIZED)
