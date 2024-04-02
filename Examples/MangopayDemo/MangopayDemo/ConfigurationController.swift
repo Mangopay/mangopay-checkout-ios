@@ -285,7 +285,7 @@ class ConfigurationController: UIViewController {
         else { return nil }
         
         let __env = MGPEnvironment(rawValue: env)!
-        MangopayCheckoutSDK.initialize(clientId: clientIDStr, profillingMerchantId: "428242", environment: __env)
+        MangopayCheckoutSDK.initialize(clientId: clientIDStr, profillingMerchantId: "428242", checkoutRerefence: UUID().uuidString, environment: __env)
 
         return Configuration(
             sdkMode: .MangoPay,
@@ -357,7 +357,7 @@ class ConfigurationController: UIViewController {
         guard let _env = env else { return }
         switch _env {
         case .sandbox:
-            apiKeyField.text = "fcc5f8fc7b8a4e8a8ad7bfb899506de1"
+            apiKeyField.text = "ff72c21d8fdf4e82b1505554c407b8c5"
             clientField.text = "checkoutsquatest"
             creditedUserField.text = "158091557"
             creditedWalletField.text = "159834019"

@@ -169,7 +169,16 @@ class PaymentFormController: UIViewController {
     private func launch3DSIfPossible(
         paymentObj: Payable? = nil
     ) {
+        SentryManager.log(name: .THREE_AUTH_REQ)
+
         MGPPaymentSheet().launch3DSIfPossible(payData: paymentObj, presentIn: self) { result in
+            switch result.status {
+            case .SUCCEEDED:
+                SentryManager.log(name: .THREE_AUTH_COMPLETED)
+            case .FAILED:
+                SentryManager.log(name: .THREE_AUTH_FAILED)
+            default: break
+            }
             self.callback.onPaymentCompleted?(result.id, result)
         } on3DSLauch: { _3dsVC in
             DispatchQueue.main.async {
@@ -181,6 +190,7 @@ class PaymentFormController: UIViewController {
             }
         } on3DSError: { error in
             print("error", error)
+            SentryManager.log(name: .THREE_AUTH_FAILED)
             switch error {
             case ._3dsNotRqd:
                 self.callback.onPaymentCompleted?(nil, _3DSResult(type: .cardDirect, status: .SUCCEEDED, id: paymentObj?.cardID ?? ""))

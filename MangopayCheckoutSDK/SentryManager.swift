@@ -30,7 +30,7 @@ enum MGPEvent: String {
 
 final public class SentryManager {
 
-    static func initialize(environment: MGPEnvironment) {
+    static func initialize(environment: MGPEnvironment, checkoutReference: String) {
         SentrySDK.start { options in
             switch environment {
             case .sandbox, .t3:
@@ -48,7 +48,7 @@ final public class SentryManager {
     
         SentrySDK.configureScope { scope in
             scope.setTag(value: "<clientid>", key: "clientid")
-            scope.setTag(value: "<checkoutReference>", key: "checkoutReference")
+            scope.setTag(value: checkoutReference, key: "checkoutReference")
         }
     }
 
