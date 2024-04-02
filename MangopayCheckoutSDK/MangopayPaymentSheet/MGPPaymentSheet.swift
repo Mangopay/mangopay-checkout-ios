@@ -96,7 +96,7 @@ public class MGPPaymentSheet {
             return
         }
         
-        guard let urlStr = payData?.secureModeReturnURL, let url = URL(string: urlStr) else {
+        guard let urlStr = payData?.secureModeRedirectURL, let url = URL(string: urlStr) else {
             return
         }
                 

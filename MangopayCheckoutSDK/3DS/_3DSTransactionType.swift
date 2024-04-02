@@ -12,6 +12,7 @@ public enum _3DSTransactionType: String, Codable, CaseIterable {
     case preauthorized = "PREAUTHORIZED"
     case cardValidated = "CARD_VALIDATION"
     case depositPreAuth = "DEPOSIT_PREAUTH"
+    case recurring
 
     public var id: String {
         switch self {
@@ -23,6 +24,8 @@ public enum _3DSTransactionType: String, Codable, CaseIterable {
             return "cardValidationId"
         case .depositPreAuth:
             return "depositId"
+        case .recurring:
+            return "recurringId"
         }
     }
 }

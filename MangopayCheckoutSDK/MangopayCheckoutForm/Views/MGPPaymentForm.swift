@@ -167,6 +167,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
             guard let webVC = WebViewController.openWebView(with: "https://mangopay.com/privacy-statement") else { return }
             topmostViewController?.present(webVC, animated: true)
         }
+        
+        cardNumberField.text = "4970105181818183"
     }
     
     required init?(coder: NSCoder) {

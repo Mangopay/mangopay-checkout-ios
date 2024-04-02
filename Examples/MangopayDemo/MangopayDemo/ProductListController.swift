@@ -167,9 +167,16 @@ class ProductListController: UIViewController {
                      
                      switch paymentMethod {
                      case .card(_):
-                         guard let payInRes = await self.mockPayinEndpoint(
-                            with: self.cardId ?? "",
-                            attemptReference: attemptRef ?? ""
+//                         guard let payInRes = await self.mockPayinEndpoint(
+//                            with: self.cardId ?? "",
+//                            attemptReference: attemptRef ?? ""
+//                         ) else { return nil }
+//                         return payInRes
+                         
+                         guard let payInRes = await self.makeEndpointCall(
+                            acardfloType: self.config.cardFlowType ?? .cardDirect,
+                            cardId: self.cardId ?? "",
+                            profilAttempte: attemptRef ?? ""
                          ) else { return nil }
                          return payInRes
                      case .applePay(_):
@@ -241,6 +248,74 @@ class ProductListController: UIViewController {
                 return nil
             }
             
+    }
+
+    func makeEndpointCall(acardfloType: _3DSTransactionType, cardId: String, profilAttempte: String) async -> AuthorizePayIn? {
+        
+        var path = ""
+        switch acardfloType {
+        case .cardDirect:
+            path = "/create-card-direct-payin"
+        case .preauthorized:
+            path = "/create-card-preauth-payin"
+        case .cardValidated:
+            path = "/create-card-validation"
+        case .depositPreAuth:
+            path = "/create-card-deposit-preauth-payin"
+        case .recurring:
+            path = "/create-card-recurring-payin"
+        }
+        
+        do {
+            let cardFlow = try await PaymentCoreClient(
+                env: self.config.env
+            ).createCardFlows(cardID: cardId, profileAttempt: profilAttempte, path: path)
+            return cardFlow
+        }
+        catch {
+            print("❌ Card Flow Failed", error)
+            return nil
+        }
+        
+    }
+
+    func mockValidation() async -> AuthorizePayIn? {
+        let validationObj = CardValidation(
+            authorID: config.userId,
+            tag: "Mangopay Demo Tag",
+            debitedFunds: nil,
+            secureMode: nil,
+            cardID: cardId,
+            secureModeRedirectURL: "https://docs.mangopay.com/please-ignore", secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
+            ipAddress: "3277:7cbf:b669:746b:cf75:08f8:061d:1867",
+            browserInfo: BrowserInfo(
+                acceptHeader: "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+                javaEnabled: false,
+                language: "EN-EN",
+                colorDepth: 4,
+                screenHeight: 750,
+                screenWidth: 400,
+                timeZoneOffset: 60,
+                userAgent: "iOS",
+                javascriptEnabled: false
+            )
+        )
+        
+        do {
+            let regResponse = try await PaymentCoreClient(
+                env: self.config.env
+            ).validateCard(
+                validationObj,
+                cardId: self.cardId ?? "",
+                clientId: self.config.clientId,
+                apiKey: self.config.apiKey
+            )
+            return regResponse
+        }
+        catch {
+            print("❌ validation Error Creating Card Registration")
+            return nil
+        }
     }
 
 
