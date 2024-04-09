@@ -116,6 +116,7 @@ class PaymentFormController: UIViewController {
                     onError: { error in
                         self.callback.onError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
                         SentryManager.log(name: .PAYMENT_FAILED)
+                        SentryManager.log(error: MGPError._3dsError(additionalInfo: error?.localizedDescription))
                     }
                 )
                 
@@ -196,6 +197,7 @@ class PaymentFormController: UIViewController {
                 self.callback.onPaymentCompleted?(nil, _3DSResult(type: .cardDirect, status: .SUCCEEDED, id: paymentObj?.cardID ?? ""))
             default: break
             }
+            SentryManager.log(error: error)
         }
     }
 }

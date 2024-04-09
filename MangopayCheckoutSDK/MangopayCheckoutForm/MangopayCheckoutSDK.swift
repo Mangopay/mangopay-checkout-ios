@@ -30,11 +30,13 @@ public struct MangopayCheckoutSDK {
 
         guard form.isFormValid else {
             callBack(nil, MGPError.invalidForm)
+            SentryManager.log(error: MGPError.invalidForm)
             return
         }
 
         guard let attemptRef = NTHNethone.attemptReference() else {
             callBack(nil, MGPError.nethoneAttemptReferenceRqd)
+            SentryManager.log(error: MGPError.nethoneAttemptReferenceRqd)
             return
         }
 
@@ -65,11 +67,13 @@ public struct MangopayCheckoutSDK {
         
         guard let _ = payData else {
             on3DSError?(MGPError._3dsPayInDataRqd)
+            SentryManager.log(error: MGPError._3dsPayInDataRqd)
             return
         }
         
         guard let _ = viewController else {
             on3DSError?(MGPError._3dsPresentingVCRqd)
+            SentryManager.log(error: MGPError._3dsPresentingVCRqd)
             return
         }
         
@@ -96,6 +100,9 @@ public struct MangopayCheckoutSDK {
             }) { error in
                 on3DSError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
                 SentryManager.log(name: .THREE_AUTH_FAILED)
+                if let _error = error {
+                    SentryManager.log(error: _error)
+                }
             }
         
         viewController?.present(_3dsVC, animated: true)

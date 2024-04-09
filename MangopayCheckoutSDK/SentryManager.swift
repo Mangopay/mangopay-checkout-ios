@@ -65,4 +65,8 @@ final public class SentryManager {
         }
     }
 
+    static func log(error: Error) {
+        SentrySDK.capture(error: error)
+    }
+
 }

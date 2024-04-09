@@ -167,6 +167,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
             guard let webVC = WebViewController.openWebView(with: "https://mangopay.com/privacy-statement") else { return }
             topmostViewController?.present(webVC, animated: true)
         }
+        
+        cardNumberField.text = "4970105181818183"
     }
     
     required init?(coder: NSCoder) {
@@ -263,16 +265,19 @@ public class MGPPaymentForm: UIView, FormValidatable {
     func tokenizeCard(callBack: @escaping MangopayTokenizedCallBack) {
         guard self.isFormValid else {
             callBack(nil, MGPError.invalidForm)
+            SentryManager.log(error: MGPError.invalidForm)
             return
         }
 
         guard let attemptRef = NTHNethone.attemptReference() else {
             callBack(nil, MGPError.nethoneAttemptReferenceRqd)
+            SentryManager.log(error: MGPError.nethoneAttemptReferenceRqd)
             return
         }
 
         guard let cardReg = cardRegistration else {
             callBack(nil, MGPError.cardRegistrationNotSet)
+            SentryManager.log(error: MGPError.cardRegistrationNotSet)
             return
         }
 
@@ -413,13 +418,25 @@ extension MGPPaymentForm: UITextFieldDelegate {
         
         switch textField {
         case cardNumberField.textfield:
-            isFormValid(cardNumberField)
+            let isValid = isFormValid(cardNumberField)
+            if !isValid {
+                SentryManager.log(error: MGPError.cardNameInvalid)
+            }
         case cardNameField.textfield:
-            isFormValid(cardNameField)
+            let isValid = isFormValid(cardNameField)
+            if !isValid {
+                SentryManager.log(error: MGPError.cardNameInvalid)
+            }
         case expiryDateField.textfield:
-            isFormValid(expiryDateField)
+            let isValid = isFormValid(expiryDateField)
+            if !isValid {
+                SentryManager.log(error: MGPError.cardExpiryInvalid)
+            }
         case cvvField.textfield:
-            isFormValid(cvvField)
+            let isValid = isFormValid(cvvField)
+            if !isValid {
+                SentryManager.log(error: MGPError.cvvInvalid)
+            }
         default: break
         }
         didEndEditing?(self)

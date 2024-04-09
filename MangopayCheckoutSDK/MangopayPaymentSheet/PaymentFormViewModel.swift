@@ -57,6 +57,7 @@ public class PaymentFormViewModel {
                 DispatchQueue.main.async {
                     self.onTokenisationError?(_error)
                     callback.onError?(_error)
+                    SentryManager.log(error: _error)
                 }
             }
         }

@@ -49,6 +49,7 @@ struct Tokenizer {
             cardRegistration: cardReg) { tokenisedCard, error in
                 guard let _card = tokenisedCard else {
                     mangoPayVaultCallback(.none, MGPError.tokenizationError(additionalInfo: error?.localizedDescription))
+                    SentryManager.log(error: MGPError.tokenizationError(additionalInfo: error?.localizedDescription))
                     return
                     
                 }

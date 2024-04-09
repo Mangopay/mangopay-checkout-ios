@@ -40,6 +40,7 @@ public enum Currency: String, CaseIterable {
 public struct Configuration {
     var sdkMode: SDKProvier
     var env: MGPEnvironment
+    var cardFlowType: _3DSTransactionType?
     var apiKey: String
     var clientId: String
     var authorId: String?
@@ -61,9 +62,10 @@ public struct Configuration {
         return currency.rawValue + " " + amount.formatAsCurrency
     }
 
-    public init(sdkMode: SDKProvier, env: MGPEnvironment, apiKey: String, clientId: String, authorId: String? = nil, userId: String, walletId: String?, amount: Double, currency: Currency) {
+    public init(sdkMode: SDKProvier, env: MGPEnvironment, cardFlowType: _3DSTransactionType?, apiKey: String, clientId: String, authorId: String? = nil, userId: String, walletId: String?, amount: Double, currency: Currency) {
         self.sdkMode = sdkMode
         self.env = env
+        self.cardFlowType = cardFlowType
         self.apiKey = apiKey
         self.clientId = clientId
         self.authorId = authorId
@@ -111,7 +113,14 @@ class ConfigurationController: UIViewController {
         style: PaymentFormStyle(),
         textfieldDelegate: self
     )
-    
+
+    lazy var cardFlowField = MangoPayDropDownTextfield(
+        placeholderText: "Card Flow Type",
+        showDropDownIcon: true,
+        style: PaymentFormStyle(),
+        textfieldDelegate: self
+    )
+
     lazy var apiKeyField = MangoPayTextfield(
         placeholderText: "API Key",
         returnKeyType: .next,
@@ -195,6 +204,7 @@ class ConfigurationController: UIViewController {
             envTextfield,
             apiKeyField,
             clientField,
+            cardFlowField,
             authorField,
             creditedUserField,
             creditedWalletField,
@@ -259,6 +269,7 @@ class ConfigurationController: UIViewController {
         providerTextfield.update(with: SDKProvier.allCases.map({$0.rawValue}))
         currencyField.update(with: Currency.allCases.map({$0.rawValue}))
         envTextfield.update(with: MGPEnvironment.allCases.map({$0.rawValue}))
+        cardFlowField.update(with: _3DSTransactionType.allCases.map({$0.rawValue}))
     }
 
     func grabData() -> Configuration? {
@@ -287,9 +298,16 @@ class ConfigurationController: UIViewController {
         let __env = MGPEnvironment(rawValue: env)!
         MangopayCheckoutSDK.initialize(clientId: clientIDStr, profillingMerchantId: "428242", checkoutRerefence: UUID().uuidString, environment: __env)
 
+        var cardFlowType: _3DSTransactionType?
+
+        if let cardFlowStr = cardFlowField.text, !cardFlowStr.isEmpty {
+            cardFlowType = _3DSTransactionType(rawValue: cardFlowStr)
+        }
+
         return Configuration(
             sdkMode: .MangoPay,
             env: __env,
+            cardFlowType: cardFlowType,
             apiKey: apiKeyStr,
             clientId: clientIDStr,
             authorId: authorField.text,
@@ -357,11 +375,11 @@ class ConfigurationController: UIViewController {
         guard let _env = env else { return }
         switch _env {
         case .sandbox:
-            apiKeyField.text = "ff72c21d8fdf4e82b1505554c407b8c5"
+            apiKeyField.text = "c35d303abaa24eb9b9161a42a9dcab5a"
             clientField.text = "checkoutsquatest"
-            creditedUserField.text = "158091557"
+            creditedUserField.text = "157868268"
             creditedWalletField.text = "159834019"
-            authorField.text = "158091557"
+            authorField.text = "157868268"
             amountField.text = "1"
         case .production:
             apiKeyField.text = "FPuqRtn4A6LhH7JGJ9QUDSfc3M0aTsbiQfScW8boGyfaAD57h3"

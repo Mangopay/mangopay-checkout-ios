@@ -9,6 +9,10 @@ import Foundation
 
 public enum MGPError: Error {
     case invalidForm
+    case cardNumberInvalid
+    case cardNameInvalid
+    case cardExpiryInvalid
+    case cvvInvalid
     case nethoneAttemptReferenceRqd
     case cardRegistrationNotSet
     case initializationRqd
@@ -62,6 +66,14 @@ public enum MGPError: Error {
             return "ApplePay amount cannot be nil"
         case .applePayErrorNotSupported:
             return "ApplePay not supported for this device"
+        case .cardNumberInvalid:
+            return "Card Number is invalid"
+        case .cardNameInvalid:
+            return "Card Name is invalid"
+        case .cardExpiryInvalid:
+            return "Card Expiry field is invalid"
+        case .cvvInvalid:
+            return "CVV field is invalid"
         }
     }
 }
