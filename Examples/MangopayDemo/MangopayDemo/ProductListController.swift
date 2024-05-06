@@ -94,7 +94,7 @@ class ProductListController: UIViewController {
          
          config.amount = Double(selectedProduct.price)
      
-         let applePayConfig = MGPApplePayConfig(
+         let applePayConfig = MGPApplePayOptions(
             amount: Double(selectedProduct.price),
             delegate: self,
             merchantIdentifier: config.merchantID,
@@ -112,14 +112,12 @@ class ProductListController: UIViewController {
 
         MangopayCheckoutSDK.apiKey = config.apiKey
         checkout = MGPPaymentSheet.create(
-             paymentMethodConfig: PaymentMethodOptions(
-                 cardReg: nil,
-                 applePayConfig: applePayConfig,
-                 paypalConfig: MGPPaypalConfig()
+            paymentMethodOptions: PaymentMethodOptions(
+                 cardOptions: MGPCardOptions(supportedCardBrands: [.visa, .mastercard, .amex, .maestro, .cb]),
+                 applePayOptions: applePayConfig,
+                 paypalOptions: MGPPaypalOptions()
              ),
-             handlePaymentFlow: false,
              branding: PaymentFormStyle(checkoutButtonText: "Pay " + config.formattedAmount, checkoutTitleText: "My Checkout"),
-             supportedCardBrands: [.visa, .mastercard, .amex, .maestro, .cb],
              callback: CallBack(
                  onPaymentMethodSelected: { paymentMethod in
                      switch paymentMethod {
@@ -180,14 +178,11 @@ class ProductListController: UIViewController {
                          ) else { return nil }
                          return paypalResponse
                      }
-                 }, onCancelled: {
+                 }, onCancel: {
                      
                  },
                  onError: { error in
                          topmostViewController?.showAlert(with: error.reason, title: "Error")
-                 },
-                 onSheetDismissed: {
-                     print("✅ sheet dismisses")
                  }
              )
          )

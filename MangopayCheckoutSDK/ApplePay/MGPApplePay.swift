@@ -61,7 +61,7 @@ public class MGPApplePay: NSObject {
    var completionHandler: PaymentCompletionHandler!
 
 
-   public init(config: MGPApplePayConfig) {
+   public init(config: MGPApplePayOptions) {
        self.amount = config.amount
        self.currencyCode = config.currencyCode
        self.applePayMerchantId = config.merchantIdentifier

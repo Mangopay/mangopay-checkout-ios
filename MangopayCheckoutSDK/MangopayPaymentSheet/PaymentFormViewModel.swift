@@ -31,7 +31,7 @@ public class PaymentFormViewModel {
 
         form.setCardRegistration(cardRegistration)
         form.tokenizeCard { tokenizedCardData, error in
-            if let _ = tokenizedCardData, let card = tokenizedCardData?.card, let cardData = tokenizedCardData {
+            if let _ = tokenizedCardData, let _ = tokenizedCardData?.card, let cardData = tokenizedCardData {
                 
                 NethoneManager.shared.performFinalizeAttempt { _ , attemptRef in
                     DispatchQueue.main.async {
@@ -42,8 +42,6 @@ public class PaymentFormViewModel {
                                 let paymentObj = await createAction(.card(nil), attemptRef)
                                 self.onCreatePaymentComplete?(paymentObj)
                             }
-                        } else {
-                            callback.onPaymentCompleted?(attemptRef, _3DSResult(type: .cardDirect, status: .SUCCEEDED, id: card.cardID ?? ""))
                         }
                     }
                 }

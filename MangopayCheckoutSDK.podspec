@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "MangopayCheckoutSDK"
-  spec.version      = "1.0.0-beta.10"
+  spec.version      = "1.0.0-beta.23"
   spec.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift."
 
   spec.description  = <<-DESC
@@ -17,14 +17,21 @@ Pod::Spec.new do |spec|
 
   spec.platform     = :ios
   spec.ios.deployment_target = "13.0"
+  spec.swift_version = '5.0'
 
-  spec.source       = { :git => "https://gitlab.com/mangopay/dev/checkout-ios-sdk.git", :tag => "#{spec.version}", :branch => "develop" }
+
+  spec.source       = { :git => "https://gitlab.com/mangopay/dev/checkout-ios-sdk.git", :tag => "#{spec.version}", :branch => "cocoapod_update" }
 
   spec.source_files  = "MangopayCheckoutSDK/**/*.swift"
-  spec.dependency     'MangopayVaultSDK', '~> 1.0.4-beta', 'PayPal/PaymentButtons'
+  spec.dependency     'PayPal/PaymentButtons'
 
+  spec.dependency     'MangopayVaultSDK', '~> 1.0.8'
+  spec.exclude_files = "MangopayCheckoutSDK/Resources/SPMextension.swift"
   
-  spec.resources = "MangopayCheckoutSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets}"
+  spec.resource_bundles = {
+    'MangopayiOSSDK_MangopayCheckoutSDK' => ['MangopayCheckoutSDK/Resources/**/*.swift', 'MangopayCheckoutSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets']
+  }
 
 
+  spec.vendored_frameworks = "Integrations/NethoneSDK.xcframework"
 end
