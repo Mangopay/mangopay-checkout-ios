@@ -15,35 +15,28 @@ class PaymentFormController: UIViewController {
 
     var paymentFormStyle: PaymentFormStyle
     var callback: CallBack
-    var paymentMethodConfig: PaymentMethodOptions
-    var handlePaymentFlow: Bool
+    var paymentMethodOptions: PaymentMethodOptions
     let paymentHandler = MGPApplePayHandler()
-    var supportedCardBrands: [CardType]?
     var navVC: UINavigationController?
     
     public init(
         cardConfig: CardConfig? = nil,
-        paymentMethodConfig: PaymentMethodOptions,
-        handlePaymentFlow: Bool,
+        paymentMethodOptions: PaymentMethodOptions,
         branding: PaymentFormStyle?,
-        supportedCardBrands: [CardType]? = nil,
         callback: CallBack
     ) {
 
         self.paymentFormStyle = branding ?? PaymentFormStyle()
         self.callback = callback
-        self.paymentMethodConfig = paymentMethodConfig
-        self.handlePaymentFlow = handlePaymentFlow
+        self.paymentMethodOptions = paymentMethodOptions
 
         formView = PaymentFormView(
             client: MangopayClient(
                 clientId: MangopayCheckoutSDK.clientId,
                 environment: MangopayCheckoutSDK.environment)
             ,
-            paymentMethodConfig: paymentMethodConfig,
-            handlePaymentFlow: handlePaymentFlow,
+            paymentMethodOptions: paymentMethodOptions,
             branding: branding,
-            supportedCardBrands: supportedCardBrands,
             callback: callback
         )
 
@@ -75,7 +68,7 @@ class PaymentFormController: UIViewController {
 
     func setupObservers() {
         formView.onApplePayTapped = {
-            guard let applePayConfig = self.paymentMethodConfig.applePayConfig else { return }
+            guard let applePayConfig = self.paymentMethodOptions.applePayOptions else { return }
             self.paymentHandler.setData(payRequest: applePayConfig.toPaymentRequest)
             self.paymentHandler.startPayment(delegate: applePayConfig.delegate) { (success) in
                 if success {
