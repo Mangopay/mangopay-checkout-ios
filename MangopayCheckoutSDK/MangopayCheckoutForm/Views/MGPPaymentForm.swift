@@ -183,8 +183,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
         vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
-        vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        vStack.heightAnchor.constraint(equalToConstant: 350).isActive = true
+        vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
+        vStack.heightAnchor.constraint(equalToConstant: 340).isActive = true
 
         self.backgroundColor = .white
         self.translatesAutoresizingMaskIntoConstraints = false

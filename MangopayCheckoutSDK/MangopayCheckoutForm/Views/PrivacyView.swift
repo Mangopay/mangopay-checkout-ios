@@ -23,14 +23,14 @@ public class PrivacyView: UIView {
         label.attributedText = {
             attrStr.append(
                 NSAttributedString(
-                    string: "Mangopay is the payment service provider processing your transaction. Check our ",
+                    string: "Processed with Mangopay - ",
                     attributes: [
                         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10),
                         NSAttributedString.Key.foregroundColor: UIColor.gray
                     ])
             )
             
-            attrStr.append(NSAttributedString(string: "Privacy Statement.", attributes: [
+            attrStr.append(NSAttributedString(string: "Privacy", attributes: [
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10),
                 NSAttributedString.Key.foregroundColor: UIColor.gray,
                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
@@ -43,9 +43,9 @@ public class PrivacyView: UIView {
     private lazy var hStack = UIStackView.create(
         spacing: 8,
         axis: .horizontal,
-        alignment: .fill,
+        alignment: .leading,
         distribution: .fill,
-        views: [logoInageView, titleLabel]
+        views: [titleLabel]
     )
 
     public var didTapPrivacyAction: (() -> Void)?
@@ -68,7 +68,7 @@ public class PrivacyView: UIView {
         hStack.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
         hStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         self.backgroundColor = .white
-        self.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
 
     private func setupTapActions() {
