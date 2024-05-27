@@ -1,6 +1,6 @@
 # 🔀 &nbsp; Changelog
 
-## 1.1.0 (2024-02-29)
+## 1.1.0 (2024-05-09)
 
 ### Features & Improvements
   
@@ -22,6 +22,9 @@
 
 * Added currency support for card payments: Support has been added for the following currencies for card payments: AED, AUD, CAD, CHF, DKK, EUR, GBP, HKD, JPY, NOK, PLN, SEK.
 
+* Added Sentry Event Logging for Analytics and product improvements.
 
-### Bug Fixes
-  * 
+* Updated Demo Project, streamlined it to be easily inferable.
+
+
+
