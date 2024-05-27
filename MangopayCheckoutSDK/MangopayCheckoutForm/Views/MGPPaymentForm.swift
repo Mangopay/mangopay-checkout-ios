@@ -134,6 +134,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
 
         return MGPCardInfo(
             cardNumber: cardNumberField.text?.trimCard(),
+            cardHolderName: cardNameField.text?.trimCard(),
             cardExpirationDate: expStr,
             cardCvx: cvvField.text,
             cardType: "CB_VISA_MASTERCARD"
