@@ -32,8 +32,8 @@ To facilitate end-to-end testing of your integration, we offer a pre-configured 
 ## 👨‍💻 Setup and run the app
 1. Clone the [mangopay-checkout-ios](https://github.com/Mangopay/mangopay-checkout-ios)
 2. Open cloned */Examples/MangopayDemo/MangopayDemo/MangopayDemo.xcodeproj in xcode       
-       ![open-example.png](..%2Fimages%2Fopen-example.png)
-3. Open `example/gradle.properties` file and populate the fields with the following
+       ![open-example.png](../images/open-example.png)
+3. Open `Examples/MangopayDemo/MangopayDemo/Info.plist` file and populate the fields with the following
 ```
 # Set this to your Mangopay clientId
 CLIENT_ID=sdk-unit-tests
@@ -45,7 +45,7 @@ EXAMPLE_BACKEND_URL=https://mangopay-example-checkout-backend.glitch.me/
 ## 💳 Access the checkout
 You should see the Checkout UI appear with the configured payment methods in your test! 🎉
 
-<img alt="mangopay-logo" src="../images/mangopay-checkout-android.jpg" height="360px"/>
+<img alt="mangopay-logo" src="../images/mangopay-checkout-ios.png" height="360px"/>
 
 See [Testing Payment Methods](https://mangopay.com/docs/dev-tools/testing/payment-methods) for Test Data
 
