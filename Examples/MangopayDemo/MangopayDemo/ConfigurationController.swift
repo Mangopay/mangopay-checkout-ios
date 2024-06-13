@@ -289,9 +289,21 @@ class ConfigurationController: UIViewController {
             return nil
         }
 
-        guard let apiKeyStr = apiKeyField.text,
-              let clientIDStr = clientField.text,
-              let userIdStr = creditedUserField.text,
+        guard let clientId = getDataFromPlist()["CLIENT_ID"] as? String, !clientId.isEmpty else {
+            envTextfield.errorText = "Set CLIENT_ID in plist file"
+            return nil
+        }
+
+        guard let baseurl = getDataFromPlist()["EXAMPLE_BACKEND_URL"] as? String else {
+            envTextfield.errorText = "Set EXAMPLE_BACKEND_URL in plist file"
+            return nil
+        }
+
+        
+        guard
+//            let apiKeyStr = apiKeyField.text,
+//              let clientIDStr = clientField.text,
+//              let userIdStr = creditedUserField.text,
               let amountStr = amountField.text
         else { return nil }
         
@@ -401,6 +413,12 @@ class ConfigurationController: UIViewController {
         }
     }
 
+    func getDataFromPlist() -> [String: Any] {
+        guard let dict = Bundle.main.infoDictionary else {
+            fatalError("Plist file not found")
+        }
+        return dict
+    }
 }
 
 extension ConfigurationController: FormValidatable {
