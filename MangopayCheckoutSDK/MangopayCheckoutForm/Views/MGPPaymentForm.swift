@@ -169,7 +169,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
             topmostViewController?.present(webVC, animated: true)
         }
         
-        cardNumberField.text = "4970105181818183"
+//        cardNumberField.text = "4970105181818183"
     }
     
     required init?(coder: NSCoder) {

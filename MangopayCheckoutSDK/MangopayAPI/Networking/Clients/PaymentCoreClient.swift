@@ -299,4 +299,58 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
             verbose: true
         )
     }
+
+    public func createCardRegistrationViaGlitch(
+        _ card: MGPCardRegistration.Initiate,
+        backendURl: URL
+    ) async throws -> MGPCardRegistration {
+
+        return try await request(
+            url: backendURl.appendingPathComponent("card-registration", isDirectory: false),
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: card.toDict(),
+            expecting: MGPCardRegistration.self,
+            apiKey: nil,
+            verbose: true
+        )
+    }
+
+    public func createCardPaymentViaGlitch(
+        _ cardId: String,
+        backendURl: URL
+    ) async throws -> AuthorizePayIn {
+
+        return try await request(
+            url: backendURl.appendingPathComponent("card-direct-payin", isDirectory: false),
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: [
+                "cardId": cardId
+            ],
+            expecting: AuthorizePayIn.self,
+            apiKey: nil,
+            verbose: true
+        )
+    }
+
+    public func createPaypalViaGlitch(backendURl: URL) async throws -> APMInfo {
+
+        return try await request(
+            url: backendURl.appendingPathComponent("payins/payment-methods/paypal", isDirectory: false),
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: [:],
+            expecting: APMInfo.self,
+            apiKey: nil,
+            verbose: true
+        )
+    }
+    
 }
