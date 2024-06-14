@@ -217,7 +217,7 @@ class ProductListController: UIViewController {
         do {
             let cardFlow = try await PaymentCoreClient(
                 env: self.config.env
-            ).createCardFlows(cardID: cardId, profileAttempt: profilAttempte, path: path)
+            ).createCardFlowsViaGlitch(cardID: cardId, profileAttempt: profilAttempte, path: path, backendURl: config.backendURL)
             return cardFlow
         }
         catch {

@@ -1,0 +1,57 @@
+"use strict";
+
+const fetch = require("node-fetch");
+const requestAccessToken = require("./create-access-token");
+const { CLIENT_ID, MANGOPAY_API, API_KEY, USER_ID, WALLET_ID } = process.env;
+const {
+  BrowserInfo,
+  Address,
+  LineItems,
+  SecureModeReturnURL,
+} = require("./payin-data");
+
+module.exports = async () => {
+  const { access_token } = await requestAccessToken();
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${access_token}`,
+    },
+    body: JSON.stringify({
+      Tag: "Created using the Glitch",
+      AuthorId: USER_ID,
+      DebitedFunds: {
+        Currency: "EUR",
+        Amount: 10000,
+      },
+      Fees: {
+        Currency: "EUR",
+        Amount: 0,
+      },
+      CreditedWalletId: WALLET_ID,
+      ReturnURL: SecureModeReturnURL,
+      CancelURL: "http://www.example.com/",
+      StatementDescriptor: "MGP",
+      Shipping: Address,
+      Billing: Address,
+      LineItems: LineItems,
+      Culture: "FR",
+      ShippingPreference: "SET_PROVIDED_ADDRESS",
+      Reference: "MGP-Glitch",
+    }),
+  };
+
+  let response;
+  try {
+    response = await fetch(
+      MANGOPAY_API + "/v2.01/${CLIENT_ID}/payins/payment-methods/paypal",
+      requestOptions
+    );
+    response = await response.json();
+  } catch (e) {
+    response = { error: true, message: e };
+  }
+  return response;
+};
