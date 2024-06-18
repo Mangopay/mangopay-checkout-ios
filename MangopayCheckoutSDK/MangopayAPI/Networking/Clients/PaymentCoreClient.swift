@@ -27,6 +27,7 @@ public protocol PaymentCoreClientProtocol {
         apiKey: String
     ) async throws -> AuthorizePayIn
     func createWebPayIn(clientId: String, apiKey: String, paypalData: APMInfo) async throws -> APMInfo
+    func createCardFlows(cardID: String, profileAttempt: String, path: String) async throws -> AuthorizePayIn
 }
 
 public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
@@ -274,4 +275,82 @@ public final class PaymentCoreClient: NetworkUtil, PaymentCoreClientProtocol {
             verbose: true
         )
     }
+
+    
+    public func createCardFlows(cardID: String, profileAttempt: String, path: String) async throws -> AuthorizePayIn {
+        
+        var _baseURL = URL(string: "https://qy9ybxo620.execute-api.us-west-2.amazonaws.com/dev")!
+        let url = _baseURL.appendingPathComponent(path, isDirectory: false)
+        
+        return try await request(
+            url: url,
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: [
+                "cardId": cardID,
+                "profilingAttemptReference": profileAttempt,
+                "currency": "EUR",
+                "amount": "2000"
+            ],
+            expecting: AuthorizePayIn.self,
+            apiKey: nil,
+            verbose: true
+        )
+    }
+
+    public func createCardRegistrationViaGlitch(
+        _ card: MGPCardRegistration.Initiate,
+        backendURl: URL
+    ) async throws -> MGPCardRegistration {
+
+        return try await request(
+            url: backendURl.appendingPathComponent("card-registration", isDirectory: false),
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: card.toDict(),
+            expecting: MGPCardRegistration.self,
+            apiKey: nil,
+            verbose: true
+        )
+    }
+
+    public func createCardPaymentViaGlitch(
+        _ cardId: String,
+        backendURl: URL
+    ) async throws -> AuthorizePayIn {
+
+        return try await request(
+            url: backendURl.appendingPathComponent("card-direct-payin", isDirectory: false),
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: [
+                "cardId": cardId
+            ],
+            expecting: AuthorizePayIn.self,
+            apiKey: nil,
+            verbose: true
+        )
+    }
+
+    public func createPaypalViaGlitch(backendURl: URL) async throws -> APMInfo {
+
+        return try await request(
+            url: backendURl.appendingPathComponent("payins/payment-methods/paypal", isDirectory: false),
+            method: .post,
+            additionalHeaders: [
+                "Content-Type" : "application/json",
+            ],
+            bodyParam: [:],
+            expecting: APMInfo.self,
+            apiKey: nil,
+            verbose: true
+        )
+    }
+    
 }

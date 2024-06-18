@@ -98,7 +98,7 @@ public class MGPPaymentSheet {
         let _3dsVC = ThreeDSController(
             secureModeReturnURL: url,
             secureModeRedirectURL: nil,
-            transactionType: .cardDirect,
+            transactionType: nil,
             onComplete: { result in
                 switch result.status {
                 case .SUCCEEDED:

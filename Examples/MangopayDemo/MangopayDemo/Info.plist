@@ -26,5 +26,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>CLIENT_ID</key>
+	<string>checkoutsquad</string>
+	<key>EXAMPLE_BACKEND_URL</key>
+	<string>https://sulfuric-titanium-drifter.glitch.me</string>
 </dict>
 </plist>

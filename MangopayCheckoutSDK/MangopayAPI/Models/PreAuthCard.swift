@@ -15,6 +15,9 @@ public protocol Payable {
     var secureModeNeeded: Bool? { set get }
     var secureModeRedirectURL: String? { set get }
     var secureModeReturnURL: String? { set get }
+    //status
+    //resultcode
+    //resultMessage
 }
 
 // MARK: - PayInCard

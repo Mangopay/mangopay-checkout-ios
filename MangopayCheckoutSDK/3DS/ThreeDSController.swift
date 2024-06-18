@@ -89,7 +89,8 @@ public class ThreeDSController: UIViewController {
     }
 
     func dismiss3DS() {
-        self.dismiss(animated: true)
+//        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 
     func addBackButton() {

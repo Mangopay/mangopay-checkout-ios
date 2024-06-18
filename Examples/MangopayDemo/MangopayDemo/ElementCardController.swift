@@ -12,6 +12,7 @@ class ElementCardController: UIViewController {
     
     var cardRegistration: MGPCardRegistration!
     var clientId: String!
+    var config: Configuration!
 
     lazy var elementForm: MGPPaymentForm = {
         let form = MGPPaymentForm(
@@ -74,10 +75,10 @@ class ElementCardController: UIViewController {
         activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
     }
 
-    init(cardRegistration: MGPCardRegistration? = nil, clientId: String) {
+    init(cardRegistration: MGPCardRegistration? = nil, config: Configuration) {
         super.init(nibName: nil, bundle: nil)
         self.cardRegistration = cardRegistration
-        self.clientId = clientId
+        self.config = config
     }
 
     required init?(coder: NSCoder) {
@@ -90,26 +91,15 @@ class ElementCardController: UIViewController {
         Task {
             guard let cardRegistration = await performCreateCardReg(
                 cardReg: MGPCardRegistration.Initiate(
-                    UserId: "158091557",
+                    UserId: "",
                     Currency: "EUR",
                     CardType: "CB_VISA_MASTERCARD"
                 ),
-                clientId: "checkoutsquatest",
-                apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC"
+                config: config
             ) else {
                 showLoader(false)
                 return
             }
-
-//            let preAuth = PreAuthCard(
-//                authorID: "158091557",
-//                debitedFunds: DebitedFunds(currency: "EUR", amount: 10),
-//                secureMode: "FORCE",
-//                cardID: "nil",
-//                secureModeNeeded: true,
-//                secureModeRedirectURL: "https://docs.mangopay.com",
-//                secureModeReturnURL: "https://docs.mangopay.com"
-//            )
 
             MangopayCheckoutSDK.tokenizeCard(
                 form: elementForm,
@@ -136,18 +126,16 @@ class ElementCardController: UIViewController {
 
     func performCreateCardReg(
         cardReg: MGPCardRegistration.Initiate,
-        clientId: String,
-        apiKey: String
+        config: Configuration
     ) async -> MGPCardRegistration? {
         do {
 //            showLoader(true)
 
             let regResponse = try await PaymentCoreClient(
-                env: .sandbox
-            ).createCardRegistration(
+                env: config.env
+            ).createCardRegistrationViaGlitch(
                 cardReg,
-                clientId: clientId,
-                apiKey: apiKey
+                backendURl: config.backendURL
             )
 //            showLoader(false)
             print("✅ res", regResponse)
