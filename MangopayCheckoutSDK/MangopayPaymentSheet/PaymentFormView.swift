@@ -78,6 +78,14 @@ class PaymentFormView: UIView {
         return payPalButton
     }()
 
+    private lazy var hStack = UIStackView.create(
+        spacing: 8,
+        axis: .horizontal,
+        alignment: .fill,
+        distribution: .fillEqually,
+        views: [payPalButton, applePayButton]
+    )
+
     private lazy var vStack = UIScrollView.createWithVStack(
         spacing: 8,
         alignment: .fill,
@@ -87,15 +95,15 @@ class PaymentFormView: UIView {
             navView,
             paymentForm,
             paymentButton,
-            payPalButton,
+//            payPalButton,
             orPayWith,
-            applePayButton,
+            hStack,
             statusLabel
         ]
     ) { stackView in
         stackView.setCustomSpacing(8, after: self.paymentButton)
         stackView.setCustomSpacing(8, after: self.orPayWith)
-        stackView.setCustomSpacing(32, after: self.applePayButton)
+//        stackView.setCustomSpacing(32, after: self.applePayButton)
     }
 
     public var isFormValid: Bool {
