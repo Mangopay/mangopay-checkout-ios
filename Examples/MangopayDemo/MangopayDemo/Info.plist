@@ -28,6 +28,8 @@
 	</dict>
 	<key>CLIENT_ID</key>
 	<string>checkoutsquatest</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
 	<key>EXAMPLE_BACKEND_URL</key>
 	<string>https://concrete-abundant-decade.glitch.me</string>
 </dict>

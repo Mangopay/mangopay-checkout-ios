@@ -37,6 +37,7 @@
 		98D535862A82661800EE6381 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 98D535852A82661800EE6381 /* IQKeyboardManagerSwift */; };
 		98D535882A826CA300EE6381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D535872A826CA300EE6381 /* Assets.xcassets */; };
 		98DF69A62A83B3EA00B08198 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 98DF69A52A83B3EA00B08198 /* netfox */; };
+		98DF8CE92C24B02200BBA33D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 98DF8CE82C24B02200BBA33D /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		98413A7F2B049AEC00F62F93 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		988260CB2C19607500684287 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		98D535872A826CA300EE6381 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		98DF8CE82C24B02200BBA33D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		98E5CFB72A9C70C5000DF08B /* MangopayDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MangopayDemo.entitlements; sourceTree = "<group>"; };
 		9B3160D1BAC867B0A69D1040 /* Pods-MangopayDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangopayDemo.debug.xcconfig"; path = "Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		A578AE37CFEEFF291DE52C15 /* Pods_MangopayDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MangopayDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,6 +192,7 @@
 				9813A36C2A8254CD0036F556 /* Main.storyboard */,
 				9813A3712A8254D00036F556 /* LaunchScreen.storyboard */,
 				9813A3742A8254D00036F556 /* Info.plist */,
+				98DF8CE82C24B02200BBA33D /* PrivacyInfo.xcprivacy */,
 				98413A7D2B04893F00F62F93 /* Extensions.swift */,
 			);
 			path = MangopayDemo;
@@ -350,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9813A3A42A8261330036F556 /* ItemCell.xib in Resources */,
+				98DF8CE92C24B02200BBA33D /* PrivacyInfo.xcprivacy in Resources */,
 				9813A3732A8254D00036F556 /* LaunchScreen.storyboard in Resources */,
 				9813A3A52A8261330036F556 /* CongratsView.xib in Resources */,
 				9813A3AC2A8261330036F556 /* CongratsController.xib in Resources */,
