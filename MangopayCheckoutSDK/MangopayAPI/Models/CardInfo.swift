@@ -10,10 +10,12 @@ public struct MGPCardInfo: Codable, Cardable {
     
     public var cardNumber: String?
     public var cardExpirationDate: String?
+    public var cardHolderName: String?
     public var cardCvx: String?
     public var cardType: String?
     public var accessKeyRef: String?
     public var data: String?
+    public var amount: Amount?
 
     public var cvc: String? {
         return cardCvx
@@ -41,6 +43,7 @@ public struct MGPCardInfo: Codable, Cardable {
 
     public init(
         cardNumber: String? = nil,
+        cardHolderName: String? = nil,
         cardExpirationDate: String? = nil,
         cardCvx: String? = nil,
         cardType: String? = nil,
@@ -49,6 +52,7 @@ public struct MGPCardInfo: Codable, Cardable {
     ) {
         self.cardNumber = cardNumber
         self.cardExpirationDate = cardExpirationDate
+        self.cardHolderName = cardHolderName
         self.cardCvx = cardCvx
         self.cardType = cardType
         self.accessKeyRef = accessKeyRef

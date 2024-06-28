@@ -7,6 +7,7 @@
 
 import UIKit
 import PassKit
+import NethoneSDK
 
 class PaymentFormController: UIViewController {
 
@@ -14,30 +15,27 @@ class PaymentFormController: UIViewController {
 
     var paymentFormStyle: PaymentFormStyle
     var callback: CallBack
-    var paymentMethodConfig: PaymentMethodConfig
-    var handlePaymentFlow: Bool
+    var paymentMethodOptions: PaymentMethodOptions
     let paymentHandler = MGPApplePayHandler()
-
+    var navVC: UINavigationController?
+    
     public init(
         cardConfig: CardConfig? = nil,
-        paymentMethodConfig: PaymentMethodConfig,
-        handlePaymentFlow: Bool,
+        paymentMethodOptions: PaymentMethodOptions,
         branding: PaymentFormStyle?,
         callback: CallBack
     ) {
 
         self.paymentFormStyle = branding ?? PaymentFormStyle()
         self.callback = callback
-        self.paymentMethodConfig = paymentMethodConfig
-        self.handlePaymentFlow = handlePaymentFlow
+        self.paymentMethodOptions = paymentMethodOptions
 
         formView = PaymentFormView(
             client: MangopayClient(
                 clientId: MangopayCheckoutSDK.clientId,
                 environment: MangopayCheckoutSDK.environment)
             ,
-            paymentMethodConfig: paymentMethodConfig,
-            handlePaymentFlow: handlePaymentFlow,
+            paymentMethodOptions: paymentMethodOptions,
             branding: branding,
             callback: callback
         )
@@ -56,6 +54,7 @@ class PaymentFormController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupObservers()
+        self.navVC = self.navigationController
     }
 
     override func viewDidLayoutSubviews() {
@@ -69,21 +68,47 @@ class PaymentFormController: UIViewController {
 
     func setupObservers() {
         formView.onApplePayTapped = {
-            guard let applePayConfig = self.paymentMethodConfig.applePayConfig else { return }
+            guard let applePayConfig = self.paymentMethodOptions.applePayOptions else { return }
             self.paymentHandler.setData(payRequest: applePayConfig.toPaymentRequest)
-            self.paymentHandler.startPayment(delegate: self) { (success) in
+            self.paymentHandler.startPayment(delegate: applePayConfig.delegate) { (success) in
                 if success {
-                    print("✅ Confirmation")
                 }
             }
         }
-
+        
         formView.onClosedTapped = {
             self.navigationController?.dismiss(animated: true, completion: {
-                self.callback.onSheetDismissed?()
+                self.callback.onCancel?()
+                NethoneManager.shared.cancelNethoneAttemptIfAny()
             })
         }
+        
+        formView.onAPMTapped = { apmInfo in
+            if let _urlStr = apmInfo.secureModeRedirectURL, let url = URL(string: _urlStr) {
+                let urlController = MGPWebViewController(
+                    url: url,
+                    nethoneAttemptReference: NTHNethone.attemptReference(),
+                    onComplete: { status in
+                        NethoneManager.shared.performFinalizeAttempt { res, attemptRef in
+                            self.callback.onPaymentCompleted?(nil, status)
+                        }
+                    },
+                    onError: { error in
+                        self.callback.onError?(MGPError._3dsError(additionalInfo: error?.localizedDescription))
+                    }
+                )
+                
+                self.navigationController?.pushViewController(urlController, animated: true)
+            }
+        }
 
+        formView.viewModel.onCreatePaymentComplete = { paymentObj in
+            guard let payObj = paymentObj else {
+                return
+            }
+
+            self.launch3DSIfPossible(paymentObj: payObj)
+        }
     }
 
     @objc func doneAction() {
@@ -91,10 +116,21 @@ class PaymentFormController: UIViewController {
     }
 
     @objc func closeTapped() {
-        self.dismiss(animated: true) {
-            self.callback.onSheetDismissed?()
-        }
-
+        self.displayAlert(
+            with: "Are you sure you want to leave",
+            message: "",
+            preferredStyle: .alert,
+            actions: [
+                UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+                    self.dismiss(animated: true) {
+                        self.callback.onCancel?()
+                        NethoneManager.shared.cancelNethoneAttemptIfAny()
+                    }
+                }),
+                UIAlertAction(title: "No", style: .default)
+            ]
+            
+        )
     }
 
     func clearForm() {
@@ -108,24 +144,28 @@ class PaymentFormController: UIViewController {
     func manuallyValidateForms() {
         formView.manuallyValidateForms()
     }
-}
 
-extension PaymentFormController: MGPApplePayHandlerDelegate {
-
-    func applePayContext(didSelect shippingMethod: PKShippingMethod, handler: @escaping (PKPaymentRequestShippingMethodUpdate) -> Void) {
-        
-    }
-
-    func applePayContext(didCompleteWith status: MGPApplePay.PaymentStatus, error: Error?) {
-        switch status {
-        case .success(let token):
-            print("🤣 MangoPayApplePay.token", token)
-        case .error:
-            print("❌ MangoPayApplePay.error")
-        case .userCancellation: break
-            
+    private func launch3DSIfPossible(
+        paymentObj: Payable? = nil
+    ) {
+        MGPPaymentSheet().launch3DSIfPossible(payData: paymentObj, presentIn: self) { result in
+            self.callback.onPaymentCompleted?(result.id, result)
+        } on3DSLauch: { _3dsVC in
+            DispatchQueue.main.async {
+                self.navVC?.pushViewController(_3dsVC, animated: true)
+            }
+        } on3DSFailure: { error in
+            DispatchQueue.main.async {
+                self.showAlert(with: "", title: "3DS challenge failed")
+            }
+        } on3DSError: { error in
+            print("error", error)
+            switch error {
+            case ._3dsNotRqd:
+                self.callback.onPaymentCompleted?(nil, _3DSResult(type: .cardDirect, status: .SUCCEEDED, id: paymentObj?.cardID ?? ""))
+            default: break
+            }
         }
     }
-    
-    
 }
+

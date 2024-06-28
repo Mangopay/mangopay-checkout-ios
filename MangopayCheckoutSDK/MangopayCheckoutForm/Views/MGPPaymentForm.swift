@@ -118,7 +118,6 @@ public class MGPPaymentForm: UIView, FormValidatable {
     var onRightButtonTappedAction: (() -> Void)?
     var didEndEditing: ((MGPPaymentForm) -> Void)?
 
-    var currentAttempt: String?
     
     var cardRegistration: MGPCardRegistration?
 
@@ -135,6 +134,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
 
         return MGPCardInfo(
             cardNumber: cardNumberField.text?.trimCard(),
+            cardHolderName: cardNameField.text?.trimCard(),
             cardExpirationDate: expStr,
             cardCvx: cvvField.text,
             cardType: "CB_VISA_MASTERCARD"
@@ -168,6 +168,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
             guard let webVC = WebViewController.openWebView(with: "https://mangopay.com/privacy-statement") else { return }
             topmostViewController?.present(webVC, animated: true)
         }
+        
+//        cardNumberField.text = "4970105181818183"
     }
     
     required init?(coder: NSCoder) {
@@ -181,8 +183,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
         vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
-        vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        vStack.heightAnchor.constraint(equalToConstant: 350).isActive = true
+        vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
+        vStack.heightAnchor.constraint(equalToConstant: 340).isActive = true
 
         self.backgroundColor = .white
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -222,31 +224,14 @@ public class MGPPaymentForm: UIView, FormValidatable {
         self.cardRegistration = cardRegistration
     }
 
-    func cancelNethoneAttemptIfAny() {
-        do {
-            try NethoneSDK.NTHNethone.cancelAttempt()
-            print("CancelAttempt success")
-        } catch { 
-//            print("Nethone cancelAttempt Error", error.localizedDescription)
-        }
-    }
-
     func initiateNethone() {
-        cancelNethoneAttemptIfAny()
-        NTHNethone.setMerchantNumber("428242");
         let nethoneConfig = NTHAttemptConfiguration()
-        nethoneConfig.sensitiveFields = [
-            "cardNumberField",
-            "cardNameField",
-            "expiryDateField",
-            "cvvField"
-        ]
+        nethoneConfig.registeredTextFieldsOnly = true
 
         registerTextfieldsToNethone()
 
         do {
             try NTHNethone.beginAttempt(with: nethoneConfig)
-            currentAttempt = NTHNethone.attemptReference()
         } catch { error
             print("Nethone intiation Error", error.localizedDescription)
         }
@@ -255,25 +240,25 @@ public class MGPPaymentForm: UIView, FormValidatable {
     func registerTextfieldsToNethone() {
         NTHNethone.register(
             cardNumberField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cardNumberField"
         )
 
         NTHNethone.register(
             cardNameField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cardNameField"
         )
 
         NTHNethone.register(
             expiryDateField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "expiryDateField"
         )
 
         NTHNethone.register(
             cvvField.textfield,
-            mode: .AllData,
+            mode: .ContentFree,
             name: "cvvField"
         )
     }
@@ -284,7 +269,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
             return
         }
 
-        guard let attemptRef = self.currentAttempt else {
+        guard let attemptRef = NTHNethone.attemptReference() else {
             callBack(nil, MGPError.nethoneAttemptReferenceRqd)
             return
         }

@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleIdentifier</key>
-	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -28,5 +26,11 @@
 			</array>
 		</dict>
 	</dict>
+	<key>CLIENT_ID</key>
+	<string>checkoutsquatest</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
+	<key>EXAMPLE_BACKEND_URL</key>
+	<string>https://concrete-abundant-decade.glitch.me</string>
 </dict>
 </plist>

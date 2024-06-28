@@ -32,11 +32,8 @@ class CardCell: UICollectionViewCell {
 
     private func setupView() {
         addSubview(cardImage)
-//        layer.borderWidth = 1
-//        layer.borderColor = UIColor.gray.cgColor
         topconstriant = cardImage.topAnchor.constraint(equalTo: topAnchor, constant: 0)
         topconstriant.isActive = true
-//        cardImage.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         cardImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 4).isActive = true
         cardImage.rightAnchor.constraint(equalTo: rightAnchor, constant: -4).isActive = true
         cardImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
@@ -51,6 +48,12 @@ class CardCell: UICollectionViewCell {
         if card == .maestro {
 //            topconstriant.constant += 4  
             cardImage.contentMode = .scaleAspectFit
+        }
+
+        if card == .cb {
+//            topconstriant.constant += 4
+//            cardImage.contentMode = .scaleAspectFi÷t
+            cardImage.layer.cornerRadius = 8
         }
     }
 

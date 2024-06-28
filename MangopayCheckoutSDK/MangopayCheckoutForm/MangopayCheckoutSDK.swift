@@ -1,35 +1,35 @@
 import Foundation
 import UIKit
+import NethoneSDK
 
 public struct MangopayCheckoutSDK {
 
     static var clientId: String!
+    public static var apiKey: String!
     static var environment: MGPEnvironment!
 
-    public static func initialize(clientId: String, environment: MGPEnvironment) {
+    public static func initialize(clientId: String, profillingMerchantId: String, environment: MGPEnvironment) {
         self.clientId = clientId
         self.environment = environment
         Tokenizer.initialize(clientId: clientId, environment: environment)
+        NethoneManager.shared.initialize(with: profillingMerchantId)
     }
 
     public static func tokenizeCard(
         form: MGPPaymentForm,
         with cardReg: MGPCardRegistration,
-        payData: PayInPreAuthProtocol? = nil,
+        payData: Payable? = nil,
         presentIn viewController: UIViewController? = nil,
         callBack: @escaping MangopayTokenizedCallBack
     ) {
 
-//        guard clientId != nil, !clientId.isEmpty else {
-//            callBack(nil, MGPError.initializationRqd)
-//            return
-//        }
 
         guard form.isFormValid else {
             callBack(nil, MGPError.invalidForm)
             return
         }
-        guard let attemptRef = form.currentAttempt else {
+
+        guard let attemptRef = NTHNethone.attemptReference() else {
             callBack(nil, MGPError.nethoneAttemptReferenceRqd)
             return
         }
@@ -44,12 +44,11 @@ public struct MangopayCheckoutSDK {
             DispatchQueue.main.async {
                 callBack(tokenizedCardData, error)
             }
-//            launch3DSIfPossible(payData: _payinData, presentIn: viewController, on3DSSucces: on3DSSucces, on3DSFailure: on3DSFailure)
         }
     }
 
     public static func launch3DSIfPossible(
-        payData: PayInPreAuthProtocol? = nil,
+        payData: Payable? = nil,
         presentIn viewController: UIViewController?,
         on3DSSucces: ((String) -> ())? = nil,
         on3DSFailure: ((String) -> ())? = nil,
@@ -82,7 +81,7 @@ public struct MangopayCheckoutSDK {
                 switch result.status {
                 case .SUCCEEDED:
                     on3DSSucces?(result.id)
-                case .FAILED:
+                case .FAILED, .CANCELLED:
                     on3DSFailure?(result.id)
                 }
             }) { error in

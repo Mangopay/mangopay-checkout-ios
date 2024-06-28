@@ -7,13 +7,18 @@
 
 import UIKit
 import PassKit
+import PaymentButtons
+import NethoneSDK
 
 class PaymentFormView: UIView {
 
     public lazy var navView = NavView()
 
     private lazy var paymentForm: MGPPaymentForm = {
-        let view = MGPPaymentForm(paymentFormStyle: paymentFormStyle)
+        let view = MGPPaymentForm(
+            paymentFormStyle: paymentFormStyle,
+            supportedCardBrands: supportedCardBrands
+        )
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
        return view
@@ -39,7 +44,7 @@ class PaymentFormView: UIView {
             paymentButtonStyle: paymentFormStyle.applePayButtonStyle
         )
         appleButton.cornerRadius = paymentFormStyle.applePayButtonCornerRadius
-        appleButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        appleButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         appleButton.titleLabel?.font = .systemFont(ofSize: 2)
         appleButton.addTarget(
             self,
@@ -54,12 +59,32 @@ class PaymentFormView: UIView {
        let button = UIButton()
         button.backgroundColor = paymentFormStyle.checkoutButtonBackgroundColor
         button.setTitle(paymentFormStyle.checkoutButtonText, for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(onTappedButton), for: .touchUpInside)
         button.setTitleColor(paymentFormStyle.checkoutButtonTextColor, for: .normal)
         return button
     }()
+
+    lazy var payPalButton: PayPalButton = {
+        let payPalButton = PayPalButton(
+            color: paymentMethodOptions.paypalConfig?.color ?? .gold,
+            edges: paymentMethodOptions.paypalConfig?.edges ?? .softEdges,
+            label: paymentMethodOptions.paypalConfig?.label
+        )
+        payPalButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        payPalButton.layer.cornerRadius = 8
+        payPalButton.addTarget(self, action: #selector(onPaypalButtonTapped), for: .touchUpInside)
+        return payPalButton
+    }()
+
+    private lazy var hStack = UIStackView.create(
+        spacing: 8,
+        axis: .horizontal,
+        alignment: .fill,
+        distribution: .fillEqually,
+        views: [payPalButton, applePayButton]
+    )
 
     private lazy var vStack = UIScrollView.createWithVStack(
         spacing: 8,
@@ -70,14 +95,15 @@ class PaymentFormView: UIView {
             navView,
             paymentForm,
             paymentButton,
+//            payPalButton,
             orPayWith,
-            applePayButton,
+            hStack,
             statusLabel
         ]
     ) { stackView in
         stackView.setCustomSpacing(8, after: self.paymentButton)
         stackView.setCustomSpacing(8, after: self.orPayWith)
-        stackView.setCustomSpacing(32, after: self.applePayButton)
+//        stackView.setCustomSpacing(32, after: self.applePayButton)
     }
 
     public var isFormValid: Bool {
@@ -89,6 +115,7 @@ class PaymentFormView: UIView {
 
     var tapGesture: UIGestureRecognizer?
     var onApplePayTapped: (() -> ())?
+    var onAPMTapped: ((Payable) -> ())?
 
     var keyboardUtil: KeyboardUtil?
     var topConstriant: NSLayoutConstraint!
@@ -98,28 +125,27 @@ class PaymentFormView: UIView {
     
     var paymentFormStyle: PaymentFormStyle
     var currentAttempt: String?
+    var supportedCardBrands: [CardType]?
 
     var client: MangopayClient
     var callback: CallBack
-    var paymentMethodConfig: PaymentMethodConfig
-    var handlePaymentFlow: Bool
+    var paymentMethodOptions: PaymentMethodOptions
 
     init(
         client: MangopayClient,
-        paymentMethodConfig: PaymentMethodConfig,
-        handlePaymentFlow: Bool,
+        paymentMethodOptions: PaymentMethodOptions,
         branding: PaymentFormStyle?,
         callback: CallBack
     ) {
         self.paymentFormStyle = branding ?? PaymentFormStyle()
         self.callback = callback
         self.client = client
-        self.paymentMethodConfig = paymentMethodConfig
-        self.handlePaymentFlow = handlePaymentFlow
+        self.paymentMethodOptions = paymentMethodOptions
+        self.supportedCardBrands = paymentMethodOptions.cardOptions?.supportedCardBrands
         
         self.viewModel = PaymentFormViewModel(
             client: client,
-            paymentMethodConfig: paymentMethodConfig
+            paymentMethodConfig: paymentMethodOptions
         )
 
         super.init(frame: .zero)
@@ -128,8 +154,8 @@ class PaymentFormView: UIView {
             action: #selector(onViewTap)
         )
 
-        [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodConfig.applePayConfig?.shouldRenderApplePay == true)})
-
+        [orPayWith, applePayButton].forEach({$0.isHidden = !(paymentMethodOptions.applePayOptions?.shouldRenderApplePay == true)})
+        payPalButton.isHidden = paymentMethodOptions.paypalConfig == nil
         setupView()
 
         viewModel.onTokenisationCompleted = {
@@ -158,7 +184,7 @@ class PaymentFormView: UIView {
 
     @objc func closeTapped() {
         onClosedTapped?()
-        callback.onCancelled?()
+        callback.onCancel?()
     }
 
     @objc func onViewTap() {
@@ -187,7 +213,17 @@ class PaymentFormView: UIView {
         finalizeButtonTapped()
         callback.onPaymentMethodSelected?(.card(paymentForm.cardData))
         Loader.show()
+    }
 
+    @objc func onPaypalButtonTapped() {
+        Task {
+            callback.onPaymentMethodSelected?(.payPal)
+            Loader.show()
+            if let paypalAPM = await callback.onCreatePayment?(.payPal, NTHNethone.attemptReference() ?? "") {
+                self.onAPMTapped?(paypalAPM)
+            }
+            Loader.hide()
+        }
     }
 
     @objc func onApplePayBtnTapped() {
@@ -196,11 +232,25 @@ class PaymentFormView: UIView {
     }
 
     func finalizeButtonTapped() {
-        viewModel.tokenizeCard(
-            form: self.paymentForm,
-            cardRegistration: paymentMethodConfig.cardReg,
-            callback: callback
-        )
+        if let cardReg = paymentMethodOptions.cardOptions?.cardRegistration {
+            self.viewModel.tokenizeCard(
+                form: self.paymentForm,
+                cardRegistration: cardReg,
+                callback: self.callback
+            )
+        } else {
+            Task {
+                if let cardReg = await callback.onCreateCardRegistration?(self.paymentForm.cardData) {
+                    self.viewModel.tokenizeCard(
+                        form: self.paymentForm,
+                        cardRegistration: cardReg,
+                        callback: self.callback
+                    )
+                }
+            }
+        }
+        
     }
+
 }
 

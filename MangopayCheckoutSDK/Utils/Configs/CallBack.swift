@@ -9,25 +9,28 @@ import Foundation
 
 public struct CallBack {
     var onPaymentMethodSelected: ((PaymentMethod) -> Void)?
-    var onTokenizationCompleted: ((MGPCardRegistration) -> Void)?
-    var onPaymentCompleted: (() -> Void)?
-    var onCancelled: (() -> Void)?
+    var onTokenizationCompleted: ((TokenizedCardData) -> Void)?
+    var onCreateCardRegistration: ((MGPCardInfo) async -> MGPCardRegistration?)?
+    var onPaymentCompleted: ((String?, _3DSResult?) -> Void)?
+    var onCreatePayment: ((PaymentMethod, String?) async -> Payable?)?
+    var onCancel: (() -> Void)?
     var onError: ((MGPError) -> Void)?
-    var onSheetDismissed: (() -> Void)?
 
     public init(
         onPaymentMethodSelected: ((PaymentMethod) -> Void)? = nil,
-        onTokenizationCompleted: ( (MGPCardRegistration) -> Void)? = nil,
-        onPaymentCompleted: ( () -> Void)? = nil,
-        onCancelled: (() -> Void)?,
-        onError: ((MGPError) -> Void)? = nil,
-        onSheetDismissed: (() -> Void)? = nil
+        onTokenizationCompleted: ( (TokenizedCardData) -> Void)? = nil,
+        onCreateCardRegistration: ((MGPCardInfo) async -> MGPCardRegistration?)? = nil,
+        onPaymentCompleted: ((String?, _3DSResult?) -> Void)? = nil,
+        onCreatePayment: ((PaymentMethod, String?) async -> Payable?)? = nil,
+        onCancel: (() -> Void)?,
+        onError: ((MGPError) -> Void)? = nil
     ) {
         self.onPaymentMethodSelected = onPaymentMethodSelected
         self.onTokenizationCompleted = onTokenizationCompleted
+        self.onCreateCardRegistration = onCreateCardRegistration
+        self.onCreatePayment = onCreatePayment
         self.onPaymentCompleted = onPaymentCompleted
-        self.onCancelled = onCancelled
+        self.onCancel = onCancel
         self.onError = onError
-        self.onSheetDismissed = onSheetDismissed
     }
 }

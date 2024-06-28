@@ -7,18 +7,21 @@
 
 import Foundation
 
-public protocol PayInPreAuthProtocol {
+public protocol Payable {
     var authorID: String? { set get }
-    var debitedFunds: DebitedFunds? { set get }
+    var debitedFunds: Amount? { set get }
     var secureMode: String? { set get }
     var cardID: String? { set get }
     var secureModeNeeded: Bool? { set get }
     var secureModeRedirectURL: String? { set get }
     var secureModeReturnURL: String? { set get }
+    //status
+    //resultcode
+    //resultMessage
 }
 
 // MARK: - PayInCard
-public struct PreAuthCard: Codable, PayInPreAuthProtocol {
+public struct PreAuthCard: Codable, Payable {
 
     public enum PaymentStatusEnum: String {
         case VALIDATED
@@ -33,7 +36,7 @@ public struct PreAuthCard: Codable, PayInPreAuthProtocol {
     }
 
     public var authorID: String?
-    public var debitedFunds, remainingFunds: DebitedFunds?
+    public var debitedFunds, remainingFunds: Amount?
     var status, paymentStatus, resultCode, resultMessage: String?
     public var executionType, secureMode, cardID: String?
     public var secureModeNeeded: Bool?
@@ -47,6 +50,7 @@ public struct PreAuthCard: Codable, PayInPreAuthProtocol {
     var ipAddress: String?
     var browserInfo: BrowserInfo?
     var shipping: Ing?
+    var profilingAttemptReference: String?
 
     public var _paymentStatus: PaymentStatusEnum? {
         guard let _str = paymentStatus else { return nil }
@@ -81,9 +85,10 @@ public struct PreAuthCard: Codable, PayInPreAuthProtocol {
         case ipAddress = "IpAddress"
         case browserInfo = "BrowserInfo"
         case shipping = "Shipping"
+        case profilingAttemptReference = "ProfilingAttemptReference"
     }
 
-    public init(authorID: String, debitedFunds: DebitedFunds, remainingFunds: DebitedFunds? = nil, status: String? = nil, paymentStatus: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String, secureModeNeeded: Bool, secureModeRedirectURL: String? = nil, secureModeReturnURL: String? = nil, expirationDate: Int? = nil, payInID: String? = nil, billing: Ing? = nil, securityInfo: SecurityInfo? = nil, culture: String? = nil, multiCapture: Bool? = nil, ipAddress: String = "2001:0620:0000:0000:0211:24FF:FE80:C12C", browserInfo: BrowserInfo = BrowserInfo(), shipping: Ing? = nil) {
+    public init(authorID: String, debitedFunds: Amount, remainingFunds: Amount? = nil, status: String? = nil, paymentStatus: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String, secureModeNeeded: Bool, secureModeRedirectURL: String? = nil, secureModeReturnURL: String? = nil, expirationDate: Int? = nil, payInID: String? = nil, billing: Ing? = nil, securityInfo: SecurityInfo? = nil, culture: String? = nil, multiCapture: Bool? = nil, ipAddress: String = "2001:0620:0000:0000:0211:24FF:FE80:C12C", browserInfo: BrowserInfo = BrowserInfo(), shipping: Ing? = nil, profilingAttemptReference: String?) {
         self.authorID = authorID
         self.debitedFunds = debitedFunds
         self.remainingFunds = remainingFunds
@@ -106,6 +111,7 @@ public struct PreAuthCard: Codable, PayInPreAuthProtocol {
         self.ipAddress = ipAddress
         self.browserInfo = browserInfo
         self.shipping = shipping
+        self.profilingAttemptReference = profilingAttemptReference
     }
 }
 

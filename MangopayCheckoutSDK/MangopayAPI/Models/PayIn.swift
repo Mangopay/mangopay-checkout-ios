@@ -12,12 +12,12 @@ public enum PayinStatus: String {
     case failed = "FAILED"
 }
 
-public struct PayIn: Codable, PayInPreAuthProtocol {
+public struct PayIn: Codable, Payable {
     
     var id, tag: String?
     var creationDate: Int?
     public var authorID, creditedUserID: String?
-    public var debitedFunds, creditedFunds, fees: DebitedFunds?
+    public var debitedFunds, creditedFunds, fees: Amount?
     public var status, resultCode, resultMessage: String?
     var executionDate: Int?
     var type, nature, creditedWalletID: String?
@@ -75,7 +75,7 @@ public struct PayIn: Codable, PayInPreAuthProtocol {
         case recurringPayinRegistrationID = "RecurringPayinRegistrationId"
     }
 
-    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, authorID: String? = nil, creditedUserID: String? = nil, debitedFunds: DebitedFunds? = nil, creditedFunds: DebitedFunds? = nil, fees: DebitedFunds? = nil, status: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionDate: Int? = nil, type: String? = nil, nature: String? = nil, creditedWalletID: String? = nil, debitedWalletID: String? = nil, paymentType: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String? = nil, secureModeReturnURL: String? = nil, secureModeRedirectURL: String? = nil, secureModeNeeded: Bool? = nil, culture: String? = nil, securityInfo: SecurityInfo? = nil, statementDescriptor: String? = nil, browserInfo: BrowserInfo? = nil, ipAddress: String? = nil, billing: Ing? = nil, shipping: Ing? = nil, requested3DSVersion: String? = nil, applied3DSVersion: String? = nil, recurringPayinRegistrationID: String? = nil) {
+    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, authorID: String? = nil, creditedUserID: String? = nil, debitedFunds: Amount? = nil, creditedFunds: Amount? = nil, fees: Amount? = nil, status: String? = nil, resultCode: String? = nil, resultMessage: String? = nil, executionDate: Int? = nil, type: String? = nil, nature: String? = nil, creditedWalletID: String? = nil, debitedWalletID: String? = nil, paymentType: String? = nil, executionType: String? = nil, secureMode: String? = nil, cardID: String? = nil, secureModeReturnURL: String? = nil, secureModeRedirectURL: String? = nil, secureModeNeeded: Bool? = nil, culture: String? = nil, securityInfo: SecurityInfo? = nil, statementDescriptor: String? = nil, browserInfo: BrowserInfo? = nil, ipAddress: String? = nil, billing: Ing? = nil, shipping: Ing? = nil, requested3DSVersion: String? = nil, applied3DSVersion: String? = nil, recurringPayinRegistrationID: String? = nil) {
         self.id = id
         self.tag = tag
         self.creationDate = creationDate

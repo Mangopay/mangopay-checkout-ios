@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3101D506E7605D4F654E6161 /* Pods_MangopayDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A578AE37CFEEFF291DE52C15 /* Pods_MangopayDemoTests.framework */; };
+		6D3887DDF994961D7AF95AAE /* Pods_MangopayDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8BAB8C86BBE1048834F6EF7 /* Pods_MangopayDemo.framework */; };
+		6F008965F04D9E086FBBA1E2 /* Pods_MangopayDemo_MangopayDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7FF5AC5BE8A89C4F84206F2 /* Pods_MangopayDemo_MangopayDemoUITests.framework */; };
 		9813A3672A8254CD0036F556 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3662A8254CD0036F556 /* AppDelegate.swift */; };
 		9813A3692A8254CD0036F556 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3682A8254CD0036F556 /* SceneDelegate.swift */; };
 		9813A36B2A8254CD0036F556 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A36A2A8254CD0036F556 /* ViewController.swift */; };
@@ -27,10 +30,14 @@
 		9813A3AB2A8261330036F556 /* CongratsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3A02A8261320036F556 /* CongratsController.swift */; };
 		9813A3AC2A8261330036F556 /* CongratsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9813A3A12A8261330036F556 /* CongratsController.xib */; };
 		9813A3AD2A8261330036F556 /* Segue+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3A22A8261330036F556 /* Segue+Additions.swift */; };
-		98983C7B2AE152F600818520 /* MangopayCheckoutSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 98983C7A2AE152F600818520 /* MangopayCheckoutSDK */; };
+		98216AE72BA0A50F0058A973 /* MangopayCheckoutSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 98216AE62BA0A50F0058A973 /* MangopayCheckoutSDK */; };
+		98216AEA2BA0A5540058A973 /* MangopayCheckoutSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 98216AE92BA0A5540058A973 /* MangopayCheckoutSDK */; };
+		98413A7E2B04893F00F62F93 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98413A7D2B04893F00F62F93 /* Extensions.swift */; };
+		98413A802B049AEC00F62F93 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98413A7F2B049AEC00F62F93 /* ResultView.swift */; };
 		98D535862A82661800EE6381 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 98D535852A82661800EE6381 /* IQKeyboardManagerSwift */; };
 		98D535882A826CA300EE6381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D535872A826CA300EE6381 /* Assets.xcassets */; };
 		98DF69A62A83B3EA00B08198 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 98DF69A52A83B3EA00B08198 /* netfox */; };
+		98DF8CE92C24B02200BBA33D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 98DF8CE82C24B02200BBA33D /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +58,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		16C41F948CC2B5C4EBF04267 /* Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		689B31200221C928767B9D05 /* Pods-MangopayDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangopayDemo.release.xcconfig"; path = "Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo.release.xcconfig"; sourceTree = "<group>"; };
+		77628604F9FA046616E9EC09 /* Pods-MangopayDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangopayDemoTests.debug.xcconfig"; path = "Target Support Files/Pods-MangopayDemoTests/Pods-MangopayDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		959B659FD18EE2B452CBD325 /* Pods-MangopayDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangopayDemoTests.release.xcconfig"; path = "Target Support Files/Pods-MangopayDemoTests/Pods-MangopayDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		9813A3632A8254CD0036F556 /* MangopayDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangopayDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9813A3662A8254CD0036F556 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9813A3682A8254CD0036F556 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,9 +86,17 @@
 		9813A3A02A8261320036F556 /* CongratsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsController.swift; sourceTree = "<group>"; };
 		9813A3A12A8261330036F556 /* CongratsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CongratsController.xib; sourceTree = "<group>"; };
 		9813A3A22A8261330036F556 /* Segue+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Segue+Additions.swift"; sourceTree = "<group>"; };
-		98A5AE6F2AA99BE200BA6042 /* MangoPayiOSSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MangoPayiOSSDK; path = ../..; sourceTree = "<group>"; };
+		98413A7D2B04893F00F62F93 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		98413A7F2B049AEC00F62F93 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		988260CB2C19607500684287 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		98D535872A826CA300EE6381 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		98DF8CE82C24B02200BBA33D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		98E5CFB72A9C70C5000DF08B /* MangopayDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MangopayDemo.entitlements; sourceTree = "<group>"; };
+		9B3160D1BAC867B0A69D1040 /* Pods-MangopayDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangopayDemo.debug.xcconfig"; path = "Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		A578AE37CFEEFF291DE52C15 /* Pods_MangopayDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MangopayDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8BAB8C86BBE1048834F6EF7 /* Pods_MangopayDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MangopayDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFF70805FE491EC6767064D2 /* Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E7FF5AC5BE8A89C4F84206F2 /* Pods_MangopayDemo_MangopayDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MangopayDemo_MangopayDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +105,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				98DF69A62A83B3EA00B08198 /* netfox in Frameworks */,
+				98216AEA2BA0A5540058A973 /* MangopayCheckoutSDK in Frameworks */,
 				98D535862A82661800EE6381 /* IQKeyboardManagerSwift in Frameworks */,
-				98983C7B2AE152F600818520 /* MangopayCheckoutSDK in Frameworks */,
+				6D3887DDF994961D7AF95AAE /* Pods_MangopayDemo.framework in Frameworks */,
+				98216AE72BA0A50F0058A973 /* MangopayCheckoutSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3101D506E7605D4F654E6161 /* Pods_MangopayDemoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,12 +124,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F008965F04D9E086FBBA1E2 /* Pods_MangopayDemo_MangopayDemoUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2CBE4B1526A00AE3CBFFBD67 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9B3160D1BAC867B0A69D1040 /* Pods-MangopayDemo.debug.xcconfig */,
+				689B31200221C928767B9D05 /* Pods-MangopayDemo.release.xcconfig */,
+				16C41F948CC2B5C4EBF04267 /* Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig */,
+				CFF70805FE491EC6767064D2 /* Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig */,
+				77628604F9FA046616E9EC09 /* Pods-MangopayDemoTests.debug.xcconfig */,
+				959B659FD18EE2B452CBD325 /* Pods-MangopayDemoTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		9813A35A2A8254CD0036F556 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +153,7 @@
 				9813A3862A8254D00036F556 /* MangopayDemoUITests */,
 				9813A3642A8254CD0036F556 /* Products */,
 				98D5357D2A82656400EE6381 /* Frameworks */,
+				2CBE4B1526A00AE3CBFFBD67 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,12 +184,16 @@
 				9813A39B2A8261320036F556 /* ItemCell.swift */,
 				9813A3992A8261320036F556 /* ItemCell.xib */,
 				9813A39C2A8261320036F556 /* ProductListController.swift */,
+				988260CB2C19607500684287 /* README.md */,
+				98413A7F2B049AEC00F62F93 /* ResultView.swift */,
 				9813A3A22A8261330036F556 /* Segue+Additions.swift */,
 				9813A39D2A8261320036F556 /* UIViewController+extensions.swift */,
 				9813A3962A8261130036F556 /* DemoPaymentForm.swift */,
 				9813A36C2A8254CD0036F556 /* Main.storyboard */,
 				9813A3712A8254D00036F556 /* LaunchScreen.storyboard */,
 				9813A3742A8254D00036F556 /* Info.plist */,
+				98DF8CE82C24B02200BBA33D /* PrivacyInfo.xcprivacy */,
+				98413A7D2B04893F00F62F93 /* Extensions.swift */,
 			);
 			path = MangopayDemo;
 			sourceTree = "<group>";
@@ -177,7 +218,6 @@
 		9813A3AE2A8263E90036F556 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				98A5AE6F2AA99BE200BA6042 /* MangoPayiOSSDK */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -185,6 +225,9 @@
 		98D5357D2A82656400EE6381 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B8BAB8C86BBE1048834F6EF7 /* Pods_MangopayDemo.framework */,
+				E7FF5AC5BE8A89C4F84206F2 /* Pods_MangopayDemo_MangopayDemoUITests.framework */,
+				A578AE37CFEEFF291DE52C15 /* Pods_MangopayDemoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -196,9 +239,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9813A38D2A8254D00036F556 /* Build configuration list for PBXNativeTarget "MangopayDemo" */;
 			buildPhases = (
+				6C21B3393D81FD0981985907 /* [CP] Check Pods Manifest.lock */,
 				9813A35F2A8254CD0036F556 /* Sources */,
 				9813A3602A8254CD0036F556 /* Frameworks */,
 				9813A3612A8254CD0036F556 /* Resources */,
+				930911787F8BC2E621FFF470 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -208,7 +253,8 @@
 			packageProductDependencies = (
 				98D535852A82661800EE6381 /* IQKeyboardManagerSwift */,
 				98DF69A52A83B3EA00B08198 /* netfox */,
-				98983C7A2AE152F600818520 /* MangopayCheckoutSDK */,
+				98216AE62BA0A50F0058A973 /* MangopayCheckoutSDK */,
+				98216AE92BA0A5540058A973 /* MangopayCheckoutSDK */,
 			);
 			productName = MangopayDemo;
 			productReference = 9813A3632A8254CD0036F556 /* MangopayDemo.app */;
@@ -218,6 +264,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9813A3902A8254D00036F556 /* Build configuration list for PBXNativeTarget "MangopayDemoTests" */;
 			buildPhases = (
+				BA48856C8CDE69480E690644 /* [CP] Check Pods Manifest.lock */,
 				9813A3752A8254D00036F556 /* Sources */,
 				9813A3762A8254D00036F556 /* Frameworks */,
 				9813A3772A8254D00036F556 /* Resources */,
@@ -236,9 +283,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9813A3932A8254D00036F556 /* Build configuration list for PBXNativeTarget "MangopayDemoUITests" */;
 			buildPhases = (
+				500D8EF9D334A54728C0BAC2 /* [CP] Check Pods Manifest.lock */,
 				9813A37F2A8254D00036F556 /* Sources */,
 				9813A3802A8254D00036F556 /* Frameworks */,
 				9813A3812A8254D00036F556 /* Resources */,
+				FB48559A0C7D432732B51B09 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -285,6 +334,7 @@
 			packageReferences = (
 				98D535842A82661800EE6381 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				98DF69A42A83B3EA00B08198 /* XCRemoteSwiftPackageReference "netfox" */,
+				98216AE82BA0A5540058A973 /* XCLocalSwiftPackageReference "../.." */,
 			);
 			productRefGroup = 9813A3642A8254CD0036F556 /* Products */;
 			projectDirPath = "";
@@ -303,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9813A3A42A8261330036F556 /* ItemCell.xib in Resources */,
+				98DF8CE92C24B02200BBA33D /* PrivacyInfo.xcprivacy in Resources */,
 				9813A3732A8254D00036F556 /* LaunchScreen.storyboard in Resources */,
 				9813A3A52A8261330036F556 /* CongratsView.xib in Resources */,
 				9813A3AC2A8261330036F556 /* CongratsController.xib in Resources */,
@@ -327,6 +378,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		500D8EF9D334A54728C0BAC2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MangopayDemo-MangopayDemoUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6C21B3393D81FD0981985907 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MangopayDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		930911787F8BC2E621FFF470 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MangopayDemo/Pods-MangopayDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BA48856C8CDE69480E690644 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MangopayDemoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB48559A0C7D432732B51B09 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MangopayDemo-MangopayDemoUITests/Pods-MangopayDemo-MangopayDemoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9813A35F2A8254CD0036F556 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -337,9 +491,11 @@
 				9813A3A32A8261330036F556 /* ConfigurationController.swift in Sources */,
 				9813A3AD2A8261330036F556 /* Segue+Additions.swift in Sources */,
 				9813A3A62A8261330036F556 /* ItemCell.swift in Sources */,
+				98413A802B049AEC00F62F93 /* ResultView.swift in Sources */,
 				9813A3672A8254CD0036F556 /* AppDelegate.swift in Sources */,
 				9813A3A82A8261330036F556 /* UIViewController+extensions.swift in Sources */,
 				9813A3692A8254CD0036F556 /* SceneDelegate.swift in Sources */,
+				98413A7E2B04893F00F62F93 /* Extensions.swift in Sources */,
 				9813A3A72A8261330036F556 /* ProductListController.swift in Sources */,
 				9813A3AA2A8261330036F556 /* ElementCardController.swift in Sources */,
 				9813A3972A8261130036F556 /* DemoPaymentForm.swift in Sources */,
@@ -515,6 +671,7 @@
 		};
 		9813A38E2A8254D00036F556 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B3160D1BAC867B0A69D1040 /* Pods-MangopayDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -547,6 +704,7 @@
 		};
 		9813A38F2A8254D00036F556 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 689B31200221C928767B9D05 /* Pods-MangopayDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -579,6 +737,7 @@
 		};
 		9813A3912A8254D00036F556 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77628604F9FA046616E9EC09 /* Pods-MangopayDemoTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -599,6 +758,7 @@
 		};
 		9813A3922A8254D00036F556 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 959B659FD18EE2B452CBD325 /* Pods-MangopayDemoTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -619,6 +779,7 @@
 		};
 		9813A3942A8254D00036F556 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16C41F948CC2B5C4EBF04267 /* Pods-MangopayDemo-MangopayDemoUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -637,6 +798,7 @@
 		};
 		9813A3952A8254D00036F556 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFF70805FE491EC6767064D2 /* Pods-MangopayDemo-MangopayDemoUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -694,6 +856,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		98216AE82BA0A5540058A973 /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		98D535842A82661800EE6381 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -714,7 +883,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		98983C7A2AE152F600818520 /* MangopayCheckoutSDK */ = {
+		98216AE62BA0A50F0058A973 /* MangopayCheckoutSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MangopayCheckoutSDK;
+		};
+		98216AE92BA0A5540058A973 /* MangopayCheckoutSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MangopayCheckoutSDK;
 		};

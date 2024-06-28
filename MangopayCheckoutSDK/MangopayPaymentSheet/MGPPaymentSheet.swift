@@ -18,18 +18,15 @@ public class MGPPaymentSheet {
         self.presentingVC = nil
         navVC = UINavigationController(rootViewController: MGPPaymentSheet.paymentFormVC)
         navVC.modalPresentationStyle = .fullScreen
-
     }
 
     public static func create(
-        paymentMethodConfig: PaymentMethodConfig,
-        handlePaymentFlow: Bool = false,
+        paymentMethodOptions: PaymentMethodOptions,
         branding: PaymentFormStyle,
         callback: CallBack
     ) -> MGPPaymentSheet {
         paymentFormVC = PaymentFormController(
-            paymentMethodConfig: paymentMethodConfig,
-            handlePaymentFlow: handlePaymentFlow,
+            paymentMethodOptions: paymentMethodOptions,
             branding: branding,
             callback: callback
         )
@@ -63,10 +60,15 @@ public class MGPPaymentSheet {
         MGPPaymentSheet.paymentFormVC.manuallyValidateForms()
     }
 
+    public func pushViewController(_ viewController: UIViewController) {
+        self.navVC.pushViewController(viewController, animated: true)
+    }
+    
+
     public func launch3DSIfPossible(
-        payData: PayInPreAuthProtocol? = nil,
+        payData: Payable? = nil,
         presentIn viewController: UIViewController?,
-        on3DSSucces: ((String) -> ())? = nil,
+        on3DSSucces: ((_3DSResult) -> ())? = nil,
         on3DSLauch: ((UIViewController) -> ())? = nil,
         on3DSFailure: ((String) -> ())? = nil,
         on3DSError: ((MGPError) -> ())? = nil
@@ -75,7 +77,6 @@ public class MGPPaymentSheet {
         self.presentingVC = viewController
         
         guard payData?.secureModeNeeded == true else {
-            print("secureModeNeeded is false ")
             on3DSError?(MGPError._3dsNotRqd)
             return
         }
@@ -97,12 +98,12 @@ public class MGPPaymentSheet {
         let _3dsVC = ThreeDSController(
             secureModeReturnURL: url,
             secureModeRedirectURL: nil,
-            transactionType: .cardDirect,
+            transactionType: nil,
             onComplete: { result in
                 switch result.status {
                 case .SUCCEEDED:
-                    on3DSSucces?(result.id)
-                case .FAILED:
+                    on3DSSucces?(result)
+                case .FAILED, .CANCELLED:
                     on3DSFailure?(result.id)
                 }
             }) { error in

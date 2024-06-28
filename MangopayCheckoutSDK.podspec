@@ -23,6 +23,11 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://gitlab.com/mangopay/dev/checkout-ios-sdk.git", :tag => "#{spec.version}", :branch => "cocoapod_update" }
 
   spec.source_files  = "MangopayCheckoutSDK/**/*.swift"
+<<<<<<< HEAD
+=======
+  spec.dependency     'PayPal/PaymentButtons'
+
+>>>>>>> develop
   spec.dependency     'MangopayVaultSDK', '~> 1.0.8'
   spec.exclude_files = "MangopayCheckoutSDK/Resources/SPMextension.swift"
   

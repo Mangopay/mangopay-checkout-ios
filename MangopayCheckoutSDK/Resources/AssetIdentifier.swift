@@ -21,7 +21,9 @@ extension UIImage {
         case card_discover
         case card_jcb
         case card_maestro
+        case paypal
         case app_icon
+        case cartebancaire
         case none
     }
 
