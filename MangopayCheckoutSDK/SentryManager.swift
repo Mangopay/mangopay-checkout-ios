@@ -30,7 +30,11 @@ enum MGPEvent: String {
 
 final public class SentryManager {
 
-    static func initialize(environment: MGPEnvironment, checkoutReference: String) {
+    static func initialize(
+        environment: MGPEnvironment,
+        clientId: String,
+        checkoutReference: String
+    ) {
         SentrySDK.start { options in
             switch environment {
             case .sandbox, .t3:
@@ -39,7 +43,7 @@ final public class SentryManager {
                 options.environment = "dev"
             case .production:
                 options.dsn  = Constants.sentryProd
-                options.releaseName = "1.1.0"
+                options.releaseName = "1.0.9"
                 options.environment = "production"
             }
 
@@ -47,7 +51,7 @@ final public class SentryManager {
         }
     
         SentrySDK.configureScope { scope in
-            scope.setTag(value: "<clientid>", key: "clientid")
+            scope.setTag(value: clientId, key: "clientid")
             scope.setTag(value: checkoutReference, key: "checkoutReference")
         }
     }
