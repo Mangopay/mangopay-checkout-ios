@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
   spec.source_files  = "MangopayCheckoutSDK/**/*.swift"
   spec.dependency     'PayPal/PaymentButtons'
   spec.dependency     'MangopayVaultSDK', '~> 1.0.8'
-  spec.exclude_files = "MangopayCheckoutSDK/Resources/SPMextension.swift"
+  spec.exclude_files = ["MangopayCheckoutSDK/Resources/SPMextension.swift", MangopayCheckoutSDK/Utils/Paypal/MGPPaypalOptions.swift]
   
   spec.resource_bundles = {
     'MangopayiOSSDK_MangopayCheckoutSDK' => ['MangopayCheckoutSDK/Resources/**/*.swift', 'MangopayCheckoutSDK/**/*.{png,jpeg,jpg,storyboard,xib,xcassets']
