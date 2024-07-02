@@ -32,7 +32,8 @@ let package = Package(
             ],
             path: "MangopayCheckoutSDK",
             exclude: [
-                "Resources/NonSPMExtension.swift"
+                "Resources/NonSPMExtension.swift",
+                "Utils/Paypal/NonMGPPaypalOptions.swift"
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),

@@ -326,11 +326,8 @@ class ConfigurationController: UIViewController {
         else { return nil }
         
         let __env = MGPEnvironment(rawValue: env)!
-<<<<<<< HEAD
-        MangopayCheckoutSDK.initialize(clientId: clientIDStr, profillingMerchantId: "428242", checkoutRerefence: UUID().uuidString, environment: __env)
-=======
-        MangopayCheckoutSDK.initialize(clientId: clientId, profillingMerchantId: "428242", environment: __env)
->>>>>>> main
+        MangopayCheckoutSDK.initialize(clientId: clientId, profillingMerchantId: "428242", checkoutRerefence: UUID().uuidString, environment: __env)
+
 
         var cardFlowType: _3DSTransactionType?
 
@@ -386,19 +383,11 @@ class ConfigurationController: UIViewController {
         guard let _env = env else { return }
         switch _env {
         case .sandbox:
-<<<<<<< HEAD
-            apiKeyField.text = "c35d303abaa24eb9b9161a42a9dcab5a"
-            clientField.text = "checkoutsquatest"
-            creditedUserField.text = "157868268"
-            creditedWalletField.text = "159834019"
-            authorField.text = "157868268"
-=======
 //            apiKeyField.text = "6281f06d0ba54934a9747d9b7c9e8bb2"
 //            clientField.text = "checkoutsquatest"
 //            creditedUserField.text = "157868268"
 //            creditedWalletField.text = "159834019"
 //            authorField.text = "157868268"
->>>>>>> main
             amountField.text = "1"
         case .production:
 //            apiKeyField.text = "FPuqRtn4A6LhH7JGJ9QUDSfc3M0aTsbiQfScW8boGyfaAD57h3"
