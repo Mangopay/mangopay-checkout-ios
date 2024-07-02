@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "MangopayCheckoutSDK"
-  spec.version      = "1.0.9-beta-gl-012"
+  spec.version      = "1.0.9-beta-gl-013"
   spec.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift."
 
   spec.description  = <<-DESC
@@ -25,6 +25,7 @@ Pod::Spec.new do |spec|
   spec.source_files  = "MangopayCheckoutSDK/**/*.swift"
   spec.dependency     'PayPal/PaymentButtons'
   spec.dependency     'MangopayVaultSDK', '~> 1.0.8'
+  spec.dependency     'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '8.30.0
   spec.exclude_files = [
   'MangopayCheckoutSDK/Resources/SPMextension.swift',
   'MangopayCheckoutSDK/Utils/Configs/Paypal/MGPPaypalOptions.swift',
