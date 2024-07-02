@@ -8,7 +8,7 @@
 import Foundation
 import PayPal
 
-public struct NonMGPPaypalOptions {
+public struct MGPPaypalOptions {
     var color: PayPalButton.Color = .gold
     var edges: PaymentButtonEdges = .softEdges
     var label: PayPalButton.Label?
