@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import PassKit
-import PaymentButtons
+import PayPal
 import NethoneSDK
 
 class PaymentFormView: UIView {
