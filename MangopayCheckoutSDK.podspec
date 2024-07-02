@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "MangopayCheckoutSDK"
-  spec.version      = "1.0.9-beta-gl-005"
+  spec.version      = "1.0.9-beta-gl-006"
   spec.summary      = "Checkout API Client, Payment Form UI and Utilities in Swift."
 
   spec.description  = <<-DESC
@@ -27,7 +27,7 @@ Pod::Spec.new do |spec|
   spec.dependency     'MangopayVaultSDK', '~> 1.0.8'
   spec.exclude_files = [
   'MangopayCheckoutSDK/Resources/SPMextension.swift',
-  'MangopayCheckoutSDK/Utils/Paypal/MGPPaypalOptions.swift'
+  'MangopayCheckoutSDK/Utils/Configs/Paypal/NonMGPPaypalOptions.swift'
   ]
   
   spec.resource_bundles = {
