@@ -31,7 +31,7 @@ public class PaymentFormViewModel {
         SentryManager.log(name: .CARD_REGISTRATION_STARTED)
         form.setCardRegistration(cardRegistration)
         form.tokenizeCard { tokenizedCardData, error in
-            if let _ = tokenizedCardData, let card = tokenizedCardData?.card, let cardData = tokenizedCardData {
+            if let _ = tokenizedCardData, let _ = tokenizedCardData?.card, let cardData = tokenizedCardData {
                 
                 NethoneManager.shared.performFinalizeAttempt { _ , attemptRef in
                     DispatchQueue.main.async {
@@ -46,8 +46,6 @@ public class PaymentFormViewModel {
                                     SentryManager.log(name: .CARD_REGISTRATION_FAILED)
                                 }
                             }
-                        } else {
-//                            callback.onPaymentCompleted?(attemptRef, _3DSResult(type: .cardDirect, status: .SUCCEEDED, id: card.cardID ?? ""))
                         }
                     }
                 }

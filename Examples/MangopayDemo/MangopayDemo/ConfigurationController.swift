@@ -41,13 +41,14 @@ public struct Configuration {
     var sdkMode: SDKProvier
     var env: MGPEnvironment
     var cardFlowType: _3DSTransactionType?
-    var apiKey: String
+//    var apiKey: String
     var clientId: String
-    var authorId: String?
-    var userId: String
-    var walletId: String?
+//    var authorId: String?
+//    var userId: String
+//    var walletId: String?
     var amount: Double
     var currency: Currency
+    var baseurlStr: String
 
     var merchantID: String {
         switch env {
@@ -62,17 +63,34 @@ public struct Configuration {
         return currency.rawValue + " " + amount.formatAsCurrency
     }
 
-    public init(sdkMode: SDKProvier, env: MGPEnvironment, cardFlowType: _3DSTransactionType?, apiKey: String, clientId: String, authorId: String? = nil, userId: String, walletId: String?, amount: Double, currency: Currency) {
+    var backendURL: URL {
+        return URL(string: baseurlStr)!
+    }
+
+    public init(
+        sdkMode: SDKProvier,
+        env: MGPEnvironment,
+        cardFlowType: _3DSTransactionType?,
+//        apiKey: String,
+        clientId: String,
+//        authorId: String? = nil,
+//        userId: String,
+//        walletId: String?,
+        amount: Double,
+        currency: Currency,
+        baseurlStr: String
+    ) {
         self.sdkMode = sdkMode
         self.env = env
         self.cardFlowType = cardFlowType
-        self.apiKey = apiKey
+//        self.apiKey = apiKey
         self.clientId = clientId
-        self.authorId = authorId
-        self.userId = userId
-        self.walletId = walletId
+//        self.authorId = authorId
+//        self.userId = userId
+//        self.walletId = walletId
         self.amount = amount
         self.currency = currency
+        self.baseurlStr = baseurlStr
     }
 }
 
@@ -89,11 +107,11 @@ public struct DataCapsule {
 class ConfigurationController: UIViewController {
 
     lazy var forms: [Validatable] = [
-        apiKeyField,
-        clientField,
-        authorField,
-        creditedUserField,
-        creditedWalletField,
+//        apiKeyField,
+//        clientField,
+//        authorField,
+//        creditedUserField,
+//        creditedWalletField,
         amountField,
     ]
 
@@ -121,60 +139,60 @@ class ConfigurationController: UIViewController {
         textfieldDelegate: self
     )
 
-    lazy var apiKeyField = MangoPayTextfield(
-        placeholderText: "API Key",
-        returnKeyType: .next,
-        validationRule: [
-            .fieldRequired,
-            .textTooShort
-        ],
-        style: PaymentFormStyle(),
-        textfieldDelegate: self
-    )
+//    lazy var apiKeyField = MangoPayTextfield(
+//        placeholderText: "API Key",
+//        returnKeyType: .next,
+//        validationRule: [
+//            .fieldRequired,
+//            .textTooShort
+//        ],
+//        style: PaymentFormStyle(),
+//        textfieldDelegate: self
+//    )
     
-    lazy var clientField = MangoPayTextfield(
-        placeholderText: "Client ID",
-        returnKeyType: .next,
-        validationRule: [
-            .fieldRequired,
-            .textTooShort
-        ],
-        style: PaymentFormStyle(),
-        textfieldDelegate: self
-    )
+//    lazy var clientField = MangoPayTextfield(
+//        placeholderText: "Client ID",
+//        returnKeyType: .next,
+//        validationRule: [
+//            .fieldRequired,
+//            .textTooShort
+//        ],
+//        style: PaymentFormStyle(),
+//        textfieldDelegate: self
+//    )
 
-    lazy var authorField = MangoPayTextfield(
-        placeholderText: "Author ID",
-        returnKeyType: .next,
-        validationRule: [
-            .fieldRequired,
-            .textTooShort
-        ],
-        style: PaymentFormStyle(),
-        textfieldDelegate: self
-    )
+//    lazy var authorField = MangoPayTextfield(
+//        placeholderText: "Author ID",
+//        returnKeyType: .next,
+//        validationRule: [
+//            .fieldRequired,
+//            .textTooShort
+//        ],
+//        style: PaymentFormStyle(),
+//        textfieldDelegate: self
+//    )
 
-    lazy var creditedUserField = MangoPayTextfield(
-        placeholderText: "Credited User ID",
-        returnKeyType: .next,
-        validationRule: [
-            .fieldRequired,
-            .textTooShort
-        ],
-        style: PaymentFormStyle(),
-        textfieldDelegate: self
-    )
+//    lazy var creditedUserField = MangoPayTextfield(
+//        placeholderText: "Credited User ID",
+//        returnKeyType: .next,
+//        validationRule: [
+//            .fieldRequired,
+//            .textTooShort
+//        ],
+//        style: PaymentFormStyle(),
+//        textfieldDelegate: self
+//    )
 
-    lazy var creditedWalletField = MangoPayTextfield(
-        placeholderText: "Credited Wallet ID",
-        returnKeyType: .next,
-        validationRule: [
-            .fieldRequired,
-            .textTooShort
-        ],
-        style: PaymentFormStyle(),
-        textfieldDelegate: self
-    )
+//    lazy var creditedWalletField = MangoPayTextfield(
+//        placeholderText: "Credited Wallet ID",
+//        returnKeyType: .next,
+//        validationRule: [
+//            .fieldRequired,
+//            .textTooShort
+//        ],
+//        style: PaymentFormStyle(),
+//        textfieldDelegate: self
+//    )
 
     lazy var amountField = MangoPayTextfield(
         placeholderText: "Amount - Long Format",
@@ -202,12 +220,12 @@ class ConfigurationController: UIViewController {
         views: [
 //            providerTextfield,
             envTextfield,
-            apiKeyField,
-            clientField,
+//            apiKeyField,
+//            clientField,
             cardFlowField,
-            authorField,
-            creditedUserField,
-            creditedWalletField,
+//            authorField,
+//            creditedUserField,
+//            creditedWalletField,
             amountField,
             currencyField,
             paymentButton
@@ -289,14 +307,30 @@ class ConfigurationController: UIViewController {
             return nil
         }
 
-        guard let apiKeyStr = apiKeyField.text,
-              let clientIDStr = clientField.text,
-              let userIdStr = creditedUserField.text,
+        guard let clientId = getDataFromPlist()["CLIENT_ID"] as? String, !clientId.isEmpty else {
+            envTextfield.errorText = "Set CLIENT_ID in plist file"
+            return nil
+        }
+
+        guard let baseurl = getDataFromPlist()["EXAMPLE_BACKEND_URL"] as? String else {
+            envTextfield.errorText = "Set EXAMPLE_BACKEND_URL in plist file"
+            return nil
+        }
+
+        
+        guard
+//            let apiKeyStr = apiKeyField.text,
+//              let clientIDStr = clientField.text,
+//              let userIdStr = creditedUserField.text,
               let amountStr = amountField.text
         else { return nil }
         
         let __env = MGPEnvironment(rawValue: env)!
+<<<<<<< HEAD
         MangopayCheckoutSDK.initialize(clientId: clientIDStr, profillingMerchantId: "428242", checkoutRerefence: UUID().uuidString, environment: __env)
+=======
+        MangopayCheckoutSDK.initialize(clientId: clientId, profillingMerchantId: "428242", environment: __env)
+>>>>>>> main
 
         var cardFlowType: _3DSTransactionType?
 
@@ -308,13 +342,14 @@ class ConfigurationController: UIViewController {
             sdkMode: .MangoPay,
             env: __env,
             cardFlowType: cardFlowType,
-            apiKey: apiKeyStr,
-            clientId: clientIDStr,
-            authorId: authorField.text,
-            userId: userIdStr,
-            walletId: creditedWalletField.text,
+//            apiKey: apiKeyStr,
+            clientId: clientId,
+//            authorId: authorField.text,
+//            userId: userIdStr,
+//            walletId: creditedWalletField.text,
             amount: Double(amountStr)!,
-            currency: Currency(rawValue: cur)!
+            currency: Currency(rawValue: cur)!,
+            baseurlStr: baseurl
         )
     }
         
@@ -345,62 +380,52 @@ class ConfigurationController: UIViewController {
 
     }
 
-//    func createCardReg(configuration: Configuration) {
-//        Task {
-//            if let createdObj = await performCreateCardReg(
-//                cardReg: MGPCardRegistration.Initiate(
-//                    UserId: configuration.userId,
-//                    Currency: configuration.currency.rawValue,
-//                    CardType: "CB_VISA_MASTERCARD"),
-//                config: configuration,
-//                clientId: configuration.clientId,
-//                apiKey: configuration.apiKey
-//            ) {
-//                    
-//                switch configuration.sdkMode {
-//                case .Payline:
-//                    routeToDemoForm(cardRegistration: createdObj, config: configuration)
-//                case .MangoPay:
-//                    routeToWhenThenDemo(config: DataCapsule(config: configuration, cardReg: createdObj))
-//                }
-//            } else {
-//                activityLoader.stopAnimating()
-//            }
-//        }
-//    }
-
     func setDummyData(env: MGPEnvironment?) {
         currencyField.text = "EUR"
 
         guard let _env = env else { return }
         switch _env {
         case .sandbox:
+<<<<<<< HEAD
             apiKeyField.text = "c35d303abaa24eb9b9161a42a9dcab5a"
             clientField.text = "checkoutsquatest"
             creditedUserField.text = "157868268"
             creditedWalletField.text = "159834019"
             authorField.text = "157868268"
+=======
+//            apiKeyField.text = "6281f06d0ba54934a9747d9b7c9e8bb2"
+//            clientField.text = "checkoutsquatest"
+//            creditedUserField.text = "157868268"
+//            creditedWalletField.text = "159834019"
+//            authorField.text = "157868268"
+>>>>>>> main
             amountField.text = "1"
         case .production:
-            apiKeyField.text = "FPuqRtn4A6LhH7JGJ9QUDSfc3M0aTsbiQfScW8boGyfaAD57h3"
-            clientField.text = "arthurinc"
-            creditedUserField.text = "4234427192"
-            creditedWalletField.text = "4234431137"
-            authorField.text = "4234427192"
+//            apiKeyField.text = "FPuqRtn4A6LhH7JGJ9QUDSfc3M0aTsbiQfScW8boGyfaAD57h3"
+//            clientField.text = "arthurinc"
+//            creditedUserField.text = "4234427192"
+//            creditedWalletField.text = "4234431137"
+//            authorField.text = "4234427192"
             amountField.text = "1"
         case .t3:
-            apiKeyField.text = "8b35136d29a4430983c835f81caf7c05"
-            clientField.text = "valitoreurprodtest2"
-            
-            creditedUserField.text = "user_m_01HP6Y728NHC46PTAT186AM17V"
-            creditedWalletField.text = "wlt_m_01HP6Y7WB48TVZCQ2HQ7BH8KK9"
-            
-            authorField.text = "6664602"
+//            apiKeyField.text = "8b35136d29a4430983c835f81caf7c05"
+//            clientField.text = "valitoreurprodtest2"
+//            
+//            creditedUserField.text = "user_m_01HP6Y728NHC46PTAT186AM17V"
+//            creditedWalletField.text = "wlt_m_01HP6Y7WB48TVZCQ2HQ7BH8KK9"
+//            
+//            authorField.text = "6664602"
             amountField.text = "1"
             
         }
     }
 
+    func getDataFromPlist() -> [String: Any] {
+        guard let dict = Bundle.main.infoDictionary else {
+            fatalError("Plist file not found")
+        }
+        return dict
+    }
 }
 
 extension ConfigurationController: FormValidatable {
@@ -409,24 +434,24 @@ extension ConfigurationController: FormValidatable {
 
 extension ConfigurationController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch textField {
-        case apiKeyField.textfield:
-            clientField.setResponsder()
-        case clientField.textfield:
-            authorField.setResponsder()
-        case authorField.textfield:
-            creditedUserField.setResponsder()
-        case creditedUserField.textfield:
-            creditedWalletField.setResponsder()
-        case creditedWalletField.textfield:
-            currencyField.setResponsder()
-        case currencyField.textfield:
-            self.view.endEditing(true)
-        default: break
-        }
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        switch textField {
+//        case apiKeyField.textfield:
+//            clientField.setResponsder()
+//        case clientField.textfield:
+//            authorField.setResponsder()
+//        case authorField.textfield:
+//            creditedUserField.setResponsder()
+//        case creditedUserField.textfield:
+//            creditedWalletField.setResponsder()
+//        case creditedWalletField.textfield:
+//            currencyField.setResponsder()
+//        case currencyField.textfield:
+//            self.view.endEditing(true)
+//        default: break
+//        }
+//        return true
+//    }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch textField {

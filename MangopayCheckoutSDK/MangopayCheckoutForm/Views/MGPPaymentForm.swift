@@ -134,6 +134,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
 
         return MGPCardInfo(
             cardNumber: cardNumberField.text?.trimCard(),
+            cardHolderName: cardNameField.text?.trimCard(),
             cardExpirationDate: expStr,
             cardCvx: cvvField.text,
             cardType: "CB_VISA_MASTERCARD"
@@ -168,7 +169,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
             topmostViewController?.present(webVC, animated: true)
         }
         
-        cardNumberField.text = "4970105181818183"
+//        cardNumberField.text = "4970105181818183"
     }
     
     required init?(coder: NSCoder) {
@@ -182,8 +183,8 @@ public class MGPPaymentForm: UIView, FormValidatable {
         vStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         vStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         vStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
-        vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        vStack.heightAnchor.constraint(equalToConstant: 350).isActive = true
+        vStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
+        vStack.heightAnchor.constraint(equalToConstant: 340).isActive = true
 
         self.backgroundColor = .white
         self.translatesAutoresizingMaskIntoConstraints = false

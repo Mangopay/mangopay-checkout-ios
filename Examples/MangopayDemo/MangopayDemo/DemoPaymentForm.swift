@@ -151,44 +151,9 @@ class DemoPaymentForm: UIViewController {
     }
     
     func peformGetPayIn() {
-//        guard let payId = createdPayIn?.id else { return }
-//        let client = MangoPayClient(
-//            clientKey: "checkoutsquatest",
-//            apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
-//            environment: .sandbox
-//        )
-//
-//        Task {
-//            do {
-//                let payIn = try await client.getPayIn(payInId: payId)
-//                DispatchQueue.main.async {
-//                    self.showAlert(with: payIn.cardID ?? "lol", title: "Successful 🎉")
-//                }
-//            } catch {
-//                print("❌ error", error)
-//            }
-//        }
     }
 
     func getCustomerCards() {
-//        guard let payId = createdPayIn?.id else { return }
-//        let client = MangoPayClient(
-//            clientKey: "checkoutsquatest",
-//            apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
-//            environment: .sandbox
-//        )
-//
-//        Task {
-//            do {
-//                let payIn = try await client.listPayInCards(userId: "158091557", isActive: true)
-//                let cards = payIn.compactMap({$0.id}).joined(separator: ",")
-//                DispatchQueue.main.async {
-//                    self.showAlert(with: cards, title: "Cards 🎉")
-//                }
-//            } catch {
-//                print("❌ error", error)
-//            }
-//        }
     }
 
     func payline(card: CardInfo) {

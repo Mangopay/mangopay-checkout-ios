@@ -55,7 +55,7 @@ struct Tokenizer {
                 }
                 let res = TokenizedCardData(
                     card: _card,
-                    fraud: FraudData(profilingAttemptReference: nethoeAttemptedRef)
+                    profilingAttemptReference: nethoeAttemptedRef
                 )
                 mangoPayVaultCallback(res, .none)
             }

@@ -268,14 +268,8 @@ MGPPaymentForm
 | Property | Type | Description |
 | --- | --- | --- |
 | card | CardRegistration | Tokenized Card object |
-| fraud | FraudData | FraudData object |
-
-`**FraudData**`
-
-| Property | Type | Description |
-| --- | --- | --- |
-| provider | String | Fraud Data provider (usually Nethone) |
 | profilingAttemptReference | String | Attempt Reference provided by Nethone
+ |
 
 Handling ApplePay payment |
 
