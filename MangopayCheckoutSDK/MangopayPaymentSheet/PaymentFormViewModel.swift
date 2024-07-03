@@ -28,7 +28,7 @@ public class PaymentFormViewModel {
         cardRegistration: MGPCardRegistration?,
         callback: CallBack
     ) {
-
+        SentryManager.log(name: .CARD_REGISTRATION_STARTED)
         form.setCardRegistration(cardRegistration)
         form.tokenizeCard { tokenizedCardData, error in
             if let _ = tokenizedCardData, let _ = tokenizedCardData?.card, let cardData = tokenizedCardData {
@@ -39,8 +39,12 @@ public class PaymentFormViewModel {
                         self.onTokenisationCompleted?()
                         if let createAction = callback.onCreatePayment {
                             Task {
-                                let paymentObj = await createAction(.card(nil), attemptRef)
-                                self.onCreatePaymentComplete?(paymentObj)
+                                if let paymentObj = await createAction(.card(nil), attemptRef) {
+                                    self.onCreatePaymentComplete?(paymentObj)
+                                    SentryManager.log(name: .CARD_REGISTRATION_COMPLETED)
+                                } else {
+                                    SentryManager.log(name: .CARD_REGISTRATION_FAILED)
+                                }
                             }
                         }
                     }
@@ -51,6 +55,7 @@ public class PaymentFormViewModel {
                 DispatchQueue.main.async {
                     self.onTokenisationError?(_error)
                     callback.onError?(_error)
+                    SentryManager.log(error: _error)
                 }
             }
         }

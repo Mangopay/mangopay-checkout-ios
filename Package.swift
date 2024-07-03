@@ -20,6 +20,7 @@ let package = Package(
             url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "main"),
         .package(
             url: "https://github.com/paypal/paypal-ios/", branch: "main"),
+        .package(url: "https://github.com/getsentry/sentry-cocoa", from: "8.22.2")
     ],
     targets: [
         .target(
@@ -27,10 +28,13 @@ let package = Package(
             dependencies: [
                 .product(name: "MangopayVaultSDK", package: "mangopay-ios-vault-sdk"),
                 .product(name: "PaymentButtons", package: "paypal-ios"),
+                .product(name: "Sentry", package: "sentry-cocoa"),
             ],
             path: "MangopayCheckoutSDK",
             exclude: [
-                "Resources/NonSPMExtension.swift"
+                "Resources/NonSPMExtension.swift",
+                "Utils/Configs/Paypal/NonMGPPaypalOptions.swift",
+                "MangopayPaymentSheet/NonSPMPaymentFormView.swift"
             ],
             resources: [
                 .copy("Resources/countrylistdata.json"),

@@ -1,13 +1,14 @@
 //
-//  PaymentFormView.swift
+//  File.swift
 //  
 //
-//  Created by Elikem Savie on 31/07/2023.
+//  Created by Elikem Savie on 02/07/2024.
 //
 
+import Foundation
 import UIKit
 import PassKit
-import PaymentButtons
+import PayPal
 import NethoneSDK
 
 class PaymentFormView: UIView {
@@ -261,4 +262,3 @@ class PaymentFormView: UIView {
     }
 
 }
-

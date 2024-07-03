@@ -72,6 +72,7 @@ final class NethoneManager {
             print("CancelAttempt success")
         } catch {
             print("Nethone cancelAttempt Error", error.localizedDescription)
+            SentryManager.log(error: error)
         }
     }
 
