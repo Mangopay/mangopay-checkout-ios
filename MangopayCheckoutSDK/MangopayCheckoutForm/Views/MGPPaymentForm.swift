@@ -146,9 +146,9 @@ public class MGPPaymentForm: UIView, FormValidatable {
         supportedCardBrands: [CardType]? = nil,
         callBack: MangopayTokenizedCallBack? = nil
     ) {
-
+        
         self.paymentFormStyle = paymentFormStyle ?? PaymentFormStyle()
-
+        
         super.init(frame: .zero)
         tapGesture = UIGestureRecognizer(
             target: self,
@@ -162,6 +162,19 @@ public class MGPPaymentForm: UIView, FormValidatable {
         cardNumberField.onEditingChanged = { text in
             self.cardType = CardTypeChecker.getCreditCardType(cardNumber: text)
             self.cardNumberField.setLeftImage(self.cardType?.icon)
+        }
+        
+        expiryDateField.onEditingChanged = { text in
+            let formattedText = self.formatExpiryDate(text)
+            if formattedText != "00" {
+                self.expiryDateField.text = self.formatExpiryDate(text)
+            } else {
+                self.expiryDateField.text = text
+            }
+        }
+        
+        expiryDateField.onEditingDidEnd = {
+            self.expDateValidation(dateStr: self.expiryDateField.text ?? "")
         }
     
         privacyView.didTapPrivacyAction = {
@@ -291,6 +304,39 @@ public class MGPPaymentForm: UIView, FormValidatable {
         }
 
     }
+    
+    private func formatExpiryDate(_ text: String) -> String {
+        var cleanedText = text.replacingOccurrences(of: "/", with: "")
+ 
+        if cleanedText.isEmpty {
+            return ""
+        }
+
+         if cleanedText.count > 4 {
+             cleanedText = String(cleanedText.prefix(4))
+         }
+
+        if cleanedText.count == 1, let firstDigit = cleanedText.first {
+            if firstDigit.wholeNumberValue! > 1 && firstDigit.wholeNumberValue! < 10 {
+                cleanedText = "0" + cleanedText
+            }
+         }
+        
+        if cleanedText.count > 2 {
+            let index = cleanedText.index(cleanedText.startIndex, offsetBy: 2)
+            cleanedText.insert("/", at: index)
+        }
+
+        return cleanedText
+
+    }
+
+    @objc func textFieldDidChange() {
+        guard let text = self.expiryDateField.text else { return }
+        let formattedText = formatExpiryDate(text)
+        self.expiryDateField.text = formattedText
+    }
+
 }
 
 extension MGPPaymentForm: UITextFieldDelegate {
@@ -366,32 +412,70 @@ extension MGPPaymentForm: UITextFieldDelegate {
             return true
             
         case expiryDateField.textfield:
-            guard let oldText = textField.text, let r = Range(range, in: oldText) else {
-                return true
-            }
-            let updatedText = oldText.replacingCharacters(in: r, with: string)
+            guard let text = textField.text else { return true }
             
-            if string == "" {
-                if updatedText.count == 2 {
-                    textField.text = "\(updatedText.prefix(1))"
-                    return false
-                }
-            } else if updatedText.count == 1 {
-                if updatedText > "1" {
-                    return false
-                }
-            } else if updatedText.count == 2 {
-                if updatedText <= "12" { //Prevent user to not enter month more than 12
-                    textField.text = "\(updatedText)/" //This will add "/" when user enters 2nd digit of month
-                }
-                return false
-            } else if updatedText.count == 5 {
-                self.expDateValidation(dateStr: updatedText)
-            } else if updatedText.count > 5 {
-                return false
+            if text.count == 5 {
+                self.expDateValidation(dateStr: text)
             }
+                
+            let newLength = text.count + string.count - range.length
+            return newLength <= 5
+                    
+//            let newLength = text.count + string.count - range.length
+//                   
+//                   // Allow the deletion by returning true
+//                   if string.isEmpty {
+//                       return true
+//                   }
+//                   
+//                   // Ensure the new string will not exceed 5 characters (MM/YY)
+//                   if newLength > 5 {
+//                       return false
+//                   }
+//
+//                   // Determine the resulting text after the change
+//                   let updatedText = (text as NSString).replacingCharacters(in: range, with: string)
+//
+//                   // If only one digit is entered, prefix it with a '0'
+//                   if updatedText.count == 1, let firstDigit = updatedText.first, firstDigit.wholeNumberValue! < 10 {
+//                       textField.text = "0" + updatedText
+//                       return false // Return false because we've manually updated the text field
+//                   }
+//                   
+//                   return true
+        
             
-            return true
+//            guard let oldText = textField.text, let r = Range(range, in: oldText) else {
+//                return true
+//            }
+//            var updatedText = oldText.replacingCharacters(in: r, with: string)
+//            
+//            if string == "" {
+//                if updatedText.count == 2 {
+//                    textField.text = "\(updatedText.prefix(1))"
+//                    return false
+//                }
+//            } else if updatedText.count == 1 {
+////                if Int(updatedText) ?? 0 > 1 {
+////                    return false
+////                }
+//        
+//                if Int(updatedText) ?? 0 < 10 {
+//                    textField.text = "0" + textField.text!
+//                    updatedText = textField.text!
+//                }
+//            } else if updatedText.count == 2 {
+//                if updatedText <= "12" { //Prevent user to not enter month more than 12
+//                    textField.text = "\(updatedText)/" //This will add "/" when user enters 2nd digit of month
+//                }
+//                return false
+//            } else if updatedText.count == 5 {
+//                self.expDateValidation(dateStr: updatedText)
+//            } else if updatedText.count > 5 {
+//                return false
+//            }
+//            
+//            return true
         case cvvField.textfield:
             guard let preText = textField.text as NSString?,
                 preText.replacingCharacters(in: range, with: string).count <= 4 else {
