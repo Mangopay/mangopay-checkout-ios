@@ -27,4 +27,9 @@
 * Updated Demo Project, streamlined it to be easily inferable.
 
 
+## 1.1.1 (2024-07-08)
+
+### Improvements
+
+* Made card expiry field more intuitive
 
