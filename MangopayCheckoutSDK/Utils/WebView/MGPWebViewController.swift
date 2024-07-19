@@ -115,38 +115,6 @@ extension MGPWebViewController: WKNavigationDelegate {
         
         _3dsResult.nethoneAttemptReference = nethoneAttemptReference
         self.handleDismiss(_3dsResult: _3dsResult)
-
-//        Task {
-//            
-//            do {
-//                let regResponse = try await PaymentCoreClient(
-//                    env: .t3
-//                ).getPayIn(
-//                    clientId: MangopayCheckoutSDK.clientId,
-//                    apiKey: MangopayCheckoutSDK.apiKey,
-//                    payInId: _3dsResult.id
-//                )
-//  
-//                _3dsResult = _3DSResult(
-//                    type: .cardDirect,
-//                    status: .SUCCEEDED,
-//                    id: _3dsResult.id,
-//                    nethoneAttemptReference: nethoneAttemptReference
-//                )
-//                self.handleDismiss(_3dsResult: _3dsResult)
-//
-//            } catch {
-//                print("❌ getPayIn Error ")
-//                _3dsResult = _3DSResult(
-//                    type: .cardDirect,
-//                    status: .FAILED,
-//                    id: _3dsResult.id,
-//                    nethoneAttemptReference: nethoneAttemptReference
-//                )
-//                self.handleDismiss(_3dsResult: _3dsResult)
-//            }
-//            
-//        }
     }
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
