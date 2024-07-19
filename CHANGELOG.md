@@ -33,3 +33,8 @@
 
 * Made card expiry field more intuitive
 
+## 1.1.2 (2024-07-19)
+
+### Improvements
+
+* More improvement to UX of expiry card field
