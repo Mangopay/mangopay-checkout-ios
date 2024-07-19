@@ -307,7 +307,7 @@ public class MGPPaymentForm: UIView, FormValidatable {
     
     private func formatExpiryDate(_ text: String) -> String {
         var cleanedText = text.replacingOccurrences(of: "/", with: "")
- 
+         
         if cleanedText.isEmpty {
             return ""
         }
@@ -321,7 +321,16 @@ public class MGPPaymentForm: UIView, FormValidatable {
                 cleanedText = "0" + cleanedText
             }
          }
-        
+       
+        if cleanedText.count == 2 {
+            let firstDigit = cleanedText.first
+            let secondDigit = cleanedText[cleanedText.index(cleanedText.startIndex, offsetBy: 1)]
+
+            if let digit = secondDigit.wholeNumberValue, digit > 2 && digit < 10  && firstDigit?.wholeNumberValue == 1 {
+                cleanedText.replaceSubrange(cleanedText.startIndex...cleanedText.startIndex, with: "0\(cleanedText.first!)")
+            }
+        }
+
         if cleanedText.count > 2 {
             let index = cleanedText.index(cleanedText.startIndex, offsetBy: 2)
             cleanedText.insert("/", at: index)

@@ -5,13 +5,19 @@
 	<key>NSPrivacyAccessedAPITypes</key>
 	<array>
 		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
 			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
-				<string>35F9.1</string>
+				<string>CA92.1</string>
 			</array>
+		</dict>
+		<dict>
 			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
-				<string></string>
+				<string>DDA9.1</string>
 			</array>
 		</dict>
 	</array>
