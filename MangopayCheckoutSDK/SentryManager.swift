@@ -56,8 +56,17 @@ final public class SentryManager {
         }
     }
 
-    static func log(name: MGPEvent, metadata: [String: String]? = nil) {
-        SentrySDK.capture(message: name.rawValue)
+    static func log(
+        name: MGPEvent,
+        metadata: [String: String]? = nil,
+        tags: [String: String]? = nil
+    ) {
+        SentrySDK.capture(message: name.rawValue) { scope in
+            guard let _tags = tags else { return }
+            for (key, value) in _tags {
+                scope.setTag(value: value, key: key)
+            }
+        }
 
         if let _data = metadata {
             let crumb = Breadcrumb()
