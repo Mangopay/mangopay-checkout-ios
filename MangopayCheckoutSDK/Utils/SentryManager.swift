@@ -39,11 +39,11 @@ final public class SentryManager {
             switch environment {
             case .sandbox, .t3:
                 options.dsn = Constants.sentryDev
-                options.releaseName = "1.1.2"
+                options.releaseName = "1.1.3"
                 options.environment = "dev"
             case .production:
                 options.dsn  = Constants.sentryProd
-                options.releaseName = "1.1.2"
+                options.releaseName = "1.1.3"
                 options.environment = "production"
             }
 
