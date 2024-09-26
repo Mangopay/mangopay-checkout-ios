@@ -39,11 +39,11 @@ final public class SentryManager {
             switch environment {
             case .sandbox, .t3:
                 options.dsn = Constants.sentryDev
-                options.releaseName = "1.1.2"
+                options.releaseName = "1.1.3"
                 options.environment = "dev"
             case .production:
                 options.dsn  = Constants.sentryProd
-                options.releaseName = "1.1.2"
+                options.releaseName = "1.1.3"
                 options.environment = "production"
             }
 
@@ -56,8 +56,17 @@ final public class SentryManager {
         }
     }
 
-    static func log(name: MGPEvent, metadata: [String: String]? = nil) {
-        SentrySDK.capture(message: name.rawValue)
+    static func log(
+        name: MGPEvent,
+        metadata: [String: String]? = nil,
+        tags: [String: String]? = nil
+    ) {
+        SentrySDK.capture(message: name.rawValue) { scope in
+            guard let _tags = tags else { return }
+            for (key, value) in _tags {
+                scope.setTag(value: value, key: key)
+            }
+        }
 
         if let _data = metadata {
             let crumb = Breadcrumb()

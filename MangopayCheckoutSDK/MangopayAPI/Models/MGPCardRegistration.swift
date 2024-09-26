@@ -44,7 +44,7 @@ public struct MGPCardRegistration: Codable {
     public var accessKey, preregistrationData, registrationData, cardID: String?
     public var cardType: String?
     public var cardRegistrationURLStr: String?
-    public var currency, status: String?
+    public var currency, status, resultCode: String?
     
     public var registrationURL: URL? {
         guard let urlStr = cardRegistrationURLStr else { return nil }
@@ -64,11 +64,12 @@ public struct MGPCardRegistration: Codable {
             cardType: self.cardType,
             cardRegistrationURLStr: self.cardRegistrationURLStr,
             currency: self.currency,
-            status: self.status
+            status: self.status,
+            resultCode: self.resultCode
         )
     }
 
-    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, userID: String? = nil, accessKey: String? = nil, preregistrationData: String? = nil, registrationData: String? = nil, cardID: String? = nil, cardType: String? = nil, cardRegistrationURLStr: String? = nil, currency: String? = nil, status: String? = nil) {
+    public init(id: String? = nil, tag: String? = nil, creationDate: Int? = nil, userID: String? = nil, accessKey: String? = nil, preregistrationData: String? = nil, registrationData: String? = nil, cardID: String? = nil, cardType: String? = nil, cardRegistrationURLStr: String? = nil, currency: String? = nil, status: String? = nil, resultCode: String? = nil) {
         self.id = id
         self.tag = tag
         self.creationDate = creationDate
@@ -81,6 +82,7 @@ public struct MGPCardRegistration: Codable {
         self.cardRegistrationURLStr = cardRegistrationURLStr
         self.currency = currency
         self.status = status
+        self.resultCode = resultCode
     }
 
     enum CodingKeys: String, CodingKey {
@@ -96,6 +98,7 @@ public struct MGPCardRegistration: Codable {
         case cardRegistrationURLStr = "CardRegistrationURL"
         case currency = "Currency"
         case status = "Status"
+        case resultCode = "ResultCode"
     }
 }
 
@@ -114,7 +117,8 @@ extension CardRegistration {
             cardType: self.cardType,
             cardRegistrationURLStr: self.cardRegistrationURLStr,
             currency: self.currency,
-            status: self.status
+            status: self.status,
+            resultCode: self.resultCode
         )
     }
 }

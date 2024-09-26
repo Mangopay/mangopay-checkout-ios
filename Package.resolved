@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "mangopay-ios-vault-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7c21340bf7c5bf8ab78e124a1e0a84944b2502e2"
+      }
+    },
+    {
+      "identity" : "paypal-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/paypal/paypal-ios/",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1eb22f17fe1244d0674c1b5d3552caa97214e9dc"
+      }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa",
+      "state" : {
+        "revision" : "5575af93efb776414f243e93d6af9f6258dc539a",
+        "version" : "8.36.0"
+      }
+    }
+  ],
+  "version" : 2
+}
