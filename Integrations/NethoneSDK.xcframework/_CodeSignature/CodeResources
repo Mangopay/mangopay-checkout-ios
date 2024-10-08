@@ -6,11 +6,11 @@
 	<dict>
 		<key>LICENSE</key>
 		<data>
-		TP+6n1H8xUpPbVXee0+s6/VLf1w=
+		5gu+bzEOAGeRTBlr1mvIrR4VVfI=
 		</data>
 		<key>THIRD-PARTY-NOTICES</key>
 		<data>
-		1RhJUxZ1ndJGwoKvW1VpvtqbLn8=
+		eLLgG6BmBlP8b87nszPqNaWJQ6I=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Headers/NTHApiError.h</key>
 		<data>
@@ -18,27 +18,31 @@
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Headers/NTHNethone.h</key>
 		<data>
-		O9k897uG13SJTorkd3pQM7S3Oes=
+		6Jx0oceP3SqlG8xyAif0RgPgBJU=
+		</data>
+		<key>ios-arm64/NethoneSDK.framework/Headers/NTHTextFieldRegisterMode.h</key>
+		<data>
+		FxGSyEVxbTigYEo1YPlPCMd6Z8Y=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Headers/NethoneSDK-Swift.h</key>
 		<data>
-		iwPm+Bl5p6duTyOKZo5d1eFhXGw=
+		idM/aHH64Qnscz2sFGPeZbB1H6I=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Headers/NethoneSDK.h</key>
 		<data>
-		XhcSl57KkkRjqNvG4V53MGw8RLA=
+		onV0uJWcZZiGtI9Do3oJRLpzmkY=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Info.plist</key>
 		<data>
-		uGZy5ZI8TmQAlUNBDlNOUydMfhM=
+		k148PKHQwDUMg8QteYlKYCTrZPE=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		QDo0mKUlg6PX3hDf5hmfQysyT2M=
+		ezJjR3YDjZyEwtHs2XOIU7FO31M=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		FNMc4hr0DHREtYYt8mSbqsCEgI4=
+		O81IB8e5SxFj1ceKw1CLVAfeXeE=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -46,7 +50,7 @@
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		FNMc4hr0DHREtYYt8mSbqsCEgI4=
+		O81IB8e5SxFj1ceKw1CLVAfeXeE=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/Modules/module.modulemap</key>
 		<data>
@@ -54,7 +58,7 @@
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/NethoneSDK</key>
 		<data>
-		piYMmmkC4L2XeWd9TtuFAkDwW+M=
+		oSWE8DXYbcz1DI1t55S/0H1xAB8=
 		</data>
 		<key>ios-arm64/NethoneSDK.framework/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -66,27 +70,31 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Headers/NTHNethone.h</key>
 		<data>
-		O9k897uG13SJTorkd3pQM7S3Oes=
+		6Jx0oceP3SqlG8xyAif0RgPgBJU=
+		</data>
+		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Headers/NTHTextFieldRegisterMode.h</key>
+		<data>
+		FxGSyEVxbTigYEo1YPlPCMd6Z8Y=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Headers/NethoneSDK-Swift.h</key>
 		<data>
-		RikTT2WLOx3+as4Ln2Hyqa3xQFs=
+		YGIBsGN/k+YEqWzIZXGh/WgGaVw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Headers/NethoneSDK.h</key>
 		<data>
-		XhcSl57KkkRjqNvG4V53MGw8RLA=
+		onV0uJWcZZiGtI9Do3oJRLpzmkY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Info.plist</key>
 		<data>
-		lnKDcFFguPNZnO5g9pbLFIyvzYs=
+		8nQtbFtN4Mpbvp7xgG3QoT6MleQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		QDo0mKUlg6PX3hDf5hmfQysyT2M=
+		ezJjR3YDjZyEwtHs2XOIU7FO31M=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		FspSIS97iB7qgdQO39Lpe4zZMtk=
+		J1koDV3hOEu+YE4I9BLJZRX3l/w=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -94,15 +102,15 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		FspSIS97iB7qgdQO39Lpe4zZMtk=
+		J1koDV3hOEu+YE4I9BLJZRX3l/w=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		QDo0mKUlg6PX3hDf5hmfQysyT2M=
+		ezJjR3YDjZyEwtHs2XOIU7FO31M=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		2LLaTBU3EeqaE0aUoG2KtsCWwfQ=
+		W4AmlgXSRPgiROHE/iLTv1RqF4o=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -110,7 +118,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		2LLaTBU3EeqaE0aUoG2KtsCWwfQ=
+		W4AmlgXSRPgiROHE/iLTv1RqF4o=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/module.modulemap</key>
 		<data>
@@ -118,7 +126,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/NethoneSDK</key>
 		<data>
-		IQiBZhEhlkhnOc17TtwxXk9A1W4=
+		5KcZK720Pn8s/KvKHGOvOTLvsvk=
 		</data>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -131,22 +139,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TP+6n1H8xUpPbVXee0+s6/VLf1w=
+			5gu+bzEOAGeRTBlr1mvIrR4VVfI=
 			</data>
 			<key>hash2</key>
 			<data>
-			6ILRmPvYfl7paWWpU8AdoMqaUeKpTTAJwTJ04ROg7G0=
+			xvnbQ0/ZaqnujO7XMShq++vWPUUq8DVanQ4GREJpz3g=
 			</data>
 		</dict>
 		<key>THIRD-PARTY-NOTICES</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1RhJUxZ1ndJGwoKvW1VpvtqbLn8=
+			eLLgG6BmBlP8b87nszPqNaWJQ6I=
 			</data>
 			<key>hash2</key>
 			<data>
-			Vla9FSZlt3CIfg0fYdiJDsMj7UdbzjOcbq+0Xe6Va6k=
+			KUnndJpT7O1mT1HPM57QS0969MlVOaIpkhmJvsv7e+g=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/Headers/NTHApiError.h</key>
@@ -164,66 +172,77 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			O9k897uG13SJTorkd3pQM7S3Oes=
+			6Jx0oceP3SqlG8xyAif0RgPgBJU=
 			</data>
 			<key>hash2</key>
 			<data>
-			4x3Fr57XAKOWOXgho19/n/3C3Adl68PZyL5hSd8KBeA=
+			nTwFRdKQDWGbg6I799xXUZgoyWthejtbemrWsMLLt+A=
+			</data>
+		</dict>
+		<key>ios-arm64/NethoneSDK.framework/Headers/NTHTextFieldRegisterMode.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			FxGSyEVxbTigYEo1YPlPCMd6Z8Y=
+			</data>
+			<key>hash2</key>
+			<data>
+			wSoO0KP3s/zHLB6Fiad+kzE3Ie3tj4Cq3lb3W6TzCck=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/Headers/NethoneSDK-Swift.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			iwPm+Bl5p6duTyOKZo5d1eFhXGw=
+			idM/aHH64Qnscz2sFGPeZbB1H6I=
 			</data>
 			<key>hash2</key>
 			<data>
-			sJAJdq/JAzTESaIyav1Vw8p1Rv5aU03tz6cBEK0Hdpg=
+			xQCqDzPBTJ5bhNcKbuxRS9D/PbXqVnJwd6lVE46HgjU=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/Headers/NethoneSDK.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			XhcSl57KkkRjqNvG4V53MGw8RLA=
+			onV0uJWcZZiGtI9Do3oJRLpzmkY=
 			</data>
 			<key>hash2</key>
 			<data>
-			IYmPk6xHMo7TSQFp79pzNuSFw+WdDee5k60w15rorQQ=
+			HCVZjGV8uv+iYgPMtDnSo3TCL7aoAb24wTFyL5gJpsc=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			uGZy5ZI8TmQAlUNBDlNOUydMfhM=
+			k148PKHQwDUMg8QteYlKYCTrZPE=
 			</data>
 			<key>hash2</key>
 			<data>
-			XEU8+9YMU0lkmtR6FaqSWRKUzDlMHBdstsF2Y36e2YI=
+			yAz/hMwP/RU9on5UyRJs+bKJtnielTnPFeGU4Tjry9g=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QDo0mKUlg6PX3hDf5hmfQysyT2M=
+			ezJjR3YDjZyEwtHs2XOIU7FO31M=
 			</data>
 			<key>hash2</key>
 			<data>
-			TJyKC6xOv2EGPXjpqwBgt+5xJGGx0CX1ttvqLXfpZNY=
+			BLHc2ofhYXvK4ZSbXacsuBRwbcq+c9P4+O5e1vrmt1U=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FNMc4hr0DHREtYYt8mSbqsCEgI4=
+			O81IB8e5SxFj1ceKw1CLVAfeXeE=
 			</data>
 			<key>hash2</key>
 			<data>
-			ykhJKYTpLAaj9onHJ79WUx+/zoh0XyLHH7rD32DwKVo=
+			iz2UJh1dGtIIb8bPZxf6oDrphXl89Uax+jkFZo7bKZ0=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -241,11 +260,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FNMc4hr0DHREtYYt8mSbqsCEgI4=
+			O81IB8e5SxFj1ceKw1CLVAfeXeE=
 			</data>
 			<key>hash2</key>
 			<data>
-			ykhJKYTpLAaj9onHJ79WUx+/zoh0XyLHH7rD32DwKVo=
+			iz2UJh1dGtIIb8bPZxf6oDrphXl89Uax+jkFZo7bKZ0=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/Modules/module.modulemap</key>
@@ -263,11 +282,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			piYMmmkC4L2XeWd9TtuFAkDwW+M=
+			oSWE8DXYbcz1DI1t55S/0H1xAB8=
 			</data>
 			<key>hash2</key>
 			<data>
-			eZPmb8CgsmSRIKvtQfAIuIQyiQeohcUXDWNJ5iUmgC4=
+			AC3xBPGcPBf3YDsOE19xB26y1lco08/YSfpyB8cgBOI=
 			</data>
 		</dict>
 		<key>ios-arm64/NethoneSDK.framework/PrivacyInfo.xcprivacy</key>
@@ -296,66 +315,77 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			O9k897uG13SJTorkd3pQM7S3Oes=
+			6Jx0oceP3SqlG8xyAif0RgPgBJU=
 			</data>
 			<key>hash2</key>
 			<data>
-			4x3Fr57XAKOWOXgho19/n/3C3Adl68PZyL5hSd8KBeA=
+			nTwFRdKQDWGbg6I799xXUZgoyWthejtbemrWsMLLt+A=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Headers/NTHTextFieldRegisterMode.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			FxGSyEVxbTigYEo1YPlPCMd6Z8Y=
+			</data>
+			<key>hash2</key>
+			<data>
+			wSoO0KP3s/zHLB6Fiad+kzE3Ie3tj4Cq3lb3W6TzCck=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Headers/NethoneSDK-Swift.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			RikTT2WLOx3+as4Ln2Hyqa3xQFs=
+			YGIBsGN/k+YEqWzIZXGh/WgGaVw=
 			</data>
 			<key>hash2</key>
 			<data>
-			VoBCOPxXZdGfO6wbCPN2hqDH4YJOBo2pJycIUT/idTg=
+			BbR7VKmjEpht8gIM2aNYXOA2+Qis/rgmMXcMbs6HfkI=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Headers/NethoneSDK.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			XhcSl57KkkRjqNvG4V53MGw8RLA=
+			onV0uJWcZZiGtI9Do3oJRLpzmkY=
 			</data>
 			<key>hash2</key>
 			<data>
-			IYmPk6xHMo7TSQFp79pzNuSFw+WdDee5k60w15rorQQ=
+			HCVZjGV8uv+iYgPMtDnSo3TCL7aoAb24wTFyL5gJpsc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			lnKDcFFguPNZnO5g9pbLFIyvzYs=
+			8nQtbFtN4Mpbvp7xgG3QoT6MleQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			G65NHbvneVlh/L5TQybXPd/WbdCems6P+jvonV/MHk8=
+			l1ytRZAVaOvEQcVS7aq8mmY/ScUFaKBxheGJjxS/RhE=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QDo0mKUlg6PX3hDf5hmfQysyT2M=
+			ezJjR3YDjZyEwtHs2XOIU7FO31M=
 			</data>
 			<key>hash2</key>
 			<data>
-			TJyKC6xOv2EGPXjpqwBgt+5xJGGx0CX1ttvqLXfpZNY=
+			BLHc2ofhYXvK4ZSbXacsuBRwbcq+c9P4+O5e1vrmt1U=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FspSIS97iB7qgdQO39Lpe4zZMtk=
+			J1koDV3hOEu+YE4I9BLJZRX3l/w=
 			</data>
 			<key>hash2</key>
 			<data>
-			96xKpX14t0qnQBFrBsTjnNNESpojWouPHBGKb9Gnyng=
+			kk2McFRampg9nuBa8LDQ8TSWlGWSvm/NLxzBGnQMYNg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -373,33 +403,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FspSIS97iB7qgdQO39Lpe4zZMtk=
+			J1koDV3hOEu+YE4I9BLJZRX3l/w=
 			</data>
 			<key>hash2</key>
 			<data>
-			96xKpX14t0qnQBFrBsTjnNNESpojWouPHBGKb9Gnyng=
+			kk2McFRampg9nuBa8LDQ8TSWlGWSvm/NLxzBGnQMYNg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QDo0mKUlg6PX3hDf5hmfQysyT2M=
+			ezJjR3YDjZyEwtHs2XOIU7FO31M=
 			</data>
 			<key>hash2</key>
 			<data>
-			TJyKC6xOv2EGPXjpqwBgt+5xJGGx0CX1ttvqLXfpZNY=
+			BLHc2ofhYXvK4ZSbXacsuBRwbcq+c9P4+O5e1vrmt1U=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2LLaTBU3EeqaE0aUoG2KtsCWwfQ=
+			W4AmlgXSRPgiROHE/iLTv1RqF4o=
 			</data>
 			<key>hash2</key>
 			<data>
-			yE1qmBpNPuLP5+cytqHWx8bF0MFNTnD3HJddID2FCKc=
+			x6wY3P9GMH8tlFQFkNXtRCx70EwMUohTHuXSQ7Qhv7Y=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/NethoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -417,11 +447,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			2LLaTBU3EeqaE0aUoG2KtsCWwfQ=
+			W4AmlgXSRPgiROHE/iLTv1RqF4o=
 			</data>
 			<key>hash2</key>
 			<data>
-			yE1qmBpNPuLP5+cytqHWx8bF0MFNTnD3HJddID2FCKc=
+			x6wY3P9GMH8tlFQFkNXtRCx70EwMUohTHuXSQ7Qhv7Y=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/Modules/module.modulemap</key>
@@ -439,11 +469,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			IQiBZhEhlkhnOc17TtwxXk9A1W4=
+			5KcZK720Pn8s/KvKHGOvOTLvsvk=
 			</data>
 			<key>hash2</key>
 			<data>
-			iSJY5IC0fCy/QNUCrirm86P77euZ9jpqMcTFhd5E8qA=
+			aXBI8UWllnLQosCEfBr+7L8VW6cGgmGrR0LvX9N5Rck=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/NethoneSDK.framework/PrivacyInfo.xcprivacy</key>
