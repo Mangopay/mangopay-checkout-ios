@@ -41,12 +41,6 @@ let package = Package(
                 .process("Resources/Images")
             ]
         ),
-        .target(
-            name: "NethoneSDK",
-            dependencies: [
-                .product(name: "NethoneSDK", package: "Nethone.NethoneSDK")
-            ]
-        ),
         .testTarget(
             name: "Tests",
             dependencies: [
