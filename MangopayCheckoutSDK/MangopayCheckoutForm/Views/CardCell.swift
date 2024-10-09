@@ -14,9 +14,9 @@ class CardCell: UICollectionViewCell {
 
     lazy var cardImage = IconImage.create(
         iconName: "dropDownIcon",
-        iconHeight: 20,
-        iconWidth: 40,
-        contentMode: .center
+        iconHeight: 24,
+        iconWidth: 32,
+        contentMode: .scaleAspectFit
     )
 
     var topconstriant: NSLayoutConstraint!
@@ -37,7 +37,7 @@ class CardCell: UICollectionViewCell {
         cardImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 4).isActive = true
         cardImage.rightAnchor.constraint(equalTo: rightAnchor, constant: -4).isActive = true
         cardImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-        layer.cornerRadius = 4
+        
         cardImage.clipsToBounds = true
         self.clipsToBounds = true
     }
@@ -45,15 +45,9 @@ class CardCell: UICollectionViewCell {
  
     func configure(with card: CardType) {
         cardImage.image = card.icon
-        if card == .maestro {
-//            topconstriant.constant += 4  
-            cardImage.contentMode = .scaleAspectFit
-        }
 
         if card == .cb {
-//            topconstriant.constant += 4
-//            cardImage.contentMode = .scaleAspectFi÷t
-            cardImage.layer.cornerRadius = 8
+            cardImage.contentMode = .scaleAspectFill
         }
     }
 
