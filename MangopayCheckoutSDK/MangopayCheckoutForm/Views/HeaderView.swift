@@ -31,12 +31,12 @@ class HeaderView: UIView {
         cv.register(CardCell.self, forCellWithReuseIdentifier: CardCell.id)
         cv.dataSource = self
         cv.delegate = self
-        cv.contentInset = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
+        cv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
         return cv
     }()
 
     private lazy var vStack = UIStackView.create(
-        spacing: 4,
+        spacing: 10,
         axis: .vertical,
         alignment: .fill,
         distribution: .fill,
@@ -106,10 +106,7 @@ extension HeaderView: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let card = viewModel.card(at: indexPath.row)
-        if card == .maestro {
-            return CGSize(width: 40, height: 19)
-        }
-        return CGSize(width: 48, height: 28)
+        return CGSize(width: 40, height: 20)
     }
 
 
