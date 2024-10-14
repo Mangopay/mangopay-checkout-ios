@@ -4,13 +4,17 @@
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import CoreMedia
 import Foundation
+import LocalAuthentication
 import MachO
 @_exported import NethoneSDK
 import Swift
-import UIKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@_inheritsConvenienceInitializers @objc(NTHProxySnifferProviderFactory) public class ProxySnifferProviderFactory : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
 @_inheritsConvenienceInitializers @objc public class NethoneSDKResources : ObjectiveC.NSObject {
   @objc public class var bundle: Foundation.Bundle {
     @objc get
