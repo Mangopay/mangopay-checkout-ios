@@ -1,4 +1,4 @@
-// swift-tools-version: 5.8
+// swift-tools-version: 5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -39,6 +39,12 @@ let package = Package(
             resources: [
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
+            ]
+        ),
+        .target(
+            name: "NethoneSDK",
+            dependencies: [
+                .product(name: "NethoneSDK", package: "Nethone.NethoneSDK")
             ]
         ),
         .testTarget(
