@@ -1,0 +1,12 @@
+{
+  "authentication" : {
+
+  },
+  "registries" : {
+    "[default]" : {
+      "supportsAvailability" : false,
+      "url" : "https://nethone.jfrog.io/artifactory/api/swift/nethonesdk-ios-mangopay-spm"
+    }
+  },
+  "version" : 1
+}

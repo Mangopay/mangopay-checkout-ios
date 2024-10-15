@@ -40,7 +40,7 @@ source 'https://gitlab.com/mangopay/dev/checkout-ios-sdk'
 
 ## Initialize the SDK
 
-Initialize the SDK with your `ClientId` , `NethoneMerchantIdand`and select your environment (Sandbox or Production). 
+Initialize the SDK with your `ClientId` , `NethoneMerchantId` and select your environment (Sandbox or Production). 
 
 <aside>
 🚨 The Initialization should only be done once for an instance of the application, We recommend putting this inside the `AppDelegate` class
