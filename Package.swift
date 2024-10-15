@@ -1,4 +1,4 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 5.8
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -13,14 +13,13 @@ let package = Package(
     products: [
         .library(
             name: "MangopayCheckoutSDK",
-            targets: ["MangopayCheckoutSDK", "NethoneSDK"])
+            targets: ["MangopayCheckoutSDK"])
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "main"),
-        .package(
-            url: "https://github.com/paypal/paypal-ios/", branch: "main"),
-        .package(url: "https://github.com/getsentry/sentry-cocoa", from: "8.22.2")
+        .package(url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "main"),
+        .package(url: "https://github.com/paypal/paypal-ios/", branch: "main"),
+        .package(url: "https://github.com/getsentry/sentry-cocoa", from: "8.22.2"),
+        .package(id: "Nethone.NethoneSDK", from: "2.16.0")
     ],
     targets: [
         .target(
@@ -29,6 +28,7 @@ let package = Package(
                 .product(name: "MangopayVaultSDK", package: "mangopay-ios-vault-sdk"),
                 .product(name: "PaymentButtons", package: "paypal-ios"),
                 .product(name: "Sentry", package: "sentry-cocoa"),
+                .product(name: "NethoneSDK", package: "Nethone.NethoneSDK")
             ],
             path: "MangopayCheckoutSDK",
             exclude: [
@@ -40,10 +40,6 @@ let package = Package(
                 .copy("Resources/countrylistdata.json"),
                 .process("Resources/Images")
             ]
-        ),
-        .binaryTarget(
-            name: "NethoneSDK",
-            path: "Integrations/NethoneSDK.xcframework"
         ),
         .testTarget(
             name: "Tests",

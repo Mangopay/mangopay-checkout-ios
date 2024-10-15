@@ -1,30 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "iqkeyboardmanager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "f137f7ffc158c09582574d0abf1ffaf6108ad88e"
-      }
-    },
-    {
       "identity" : "mangopay-ios-vault-sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
       "state" : {
         "branch" : "main",
-        "revision" : "ce8a8a8b71286377afcbe8d076c8074b9f21a33f"
-      }
-    },
-    {
-      "identity" : "netfox",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kasketis/netfox",
-      "state" : {
-        "branch" : "develop",
-        "revision" : "150d41ac4e3b49d80bc5508c5c6895ca057e5d8e"
+        "revision" : "7c21340bf7c5bf8ab78e124a1e0a84944b2502e2"
       }
     },
     {
@@ -41,7 +23,7 @@
       "location" : "https://github.com/paypal/paypal-ios/",
       "state" : {
         "branch" : "main",
-        "revision" : "c504258ea110c112ac6a3b39cd79926b2ff5fefa"
+        "revision" : "1eb22f17fe1244d0674c1b5d3552caa97214e9dc"
       }
     },
     {
@@ -49,8 +31,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getsentry/sentry-cocoa",
       "state" : {
-        "revision" : "56157a1aea8c49a1050c1845033089bf813ea3c5",
-        "version" : "8.22.2"
+        "revision" : "5575af93efb776414f243e93d6af9f6258dc539a",
+        "version" : "8.36.0"
       }
     }
   ],
