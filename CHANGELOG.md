@@ -43,7 +43,7 @@
 
 ### Improvements
 
-* Added tags to sentry logs to enhnace easy classification.
+* Added tags to sentry logs to enhance easy classification.
 
 * Ensured consistent sizing for all card icons.
 
