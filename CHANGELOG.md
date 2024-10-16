@@ -38,3 +38,13 @@
 ### Improvements
 
 * More improvement to UX of expiry card field
+
+##1.1.3 (2024-10-14)
+
+### Improvements
+
+* Added tags to sentry logs to enhance easy classification.
+
+* Ensured consistent sizing for all card icons.
+
+* Migrated & updated NethoneSDk from xcframework to SPM package.
