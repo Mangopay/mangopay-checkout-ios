@@ -248,12 +248,29 @@ class PaymentFormView: UIView {
             )
         } else {
             Task {
+                SentryManager.log(name: .CARD_REGISTRATION_STARTED)
                 if let cardReg = await callback.onCreateCardRegistration?(self.paymentForm.cardData) {
+                    
+                    SentryManager.log(
+                        name: .CARD_REGISTRATION_COMPLETED,
+                        tags: [
+                            "Id": cardReg.id ?? "N/A",
+                            "CardType": cardReg.cardType ?? "N/A",
+                            "CardId": cardReg.cardID ?? "N/A",
+                            "Currency": cardReg.currency ?? "N/A",
+                            "ResultCode": cardReg.resultCode ?? "N?A",
+                            "Status": cardReg.status ?? "N/A"
+                            
+                        ]
+                    )
+    
                     self.viewModel.tokenizeCard(
                         form: self.paymentForm,
                         cardRegistration: cardReg,
                         callback: self.callback
                     )
+                } else {
+                    SentryManager.log(name: .CARD_REGISTRATION_FAILED)
                 }
             }
         }
