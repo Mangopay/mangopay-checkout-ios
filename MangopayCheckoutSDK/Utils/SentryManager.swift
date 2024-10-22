@@ -11,20 +11,22 @@ import Sentry
 
 enum MGPEvent: String {
     case SDK_INITIALIZED
-    case PAYMENT_METHOD_SELECTED
-    case THREE_AUTH_REQ = "3DS_AUTHENTICATION_REQUESTED"
-    case THREE_AUTH_COMPLETED = "3DS_AUTHENTICATION_COMPLETED"
-    case THREE_AUTH_FAILED = "3DS_AUTHENTICATION_FAILED"
-    case PAYMENT_COMPLETED = "PAYMENT_COMPLETED"
-    case PAYMENT_FAILED = "PAYMENT_FAILED"
-    case PAYMENT_CANCELLED = "PAYMENT_CANCELLED"
-    case PAYMENT_ERRORED = "PAYMENT_ERRORED"
-    case NETHONE_PROFILER_INIT = "NETHONE_PROFILER_INIT"
-    case CARD_REGISTRATION_STARTED = "CARD_REGISTRATION_STARTED"
-    case CARD_REGISTRATION_COMPLETED = "CARD_REGISTRATION_COMPLETED"
-    case CARD_REGISTRATION_FAILED = "CARD_REGISTRATION_FAILED"
-    case APPLEPAY_INITIALIZED = "APPLEPAY_INITIALIZED"
-    case PAYMENT_METHODS_RENDERED = "PAYMENT_METHODS_RENDERED"
+    case PAYMENT_METHOD_SELECTED = "Payment method selected"
+    case THREE_AUTH_REQ = "3DS Authentication requested"
+    case THREE_AUTH_COMPLETED = "3DS Authentication completed"
+    case THREE_AUTH_FAILED = "3DS Authorization failed"
+    case PAYMENT_COMPLETED = "Payment completed"
+    case PAYMENT_FAILED = "Payment failed"
+    case PAYMENT_CANCELLED = "Payment canceled"
+    case PAYMENT_ERRORED = "Payment error"
+    case NETHONE_PROFILER_INIT = "Nethone profiler initialized"
+    case CARD_REGISTRATION_STARTED = "Card registration started"
+    case CARD_REGISTRATION_COMPLETED = "Create card registration completed"
+    case TOKENIZATION_COMPLETED = "Tokenization completed"
+    case TOKENIZATION_FAILED = "Tokenization failed"
+    case CARD_REGISTRATION_FAILED = "Create card registration failed"
+    case APPLEPAY_INITIALIZED = "Apple Pay initialized"
+    case PAYMENT_METHODS_RENDERED = "Payment methods rendered"
 }
 
 
@@ -33,17 +35,18 @@ final public class SentryManager {
     static func initialize(
         environment: MGPEnvironment,
         clientId: String,
-        checkoutReference: String
+        checkoutReference: String,
+        profillingMerchantId: String
     ) {
         SentrySDK.start { options in
             switch environment {
             case .sandbox, .t3:
                 options.dsn = Constants.sentryDev
-                options.releaseName = "1.1.3"
+                options.releaseName = Constants.sdkVersion
                 options.environment = "dev"
             case .production:
                 options.dsn  = Constants.sentryProd
-                options.releaseName = "1.1.3"
+                options.releaseName = Constants.sdkVersion
                 options.environment = "production"
             }
 
@@ -51,8 +54,9 @@ final public class SentryManager {
         }
     
         SentrySDK.configureScope { scope in
-            scope.setTag(value: clientId, key: "clientid")
+            scope.setTag(value: clientId, key: "clientId")
             scope.setTag(value: checkoutReference, key: "checkoutReference")
+            scope.setTag(value: profillingMerchantId, key: "profilingMerchantId")
         }
     }
 

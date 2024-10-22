@@ -326,7 +326,12 @@ class ConfigurationController: UIViewController {
         else { return nil }
         
         let __env = MGPEnvironment(rawValue: env)!
-        MangopayCheckoutSDK.initialize(clientId: clientId, profillingMerchantId: "428242", checkoutRerefence: UUID().uuidString, environment: __env)
+        MangopayCheckoutSDK.initialize(
+            clientId: clientId,
+            profillingMerchantId: "428242",
+            checkoutRerefence: UUID().uuidString,
+            environment: __env
+        )
 
 
         var cardFlowType: _3DSTransactionType?
