@@ -28,14 +28,6 @@
       }
     },
     {
-      "identity" : "Nethone.NethoneSDK",
-      "kind" : "registry",
-      "location" : "",
-      "state" : {
-        "version" : "2.16.0"
-      }
-    },
-    {
       "identity" : "paypal-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/paypal/paypal-ios/",
