@@ -1,4 +1,5 @@
 {
+  "originHash" : "b86f0a7203a1094329debea3650a5be073d1acd015e6e55bd40b5668c80d01da",
   "pins" : [
     {
       "identity" : "iqkeyboardmanager",
@@ -14,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
       "state" : {
-        "branch" : "main",
-        "revision" : "ce8a8a8b71286377afcbe8d076c8074b9f21a33f"
+        "revision" : "ce8a8a8b71286377afcbe8d076c8074b9f21a33f",
+        "version" : "1.0.9"
       }
     },
     {
@@ -32,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/paypal/paypal-ios/",
       "state" : {
-        "branch" : "main",
-        "revision" : "c504258ea110c112ac6a3b39cd79926b2ff5fefa"
+        "revision" : "99ed704bd640c480dacd8be01f023c977d244132",
+        "version" : "1.4.0"
       }
     },
     {
@@ -46,5 +47,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

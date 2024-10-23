@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mangopay/mangopay-ios-vault-sdk",
       "state" : {
-        "branch" : "main",
-        "revision" : "ce8a8a8b71286377afcbe8d076c8074b9f21a33f"
+        "revision" : "ce8a8a8b71286377afcbe8d076c8074b9f21a33f",
+        "version" : "1.0.9"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/paypal/paypal-ios/",
       "state" : {
-        "branch" : "main",
-        "revision" : "1eb22f17fe1244d0674c1b5d3552caa97214e9dc"
+        "revision" : "99ed704bd640c480dacd8be01f023c977d244132",
+        "version" : "1.4.0"
       }
     },
     {

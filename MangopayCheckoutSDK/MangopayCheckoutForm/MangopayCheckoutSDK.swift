@@ -8,17 +8,27 @@ public struct MangopayCheckoutSDK {
     public static var apiKey: String!
     static var environment: MGPEnvironment!
 
-    public static func initialize(clientId: String, profillingMerchantId: String, checkoutRerefence: String, environment: MGPEnvironment) {
+    public static func initialize(
+        clientId: String,
+        profillingMerchantId: String,
+        checkoutReference: String,
+        environment: MGPEnvironment
+    ) {
         self.clientId = clientId
         self.environment = environment
 
         SentryManager.initialize(
             environment: environment,
             clientId: clientId,
-            checkoutReference: checkoutRerefence,
+            checkoutReference: checkoutReference,
             profillingMerchantId: profillingMerchantId
         )
-        Tokenizer.initialize(clientId: clientId, checkoutRerefence: checkoutRerefence, environment: environment)
+
+        Tokenizer.initialize(
+            clientId: clientId,
+            checkoutReference: checkoutReference,
+            environment: environment
+        )
 
         SentryManager.log(name: .SDK_INITIALIZED)
         SentryManager.log(name: .NETHONE_PROFILER_INIT)

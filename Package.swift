@@ -17,9 +17,9 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", branch: "main"),
+            url: "https://github.com/Mangopay/mangopay-ios-vault-sdk", from: "1.0.9"),
         .package(
-            url: "https://github.com/paypal/paypal-ios/", branch: "main"),
+            url: "https://github.com/paypal/paypal-ios/", from: "1.4.0"),
         .package(url: "https://github.com/getsentry/sentry-cocoa", from: "8.22.2")
     ],
     targets: [
