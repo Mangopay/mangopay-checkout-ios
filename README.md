@@ -49,7 +49,12 @@ Initialize the SDK with your `ClientId` , `NethoneMerchantId` and select your en
 
 ```swift
 
-MangopayCheckoutSDK.initialize(clientId: "client_id", profillingMerchantId: "profillingMerchant_id", environment: .sandbox)
+        MangopayCheckoutSDK.initialize(
+            clientId: <client_id>,
+            profillingMerchantId: <profillingMerchant_id>,
+            checkoutReference: <checkoutRerefence>,
+            environment: <env>
+        )
 ```
 
 ### Initialization parameters
@@ -58,6 +63,7 @@ MangopayCheckoutSDK.initialize(clientId: "client_id", profillingMerchantId: "pro
 | --- | --- | --- |
 | clientId | String | MGPEnvironment |
 | profillingMerchantId | String | The profilingMerchantId is required to initialize the Checkout SDK, even if you are not subscribed to fraud prevention. Contact Mangopay to obtain your identifier. |
+| checkoutReference | String | An identifier for your checkout session |
 | environment | Environment | Expected backend environment.
 
 Default value: Environment.SANDBOX
@@ -109,7 +115,7 @@ Card Options Configuration Parameters
       let applePayOptions = MGPApplePayOptions(
             amount: 10,
             delegate: self,
-            merchantIdentifier: config.merchantID,
+            merchantIdentifier: <Merchant_ID>,
             merchantCapabilities: .capability3DS,
             currencyCode: "USD",
             countryCode: "US",
@@ -118,7 +124,6 @@ Card Options Configuration Parameters
                 .visa
             ],
             requiredBillingContactFields: [.name],
-            billingContact: contact,
             shippingType: .delivery
          )
 ```
@@ -147,11 +152,11 @@ Paypal Options Configuration Parameters
          onTokenizationCompleted: { tokenizedData in
          
          },
-             onCreateCardRegistration: { cardInfo in
-             },
-             onPaymentCompleted: { attemptReference, result in
+         onCreateCardRegistration: { cardInfo in
          },
-             onCreatePayment: { paymentMethod, attemptReference in
+         onPaymentCompleted: { attemptReference, result in
+         },
+         onCreatePayment: { paymentMethod, attemptReference in
            switch paymentMethod {
              case .card(_):
              //
@@ -159,7 +164,7 @@ Paypal Options Configuration Parameters
              default: return nil
              }
              },
-       onCancel: {
+        onCancel: {
          },
          onError: { error in
          }

@@ -12,16 +12,16 @@ struct Tokenizer {
     
     private static var clientId: String!
     private static var environment: MGPEnvironment!
-    private static var checkoutRerefence: String!
+    private static var checkoutReference: String!
 
     public static func initialize(
         clientId: String,
-        checkoutRerefence: String,
+        checkoutReference: String,
         environment: MGPEnvironment
     ) {
         self.clientId = clientId
         self.environment = environment
-        self.checkoutRerefence = checkoutRerefence
+        self.checkoutReference = checkoutReference
         MangopayVault.initialize(clientId: clientId, environment: environment == .sandbox ? .sandbox : environment == .t3 ? .t3 : .prod)
     }
 
