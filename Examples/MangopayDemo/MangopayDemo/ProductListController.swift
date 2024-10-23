@@ -303,11 +303,7 @@ extension ProductListController: MGPApplePayHandlerDelegate {
     func applePayContext(didCompleteWith status: MGPApplePay.PaymentStatus, error: Error?) {
         switch status {
         case .success(let token):
-//            Loader
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-//                self.showSuccessDialog(title: "🤣 MangoPayApplePay.token", result: token)
-                ResultView.show(title: "MangoPayApplePay.token", result: token)
-//            })
+            ResultView.show(title: "MangoPayApplePay.token", result: token)
         case .error:
             print("❌ MangoPayApplePay.error")
         case .userCancellation: break
