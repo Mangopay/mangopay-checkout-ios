@@ -50,7 +50,7 @@
 * Migrated & updated NethoneSDk from xcframework to SPM package.
 
 
-##1.1.5 (2024-10-23)
+##1.2.5 (2024-10-23)
 
 ### Improvements
 
