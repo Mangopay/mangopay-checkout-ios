@@ -36,7 +36,7 @@ final public class SentryManager {
         environment: MGPEnvironment,
         clientId: String,
         checkoutReference: String,
-        profillingMerchantId: String
+        profilingMerchantId: String
     ) {
         SentrySDK.start { options in
             switch environment {
@@ -56,7 +56,7 @@ final public class SentryManager {
         SentrySDK.configureScope { scope in
             scope.setTag(value: clientId, key: "clientId")
             scope.setTag(value: checkoutReference, key: "checkoutReference")
-            scope.setTag(value: profillingMerchantId, key: "profilingMerchantId")
+            scope.setTag(value: profilingMerchantId, key: "profilingMerchantId")
         }
     }
 

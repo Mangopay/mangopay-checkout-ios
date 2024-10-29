@@ -115,7 +115,7 @@ Card Options Configuration Parameters
       let applePayOptions = MGPApplePayOptions(
             amount: 10,
             delegate: self,
-            merchantIdentifier: <Merchant_ID>,
+            merchantIdentifier: <merchantIdentifier>,
             merchantCapabilities: .capability3DS,
             currencyCode: "USD",
             countryCode: "US",

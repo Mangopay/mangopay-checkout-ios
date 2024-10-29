@@ -10,7 +10,7 @@ public struct MangopayCheckoutSDK {
 
     public static func initialize(
         clientId: String,
-        profillingMerchantId: String,
+        profilingMerchantId: String,
         checkoutReference: String,
         environment: MGPEnvironment
     ) {
@@ -21,7 +21,7 @@ public struct MangopayCheckoutSDK {
             environment: environment,
             clientId: clientId,
             checkoutReference: checkoutReference,
-            profillingMerchantId: profillingMerchantId
+            profilingMerchantId: profilingMerchantId
         )
 
         Tokenizer.initialize(
@@ -41,7 +41,7 @@ public struct MangopayCheckoutSDK {
                 ]
             )
         )
-        NethoneManager.shared.initialize(with: profillingMerchantId)
+        NethoneManager.shared.initialize(with: profilingMerchantId)
     }
 
     public static func tokenizeCard(
