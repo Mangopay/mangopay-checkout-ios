@@ -110,44 +110,7 @@ class DemoPaymentForm: UIViewController {
 
     
     func peformAuthorize(with tokenisedCard: CardRegistration) {
-//        showLoader(true)
-//
-//        let client = PaymentCoreClient(
-//            clientKey: "checkoutsquatest",
-//            apiKey: "7fOfvt3ozv6vkAp1Pahq56hRRXYqJqNXQ4D58v5QCwTocCVWWC",
-//            environment: .sandbox
-//        )
-//
-//        Task {
-//            let authPay = AuthorizePayIn(
-//                tag: tokenisedCard.tag ?? "Random tag",
-//                authorID: "158091557",
-//                creditedUserID: "158091557",
-//                debitedFunds: DebitedFunds(currency: "EUR", amount: 20),
-//                fees: DebitedFunds(currency: "EUR", amount: 2),
-//                creditedWalletID: "159834019",
-//                cardID: tokenisedCard.cardID ?? "" ,
-//                secureModeReturnURL: "https://docs.mangopay.com/please-ignore",
-//                statementDescriptor: "MangoPay",
-//                browserInfo: BrowserInfo(),
-//                ipAddress: "1c10:17fe:65db:25b7:1784:ce36:43ce:c610",
-//                shipping: Ing(firstName: "Elikem", lastName: "Savie", address: Address(addressLine1: "Accra", addressLine2: "Ghana", city: "Accra", region: "Accra", postalCode: "00000", country: "FR")
-//                             )
-//
-//            )
-//            do {
-//                let payIn = try await client.authorizePaymentPayIn(payment: authPay)
-//                print("✅ success", payIn)
-//                self.createdPayIn = payIn
-//                showLoader(false)
-//                self.showAlert(with: payIn.id ?? "", title: "Successfully Authorized Card 🎉")
-//
-//            } catch {
-//                print("❌ error", error)
-//                showLoader(false)
-//                self.showAlert(with: "", title: "❌ Authorized Card Failed")
-//            }
-//        }
+
     }
     
     func peformGetPayIn() {

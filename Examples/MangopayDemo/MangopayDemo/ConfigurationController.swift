@@ -41,11 +41,7 @@ public struct Configuration {
     var sdkMode: SDKProvier
     var env: MGPEnvironment
     var cardFlowType: _3DSTransactionType?
-//    var apiKey: String
     var clientId: String
-//    var authorId: String?
-//    var userId: String
-//    var walletId: String?
     var amount: Double
     var currency: Currency
     var baseurlStr: String
@@ -71,11 +67,7 @@ public struct Configuration {
         sdkMode: SDKProvier,
         env: MGPEnvironment,
         cardFlowType: _3DSTransactionType?,
-//        apiKey: String,
         clientId: String,
-//        authorId: String? = nil,
-//        userId: String,
-//        walletId: String?,
         amount: Double,
         currency: Currency,
         baseurlStr: String
@@ -83,11 +75,7 @@ public struct Configuration {
         self.sdkMode = sdkMode
         self.env = env
         self.cardFlowType = cardFlowType
-//        self.apiKey = apiKey
         self.clientId = clientId
-//        self.authorId = authorId
-//        self.userId = userId
-//        self.walletId = walletId
         self.amount = amount
         self.currency = currency
         self.baseurlStr = baseurlStr
@@ -107,12 +95,7 @@ public struct DataCapsule {
 class ConfigurationController: UIViewController {
 
     lazy var forms: [Validatable] = [
-//        apiKeyField,
-//        clientField,
-//        authorField,
-//        creditedUserField,
-//        creditedWalletField,
-        amountField,
+        amountField
     ]
 
     @IBOutlet weak var activityLoader: UIActivityIndicatorView!
@@ -139,61 +122,6 @@ class ConfigurationController: UIViewController {
         textfieldDelegate: self
     )
 
-//    lazy var apiKeyField = MangoPayTextfield(
-//        placeholderText: "API Key",
-//        returnKeyType: .next,
-//        validationRule: [
-//            .fieldRequired,
-//            .textTooShort
-//        ],
-//        style: PaymentFormStyle(),
-//        textfieldDelegate: self
-//    )
-    
-//    lazy var clientField = MangoPayTextfield(
-//        placeholderText: "Client ID",
-//        returnKeyType: .next,
-//        validationRule: [
-//            .fieldRequired,
-//            .textTooShort
-//        ],
-//        style: PaymentFormStyle(),
-//        textfieldDelegate: self
-//    )
-
-//    lazy var authorField = MangoPayTextfield(
-//        placeholderText: "Author ID",
-//        returnKeyType: .next,
-//        validationRule: [
-//            .fieldRequired,
-//            .textTooShort
-//        ],
-//        style: PaymentFormStyle(),
-//        textfieldDelegate: self
-//    )
-
-//    lazy var creditedUserField = MangoPayTextfield(
-//        placeholderText: "Credited User ID",
-//        returnKeyType: .next,
-//        validationRule: [
-//            .fieldRequired,
-//            .textTooShort
-//        ],
-//        style: PaymentFormStyle(),
-//        textfieldDelegate: self
-//    )
-
-//    lazy var creditedWalletField = MangoPayTextfield(
-//        placeholderText: "Credited Wallet ID",
-//        returnKeyType: .next,
-//        validationRule: [
-//            .fieldRequired,
-//            .textTooShort
-//        ],
-//        style: PaymentFormStyle(),
-//        textfieldDelegate: self
-//    )
-
     lazy var amountField = MangoPayTextfield(
         placeholderText: "Amount - Long Format",
         keyboardType: .decimalPad,
@@ -218,14 +146,8 @@ class ConfigurationController: UIViewController {
         distribution: .fill,
         padding: UIEdgeInsets(top: 8, left: 0, bottom: 32, right: 0),
         views: [
-//            providerTextfield,
             envTextfield,
-//            apiKeyField,
-//            clientField,
             cardFlowField,
-//            authorField,
-//            creditedUserField,
-//            creditedWalletField,
             amountField,
             currencyField,
             paymentButton
@@ -318,18 +240,13 @@ class ConfigurationController: UIViewController {
         }
 
         
-        guard
-//            let apiKeyStr = apiKeyField.text,
-//              let clientIDStr = clientField.text,
-//              let userIdStr = creditedUserField.text,
-              let amountStr = amountField.text
-        else { return nil }
+        guard let amountStr = amountField.text else { return nil }
         
         let __env = MGPEnvironment(rawValue: env)!
         MangopayCheckoutSDK.initialize(
             clientId: clientId,
-            profillingMerchantId: "428242",
-            checkoutRerefence: UUID().uuidString,
+            profilingMerchantId: "428242",
+            checkoutReference: UUID().uuidString,
             environment: __env
         )
 
@@ -344,11 +261,7 @@ class ConfigurationController: UIViewController {
             sdkMode: .MangoPay,
             env: __env,
             cardFlowType: cardFlowType,
-//            apiKey: apiKeyStr,
             clientId: clientId,
-//            authorId: authorField.text,
-//            userId: userIdStr,
-//            walletId: creditedWalletField.text,
             amount: Double(amountStr)!,
             currency: Currency(rawValue: cur)!,
             baseurlStr: baseurl
@@ -384,34 +297,7 @@ class ConfigurationController: UIViewController {
 
     func setDummyData(env: MGPEnvironment?) {
         currencyField.text = "EUR"
-
-        guard let _env = env else { return }
-        switch _env {
-        case .sandbox:
-//            apiKeyField.text = "6281f06d0ba54934a9747d9b7c9e8bb2"
-//            clientField.text = "checkoutsquatest"
-//            creditedUserField.text = "157868268"
-//            creditedWalletField.text = "159834019"
-//            authorField.text = "157868268"
-            amountField.text = "1"
-        case .production:
-//            apiKeyField.text = "FPuqRtn4A6LhH7JGJ9QUDSfc3M0aTsbiQfScW8boGyfaAD57h3"
-//            clientField.text = "arthurinc"
-//            creditedUserField.text = "4234427192"
-//            creditedWalletField.text = "4234431137"
-//            authorField.text = "4234427192"
-            amountField.text = "1"
-        case .t3:
-//            apiKeyField.text = "8b35136d29a4430983c835f81caf7c05"
-//            clientField.text = "valitoreurprodtest2"
-//            
-//            creditedUserField.text = "user_m_01HP6Y728NHC46PTAT186AM17V"
-//            creditedWalletField.text = "wlt_m_01HP6Y7WB48TVZCQ2HQ7BH8KK9"
-//            
-//            authorField.text = "6664602"
-            amountField.text = "1"
-            
-        }
+        amountField.text = "1"
     }
 
     func getDataFromPlist() -> [String: Any] {
@@ -428,25 +314,6 @@ extension ConfigurationController: FormValidatable {
 
 extension ConfigurationController: UITextFieldDelegate {
     
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        switch textField {
-//        case apiKeyField.textfield:
-//            clientField.setResponsder()
-//        case clientField.textfield:
-//            authorField.setResponsder()
-//        case authorField.textfield:
-//            creditedUserField.setResponsder()
-//        case creditedUserField.textfield:
-//            creditedWalletField.setResponsder()
-//        case creditedWalletField.textfield:
-//            currencyField.setResponsder()
-//        case currencyField.textfield:
-//            self.view.endEditing(true)
-//        default: break
-//        }
-//        return true
-//    }
-
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch textField {
         case envTextfield.textfield:

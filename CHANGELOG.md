@@ -49,3 +49,9 @@
 
 * Migrated & updated NethoneSDk from xcframework to SPM package.
 
+
+##1.2.5 (2024-10-23)
+
+### Improvements
+
+* Fix issue of adding SDK via SPM

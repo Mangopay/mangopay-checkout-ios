@@ -16,3 +16,29 @@ import UIKit
         )!.first! as! T // swiftlint:disable:this force_cast
     }
 }
+
+extension UIViewController {
+    func showAlert(with cardToken: String, title: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: cardToken,
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(
+            title: "OK",
+            style: .default
+        ) { _ in
+            alert.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+var topmostViewController: UIViewController? {
+    var rootViewController = UIApplication.shared.keyWindow?.rootViewController
+    while let controller = rootViewController?.presentedViewController {
+        rootViewController = controller
+    }
+    return rootViewController
+}

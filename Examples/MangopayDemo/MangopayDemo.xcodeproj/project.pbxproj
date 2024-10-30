@@ -12,7 +12,6 @@
 		6F008965F04D9E086FBBA1E2 /* Pods_MangopayDemo_MangopayDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7FF5AC5BE8A89C4F84206F2 /* Pods_MangopayDemo_MangopayDemoUITests.framework */; };
 		9813A3672A8254CD0036F556 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3662A8254CD0036F556 /* AppDelegate.swift */; };
 		9813A3692A8254CD0036F556 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A3682A8254CD0036F556 /* SceneDelegate.swift */; };
-		9813A36B2A8254CD0036F556 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A36A2A8254CD0036F556 /* ViewController.swift */; };
 		9813A36E2A8254CD0036F556 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9813A36C2A8254CD0036F556 /* Main.storyboard */; };
 		9813A3732A8254D00036F556 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9813A3712A8254D00036F556 /* LaunchScreen.storyboard */; };
 		9813A37E2A8254D00036F556 /* MangopayDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813A37D2A8254D00036F556 /* MangopayDemoTests.swift */; };
@@ -65,7 +64,6 @@
 		9813A3632A8254CD0036F556 /* MangopayDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangopayDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9813A3662A8254CD0036F556 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9813A3682A8254CD0036F556 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9813A36A2A8254CD0036F556 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9813A36D2A8254CD0036F556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9813A3722A8254D00036F556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9813A3742A8254D00036F556 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -173,7 +171,6 @@
 				98E5CFB72A9C70C5000DF08B /* MangopayDemo.entitlements */,
 				9813A3662A8254CD0036F556 /* AppDelegate.swift */,
 				9813A3682A8254CD0036F556 /* SceneDelegate.swift */,
-				9813A36A2A8254CD0036F556 /* ViewController.swift */,
 				9813A3982A8261320036F556 /* ConfigurationController.swift */,
 				9813A3A02A8261320036F556 /* CongratsController.swift */,
 				9813A3A12A8261330036F556 /* CongratsController.xib */,
@@ -486,7 +483,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9813A36B2A8254CD0036F556 /* ViewController.swift in Sources */,
 				9813A3A92A8261330036F556 /* CongratsView.swift in Sources */,
 				9813A3A32A8261330036F556 /* ConfigurationController.swift in Sources */,
 				9813A3AD2A8261330036F556 /* Segue+Additions.swift in Sources */,
