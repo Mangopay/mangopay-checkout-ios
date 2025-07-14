@@ -1,7 +1,14 @@
 ---
+# ⚠️ Deprecated ⚠️
 
-<aside>
-<img src="/icons/square-alternate_lightgray.svg" alt="/icons/square-alternate_lightgray.svg" width="40px" /> **Prerequisites**
+**This SDK is deprecated as of July 1, 2025, and will no longer be maintained or supported.**
+
+We recommend using our **[Checkout Web SDK](https://docs.mangopay.com/sdks/checkout/web)** within a WebView as an alternative solution.  
+A step-by-step integration guide is available [here](https://gist.github.com/jide-mangopay/3f96969bcb546f66507a7ac729cf4e39).
+
+If you have any questions regarding this deprecation, please reach out to our team via the [Hub](https://hub.mangopay.com/).
+
+## Prerequisites
 
 To use the Mangopay Checkout SDK, you’ll need:
 
@@ -10,7 +17,6 @@ To use the Mangopay Checkout SDK, you’ll need:
 - iOS 13+
 - Xcode 12.2
 - Swift 5.3+
-</aside>
 
 ## Installation
 
